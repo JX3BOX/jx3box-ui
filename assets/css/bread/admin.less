@@ -1,0 +1,131 @@
+.c-admin {
+    top: 0;
+    position: fixed;
+    right: 0;
+    overflow-y: hidden;
+    margin: 0;
+
+    *:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .el-drawer {
+        .size(100%);
+        overflow-y: auto;
+    }
+    .el-drawer__header{
+        .mb(10px);
+    }
+    .el-drawer__body{
+        padding:0 20px;
+    }
+}
+
+.c-admin-mark {
+    .el-radio {
+        .mb(10px);
+    }
+}
+
+.c-admin-wrapper {
+    box-sizing: border-box;
+
+    .u-refresh-btn {
+        margin-left: 10px;;
+    }
+}
+
+.c-admin-highlight-checkbox {
+    .mr(10px) !important;
+}
+.c-admin-highlight-block {
+    .y;
+}
+.c-admin-highlight-preview {
+    .fz(14px);
+    .bold;
+    .ml(10px);
+}
+
+.c-admin-banner {
+    .u-banner {
+        .mt(5px);
+    }
+    .u-btn {
+        .pointer;
+    }
+}
+.c-admin-upload {
+    .w(100%) !important;
+    .x;
+
+    .el-upload {
+        .size(100%);
+        box-sizing: border-box;
+    }
+    overflow: hidden;
+}
+
+.c-admin-info {
+    display: flex;
+}
+
+.w-select {
+    position: relative;
+    .flex;
+    align-items: center;
+    .u-select-label {
+        background-color: #f5f7fa;
+        color: #909399;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 4px;
+        padding: 0 20px;
+        white-space: nowrap;
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: 1px 0 0 0 #dcdfe6 inset, 0 1px 0 0 #dcdfe6 inset, 0 -1px 0 0 #dcdfe6 inset;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+    .el-select {
+        .el-input__wrapper {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 1px 0 0 #dcdfe6 inset, 0 -1px 0 0 #dcdfe6 inset, 0 0 0 1px #dcdfe6 inset;
+        }
+    }
+}
+
+.c-admin-type {
+    .w(50%);
+    min-width: 200px;
+    .mr(10px);
+    .u-select-label {
+        height: 32px;
+        line-height: 32px;
+    }
+}
+.c-admin-author {
+    .w(50%);
+    flex: 1;
+}
+
+.c-admin-buttons {
+    .mt(20px);
+    .x;
+}
+
+@media screen and (max-width: @ipad) {
+    .c-admin {
+        .el-drawer {
+            .w(100%) !important;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+// 编辑器外样式
+.c-article-tinymce{
+	.e-jx3macro-area{
+		.pr;
+		&:after{
+			content : 'JX3BOX·MACRO';
+			position: absolute;right:0;top:-30px;
+			background-color:@bg-black;
+			color:#fff;
+			border-radius:3px;
+			padding:0 8px;
+			line-height:28px;
+			height: 28px;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+	}
+}
+// tinymce编辑器
+.c-article-editor {
+	.e-jx3macro-area{
+		min-height:24px;
+		border-radius:4px;
+		padding:10px;
+		font-size: 14px;
+		white-space: pre-wrap;
+		background-color: #f1f8ff;
+		border: 1px solid #c8e1ff;
+		color:darken(#c8e1ff,20%);
+		.pr;
+		&:after{
+			content : 'JX3BOX·MACRO';
+			position: absolute;right:10px;top:10px;
+			background-color:darken(#c8e1ff,20%);
+			color:#fff;
+			border-radius:3px;
+			padding:0 8px;
+		}
+	}
+}

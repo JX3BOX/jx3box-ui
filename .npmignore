@@ -1,0 +1,8 @@
+.github
+.gitignore
+.npmignore
+node_modules
+demo
+dist
+docs
+.husky

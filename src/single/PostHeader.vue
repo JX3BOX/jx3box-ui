@@ -1,0 +1,397 @@
+<template>
+    <header class="m-single-header" v-if="post">
+        <!-- 标题 -->
+        <div class="m-single-title">
+            <span class="u-title u-sub-block" :href="url" :title="title">
+                <i class="u-original" v-if="isOriginal">原创</i>
+                <i class="u-private" v-if="post.post_status != 'publish' || !!~~post.visible">
+                    <el-icon
+                        v-if="post.post_status == 'draft' || post.post_status == 'pending' || !!~~post.visible"
+                        color="#fb9b24"
+                        ><Lock></Lock
+                    ></el-icon>
+                    <el-icon v-if="post.post_status == 'dustbin'" color="#c00"><Delete></Delete></el-icon>
+                </i>
+                <span class="u-title-text">{{ title }}</span>
+                <template v-if="titleExtra">
+                    <span class="u-client" :class="'i-client-' + client">{{ showClientLabel(client) }}</span>
+                    <span class="u-client u-zlp" v-if="zlp">{{ zlp }}</span>
+                    <span class="u-client i-client-wujie" v-if="is_wujie">无界</span>
+                </template>
+            </span>
+        </div>
+
+        <!-- 信息 -->
+        <div class="m-single-info">
+            <!-- 用户名 -->
+            <div class="u-author u-sub-block">
+                <i class="u-author-icon">
+                    <img svg-inline src="../../assets/img/single/author.svg" />
+                </i>
+                <a class="u-name" :href="author_link" v-if="!anonymous">{{ author_name }}</a>
+                <span class="u-name u-anonymous" v-else>神秘侠士</span>
+            </div>
+
+            <!-- 自定义字段 -->
+            <!-- <template v-if="metas && metas.length">
+            <div class="u-meta u-sub-block" v-for="(meta_value,meta_key) in metas" :key="meta_key">
+                <em class="u-label">{{meta_key}}</em>
+                <span class="u-value">{{meta_value}}</span>
+            </div>
+            </template> -->
+            <slot></slot>
+
+            <!-- 客户端 -->
+            <div class="u-meta u-sub-block">
+                <em class="u-label">适用客户端</em>
+                <span class="u-value u-client" :class="client">{{ showClientLabel(client) }}</span>
+                <span class="u-value u-client wujie" v-if="is_wujie">无界</span>
+            </div>
+
+            <!-- 发布日期 -->
+            <span class="u-podate u-sub-block" :title="'发布日期:' + post_time">
+                <i class="u-icon-podate">
+                    <img svg-inline src="../../assets/img/single/podate.svg" />
+                </i>
+                <time>{{ post_date }}</time>
+            </span>
+
+            <!-- 最后更新 -->
+            <span class="u-modate u-sub-block" :title="'最后更新:' + update_time">
+                <i class="u-icon-modate">
+                    <img svg-inline src="../../assets/img/single/modate.svg" />
+                </i>
+                <time>{{ update_date }}</time>
+            </span>
+
+            <!-- 查看次数 -->
+            <span class="u-views u-sub-block">
+                <el-icon :size="15"><View /></el-icon>
+                {{ views }}
+            </span>
+
+            <span class="u-word-count u-sub-block" v-if="wordCount" title="累计字数">
+                <el-icon :size="15"><Sunny /></el-icon>
+                {{ wordCount }}
+            </span>
+
+            <!-- 编辑 -->
+            <a class="u-edit u-sub-block" :href="edit_link" v-if="canEdit && !anonymous">
+                <el-icon class="u-icon-edit" :size="16"><Edit /></el-icon>
+                <span>编辑</span>
+            </a>
+        </div>
+    </header>
+</template>
+
+<script>
+import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import { showDate, showTime } from "@jx3box/jx3box-common/js/moment";
+import { editLink, authorLink } from "@jx3box/jx3box-common/js/utils.js";
+import User from "@jx3box/jx3box-common/js/user.js";
+import $ from "jquery";
+const { __clients } = JX3BOX;
+
+export default {
+    name: "PostHeader",
+    props: ["post", "stat", "titleExtra", "anonymous",],
+    data: function () {
+        return {
+            wordCount: 0,
+        };
+    },
+    computed: {
+        url: function () {
+            return location.href;
+        },
+        isOriginal: function () {
+            return !!~~this.post?.original;
+        },
+        title: function () {
+            return this.post?.post_title || "无标题";
+        },
+        author_link: function () {
+            return authorLink(this.post?.post_author);
+        },
+        author_name: function () {
+            return this.post?.author_info?.display_name || "匿名";
+        },
+        post_date: function () {
+            return showDate(new Date(this.post?.post_date));
+        },
+        update_date: function () {
+            return showDate(new Date(this.post?.post_modified));
+        },
+        post_time: function () {
+            return showTime(new Date(this.post?.post_date));
+        },
+        update_time: function () {
+            return showTime(new Date(this.post?.post_modified));
+        },
+        views: function () {
+            return this.stat?.views || "-";
+        },
+        edit_link: function () {
+            return editLink(this.post?.post_type, this.post?.ID);
+        },
+        canEdit: function () {
+            return this.post?.post_author == User.getInfo().uid || User.isEditor();
+        },
+        client: function () {
+            return this.post?.client || "std";
+        },
+        is_wujie: function () {
+            return this.post?.is_wujie
+        },
+    },
+    watch: {
+        post: {
+            deep: true,
+            handler: function () {
+                this.countWords();
+            },
+        },
+    },
+    methods: {
+        showClientLabel: function (val) {
+            return __clients[val];
+        },
+        countWords: function () {
+            this.$nextTick(() => {
+                // 需要去除空格 \n \g
+                // eslint-disable-next-line no-useless-escape
+                const text = $(".c-article")
+                    .text()
+                    ?.replace(
+                        /[\s|\n|\r|\t|\g|\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\，|\。|\？|\：|\；|\‘|\’|\”|\“|\、|\·|\！|\（|\）|\》|\《|\『|\』]/g,
+                        ""
+                    );
+
+                this.wordCount = text?.length || 0;
+            });
+        },
+    },
+    mounted: function () {},
+};
+</script>
+
+<style lang="less">
+.i-client-all {
+    border: 1px solid #a26ef7;
+    color: #a26ef7;
+}
+.i-client-std {
+    border: 1px solid #f0b400;
+    color: #f0b400;
+}
+.i-client-origin {
+    border: 1px solid #0eb7ce;
+    color: #0eb7ce;
+}
+.i-client-wujie {
+    border: 1px solid #00dcda;
+    color: #3ae0f1;
+    background: #eff;
+    margin-left: 5px;
+}
+
+.m-single-header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    // padding-right: 280px;
+    .pr;
+    .u-sub-block {
+        .dbi;
+        .y(top);
+    }
+}
+@media screen and (max-width: @phone) {
+    .m-single-header {
+        padding-right: 0;
+    }
+}
+@media print {
+    .m-single-header {
+        padding-right: 0;
+    }
+}
+
+.m-single-title {
+    .fz(32px);
+    padding: 1px 0;
+
+    .u-title {
+        color: @color;
+        // &:hover {
+        //     color: @primary;
+        // }
+        letter-spacing: 0.5px;
+        font-weight: 300;
+        .db;
+        .nobreak;
+    }
+    .u-author {
+        .pr;
+    }
+
+    .u-original {
+        background-color: #6f42c1;
+        color: #fff;
+        .fz(14px, 20px);
+        font-style: normal;
+        font-weight: normal;
+        padding: 2px 5px;
+        .mr(5px);
+        // .fl;
+    }
+
+    .u-private {
+        .y(-4px);
+        margin-right: 5px;
+        color: #111;
+    }
+}
+@media screen and (max-width: @phone) {
+    .m-single-title {
+        .fz(1rem, 1.8);
+        .u-title {
+            word-break: break-all;
+            white-space: normal;
+            font-weight: normal;
+        }
+    }
+}
+@media print {
+    .m-single-title {
+        .x;
+    }
+}
+
+.m-single-info {
+    margin-top: 10px;
+    .clearfix;
+    .fz(12px, 20px);
+    color: #666;
+
+    @origin: #0eb7ce;
+    @std: #f0b400;
+    @all: #a26ef7;
+    @wujie: #fc79bf;
+
+    .u-client {
+        // .fl;
+        font-style: normal;
+        .fz(12px);
+        padding: 0px 5px;
+        .r(3px);
+        // .mr(10px);
+
+        &.std {
+            border: 1px solid @std;
+            color: @std;
+        }
+
+        &.origin {
+            border: 1px solid @origin;
+            color: @origin;
+        }
+
+        &.wujie {
+            border: 1px solid #00dcda;
+            color: #3ae0f1;
+            background: #eff;
+            margin-left: 5px;
+        }
+
+        &.all {
+            border: 1px solid @all;
+            color: @all;
+        }
+    }
+
+    * {
+        .dbi;
+    }
+
+    svg {
+        fill: #666;
+        .size(16px);
+        .y;
+        .mr(3px);
+    }
+
+    .u-sub-block {
+        .mr(15px);
+        .fl;
+    }
+
+    .u-author {
+        a:hover {
+            box-shadow: 0 1px 0 @color-link;
+        }
+        i {
+            .pr;
+            top: -2px;
+        }
+    }
+
+    .u-label {
+        .mr(5px);
+        background-color: #eee;
+        padding: 0 5px;
+        .r(2px);
+        font-style: normal;
+    }
+
+    .u-views,
+    .u-word-count {
+        .flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .u-edit {
+        i {
+            &:before {
+                font-size: 16px;
+            }
+            .pr;
+            top: 4px;
+            .mr(1px);
+        }
+        &:hover {
+            box-shadow: 0 1px 0 @color-link;
+        }
+    }
+}
+@media screen and (max-width: @ipad) {
+    .m-single-info {
+        .u-meta {
+            .none;
+        }
+    }
+}
+@media screen and (max-width: @phone) {
+    .m-single-info {
+        .u-podate {
+            .none;
+        }
+    }
+}
+@media print {
+    .m-single-info {
+        .u-meta,
+        .u-views,
+        .u-edit {
+            .none;
+        }
+        .x;
+        .u-sub-block {
+            float: none;
+        }
+        .u-name {
+            color: @color;
+        }
+    }
+}
+</style>

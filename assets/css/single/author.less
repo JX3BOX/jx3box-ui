@@ -1,0 +1,101 @@
+.c-author {
+    .u-tips {
+        .db;
+        color: #555;
+        font-size: 12px;
+    }
+
+    .u-label {
+        padding: 10px 0;
+        .flex;
+        align-items: center;
+        i,
+        svg {
+            .size(16px);
+            .mr(5px);
+        }
+        span {
+            .fz(12px);
+            .bold;
+        }
+        // border-bottom: 1px solid @border;
+    }
+    .u-more {
+        fill: #aaa;
+    }
+
+    @keyframes living-icon-ani {
+        0% {
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+        50% {
+            -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+        }
+        to {
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+    }
+
+    .u-tv-living {
+        .dbi;
+        .ml(10px);
+    }
+
+    .u-tv-living-icon {
+        .h(10px);
+    }
+
+    .u-tv-living-icon-col {
+        .dbi;
+        transform-origin: bottom;
+        width: 2px;
+        height: 100%;
+        margin: 0 1px;
+        background-color: #fb7299;
+        border-radius: 2px;
+        animation: living-icon-ani 0.6s linear infinite;
+    }
+    .u-tv-living-icon-col.first {
+        animation-delay: -0.2s;
+    }
+    .u-tv-living-icon-col.last {
+        animation-delay: 0.2s;
+    }
+
+    .u-interact {
+        .mt(5px);
+        display: flex;
+    }
+    .u-links {
+        .mt(15px);
+    }
+    .u-block {
+        .mt(20px);
+    }
+
+    .u-btn {
+        &:hover {
+            .u-msg-icon {
+                filter: invert(33%) sepia(39%) saturate(6852%) hue-rotate(201deg) brightness(87%) contrast(98%);
+            }
+        }
+    }
+
+    .u-msg-icon {
+        .size(14px);
+        .pr;
+        top: 1px;
+        filter: invert(40%) sepia(5%) saturate(419%) hue-rotate(182deg) brightness(89%) contrast(84%);
+    }
+}
+
+.c-sidebar-left .c-author {
+    margin: 10px;
+}
+
+.c-sidebar-right .c-author {
+    margin: 15px;
+}

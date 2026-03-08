@@ -1,0 +1,229 @@
+.c-article {
+    .e-jx3-item {
+        .pointer;
+    }
+    .e-jx3-item-q0 {
+        color: rgb(167, 167, 167);
+        box-shadow: 0 1px 0 rgb(167, 167, 167);
+        &:hover {
+            color: rgb(167, 167, 167, 0.88);
+            box-shadow: 0 1px 0 rgba(167, 167, 167, 0.88);
+        }
+    }
+    .e-jx3-item-q1 {
+        color: rgb(6, 191, 204);
+        box-shadow: 0 1px 0 rgb(6, 191, 204);
+        &:hover {
+            color: rgba(6, 191, 204, 0.88);
+            box-shadow: 0 1px 0 rgba(6, 191, 204, 0.88);
+        }
+    }
+    .e-jx3-item-q2 {
+        color: rgb(0, 210, 75);
+        box-shadow: 0 1px 0 rgb(0, 210, 75);
+        &:hover {
+            color: rgba(0, 210, 75, 0.88);
+            box-shadow: 0 1px 0 rgba(0, 210, 75, 0.88);
+        }
+    }
+    .e-jx3-item-q3 {
+        color: rgb(0, 126, 255);
+        box-shadow: 0 1px 0 rgb(0, 126, 255);
+        &:hover {
+            color: rgba(0, 126, 255, 0.88);
+            box-shadow: 0 1px 0 rgba(0, 126, 255, 0.88);
+        }
+    }
+    .e-jx3-item-q4 {
+        color: rgb(254, 45, 254);
+        box-shadow: 0 1px 0 rgb(254, 45, 254);
+        &:hover {
+            color: rgba(254, 45, 254, 0.88);
+            box-shadow: 0 1px 0 rgba(254, 45, 254, 0.88);
+        }
+    }
+    .e-jx3-item-q5 {
+        color: rgb(255, 165, 0);
+        box-shadow: 0 1px 0 rgb(255, 165, 0);
+        &:hover {
+            color: rgba(255, 165, 0, 0.88);
+            box-shadow: 0 1px 0 rgba(255, 165, 0, 0.88);
+        }
+    }
+}
+
+.c-item {
+    @max-width: 345px;
+    @field-padding-right: 0px;
+
+    .pr;
+    .dbi;
+    padding: 2px;
+    font-family: "SimHei", "STHeiti", "Microsoft YaHei";
+
+    &.c-item-equipment {
+        width: @max-width;
+    }
+
+    &.c-item-furniture {
+        min-width: 200px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .c-item-wrapper {
+        max-width: @max-width;
+        padding: 9px 10px 10px;
+        background-color: rgba(15, 34, 34, 0.88);
+        // background-color: #0f2222;
+        color: #ffffff;
+
+        *{
+            font-weight: normal;
+            font-size: 13.6px;
+            line-height: 1.5em;
+            text-shadow: 1px 1px 1px #0f2222;
+        }
+
+        &:before {
+            content: "";
+            .pa;
+            top: 0;
+            left: 0;
+            .w(100%);
+            .h(100%);
+            border: 1px solid #0f2222;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .u-title {
+            font-weight: normal;
+        }
+
+        .u-desc {
+            padding-right: @field-padding-right;
+        }
+
+        .u-title,
+        .u-desc {
+            margin: 0;
+        }
+
+        .u-orange {
+            color: #ffa500;
+        }
+
+        .u-yellow {
+            color: #ffff00;
+        }
+
+        .u-green {
+            color: #00d24b;
+        }
+
+        .u-white {
+            color: #ffffff;
+        }
+
+        .u-gray {
+            color: #adadad;
+        }
+
+        .u-max-strength-level {
+            .pr;
+            color: #7ee3a3;
+
+            span {
+                .pa;
+                top: 0;
+                right: 0;
+            }
+        }
+
+        .u-max-exist-time {
+            color: #cfcfcf;
+        }
+
+        .u-weapon-type-label {
+            & + .u-type-label {
+                .fr;
+                transform: translateY(-100%);
+            }
+        }
+
+        .u-attributes {
+            .pr;
+            padding-right: @field-padding-right;
+
+            .u-orange {
+                color: #ff9600;
+            }
+
+            .u-green {
+                color: #00c848;
+            }
+
+            .u-speed {
+                .pa;
+                top: 0;
+                right: 0;
+            }
+
+            .u-horse-attribute {
+                .u-horse-icon {
+                    float: left;
+                    .w(22px);
+                    .mt(3px);
+
+                    & + .u-horse-desc {
+                        .ml(22px);
+                    }
+                }
+            }
+        }
+
+        .u-diamonds {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            .u-diamond {
+                .u-square,
+                .u-text {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+                .u-square {
+                    width: 1.1em;
+                    height: 1.1em;
+                    margin-right: 3px;
+                    border: 1px solid #999999;
+                }
+
+                .u-text {
+                    margin-top: -1px;
+                }
+            }
+        }
+
+        .u-can-shared {
+            color: #4fff6c;
+        }
+
+        .u-furniture-can {
+            span {
+                .pr(10px);
+            }
+        }
+    }
+}
