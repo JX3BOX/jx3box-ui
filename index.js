@@ -1,11 +1,16 @@
-import Header from "./src/CommonHeader.vue";
+// 全局模块
+import CommonHeader from "./src/CommonHeader.vue";
 import Footer from "./src/Footer.vue";
+import CommonFooter from "./src/CommonFooter.vue";
+
+// 布局
 import Main from "./src/Main.vue";
 import Breadcrumb from "./src/Breadcrumb.vue";
 import LeftSidebar from "./src/LeftSidebar.vue";
 import RightSidebar from "./src/RightSidebar.vue";
 import LeftSideToggle from "./src/LeftSideToggle.vue";
 
+// 列表页
 import markBy from "./src/filters/markBy.vue";
 import tagBy from "./src/filters/tagBy.vue";
 import orderBy from "./src/filters/orderBy.vue";
@@ -28,8 +33,10 @@ import {
 } from "./i18n";
 
 const components = {
-    Header,
+    CommonHeader,
+    CommonFooter,
     Footer,
+
     Main,
     Breadcrumb,
     LeftSidebar,

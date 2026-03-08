@@ -1,7 +1,7 @@
 <template>
     <div class="container-page">
-        <Header></Header>
-        <breadcrumb
+        <CommonHeader></CommonHeader>
+        <!-- <breadcrumb
             name="频道名称"
             slug="slug"
             root="/slug"
@@ -19,7 +19,6 @@
             <LeftSideToggle :mobileOnly="true" />
             <Author :uid="7" />
         </LeftSidebar>
-
         <Main :withoutLeft="false" :withoutRight="false">
             <versionBy value=""></versionBy>
             <el-divider></el-divider>
@@ -73,45 +72,42 @@
                     </div>
                 </template>
             </SuspendCommon>
-
-            <CommonFooter> </CommonFooter>
-        </Main>
+        </Main> -->
+        <CommonFooter> </CommonFooter>
     </div>
 </template>
 
 <script>
-import singlebox from "./single/cms-single.vue";
-import UploadAlum from "./editor/UploadAlum.vue";
-import Author from "./single/Author.vue";
-import SimpleThxVue from "./single/SimpleThx.vue";
-import Comment from "./single/Comment.vue";
-import Thx from "./single/Thx.vue";
+// import singlebox from "./single/cms-single.vue";
+// import UploadAlum from "./editor/UploadAlum.vue";
+// import Author from "./single/Author.vue";
+// import SimpleThxVue from "./single/SimpleThx.vue";
+// import Comment from "./single/Comment.vue";
+// import Thx from "./single/Thx.vue";
 // import PostHeader from "./single/PostHeader.vue";
-import PostTopic from "./single/PostTopic.vue";
-import axios from "axios";
-import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
-import { get_item } from "../service/item";
+// import PostTopic from "./single/PostTopic.vue";
+// import axios from "axios";
+// import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
+// import { get_item } from "../service/item";
 // import AdminDirectMessage from "./bread/AdminDirectMessage.vue";
 // import Admin from "@/bread/Admin.vue";
-import versionBy from "./filters/versionBy.vue";
-import SuspendCommon from "./SuspendCommon.vue";
-import CommonFooter from "./CommonFooter.vue";
+// import versionBy from "./filters/versionBy.vue";
+// import SuspendCommon from "./SuspendCommon.vue";
 export default {
     name: "App",
     components: {
-        SimpleThxVue,
-        Author,
-        Comment,
-        Thx,
-        // PostHeader,
-        PostTopic,
-        UploadAlum,
-        // AdminDirectMessage,
-        singlebox,
-        versionBy,
-        SuspendCommon,
-        CommonFooter,
-        // Admin,
+        // SimpleThxVue,
+        // Author,
+        // Comment,
+        // Thx,
+        // // PostHeader,
+        // PostTopic,
+        // UploadAlum,
+        // // AdminDirectMessage,
+        // singlebox,
+        // versionBy,
+        // SuspendCommon,
+        // // Admin,
     },
     data() {
         return {
@@ -119,7 +115,7 @@ export default {
             post: "",
             client: location.href.includes("origin") ? "origin" : "std",
             tag: "",
-            post_topics: post_topics["bps_pve"],
+            // post_topics: post_topics["bps_pve"],
             tag2: "",
             item1: null,
             item2: null,
@@ -133,7 +129,7 @@ export default {
         post_id: {
             immediate: true,
             handler: function () {
-                this.loadPost();
+                // this.loadPost();
             },
         },
     },
