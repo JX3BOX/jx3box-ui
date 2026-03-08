@@ -266,6 +266,7 @@ export default {
 </script>
 
 <style lang="less">
+@import '../../assets/css/mixin.less';
 //用户相关
 .c-header-user {
     font-size: 14px;

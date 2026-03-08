@@ -108,6 +108,9 @@ export default {
 </script>
 
 <style lang="less">
+@import '../../assets/css/mixin.less';
+
+
 // 用户资产
 .c-header-assets {
     position: relative;
