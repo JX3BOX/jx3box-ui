@@ -10,7 +10,7 @@
                                 :class="{ on: isFocus(item.link) }"
                                 :href="item.link"
                                 :target="isSelf(item.link)"
-                                >{{ item.label }}</a
+                                >{{ $jx3boxT(`jx3boxUi.nav.${item.key}`, item.label) }}</a
                             >
                             <template #dropdown>
                                 <el-dropdown-menu class="c-header-menu">
@@ -21,7 +21,7 @@
                                             class="u-menu-item"
                                         >
                                             <a :href="subitem.link" :target="isSelf(subitem.link)"
-                                                >{{ subitem.label }}
+                                                >{{ $jx3boxT(`jx3boxUi.nav.${subitem.key}`, subitem.label) }}
                                                 <span v-if="subitem.desc">{{ subitem.desc }}</span></a
                                             >
                                         </el-dropdown-item>
@@ -31,7 +31,9 @@
                         </el-dropdown>
                     </template>
                     <template v-else>
-                        <a class="u-item" :class="{ on: isFocus(item.link) }" :href="item.link">{{ item.label }}</a>
+                        <a class="u-item" :class="{ on: isFocus(item.link) }" :href="item.link">{{
+                            $jx3boxT(`jx3boxUi.nav.${item.key}`, item.label)
+                        }}</a>
                     </template>
                 </template>
             </div>
@@ -124,8 +126,10 @@ const activeNav = {
 
 import { getMenu } from "../../service/header";
 import { trimSlash } from "./utils";
+import i18nMixin from "../../i18n/mixin";
 
 export default {
+    mixins: [i18nMixin],
     props: [],
     data: function () {
         return {

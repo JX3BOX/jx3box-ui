@@ -8,6 +8,22 @@ const app = createApp(App);
 // 3.Store
 
 // 4.i18n
+import { Jx3boxUiI18n, getJx3boxUiAvailableLocales } from "../index.js";
+
+const __langKey = (localStorage.getItem("lang") || "zh-cn").toLowerCase();
+const __langMap = {
+    "zh-cn": "zh-CN",
+    "en-us": "en-US",
+    "zh-tw": "zh-TW",
+    vi: "vi",
+};
+const __preferredI18nLocale = __langMap[__langKey] || "zh-CN";
+const __supportedI18nLocales = getJx3boxUiAvailableLocales();
+const __i18nLocale = __supportedI18nLocales.includes(__preferredI18nLocale) ? __preferredI18nLocale : "zh-CN";
+
+app.use(Jx3boxUiI18n, {
+    locale: __i18nLocale,
+});
 
 // 5.Components
 import { createHead } from "@vueuse/head";
@@ -21,12 +37,23 @@ import "@jx3box/jx3box-common/css/normalize.css";
 import "@jx3box/jx3box-common/css/font.css";
 
 // 6.2 Element Plus
+import "@jx3box/jx3box-common/css/element-plus-theme.scss";
 import ElementPlus from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
+import en from "element-plus/es/locale/lang/en";
+import zhTw from "element-plus/es/locale/lang/zh-tw";
+import vi from "element-plus/es/locale/lang/vi";
 import "element-plus/dist/index.css";
-import "@jx3box/jx3box-common/css/element-plus-theme.css";
+
+const __elementLocaleMap = {
+    "zh-CN": zhCn,
+    "en-US": en,
+    "zh-TW": zhTw,
+    vi,
+};
+const __elementLocale = __elementLocaleMap[__i18nLocale] || zhCn;
 app.use(ElementPlus, {
-    locale: zhCn,
+    locale: __elementLocale,
 });
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

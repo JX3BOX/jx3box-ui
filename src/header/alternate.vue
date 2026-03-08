@@ -1,5 +1,11 @@
 <template>
-    <el-dialog append-to-body v-model="visible" custom-class="c-alternate" width="320px" title="切换马甲">
+    <el-dialog
+        append-to-body
+        v-model="visible"
+        custom-class="c-alternate"
+        width="320px"
+        :title="$jx3boxT('jx3boxUi.alternate.title', '切换马甲')"
+    >
         <div class="c-alternate__content">
             <div
                 class="c-alternate-item"
@@ -13,10 +19,16 @@
                     <img class="u-avatar" :src="showAvatar(item.avatar)" alt="" />
                 </div>
                 <div class="m-misc">
-                    <span class="u-name"><span class="u-label">用户昵称：</span>{{ item.name }}</span>
+                    <span class="u-name"
+                        ><span class="u-label">{{ $jx3boxT("jx3boxUi.alternate.userNickname", "用户昵称：") }}</span
+                        >{{ item.name }}</span
+                    >
                     <span class="u-time">
-                        <span class="u-label">上次登录：</span>{{ getFormatTime(item.created_at) }}
-                        <span class="u-extra" v-if="isExpired(item.created_at)">(已过期)</span>
+                        <span class="u-label">{{ $jx3boxT("jx3boxUi.alternate.lastLogin", "上次登录：") }}</span
+                        >{{ getFormatTime(item.created_at) }}
+                        <span class="u-extra" v-if="isExpired(item.created_at)">{{
+                            $jx3boxT("jx3boxUi.alternate.expired", "(已过期)")
+                        }}</span>
                     </span>
                 </div>
 
@@ -36,8 +48,10 @@ import dayjs from "dayjs";
 import User from "@jx3box/jx3box-common/js/user";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { refreshAuth } from "../../service/cms";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AlternateSwitch",
+    mixins: [i18nMixin],
     data() {
         return {
             visible: false,
@@ -124,15 +138,15 @@ export default {
         // 选择马甲
         onSelectAlternate(item) {
             if (this.isExpired(item.created_at)) {
-                this.$message.error("该马甲已过期，请重新登录");
+                this.$message.error(this.$jx3boxT("jx3boxUi.alternate.expiredNeedRelogin", "该马甲已过期，请重新登录"));
                 return;
             }
             if (this.profile.uid == item.uid) {
                 return;
             }
-            this.$confirm("确定要切换到该马甲吗？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm(this.$jx3boxT("jx3boxUi.alternate.switchConfirm", "确定要切换到该马甲吗？"), this.$jx3boxT("jx3boxUi.common.tip", "提示"), {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
                 type: "warning",
             })
                 .then(() => {
@@ -153,9 +167,9 @@ export default {
         },
         // 删除马甲
         onRemoveAlternate(item) {
-            this.$confirm("确定要删除该马甲吗？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm(this.$jx3boxT("jx3boxUi.alternate.deleteConfirm", "确定要删除该马甲吗？"), this.$jx3boxT("jx3boxUi.common.tip", "提示"), {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
                 type: "warning",
             })
                 .then(() => {
@@ -168,7 +182,7 @@ export default {
         // 新增马甲
         onAddAlternate() {
             if (this.overLength) {
-                this.$message.error("最多只能添加5个马甲");
+                this.$message.error(this.$jx3boxT("jx3boxUi.alternate.maxFive", "最多只能添加5个马甲"));
                 return;
             }
             // 跳转至登录页

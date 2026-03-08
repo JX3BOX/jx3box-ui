@@ -3,8 +3,8 @@
         <div v-for="item in socials" :key="item.name">
             <el-popover v-if="item.qrcode" trigger="hover" placement="top" popper-class="c-footer-v4__popover">
                 <div class="flex w-36 flex-col items-center p-3">
-                    <img class="h-32 w-32 rounded-md object-cover" :src="item.qrcode" :alt="item.name" />
-                    <span class="mt-2 text-xs">{{ item.label || item.name }}</span>
+                    <img class="h-32 w-32 rounded-md object-cover" :src="item.qrcode" :alt="getSocialName(item)" />
+                    <span class="mt-2 text-xs">{{ item.label || getSocialName(item) }}</span>
                 </div>
                 <template #reference>
                     <a
@@ -12,7 +12,7 @@
                         :title="item.label"
                         href="javascript:;"
                     >
-                        <img class="h-5 w-5" :src="item.icon" :alt="item.name" />
+                        <img class="h-5 w-5" :src="item.icon" :alt="getSocialName(item)" />
                     </a>
                 </template>
             </el-popover>
@@ -24,7 +24,7 @@
                 rel="noopener noreferrer"
                 :title="item.label"
             >
-                <img class="h-5 w-5" :src="item.icon" :alt="item.name" />
+                <img class="h-5 w-5" :src="item.icon" :alt="getSocialName(item)" />
             </a>
         </div>
     </div>
@@ -37,8 +37,11 @@
 // import douyinIcon from "@/assets/img/icons/douyin.svg?url";
 // import wechatQrcode from "@/assets/img/icons/mp.jpg";
 
+import i18nMixin from "../../i18n/mixin";
+
 export default {
     name: "FooterOfficial",
+    mixins: [i18nMixin],
     props: [],
     components: {},
     data: function () {
@@ -78,7 +81,19 @@ export default {
     },
     computed: {},
     watch: {},
-    methods: {},
+    methods: {
+        getSocialName(item) {
+            if (!item?.key) return item?.name || "";
+            const map = {
+                wechat: "wechatOA",
+                bilibili: "bilibili",
+                weibo: "weibo",
+                douyin: "douyin",
+            };
+            const tKey = map[item.key] || item.key;
+            return this.$jx3boxT(`jx3boxUi.footer.${tKey}`, item.name || tKey);
+        },
+    },
     created: function () {},
     mounted: function () {},
 };

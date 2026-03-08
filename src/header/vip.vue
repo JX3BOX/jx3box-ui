@@ -1,11 +1,21 @@
 <template>
     <div class="c-header-panel c-header-vip" id="c-header-vip">
-        <el-tooltip effect="dark" content="会员中心" placement="bottom" popper-class="c-header-tooltip">
+        <el-tooltip
+            effect="dark"
+            :content="$jx3boxT('jx3boxUi.header.vipCenter', '会员中心')"
+            placement="bottom"
+            popper-class="c-header-tooltip"
+        >
             <a class="u-post u-vip" href="/vip/premium">
                 <i class="u-icon u-icon-msg">
                     <i class="u-pop" style="display: none" v-show="pop"></i>
                     <!-- <vipIcon class="u-add" /> -->
-                    <img class="u-add" svg-inline src="../../assets/img/common/vip.svg" alt="会员中心">
+                    <img
+                        class="u-add"
+                        svg-inline
+                        src="../../assets/img/common/vip.svg"
+                        :alt="$jx3boxT('jx3boxUi.header.vipCenter', '会员中心')"
+                    />
                 </i>
             </a>
         </el-tooltip>
@@ -15,9 +25,11 @@
 <script>
 import { getConfig, getUserMeta, setUserMeta } from "../../service/cms";
 import User from "@jx3box/jx3box-common/js/user";
+import i18nMixin from "../../i18n/mixin";
 // import vipIcon from "@/assets/img/components/common/header/vip.svg";
 export default {
     name: "vip",
+    mixins: [i18nMixin],
     components: {
         // vipIcon,
     },

@@ -2,11 +2,22 @@
     <div class="c-header-search" id="c-header-search">
         <div class="c-search">
             <form class="u-form" @submit.prevent="handleSubmit">
-                <input class="u-text" type="text" autocomplete="off" name="q" placeholder="搜索.." ref="searchInput" />
+                <input
+                    class="u-text"
+                    type="text"
+                    autocomplete="off"
+                    name="q"
+                    :placeholder="$jx3boxT('jx3boxUi.header.searchPlaceholder', '搜索..')"
+                    ref="searchInput"
+                />
                 <input type="hidden" name="client" :value="client" />
                 <i class="u-btn" @click="handleSubmit">
                     <!-- <search-icon /> -->
-                    <img svg-inline src="../../assets/img/common/search-key-slash.svg" alt="搜索">
+                    <img
+                        svg-inline
+                        src="../../assets/img/common/search-key-slash.svg"
+                        :alt="$jx3boxT('jx3boxUi.header.search', '搜索')"
+                    />
                 </i>
             </form>
         </div>
@@ -16,9 +27,11 @@
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { searchJump } from "./utils";
+import i18nMixin from "../../i18n/mixin";
 // import searchIcon from "@/assets/img/components/common/header/search-key-slash.svg";
 export default {
     name: "search",
+    mixins: [i18nMixin],
     components: {
         // searchIcon,
     },

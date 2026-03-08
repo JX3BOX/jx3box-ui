@@ -5,13 +5,13 @@
             <template v-if="isPhone">
                 <ul class="u-menu u-pop-content">
                     <li>
-                        <a href="/dashboard">个人中心</a>
+                        <a href="/dashboard">{{ $jx3boxT("jx3boxUi.header.profileCenter", "个人中心") }}</a>
                     </li>
                     <li>
-                        <a :href="url.msg">消息中心</a>
+                        <a :href="url.msg">{{ $jx3boxT("jx3boxUi.header.messageCenter", "消息中心") }}</a>
                     </li>
                     <li>
-                        <a :href="url.publish">发布中心</a>
+                        <a :href="url.publish">{{ $jx3boxT("jx3boxUi.header.publishCenter", "发布中心") }}</a>
                     </li>
                     <hr />
                     <li v-for="item in userPanel" :key="item.label">
@@ -29,7 +29,7 @@
                         </li>
                     </template>
                     <li>
-                        <a @click="logout">退出登录</a>
+                        <a @click="logout">{{ $jx3boxT("jx3boxUi.header.logout", "退出登录") }}</a>
                     </li>
                 </ul>
             </template>
@@ -45,22 +45,26 @@
                                     :src="super_author_icon"
                                     class="u-superauthor-profile"
                                     alt="superauthor"
-                                    title="签约作者"
+                                    :title="$jx3boxT('jx3boxUi.header.superAuthor', '签约作者')"
                                     :class="{ off: !isSuperAuthor }"
                             /></a>
                             <a
                                 class="u-vip"
                                 href="/vip/premium?from=header_usermenu"
                                 target="_blank"
-                                title="专业版账号"
+                                :title="$jx3boxT('jx3boxUi.header.proAccount', '专业版账号')"
                             >
                                 <i class="i-icon-vip" :class="{ on: isPRO }">{{ vipType }}</i>
-                                <span class="u-expire" v-if="isPRO">（有效期至：{{ pro_expire_date }}）</span>
+                                <span class="u-expire" v-if="isPRO">{{
+                                    $jx3boxT("jx3boxUi.header.proExpireUntil", "（有效期至：{date}）", {
+                                        date: pro_expire_date,
+                                    })
+                                }}</span>
                             </a>
                         </div>
                         <div class="u-id">
                             <span
-                                >魔盒UID：<b>{{ user.ID }}</b></span
+                                >{{ $jx3boxT("jx3boxUi.header.uidPrefix", "魔盒UID：") }}<b>{{ user.ID }}</b></span
                             >
                             <el-icon class="el-icon-document-copy u-copy" @click.stop="copyText(user.ID)"
                                 ><DocumentCopy
@@ -69,31 +73,37 @@
                     </div>
 
                     <el-button-group class="u-actions">
-                        <a class="el-button el-button--default is-plain" href="/dashboard">个人中心</a>
-                        <a class="el-button el-button--default is-plain" @click="changeAlternate">切换马甲</a>
-                        <a class="el-button el-button--default is-plain" href="/dashboard/frame">主题风格</a>
+                        <a class="el-button el-button--default is-plain" href="/dashboard">{{
+                            $jx3boxT("jx3boxUi.header.profileCenter", "个人中心")
+                        }}</a>
+                        <a class="el-button el-button--default is-plain" @click="changeAlternate">{{
+                            $jx3boxT("jx3boxUi.header.switchAlternate", "切换马甲")
+                        }}</a>
+                        <a class="el-button el-button--default is-plain" href="/dashboard/frame">{{
+                            $jx3boxT("jx3boxUi.header.themeStyle", "主题风格")
+                        }}</a>
                     </el-button-group>
 
                     <div class="u-other">
                         <a href="/dashboard/role" class="u-item"
-                            ><el-icon><Sunny /></el-icon>角色管理
+                            ><el-icon><Sunny /></el-icon>{{ $jx3boxT("jx3boxUi.header.roleManage", "角色管理") }}
                         </a>
                         <a href="/dashboard/fav" class="u-item"
-                            ><el-icon><Star /></el-icon>收藏订阅
+                            ><el-icon><Star /></el-icon>{{ $jx3boxT("jx3boxUi.header.favorites", "收藏订阅") }}
                         </a>
                         <a href="/dashboard/purchases" class="u-item"
-                            ><el-icon><ShoppingBag /></el-icon>已购资源
+                            ><el-icon><ShoppingBag /></el-icon>{{ $jx3boxT("jx3boxUi.header.purchased", "已购资源") }}
                         </a>
                         <a href="/dashboard/mall" class="u-item"
-                            ><el-icon><Memo /></el-icon>订单中心
+                            ><el-icon><Memo /></el-icon>{{ $jx3boxT("jx3boxUi.header.orderCenter", "订单中心") }}
                         </a>
                         <hr />
                         <a href="/dashboard/feedback" class="u-item"
-                            ><el-icon><Phone /></el-icon>反馈帮助
+                            ><el-icon><Phone /></el-icon>{{ $jx3boxT("jx3boxUi.header.feedbackHelp", "反馈帮助") }}
                         </a>
                         <hr />
                         <div class="u-logout">
-                            <el-button @click="logout" plain>退出登录</el-button>
+                            <el-button @click="logout" plain>{{ $jx3boxT("jx3boxUi.header.logout", "退出登录") }}</el-button>
                         </div>
                     </div>
                 </div>
@@ -114,10 +124,12 @@ import { copyText } from "./utils";
 import { getMenu } from "../../service/header";
 import Bus from "./bus";
 import alternate from "./alternate.vue";
+import i18nMixin from "../../i18n/mixin";
 
 const { __Links, __Root, __imgPath, __OriginRoot } = JX3BOX;
 export default {
     name: "info",
+    mixins: [i18nMixin],
     props: ["asset"],
     emits: ["update"],
     components: {
@@ -200,15 +212,15 @@ export default {
                 .then(() => {
                     if (mute) return;
                     this.$notify({
-                        title: "成功",
-                        message: "登出成功",
+                        title: this.$jx3boxT("jx3boxUi.header.success", "成功"),
+                        message: this.$jx3boxT("jx3boxUi.header.logoutSuccess", "登出成功"),
                         type: "success",
                         duration: 1000,
                     });
                 });
         },
         showUserName: function (val) {
-            return val || "匿名";
+            return val || this.$jx3boxT("jx3boxUi.header.anonymous", "匿名");
         },
         loadMyInfo: function () {
             getMyInfo()

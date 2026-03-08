@@ -1,6 +1,7 @@
 import { ElNotification } from "element-plus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import searchMap from "./search_map.json";
+import { tGlobal } from "../../i18n";
 
 const { __Root } = JX3BOX;
 
@@ -10,15 +11,15 @@ export function copyText(text) {
         window.navigator.clipboard.writeText(text).then(
             function () {
                 ElNotification.success({
-                    title: "复制成功",
+                    title: tGlobal("jx3boxUi.common.copySuccess", null, "复制成功"),
                 });
                 console.log("Async: Copying to clipboard was successful!");
             },
             function (err) {
                 console.error("Async: Could not copy text: ", err);
                 ElNotification.error({
-                    title: "复制失败",
-                    message: "无法复制到剪贴板",
+                    title: tGlobal("jx3boxUi.common.copyFailed", null, "复制失败"),
+                    message: tGlobal("jx3boxUi.common.cannotCopyClipboard", null, "无法复制到剪贴板"),
                 });
             }
         );
@@ -36,19 +37,19 @@ export function copyText(text) {
 
             if (successful) {
                 ElNotification.success({
-                    title: "复制成功",
+                    title: tGlobal("jx3boxUi.common.copySuccess", null, "复制成功"),
                 });
             } else {
                 ElNotification.error({
-                    title: "复制失败",
-                    message: "浏览器复制失败",
+                    title: tGlobal("jx3boxUi.common.copyFailed", null, "复制失败"),
+                    message: tGlobal("jx3boxUi.common.browserCopyFailed", null, "浏览器复制失败"),
                 });
             }
         } catch (err) {
             console.error("Fallback: Oops, unable to copy", err);
             ElNotification.error({
-                title: "复制失败",
-                message: "浏览器不支持复制",
+                title: tGlobal("jx3boxUi.common.copyFailed", null, "复制失败"),
+                message: tGlobal("jx3boxUi.common.browserNotSupportCopy", null, "浏览器不支持复制"),
             });
         }
 

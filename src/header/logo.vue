@@ -1,17 +1,23 @@
 <template>
-    <div class="c-header-logo" @click="toggleBox($event)" title="点击展开魔盒矩阵">
+    <div
+        class="c-header-logo"
+        @click="toggleBox($event)"
+        :title="$jx3boxT('jx3boxUi.header.expandBoxMatrix', '点击展开魔盒矩阵')"
+    >
         <i class="u-pic" id="c-header-logo">
             <img svg-inline src="../../assets/img/common/logo.svg" alt="JX3BOX" />
         </i>
-        <span class="u-txt" :class="{ on: isIndex }" href="/">魔盒</span>
+        <span class="u-txt" :class="{ on: isIndex }" href="/">{{ $jx3boxT("jx3boxUi.header.box", "魔盒") }}</span>
     </div>
 </template>
 
 <script>
 // import { useLayoutStore } from "@/store/layout";
+import i18nMixin from "../../i18n/mixin";
 
 export default {
     name: "c-header-logo",
+    mixins: [i18nMixin],
     components: {
         // Logo,
     },
@@ -23,6 +29,7 @@ export default {
     },
     computed: {},
     methods: {
+        toggleBox: function () {},
         // TODO: 主页和魔盒矩阵的切换
         // 盒子
         // toggleBox: function (e) {

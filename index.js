@@ -18,6 +18,15 @@ import Item from "./src/editor/components/Item.vue";
 import ItemSimple from "./src/editor/components/ItemSimple.vue";
 import GameText from "./src/editor/components/GameText.vue";
 
+import {
+    Jx3boxUiI18n,
+    createJx3boxUiI18n,
+    getJx3boxUiMessages,
+    mergeJx3boxUiMessages,
+    getJx3boxUiAvailableLocales,
+    setJx3boxUiLocale,
+} from "./i18n";
+
 const components = {
     Header,
     Footer,
@@ -46,4 +55,12 @@ const install = function (app) {
     });
 };
 
-export { install };
+export {
+    install,
+    Jx3boxUiI18n,
+    createJx3boxUiI18n,
+    getJx3boxUiMessages,
+    mergeJx3boxUiMessages,
+    getJx3boxUiAvailableLocales,
+    setJx3boxUiLocale,
+};

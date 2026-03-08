@@ -3,14 +3,19 @@
         <span class="u-post u-manage">
             <i class="u-pop" style="display: none" v-show="showPop || !isAuth"></i>
             <!-- <manageIcon class="u-add" /> -->
-            <img class="u-add" svg-inline src="../../assets/img/common/manage.svg" alt="扩展中心">
+            <img
+                class="u-add"
+                svg-inline
+                src="../../assets/img/common/manage.svg"
+                :alt="$jx3boxT('jx3boxUi.header.manageCenter', '扩展中心')"
+            />
         </span>
         <ul class="u-menu u-pop-content">
             <template v-for="item in userPanel">
                 <li :key="item.label" v-if="item.remark == 'auth' ? !isAuth : true">
                     <a :href="item.link" :target="item.target || '_self'" class="u-menu-item" @click="onClick(item)">
                         <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
-                        {{ item.label }}
+                        {{ getPanelLabel(item) }}
                         <span v-if="showPop" class="u-new">New!</span>
                         <span v-if="item.remark == 'auth' && !isAuth" class="u-new">New!</span>
                     </a>
@@ -21,7 +26,7 @@
                 <li v-for="item in adminPanel" :key="item.label">
                     <a :href="item.link" :target="item.target || '_self'" class="u-menu-item">
                         <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
-                        {{ item.label }}
+                        {{ getPanelLabel(item) }}
                     </a>
                 </li>
             </template>
@@ -33,10 +38,12 @@
 import { getMenu } from "../../service/header";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
+import i18nMixin from "../../i18n/mixin";
 // import manageIcon from "@/assets/img/components/common/header/manage.svg";
 const { __imgPath } = JX3BOX;
 const defaultPanel = [
     {
+        key: "manageCenter",
         label: "管理中心",
         link: "/os",
         onlyAdmin: true,
@@ -44,6 +51,7 @@ const defaultPanel = [
 ];
 export default {
     name: "Manage",
+    mixins: [i18nMixin],
     components: {
         // manageIcon,
     },
@@ -78,6 +86,10 @@ export default {
         this.loadPanel();
     },
     methods: {
+        getPanelLabel(item) {
+            if (item?.key) return this.$jx3boxT(`jx3boxUi.header.panel.${item.key}`, item.label || item.key);
+            return item?.label || "";
+        },
         loadPanel: function () {
             try {
                 const panel = JSON.parse(sessionStorage.getItem("panel"));

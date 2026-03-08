@@ -26,11 +26,18 @@
             <user-info :asset="asset" @logout="logout" @update="update" />
         </template>
         <template v-else>
-            <div class="c-header-login">
+            <!-- 语言切换 -->
+            <lang />
+
+            <a class="c-header-console" :href="login_url">{{
+                $jx3boxT("jx3boxUi.header.loginRegister", "登录/注册")
+            }}</a>
+
+            <!-- <div class="c-header-login">
                 <a class="u-register u-default" :href="register_url">注册</a>
                 <em>|</em>
                 <a class="u-login u-default" :href="login_url">登录</a>
-            </div>
+            </div> -->
         </template>
     </div>
 </template>
@@ -42,6 +49,7 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 dayjs.extend(isToday);
+import i18nMixin from "../../i18n/mixin";
 
 import message from "./message.vue";
 import publish from "./publish.vue";
@@ -53,6 +61,7 @@ import lang from "./lang.vue";
 import userInfo from "./userInfo.vue";
 
 export default {
+    mixins: [i18nMixin],
     props: {
         asset: {
             type: Object,
@@ -109,7 +118,7 @@ export default {
                             .then(() => {
                                 let msg = this.$message({
                                     type: "success",
-                                    message: "签到成功",
+                                    message: this.$jx3boxT("jx3boxUi.header.signInSuccess", "签到成功"),
                                     customClass: "c-header-signin",
                                     duration: 0,
                                 });
@@ -154,6 +163,22 @@ export default {
 </script>
 
 <style lang="less">
+.c-header-console {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.15s;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 9999px;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: @v4primary;
+    &:hover {
+        background-color: @v4yellow;
+    }
+}
 //登录、注册
 .c-header-login {
     margin: 16px 5px 16px 0;

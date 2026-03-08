@@ -1,11 +1,20 @@
 <template>
     <div class="c-header-msg" id="c-header-msg">
-        <el-tooltip effect="dark" content="消息中心" placement="bottom" popper-class="c-header-tooltip">
+        <el-tooltip
+            effect="dark"
+            :content="$jx3boxT('jx3boxUi.header.messageCenter', '消息中心')"
+            placement="bottom"
+            popper-class="c-header-tooltip"
+        >
             <a class="u-msg" :href="url">
                 <i class="u-icon u-icon-msg">
                     <i class="u-pop" style="display: none" v-show="pop"></i>
                     <!-- <bell /> -->
-                     <img svg-inline src="../../assets/img/common/bell.svg" alt="消息">
+                    <img
+                        svg-inline
+                        src="../../assets/img/common/bell.svg"
+                        :alt="$jx3boxT('jx3boxUi.header.messageCenter', '消息中心')"
+                    />
                 </i>
             </a>
         </el-tooltip>
@@ -15,9 +24,11 @@
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getLetter, getMsg } from "../../service/header";
+import i18nMixin from "../../i18n/mixin";
 // import bell from "@/assets/img/components/common/header/bell.svg";
 export default {
     name: "message",
+    mixins: [i18nMixin],
     components: {
         // bell,
     },

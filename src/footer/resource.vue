@@ -1,12 +1,18 @@
 <template>
     <section class="lg:col-span-4 lg:col-start-9">
-        <h3 class="text-sm font-semibold tracking-wide text-white">下载中心</h3>
+        <h3 class="text-sm font-semibold tracking-wide text-white">
+            {{ $jx3boxT("jx3boxUi.footer.downloadCenter", "下载中心") }}
+        </h3>
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div v-for="item in downloadLinks" :key="item.name">
                 <el-popover v-if="item.qrcode" trigger="hover" placement="top" popper-class="c-footer-v4__popover">
                     <div class="flex flex-col items-center p-3">
-                        <img class="h-32 w-32 rounded-md object-cover" :src="item.qrcode" :alt="item.name" />
-                        <span class="mt-2 text-xs">{{ item.label }}</span>
+                        <img
+                            class="h-32 w-32 rounded-md object-cover"
+                            :src="item.qrcode"
+                            :alt="getDownloadName(item)"
+                        />
+                        <span class="mt-2 text-xs">{{ getDownloadLabel(item) }}</span>
                     </div>
                     <template #reference>
                         <a
@@ -16,9 +22,9 @@
                             :rel="item.href ? 'noopener noreferrer' : null"
                         >
                             <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
-                                <img class="h-4 w-4" :src="item.icon" :alt="item.name" />
+                                <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
                             </span>
-                            <span>{{ item.name }}</span>
+                            <span>{{ getDownloadName(item) }}</span>
                         </a>
                     </template>
                 </el-popover>
@@ -30,9 +36,9 @@
                     :rel="item.href ? 'noopener noreferrer' : null"
                 >
                     <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
-                        <img class="h-4 w-4" :src="item.icon" :alt="item.name" />
+                        <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
                     </span>
-                    <span>{{ item.name }}</span>
+                    <span>{{ getDownloadName(item) }}</span>
                 </a>
             </div>
         </div>
@@ -49,11 +55,16 @@
                     class="flex h-10 w-10 items-center justify-center rounded-lg text-blue-400"
                     style="background-color: rgba(59, 130, 246, 0.2)"
                 >
-                    <img class="h-6 w-6" svg-inline src="../../assets/img/common/qqbot.svg" alt="QQ机器人" />
+                    <img
+                        class="h-6 w-6"
+                        svg-inline
+                        src="../../assets/img/common/qqbot.svg"
+                        :alt="$jx3boxT('jx3boxUi.footer.qqBot', 'QQ机器人')"
+                    />
                 </div>
                 <div>
                     <p class="font-bold uppercase tracking-wider text-gray-500" style="font-size: 10px">
-                        QQ 机器人服务
+                        {{ $jx3boxT("jx3boxUi.footer.qqBotService", "QQ 机器人服务") }}
                     </p>
                     <p class="mt-1 font-mono text-sm font-semibold text-white">3889010020</p>
                 </div>
@@ -64,40 +75,47 @@
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                添加
+                {{ $jx3boxT("jx3boxUi.footer.add", "添加") }}
             </a>
         </div>
     </section>
 </template>
 
 <script>
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "FooterResource",
+    mixins: [i18nMixin],
     props: [],
     components: {},
     data: function () {
         return {
             downloadLinks: [
                 {
+                    key: "appStore",
                     name: "App Store",
                     href: "",
                     icon: require("../../assets/img/common/ios.svg"),
                     // qrcode: require("../../assets/img/common/ios.jpg"),
                 },
                 {
+                    key: "android",
                     name: "Android",
                     href: "",
                     icon: require("../../assets/img/common/android.svg"),
                     // qrcode: require("../../assets/img/common/android.jpg"),
                 },
                 {
+                    key: "harmonyNext",
                     name: "鸿蒙 NEXT",
                     href: "",
                     icon: require("../../assets/img/common/harmony.svg"),
                     // qrcode: require("../../assets/img/common/harmony.jpg"),
                 },
                 {
+                    key: "miniProgram",
                     name: "小程序",
+                    labelKey: "jx3boxHelper",
                     label: "JX3BOX小助手",
                     href: "",
                     icon: require("../../assets/img/common/miniprogram.svg"),
@@ -108,7 +126,20 @@ export default {
     },
     computed: {},
     watch: {},
-    methods: {},
+    methods: {
+        getDownloadName(item) {
+            if (item?.key) {
+                const k = item.key === "harmonyNext" ? "harmonyNext" : item.key;
+                const maybe = `jx3boxUi.footer.${k}`;
+                return this.$jx3boxT(maybe, item.name || k);
+            }
+            return item?.name || "";
+        },
+        getDownloadLabel(item) {
+            if (item?.labelKey) return this.$jx3boxT(`jx3boxUi.footer.${item.labelKey}`, item.label || item.labelKey);
+            return item?.label || "";
+        },
+    },
     created: function () {},
     mounted: function () {},
 };

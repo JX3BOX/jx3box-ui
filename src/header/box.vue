@@ -9,7 +9,7 @@
                 <a class="u-item" href="/index">
                     <img class="u-pic" svg-inline :src="homeicon" />
                     <img class="u-pic-hover" svg-inline :src="homeicon" />
-                    <span class="u-txt">首页</span>
+                    <span class="u-txt">{{ $jx3boxT("jx3boxUi.header.home", "首页") }}</span>
                 </a>
             </li>
             <li v-for="(item, i) in list" :key="i" :class="{ 'u-app-start': item.lf }">
@@ -22,7 +22,7 @@
         </ul>
         <span class="u-close" @click="closeBox($event)">
             <i class="el-icon-upload2"></i>
-            <span>收起</span>
+            <span>{{ $jx3boxT("jx3boxUi.header.collapse", "收起") }}</span>
         </span>
     </div>
 </template>
@@ -35,10 +35,12 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import box from "../assets/data/box.json";
 import { getMenu } from "../service/header.js";
 import { trimSlash } from "../assets/js/utils";
+import i18nMixin from "../../i18n/mixin";
 
 const { __imgPath, __cdn } = JX3BOX;
 export default {
     name: "Box",
+    mixins: [i18nMixin],
     props: ["overlayEnable"],
     data: function () {
         return {

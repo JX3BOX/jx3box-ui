@@ -25,7 +25,7 @@
             role="menu"
         >
             <div class="px-3 py-2 text-[10px] text-gray-500 uppercase tracking-widest border-b border-gray-800 mb-1">
-                选择游戏版本
+                {{ $jx3boxT("jx3boxUi.header.chooseGameVersion", "选择游戏版本") }}
             </div>
 
             <!-- 剑网3 -->
@@ -41,11 +41,18 @@
                             <path d="M4 5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z" />
                             <path d="M4 13a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2Z" />
                         </svg> -->
-                        <img class="w-4 h-4" svg-inline src="../../assets/img/common/jx3-www.svg" alt="剑网3/无界">
+                        <img
+                            class="w-4 h-4"
+                            svg-inline
+                            src="../../assets/img/common/jx3-www.svg"
+                            :alt="$jx3boxT('jx3boxUi.header.jx3Full', '剑网3 / 无界')"
+                        />
                         <!-- <Jx3Icon class="w-4 h-4" /> -->
                     </span>
                     <div>
-                        <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">剑网3 / 无界</div>
+                        <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">
+                            {{ $jx3boxT("jx3boxUi.header.jx3Full", "剑网3 / 无界") }}
+                        </div>
                         <div class="text-[10px] text-gray-500 group-hover/item:text-indigo-200">www.jx3box.com</div>
                     </div>
                 </div>
@@ -68,11 +75,18 @@
                                 clip-rule="evenodd"
                             />
                         </svg> -->
-                        <img class="w-4 h-4" svg-inline src="../../assets/img/common/jx3-origin.svg" alt="剑网3·缘起">
+                        <img
+                            class="w-4 h-4"
+                            svg-inline
+                            src="../../assets/img/common/jx3-origin.svg"
+                            :alt="$jx3boxT('jx3boxUi.header.originFull', '剑网3·缘起')"
+                        />
                         <!-- <OriginIcon class="w-4 h-4" /> -->
                     </span>
                     <div>
-                        <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">剑网3·缘起</div>
+                        <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">
+                            {{ $jx3boxT("jx3boxUi.header.originFull", "剑网3·缘起") }}
+                        </div>
                         <div class="text-[10px] text-gray-500 group-hover/item:text-indigo-200">origin.jx3box.com</div>
                     </div>
                 </div>
@@ -85,8 +99,10 @@
 <script>
 // import Jx3Icon from "@/assets/img/components/common/header/jx3-www.svg";
 // import OriginIcon from "@/assets/img/components/common/header/jx3-origin.svg";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "clientSwitch",
+    mixins: [i18nMixin],
     components: {
         // Jx3Icon,
         // OriginIcon,
@@ -99,7 +115,9 @@ export default {
     },
     computed: {
         currentGameLabel: function () {
-            return this.activeKey === "origin" ? "缘起" : "剑网3";
+            return this.activeKey === "origin"
+                ? this.$jx3boxT("jx3boxUi.header.originShort", "缘起")
+                : this.$jx3boxT("jx3boxUi.header.jx3Short", "剑网3");
         },
     },
     watch: {
