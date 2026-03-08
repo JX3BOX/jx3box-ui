@@ -16,20 +16,20 @@ jobs:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
               with:
-                  node-version: "16.x"
+                  node-version: "22"
 
-            - name: Install && Build
-              run: |
-                  npm install
-                  npm run header
+            # - name: Install && Build
+            #   run: |
+            #       npm install
+            #       npm run header
 
-            - name: OSS
-              uses: manyuanrong/setup-ossutil@v2.0
-              with:
-                  endpoint: "oss-cn-hangzhou.aliyuncs.com"
-                  access-key-id: ${{secrets.AccessKey_ID}}
-                  access-key-secret: ${{secrets.Access_Key_Secret}}
-            - run: ossutil cp -rf dist oss://jx3box/static/jx3box-vue3-ui
+            # - name: OSS
+            #   uses: manyuanrong/setup-ossutil@v2.0
+            #   with:
+            #       endpoint: "oss-cn-hangzhou.aliyuncs.com"
+            #       access-key-id: ${{secrets.AccessKey_ID}}
+            #       access-key-secret: ${{secrets.Access_Key_Secret}}
+            # - run: ossutil cp -rf dist oss://jx3box/static/jx3box-vue3-ui
 
     publish-npm:
         # needs: build
@@ -38,24 +38,10 @@ jobs:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
               with:
-                  node-version: "16.x"
+                  node-version: "22"
                   registry-url: https://registry.npmjs.org/
             # - run: npm ci
             - run: npm publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-    publish-gpr:
-        # needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: "16.x"
-                  registry-url: https://npm.pkg.github.com/
-                  scope: "@jx3box"
-            # - run: npm ci
-            - run: npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
