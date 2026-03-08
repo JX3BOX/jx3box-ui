@@ -50,7 +50,7 @@
         </div>
         <el-pagination
             class="w-boxcoin-records-pages"
-            small
+            size="small"
             layout="prev, pager, next"
             :hide-on-single-page="true"
             :page-size="per"

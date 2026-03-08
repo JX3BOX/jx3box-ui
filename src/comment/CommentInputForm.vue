@@ -5,7 +5,7 @@
         </div>
         <el-form-item>
             <el-input
-                rows="3"
+                :rows="3"
                 type="textarea"
                 maxlength="300"
                 show-word-limit

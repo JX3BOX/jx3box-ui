@@ -1,5 +1,5 @@
 <template>
-    <header class="c-header" id="c-header" :class="{ isOverlay: overlayEnable && isOverlay }" v-if="!isApp">
+    <header class="c-header" id="c-header" :class="{ isOverlay: overlayEnable && isOverlay }">
         <div class="c-header-inner">
             <!-- logo -->
             <header-logo />
@@ -18,7 +18,8 @@
             <!-- user -->
             <header-user ref="user" :client="client" :asset="asset" />
         </div>
-        <!-- <header-box class="c-header-jx3box" :overlayEnable="overlayEnable" :client="client" /> -->
+        <header-box v-if="isMobile" class="c-header-jx3box" :overlayEnable="overlayEnable" />
+        <header-box2 v-else />
     </header>
 </template>
 
@@ -32,7 +33,8 @@ import client from "./header/client.vue";
 import search from "./header/search.vue";
 import nav from "./header/nav.vue";
 import user from "./header/user.vue";
-// import box from "./header/box.vue";
+import box from "./header/box.vue";
+import box2 from "./header/box2.vue";
 
 // 移动端适配
 const KW = "jx3boxApp";
@@ -52,13 +54,15 @@ export default {
         "header-search": search,
         "header-nav": nav,
         "header-user": user,
-        // "header-box": box,
+        "header-box": box,
+        "header-box2": box2,
     },
     props: ["overlayEnable"],
     data: function () {
         return {
             isOverlay: false,
             isApp: checkIsApp(),
+            isMobile: window.innerWidth <= 768,
 
             asset: {},
         };
@@ -181,9 +185,13 @@ export default {
                 }
             });
         },
+        updateScreen() {
+            this.isMobile = window.innerWidth <= 768;
+        },
     },
     created: function () {
         this.init();
+        window.addEventListener("resize", this.updateScreen, { passive: true });
 
         if (this.overlayEnable) {
             this.__overlayScrollHandler = _.throttle(() => {
@@ -194,6 +202,7 @@ export default {
         }
     },
     beforeUnmount: function () {
+        window.removeEventListener("resize", this.updateScreen);
         if (this.__overlayScrollHandler) {
             window.removeEventListener("scroll", this.__overlayScrollHandler);
             this.__overlayScrollHandler.cancel && this.__overlayScrollHandler.cancel();

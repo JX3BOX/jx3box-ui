@@ -32,10 +32,10 @@ import search from "./search.vue";
 import _ from "lodash";
 import Bus from "./bus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
-import box from "../assets/data/box.json";
-import { getMenu } from "../service/header.js";
-import { trimSlash } from "../assets/js/utils";
 import i18nMixin from "../../i18n/mixin";
+import box from "../../assets/data/box.json";
+import { getMenu } from "../../service/header.js";
+import { trimSlash } from "./utils";
 
 const { __imgPath, __cdn } = JX3BOX;
 export default {
@@ -139,7 +139,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../assets/css/header/box.less";
+@import "../../assets/css/header/box.less";
 </style>
 
 <style scoped lang="less">

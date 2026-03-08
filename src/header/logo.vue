@@ -14,6 +14,7 @@
 <script>
 // import { useLayoutStore } from "@/store/layout";
 import i18nMixin from "../../i18n/mixin";
+import Bus from "./bus";
 
 export default {
     name: "c-header-logo",
@@ -29,14 +30,12 @@ export default {
     },
     computed: {},
     methods: {
-        toggleBox: function () {},
         // TODO: 主页和魔盒矩阵的切换
         // 盒子
-        // toggleBox: function (e) {
-        //     e.stopPropagation();
-        //     const layout = useLayoutStore();
-        //     layout.toggleBoxMatrix();
-        // },
+        toggleBox: function (e) {
+            e.stopPropagation();
+            Bus.$emit("toggleBox");
+        },
     },
     mounted: function () {},
 };
