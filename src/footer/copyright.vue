@@ -5,9 +5,9 @@
     >
         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
             <span>{{
-                $jx3boxT("jx3boxUi.footer.copyright", "© 2019-{year} JX3BOX. {poweredBy}", {
+                $jx3boxT("jx3boxUi.footer.copyright", "© 2019-{year} JX3BOX {poweredBy}", {
                     year: new Date().getFullYear(),
-                    poweredBy: $jx3boxT("jx3boxUi.footer.poweredBy", "由有爱玩家驱动。"),
+                    poweredBy: $jx3boxT("jx3boxUi.footer.poweredBy", "All rights reserved."),
                 })
             }}</span>
             <a

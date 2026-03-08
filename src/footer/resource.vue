@@ -66,7 +66,7 @@
                     <p class="font-bold uppercase tracking-wider text-gray-500" style="font-size: 10px">
                         {{ $jx3boxT("jx3boxUi.footer.qqBotService", "QQ 机器人服务") }}
                     </p>
-                    <p class="mt-1 font-mono text-sm font-semibold text-white">3889010020</p>
+                    <p class="mt-1 font-mono text-sm font-semibold text-white">3889 010 020</p>
                 </div>
             </div>
             <a

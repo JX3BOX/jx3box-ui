@@ -1,5 +1,5 @@
 <template>
-    <section class="lg:col-span-3">
+    <section class="lg:col-span-4">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
             <div v-for="group in footerGroups" :key="group.title">
                 <h3 class="text-sm font-semibold tracking-wide text-white">
