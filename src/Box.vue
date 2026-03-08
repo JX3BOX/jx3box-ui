@@ -34,7 +34,7 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import box from "../assets/data/box.json";
 import { getMenu } from "../service/header.js";
 
-import search from "./header/Search.vue";
+import search from "./header/search.vue";
 export default {
     name: "CommonBox",
     props: ["overlayEnable"],

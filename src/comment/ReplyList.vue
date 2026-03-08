@@ -20,7 +20,7 @@
             <el-col :span="20" class="c-comment-reply-pages">
                 <el-pagination
                     v-show="showPager"
-                    small
+                    size="small"
                     @current-change="handleCurrentChange"
                     :current-page="pager.index"
                     :page-size="pager.pageSize"
