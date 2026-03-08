@@ -5,14 +5,14 @@
         </h3>
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div v-for="item in downloadLinks" :key="item.name">
-                <el-popover v-if="item.qrcode" trigger="hover" placement="top" popper-class="c-footer-v4__popover">
+                <el-popover v-if="item.qrcode" trigger="hover" placement="top" popper-class="c-footer--v4__popover">
                     <div class="flex flex-col items-center p-3">
                         <img
                             class="h-32 w-32 rounded-md object-cover"
                             :src="item.qrcode"
                             :alt="getDownloadName(item)"
                         />
-                        <span class="mt-2 text-xs">{{ getDownloadLabel(item) }}</span>
+                        <span class="mt-2 text-xs font-black">{{ getDownloadLabel(item) }}</span>
                     </div>
                     <template #reference>
                         <a

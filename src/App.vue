@@ -204,3 +204,9 @@ export default {
     },
 };
 </script>
+
+<style lang="less">
+body {
+    padding-top: @header-height;
+}
+</style>

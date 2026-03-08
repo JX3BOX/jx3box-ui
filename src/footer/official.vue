@@ -1,10 +1,22 @@
 <template>
     <div class="c-footer-official mt-6 flex flex-wrap gap-3">
         <div v-for="item in socials" :key="item.name">
-            <el-popover v-if="item.qrcode" trigger="hover" placement="top" popper-class="c-footer-v4__popover">
+            <el-popover
+                v-if="item.qrcode"
+                ref="officialPopover"
+                trigger="hover"
+                placement="top"
+                popper-class="c-footer--v4__popover"
+                @show="handlePopoverShow"
+            >
                 <div class="flex w-36 flex-col items-center p-3">
-                    <img class="h-32 w-32 rounded-md object-cover" :src="item.qrcode" :alt="getSocialName(item)" />
-                    <span class="mt-2 text-xs">{{ item.label || getSocialName(item) }}</span>
+                    <img
+                        class="h-32 w-32 rounded-md object-cover"
+                        :src="item.qrcode"
+                        :alt="getSocialName(item)"
+                        @load="handleQrcodeLoad"
+                    />
+                    <span class="mt-2 text-xs font-black">{{ item.label || getSocialName(item) }}</span>
                 </div>
                 <template #reference>
                     <a
@@ -82,6 +94,26 @@ export default {
     computed: {},
     watch: {},
     methods: {
+        getPopoverInstance() {
+            const popoverRef = this.$refs?.officialPopover;
+            if (Array.isArray(popoverRef)) return popoverRef[0] || null;
+            return popoverRef || null;
+        },
+        updatePopoverPosition() {
+            const popover = this.getPopoverInstance();
+            if (popover && typeof popover.updatePopper === "function") popover.updatePopper();
+        },
+        handlePopoverShow() {
+            this.$nextTick(() => {
+                this.updatePopoverPosition();
+                if (typeof requestAnimationFrame === "function") {
+                    requestAnimationFrame(() => this.updatePopoverPosition());
+                }
+            });
+        },
+        handleQrcodeLoad() {
+            this.$nextTick(() => this.updatePopoverPosition());
+        },
         getSocialName(item) {
             if (!item?.key) return item?.name || "";
             const map = {

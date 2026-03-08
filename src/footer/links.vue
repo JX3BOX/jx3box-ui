@@ -9,7 +9,7 @@
                     <a
                         v-for="item in group.links"
                         :key="item.name"
-                        class="block text-xs text-gray-400 transition hover:text-blue-400"
+                        class="block text-xs text-gray-400 transition hover:text-indigo-400"
                         :href="item.href"
                         target="_blank"
                         rel="noopener noreferrer"

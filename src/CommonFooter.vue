@@ -61,7 +61,9 @@ body::after {
 }
 
 .c-footer--v4__popover .popper__arrow,
-.c-footer--v4__popover .popper__arrow:after {
+.c-footer--v4__popover .popper__arrow:after,
+.c-footer--v4__popover .el-popper__arrow,
+.c-footer--v4__popover .el-popper__arrow::before {
     display: none !important;
 }
 </style>

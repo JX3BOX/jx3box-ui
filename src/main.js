@@ -37,13 +37,13 @@ import "@jx3box/jx3box-common/css/normalize.css";
 import "@jx3box/jx3box-common/css/font.css";
 
 // 6.2 Element Plus
-import "@jx3box/jx3box-common/css/element-plus-theme.scss";
 import ElementPlus from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
 import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import "element-plus/dist/index.css";
+import "@jx3box/jx3box-common/css/element-plus-theme.scss";
 
 const __elementLocaleMap = {
     "zh-CN": zhCn,
