@@ -73,8 +73,8 @@
                     </div>
 
                     <el-button-group class="u-actions">
-                        <a class="el-button el-button--default is-plain" href="/dashboard">{{
-                            $jx3boxT("jx3boxUi.header.profileCenter", "个人中心")
+                        <a class="el-button el-button--default is-plain" href="/dashboard/config">{{
+                            $jx3boxT("jx3boxUi.header.config", "偏好设置")
                         }}</a>
                         <a class="el-button el-button--default is-plain" @click="changeAlternate">{{
                             $jx3boxT("jx3boxUi.header.switchAlternate", "切换马甲")
@@ -91,13 +91,16 @@
                         <a href="/dashboard/fav" class="u-item"
                             ><el-icon><Star /></el-icon>{{ $jx3boxT("jx3boxUi.header.favorites", "收藏订阅") }}
                         </a>
-                        <a href="/dashboard/purchases" class="u-item"
-                            ><el-icon><ShoppingBag /></el-icon>{{ $jx3boxT("jx3boxUi.header.purchased", "已购资源") }}
-                        </a>
                         <a href="/dashboard/mall" class="u-item"
                             ><el-icon><Memo /></el-icon>{{ $jx3boxT("jx3boxUi.header.orderCenter", "订单中心") }}
                         </a>
+                        <a href="/dashboard/config" class="u-item"
+                            ><el-icon><Box /></el-icon>{{ $jx3boxT("jx3boxUi.header.dashboard", "个人中心") }}
+                        </a>
                         <hr />
+                        <a href="/dashboard/profile" class="u-item"
+                            ><el-icon><Setting /></el-icon>{{ $jx3boxT("jx3boxUi.header.profile", "资料修改") }}
+                        </a>
                         <a href="/dashboard/feedback" class="u-item"
                             ><el-icon><Phone /></el-icon>{{ $jx3boxT("jx3boxUi.header.feedbackHelp", "反馈帮助") }}
                         </a>
@@ -597,6 +600,7 @@ export default {
             padding: 5px 10px;
             color: #454545;
             .flex(y);
+            .r(4px);
 
             &:hover {
                 background: @v4primary;
