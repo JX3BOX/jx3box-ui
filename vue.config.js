@@ -65,6 +65,23 @@ module.exports = {
     //❤️ define path for static files ~
     publicPath: process.env.NODE_ENV === "development" ? "/" : process.env.STATIC_PATH,
 
+    // 依赖包（element-plus/theme-chalk 等）会输出大量 Sass deprecation 警告
+    // 这些不是运行错误，开启 quietDeps 让它们不刷屏（只保留项目自身的警告）
+    css: {
+        loaderOptions: {
+            sass: {
+                sassOptions: {
+                    quietDeps: true,
+                },
+            },
+            scss: {
+                sassOptions: {
+                    quietDeps: true,
+                },
+            },
+        },
+    },
+
     // 过滤依赖包里的已知兼容性 warning（不影响运行，但会刷屏）
     configureWebpack: {
         stats: {

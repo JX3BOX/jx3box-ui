@@ -21,10 +21,10 @@ import "@jx3box/jx3box-common/css/normalize.css";
 import "@jx3box/jx3box-common/css/font.css";
 
 // 6.2 Element Plus
-// import "@jx3box/jx3box-common/css/element.scss";
 import ElementPlus from "element-plus";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import "element-plus/dist/index.css";
+import "@jx3box/jx3box-common/css/element-plus-theme.css";
 app.use(ElementPlus, {
     locale: zhCn,
 });
