@@ -149,7 +149,6 @@ export default {
             .flex;
             align-items: center;
             gap: 4px;
-            font-weight: 500;
 
             &:hover {
                 .u-menu-icon {

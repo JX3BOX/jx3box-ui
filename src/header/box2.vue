@@ -16,12 +16,7 @@
                     </div>
                     <div class="u-search">
                         <i class="el-icon-search u-search-icon"></i>
-                        <input
-                            v-model.trim="searchQuery"
-                            class="u-search-input"
-                            type="text"
-                            placeholder="搜索应用"
-                        />
+                        <input v-model.trim="searchQuery" class="u-search-input" type="text" placeholder="搜索应用" />
                         <button v-if="searchQuery" class="u-search-clear" type="button" @click="searchQuery = ''">
                             <i class="el-icon-close"></i>
                         </button>
@@ -35,7 +30,7 @@
                                 <div class="u-icon-wrap">
                                     <img class="u-pic" svg-inline :src="homeicon" />
                                 </div>
-                                <span class="u-txt">首页</span>
+                                <span class="u-txt">{{ $jx3boxT("jx3boxUi.header.home", "首页") }}</span>
                             </a>
                         </li>
                         <li v-for="(item, i) in filteredList" :key="i">
@@ -59,6 +54,7 @@
 <script>
 import Bus from "./bus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../../i18n/mixin";
 import box from "../../assets/data/box.json";
 import { getMenu } from "../../service/header.js";
 
@@ -66,6 +62,7 @@ const { __imgPath, __cdn } = JX3BOX;
 
 export default {
     name: "Box2",
+    mixins: [i18nMixin],
     data: function () {
         return {
             status: false,
@@ -188,7 +185,7 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .c-jx3box2-mask {
     position: fixed;
     left: 0;
@@ -204,238 +201,10 @@ export default {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
-
-.c-jx3box2 {
-    position: relative;
-    width: min(1120px, calc(100vw - 40px));
-    max-height: min(860px, calc(100vh - 40px));
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 36px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(21, 25, 35, 0.9);
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45);
-}
-
-.u-topline {
-    height: 6px;
-    width: 100%;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.6), transparent);
-}
-
-.u-head {
-    padding: 28px 32px 24px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.u-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.u-logo {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-    background: #fff;
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.38);
-}
-
-.u-title {
-    margin: 0;
-    color: #fff;
-    font-size: 28px;
-    line-height: 1.1;
-    font-weight: 800;
-}
-
-.u-subtitle {
-    margin: 6px 0 0;
-    color: #60a5fa;
-    font-size: 10px;
-    letter-spacing: 0.26em;
-    font-weight: 700;
-}
-
-.u-search {
-    width: min(460px, 100%);
-    margin-left: auto;
-    position: relative;
-}
-
-.u-search-input {
-    width: 100%;
-    height: 48px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    outline: none;
-    padding: 0 40px 0 40px;
-    box-sizing: border-box;
-    transition: all 0.2s ease;
-}
-
-.u-search-input::placeholder {
-    color: #6b7280;
-}
-
-.u-search-input:focus {
-    border-color: rgba(59, 130, 246, 0.5);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-}
-
-.u-search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6b7280;
-    font-size: 16px;
-}
-
-.u-search-clear {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 0;
-    background: transparent;
-    color: #798192;
-    cursor: pointer;
-}
-
-.u-search-clear:hover {
-    color: #fff;
-}
-
-.u-body {
-    padding: 4px 32px 24px;
-    flex: 1;
-    min-height: 360px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
-
-.u-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 14px;
-    align-content: start;
-}
-
-.u-item {
-    height: 116px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    text-decoration: none;
-    transition: all 0.25s ease;
-}
-
-.u-item:hover {
-    transform: translateY(-4px);
-    border-color: rgba(59, 130, 246, 0.5);
-    background: rgba(59, 130, 246, 0.12);
-    box-shadow: 0 14px 26px -12px rgba(0, 0, 0, 0.55), 0 0 16px rgba(59, 130, 246, 0.2);
-}
-
-.u-icon-wrap {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-}
-
-.u-item:hover .u-icon-wrap {
-    background: rgba(37, 99, 235, 0.18);
-}
-
-.u-pic {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-}
-
-.u-txt {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #a8b0be;
-    line-height: 1.2;
-}
-
-.u-item:hover .u-txt {
-    color: #fff;
-}
-
-.u-empty {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #8b95a7;
-    font-size: 13px;
-}
-
-.u-foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(0, 0, 0, 0.24);
-}
-
-.u-foot-left {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: #9ba3b2;
-    font-weight: 600;
-}
-
-.u-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #3b82f6;
-}
-
-.u-close {
-    border: 0;
-    background: transparent;
-    color: #9ba3b2;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-}
-
-.u-close:hover {
-    color: #fff;
+@media screen and (max-width: @phone) {
+    .c-jx3box2-mask {
+        display: none;
+    }
 }
 
 .box2-fade-enter-active,
@@ -459,21 +228,251 @@ export default {
     opacity: 0;
 }
 
-@media screen and (max-width: 1200px) {
-    .u-list {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
+.c-jx3box2 {
+    position: relative;
+    width: min(1120px, calc(100vw - 40px));
+    max-height: min(860px, calc(100vh - 40px));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(21, 25, 35, 0.9);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45);
 }
 
-@media screen and (max-width: 992px) {
-    .u-list {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+.c-jx3box2 {
+    .u-topline {
+        height: 6px;
+        width: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.6), transparent);
     }
-}
 
-@media screen and (max-width: @phone) {
-    .c-jx3box2-mask {
-        display: none;
+    .u-head {
+        padding: 28px 32px 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .u-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .u-logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: #fff;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.38);
+        padding:5px;
+    }
+
+    .u-title {
+        margin: 0;
+        color: #fff;
+        font-size: 28px;
+        line-height: 1.1;
+        font-weight: 800;
+    }
+
+    .u-subtitle {
+        margin: 6px 0 0;
+        color: #60a5fa;
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        font-weight: 700;
+    }
+
+    .u-search {
+        width: min(460px, 100%);
+        margin-left: auto;
+        position: relative;
+    }
+
+    .u-search-input {
+        width: 100%;
+        height: 48px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        outline: none;
+        padding: 0 40px 0 40px;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+
+    .u-search-input::placeholder {
+        color: #6b7280;
+    }
+
+    .u-search-input:focus {
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+
+    .u-search-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        font-size: 16px;
+    }
+
+    .u-search-clear {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 0;
+        background: transparent;
+        color: #798192;
+        cursor: pointer;
+    }
+
+    .u-search-clear:hover {
+        color: #fff;
+    }
+
+    .u-body {
+        padding: 4px 32px 24px;
+        flex: 1;
+        min-height: 360px;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .u-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 14px;
+        align-content: start;
+    }
+
+    .u-item {
+        height: 116px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .u-item:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        background: rgba(59, 130, 246, 0.12);
+        box-shadow: 0 14px 26px -12px rgba(0, 0, 0, 0.55), 0 0 16px rgba(59, 130, 246, 0.2);
+    }
+
+    .u-icon-wrap {
+        width: 54px;
+        height: 54px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+    }
+
+    .u-item:hover .u-icon-wrap {
+        background: rgba(37, 99, 235, 0.18);
+    }
+
+    .u-pic {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .u-txt {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #a8b0be;
+        line-height: 1.2;
+    }
+
+    .u-item:hover .u-txt {
+        color: #fff;
+    }
+
+    .u-empty {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8b95a7;
+        font-size: 13px;
+    }
+
+    .u-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 32px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.24);
+    }
+
+    .u-foot-left {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: #9ba3b2;
+        font-weight: 600;
+    }
+
+    .u-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #3b82f6;
+    }
+
+    .u-close {
+        border: 0;
+        background: transparent;
+        color: #9ba3b2;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        cursor: pointer;
+    }
+
+    .u-close:hover {
+        color: #fff;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .u-list {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        .u-list {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
     }
 }
 </style>
