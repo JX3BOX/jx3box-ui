@@ -92,11 +92,16 @@ export default {
             return this.data.filter((item) => {
                 const currentClient = String(this.client || "").toLowerCase();
                 const rawClient = item.client;
-                const matchedClient = !rawClient
-                    ? true
+                const clients = !rawClient
+                    ? []
                     : Array.isArray(rawClient)
-                    ? rawClient.map((c) => String(c || "").toLowerCase()).includes(currentClient)
-                    : String(rawClient || "").toLowerCase().includes(currentClient);
+                    ? rawClient.map((c) => String(c || "").toLowerCase())
+                    : String(rawClient || "")
+                          .split(",")
+                          .map((c) => String(c || "").trim().toLowerCase())
+                          .filter(Boolean);
+                const matchedClient =
+                    !clients.length || clients.includes("all") || clients.includes(currentClient);
                 return matchedClient;
             });
         },
