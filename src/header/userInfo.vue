@@ -86,7 +86,7 @@
 
                     <div class="u-other">
                         <a href="/dashboard/role" class="u-item"
-                            ><el-icon><Sunny /></el-icon>{{ $jx3boxT("jx3boxUi.header.roleManage", "角色管理") }}
+                            ><el-icon><User /></el-icon>{{ $jx3boxT("jx3boxUi.header.roleManage", "角色管理") }}
                         </a>
                         <a href="/dashboard/fav" class="u-item"
                             ><el-icon><Star /></el-icon>{{ $jx3boxT("jx3boxUi.header.favorites", "收藏订阅") }}
@@ -95,7 +95,7 @@
                             ><el-icon><Memo /></el-icon>{{ $jx3boxT("jx3boxUi.header.orderCenter", "订单中心") }}
                         </a>
                         <a href="/dashboard/config" class="u-item"
-                            ><el-icon><Box /></el-icon>{{ $jx3boxT("jx3boxUi.header.dashboard", "个人中心") }}
+                            ><el-icon><Help /></el-icon>{{ $jx3boxT("jx3boxUi.header.dashboard", "个人中心") }}
                         </a>
                         <hr />
                         <a href="/dashboard/profile" class="u-item"
