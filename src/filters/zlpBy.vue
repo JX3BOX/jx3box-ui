@@ -29,7 +29,12 @@ import zlps from "@jx3box/jx3box-common/data/jx3_zlp.json";
 export default {
     name: "zlpBy",
     emits: ["filter"],
-    props: ["client"],
+    props: {
+        client: {
+            type: String,
+            default: "",
+        },
+    },
     data: function () {
         return {
             value: "",

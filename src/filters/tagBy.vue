@@ -43,7 +43,16 @@
 export default {
     name: "tagBy",
     emits: ["filter"],
-    props: ["data", "type"],
+    props: {
+        data: {
+            type: Object,
+            default: () => ({}),
+        },
+        type: {
+            type: String,
+            default: "tag",
+        },
+    },
     data: function () {
         return {
             visible: false,

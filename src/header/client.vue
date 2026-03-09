@@ -107,7 +107,12 @@ export default {
         // Jx3Icon,
         // OriginIcon,
     },
-    props: ["defaultValue"],
+    props: {
+        defaultValue: {
+            type: String,
+            default: "",
+        },
+    },
     data: function () {
         return {
             activeKey: this.defaultValue || (location.host.includes("origin") ? "origin" : "std"),

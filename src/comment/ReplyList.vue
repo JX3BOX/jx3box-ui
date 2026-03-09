@@ -35,7 +35,25 @@
 <script>
 import ReplyItem from "./ReplyItem.vue";
 export default {
-    props: ["data", "power", "pager"],
+    props: {
+        data: {
+            type: Array,
+            default: () => [],
+        },
+        power: {
+            type: Object,
+            default: () => ({}),
+        },
+        pager: {
+            type: Object,
+            default: () => ({
+                index: 1,
+                pageSize: 10,
+                pageTotal: 1,
+                total: 0,
+            }),
+        },
+    },
     components: {
         ReplyItem,
     },

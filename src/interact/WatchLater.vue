@@ -26,7 +26,7 @@ export default {
             default: "",
         },
         authorId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         banner: {
@@ -34,9 +34,9 @@ export default {
             default: "",
         },
         contentId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
-        }
+        },
     },
     data: function () {
         return {

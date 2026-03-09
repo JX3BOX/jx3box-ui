@@ -51,7 +51,20 @@
 import Uploader from "./Upload.vue";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
 export default {
-    props: ["username", "userHref", "currentId"],
+    props: {
+        username: {
+            type: String,
+            default: "",
+        },
+        userHref: {
+            type: String,
+            default: "",
+        },
+        currentId: {
+            type: [Number, String],
+            default: 0,
+        },
+    },
     data: function () {
         return {
             content: "",

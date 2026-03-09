@@ -62,7 +62,16 @@ import Honor from "./AuthorHonor.vue";
 const { __imgPath, __userLevelColor } = JX3BOX;
 export default {
     name: "AuthorInfo",
-    props: ["uid", "anonymous"],
+    props: {
+        uid: {
+            type: [Number, String],
+            default: 0,
+        },
+        anonymous: {
+            type: [Number, String],
+            default: 0,
+        },
+    },
     components: {
         Avatar,
         Honor,

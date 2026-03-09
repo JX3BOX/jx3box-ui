@@ -74,7 +74,28 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 const { __imgPath } = JX3BOX;
 const DECORATION_KEY = "decoration_comment_";
 export default {
-    props: ["item", "baseApi", "power", "user-href", "username"],
+    props: {
+        item: {
+            type: Object,
+            required: true,
+        },
+        baseApi: {
+            type: String,
+            required: true,
+        },
+        power: {
+            type: Object,
+            required: true,
+        },
+        userHref: {
+            type: String,
+            default: "",
+        },
+        username: {
+            type: String,
+            default: "",
+        },
+    },
     components: {
         CommentContent,
         ReplyList,

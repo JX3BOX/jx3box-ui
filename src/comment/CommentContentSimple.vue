@@ -96,21 +96,60 @@ function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
 export default {
-    props: [
-    "commentId",
-        "content",
-        "attachments",
-        "date",
-        "hasReply",
-        "canDelete",
-        "canHide",
-        "canReply",
-        "isLike", // 是否已点赞
-        "likes", // 点赞数
-        "userHref",
-        "replyForUsername",
-        "replyForUserId",
-    ],
+    props: {
+        commentId: {
+            type: [Number, String],
+            default: 0,
+        },
+        content: {
+            type: String,
+            default: "",
+        },
+        attachments: {
+            type: Array,
+            default: () => [],
+        },
+        date: {
+            type: [String, Number, Date],
+            default: "",
+        },
+        hasReply: {
+            type: Boolean,
+            default: false,
+        },
+        canDelete: {
+            type: Boolean,
+            default: false,
+        },
+        canHide: {
+            type: Boolean,
+            default: false,
+        },
+        canReply: {
+            type: Boolean,
+            default: false,
+        },
+        isLike: {
+            type: Boolean,
+            default: false,
+        },
+        likes: {
+            type: Number,
+            default: 0,
+        },
+        userHref: {
+            type: String,
+            default: "",
+        },
+        replyForUsername: {
+            type: String,
+            default: "",
+        },
+        replyForUserId: {
+            type: [Number, String],
+            default: 0,
+        },
+    },
     data: function () {
         return {
             showInput: false,

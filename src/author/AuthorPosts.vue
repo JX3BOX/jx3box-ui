@@ -11,10 +11,8 @@
         <ul class="u-list" v-if="data && data.length">
             <li v-for="(item, i) in data" :key="i">
                 <a class="u-item" :href="url(item.ID, item.post_type)" target="_blank">
-                    <span>
-                        <img svg-inline src="../../assets/img/leftsidebar/arrow.svg" class="u-icon" />
-                        {{ item.post_title || item.post_type + "/无标题" }}
-                    </span>
+                    <img svg-inline src="../../assets/img/leftsidebar/arrow.svg" class="u-icon" />
+                    <span class="u-title">{{ item.post_title || item.post_type + "/无标题" }}</span>
                 </a>
             </li>
         </ul>
@@ -74,7 +72,9 @@ export default {
         .db;
     }
     .u-item {
-        .db;
+        .flex;
+        align-items: center;
+        gap: 5px;
         padding: 3px 2px;
         .nobreak;
         .fz(12px,2);
@@ -82,9 +82,7 @@ export default {
         border-bottom: 1px solid transparent;
         &:hover {
             color: @pink;
-            // background-color:#fff;
-            // border-bottom: 1px solid @border;
-            .u-icon{
+            .u-icon {
                 transform: translateX(5px);
             }
         }
@@ -94,8 +92,16 @@ export default {
         .size(12px);
         // .y;
         color: #999;
+        flex: 0 0 auto;
         // .mr(5px);
         transition: all 0.3s;
+    }
+    .u-title {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .u-label {

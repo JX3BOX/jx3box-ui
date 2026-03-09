@@ -28,14 +28,32 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 const { __imgPath } = JX3BOX;
 export default {
     name: "CommentAvatar",
-    props: [
-        "avatarSize",
-        "userAvatar",
-        "userHref",
-        "username",
-        "avatarFrame",
-        "withFrame",
-    ],
+    props: {
+        avatarSize: {
+            type: Number,
+            default: 48,
+        },
+        userAvatar: {
+            type: String,
+            default: "",
+        },
+        userHref: {
+            type: String,
+            default: "",
+        },
+        username: {
+            type: String,
+            default: "",
+        },
+        avatarFrame: {
+            type: String,
+            default: "",
+        },
+        withFrame: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function() {
         return {};
     },

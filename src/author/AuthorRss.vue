@@ -1,18 +1,16 @@
 <template>
-    <div class="c-author-rss">
-        <el-button
-            class="u-btn"
-            :class="{ 'u-fans-box': isSelf }"
-            size="small"
-            plain
-            @click="subscribe"
-            :loading="loading"
-            :disabled="isSelf"
-        >
-            <img class="u-icon" svg-inline :src="src" />
-            {{ btnText }}</el-button
-        >
-    </div>
+    <el-button
+        class="u-btn c-author-rss"
+        :class="{ 'u-fans-box': isSelf, 'is-subscribed': subscribed }"
+        size="small"
+        plain
+        @click="subscribe"
+        :loading="loading"
+        :disabled="isSelf"
+    >
+        <img class="u-icon" svg-inline src="../../assets/img/author/rss.svg" />
+        {{ btnText }}</el-button
+    >
 </template>
 
 <script>
@@ -54,9 +52,6 @@ export default {
         isLogin: function () {
             return User.isLogin();
         },
-        src() {
-            return jx3box.__cdn + "design/vector/icon/rss_author.svg";
-        }
     },
     watch: {
         uid: {
@@ -130,26 +125,25 @@ export default {
 </script>
 
 <style lang="less">
-.c-author-rss {
-    .u-btn.el-button {
-        cursor: default;
-        &:hover {
-            cursor: pointer;
-            background-color: @light-pink;
-            color: #fff;
-            border-color: darken(@light-pink, 2%);
-
-            .u-icon {
-                filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(198deg) brightness(104%) contrast(101%);
-            }
-        }
+.c-author-rss.el-button {
+    cursor: default;
+    &:hover,
+    &.is-plain:hover,
+    &.is-plain:focus {
+        cursor: pointer;
+        background-color: @light-pink;
+        color: #fff;
+        border-color: darken(@light-pink, 2%);
     }
     .u-icon {
-        .size(14px);
-        .pr;
-        top: 1px;
-        filter: invert(40%) sepia(5%) saturate(419%) hue-rotate(182deg) brightness(89%) contrast(84%);
+        .size(10px);
+        fill: currentColor;
+        margin-right: 4px;
     }
+}
+
+.c-author-rss.el-button.is-subscribed {
+    color: #999;
 }
 
 @media screen and (max-width: @phone) {

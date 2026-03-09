@@ -46,7 +46,16 @@ import ReplyForReply from "./ReplyForReply.vue";
 import CommentAvatar from "./Avatar.vue";
 
 export default {
-    props: ["reply", "power"],
+    props: {
+        reply: {
+            type: Object,
+            required: true,
+        },
+        power: {
+            type: Object,
+            required: true,
+        },
+    },
     components: {
         CommentAvatar,
         CommentContentSimple,

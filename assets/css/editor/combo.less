@@ -1,30 +1,38 @@
 .scrollbar() {
+    /* assets/css/editor/combo.less */
     &::-webkit-scrollbar {
+        /* assets/css/editor/combo.less */
         width: 4px;
     }
     &::-webkit-scrollbar-track,
     &::-webkit-scrollbar-track-piece {
+        /* assets/css/editor/combo.less */
         background-color: #fafafa;
         border-radius: 6px;
     }
     &::-webkit-scrollbar-thumb {
+        /* assets/css/editor/combo.less */
         background-color: #eee;
         border-radius: 6px;
     }
     &::-webkit-scrollbar-button,
     &::-webkit-scrollbar-corner,
     &::-webkit-resizer {
+        /* assets/css/editor/combo.less */
         display: none;
     }
 }
 
 .m-resource-combo {
+    /* assets/css/editor/combo.less */
     .m-combo-list {
+        /* assets/css/editor/combo.less */
         max-height: 230px;
         overflow: auto;
         .scrollbar();
     }
     .m-database-search {
+        /* assets/css/editor/combo.less */
         position: sticky;
         z-index: 100;
         top: 0;
@@ -33,16 +41,19 @@
         .pr;
 
         .u-client {
+            /* assets/css/editor/combo.less */
             // .pa;.lt(20px,10px);
             margin-right: 15px;
         }
         .u-input {
+            /* assets/css/editor/combo.less */
             flex: 1;
         }
         display: flex;
     }
 
     .m-database-tip {
+        /* assets/css/editor/combo.less */
         .x;
         // .fz(12px);
         color: #aaa;
@@ -54,23 +65,27 @@
 
     // 加载更多
     .m-archive-more {
+        /* assets/css/editor/combo.less */
         .none;
         margin: 0 20px 10px 20px;
         box-sizing: border-box;
         width: calc(100% - 40px);
     }
     .m-archive-more.show {
+        /* assets/css/editor/combo.less */
         .db;
     }
 
     // 分页
     .m-archive-pages {
+        /* assets/css/editor/combo.less */
         overflow-x: auto;
         margin: 0 20px;
         .x;
     }
 
     .m-resource-count {
+        /* assets/css/editor/combo.less */
         .mt(0);
         .mb(10px);
 
@@ -80,12 +95,14 @@
     }
 
     .m-resource-list {
+        /* assets/css/editor/combo.less */
         .mt(10px);
         padding: 0;
         margin: 0;
         .scrollbar();
 
         .u-item {
+            /* assets/css/editor/combo.less */
             .db;
             border: 2px solid @border-hr;
             background: #fafbfc;
@@ -94,9 +111,11 @@
             min-height: 60px;
             .r(6px);
             &:hover {
+                /* assets/css/editor/combo.less */
                 background-color: #e7f9ff;
             }
             &.on {
+                /* assets/css/editor/combo.less */
                 border-color: #34d058;
                 background-color: #fff;
                 box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
@@ -109,10 +128,12 @@
             .pointer;
         }
         .u-link {
+            /* assets/css/editor/combo.less */
             .db;
             color: @color;
         }
         .u-pic {
+            /* assets/css/editor/combo.less */
             .db;
             .pa;
             .lt(10px);
@@ -121,6 +142,7 @@
             box-shadow: 0 0 1px inset rgba(0, 0, 0, 0.2);
         }
         .u-id {
+            /* assets/css/editor/combo.less */
             .fz(10px);
             color: #555;
             .pa;
@@ -128,21 +150,26 @@
             .x(right);
         }
         .u-detach {
+            /* assets/css/editor/combo.less */
             .mt(4px);
             .db;
         }
         .u-primary {
+            /* assets/css/editor/combo.less */
             .pr;
         }
         .u-raw {
+            /* assets/css/editor/combo.less */
             .pa;
             .rb(0);
         }
         .u-name {
+            /* assets/css/editor/combo.less */
             .fz(14px, 2);
             .bold;
             .db;
             em {
+                /* assets/css/editor/combo.less */
                 .fz(12px);
                 color: #999;
                 font-weight: normal;
@@ -150,21 +177,25 @@
             }
         }
         .u-content {
+            /* assets/css/editor/combo.less */
             .fz(13px, 1.8);
             .mb(5px);
             .db;
 
             .u-map,
             .u-life {
+                /* assets/css/editor/combo.less */
                 .mr(20px);
             }
         }
         .u-remark {
+            /* assets/css/editor/combo.less */
             .fz(12px, 1.8);
             color: #aaa;
             .db;
 
             em {
+                /* assets/css/editor/combo.less */
                 background-color: #eee;
                 padding: 0 5px;
                 margin: 0 3px;
@@ -172,12 +203,14 @@
             }
         }
         .u-desc {
+            /* assets/css/editor/combo.less */
             .fz(12px, 1.8);
             .db;
             white-space: pre-wrap;
             margin: 4px 0;
 
             em {
+                /* assets/css/editor/combo.less */
                 background-color: #f3f3f3;
                 padding: 2px 5px;
                 margin-right: 5px;
@@ -188,37 +221,44 @@
             }
 
             sub {
+                /* assets/css/editor/combo.less */
                 font-size: 100%;
                 .ps;
             }
         }
         .u-props {
+            /* assets/css/editor/combo.less */
             .mt(10px);
             border-top: 1px dashed #ddd;
             padding: 10px 0;
             .clearfix;
             .u-desc {
+                /* assets/css/editor/combo.less */
                 .w(50%);
                 .fl;
             }
             .none;
             &.on {
+                /* assets/css/editor/combo.less */
                 .db;
             }
         }
     }
     .m-select-content {
+        /* assets/css/editor/combo.less */
         height: calc(100% - 200px);
         overflow: auto;
     }
     // 已选数据
     .m-selected-skills {
+        /* assets/css/editor/combo.less */
         height: 70px;
         border: 1px solid #ddd;
         padding: 10px;
         .scrollbar();
         overflow-y: auto;
         .m-skills-list {
+            /* assets/css/editor/combo.less */
             .flex;
             gap: 30px;
             list-style: none;
@@ -228,12 +268,14 @@
             flex-wrap: wrap;
         }
         .m-skill {
+            /* assets/css/editor/combo.less */
             // position: relative;
             // display: flex;
             // justify-content: center;
             .pr;
 
             &:not(:last-of-type)::after {
+                /* assets/css/editor/combo.less */
                 content: "▲";
                 .pa;
                 right: -25px;
@@ -242,6 +284,7 @@
             }
 
             .u-remove-icon {
+                /* assets/css/editor/combo.less */
                 .pa;
                 right: -4px;
                 top: -4px;
@@ -253,16 +296,19 @@
                 .r(50%);
                 .db;
                 i{
+                    /* assets/css/editor/combo.less */
                     color:#fff;
                     .fz(12px);
                     .db;
                 }
                 &:hover {
+                    /* assets/css/editor/combo.less */
                     background-color:#f00;
                 }
             }
 
             .u-gcd-icon {
+                /* assets/css/editor/combo.less */
                 .pa;
                 // 左上角
                 left: -4px;
@@ -274,6 +320,7 @@
                 .db;
 
                 i{
+                    /* assets/css/editor/combo.less */
                     color:#fff;
                     .fz(12px, 1);
                     .db;
@@ -281,10 +328,12 @@
             }
 
             .u-skill-icon {
+                /* assets/css/editor/combo.less */
                 .size(48px, 48px);
             }
 
             .u-name {
+                /* assets/css/editor/combo.less */
                 display: block;
                 font-size: 12px;
                 text-align: center;
@@ -294,6 +343,7 @@
             }
 
             .u-mask {
+                /* assets/css/editor/combo.less */
                 .pa;
                 .lt(0);
                 .size(48px, 48px);
@@ -304,6 +354,7 @@
             }
 
             &:hover {
+                /* assets/css/editor/combo.less */
                 cursor: move;
             }
         }

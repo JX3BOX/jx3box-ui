@@ -1,23 +1,29 @@
 .c-footer {
+    /* assets/css/common/footer.less */
     padding: 20px;
 
     .fz(13px);
     color: #999;
     a {
+        /* assets/css/common/footer.less */
         transition: 0.03s ease-in-out;
         color: #999;
         box-shadow: 0 1px transparent;
 
         &:hover {
+            /* assets/css/common/footer.less */
             color: @color-link;
             box-shadow: 0 1px @color-link;
         }
     }
 
     &.is--dark {
+        /* assets/css/common/footer.less */
         background-color: @bg-black;
         a {
+            /* assets/css/common/footer.less */
             &:hover {
+                /* assets/css/common/footer.less */
                 color: #eee;
                 box-shadow: 0 1px #eee;
             }
@@ -25,53 +31,70 @@
     }
 }
 .c-footer-inner {
+    /* assets/css/common/footer.less */
     .flex;
     justify-content: space-between;
 }
 .c-footer-left {
+    /* assets/css/common/footer.less */
     .u-flag {
+        /* assets/css/common/footer.less */
         .size(18px);
         .y(-3px);
         .mr(5px);
     }
     .u-beian {
+        /* assets/css/common/footer.less */
         .italic;
     }
 }
 .c-footer-right {
+    /* assets/css/common/footer.less */
     em {
+        /* assets/css/common/footer.less */
         margin: 0 10px;
     }
 }
 @media screen and (max-width: @phone) {
+    /* assets/css/common/footer.less */
     .c-footer {
+        /* assets/css/common/footer.less */
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
     .c-footer-left {
+        /* assets/css/common/footer.less */
         .none;
     }
     .c-footer-right {
+        /* assets/css/common/footer.less */
         flex: 1;
         .x;
     }
 }
 
 @media print {
+    /* assets/css/common/footer.less */
     .c-footer {
+        /* assets/css/common/footer.less */
         .none;
     }
 }
 
 @media screen and (max-width: @phone) {
+    /* assets/css/common/footer.less */
     .env-app {
+        /* assets/css/common/footer.less */
         .c-footer {
+            /* assets/css/common/footer.less */
             .none;
         }
     }
 
     .wechat-miniprogram {
+        /* assets/css/common/footer.less */
         .c-footer {
+            /* assets/css/common/footer.less */
             .none;
         }
     }

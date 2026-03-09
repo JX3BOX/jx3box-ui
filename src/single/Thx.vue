@@ -36,18 +36,31 @@
                 :can-gift="lvEnough"
             />
             <Share :postId="postId" :postType="postType" :client="client" />
-            <watch-later :category="postType" :title="postTitle" :author-id="authorId" :banner="banner" :content-id="contentMetaId"></watch-later>
+            <watch-later
+                :category="postType"
+                :title="postTitle"
+                :author-id="authorId"
+                :banner="banner"
+                :content-id="contentMetaId"
+            ></watch-later>
         </div>
         <div class="w-thx-records">
-            <boxcoin-records :postId="postId" :postType="postType" :postClient="finalClient" :cacheRecord="cacheRecord"
-                :mode="mode" @update:boxcoin="updateBoxcoin" v-if="showRecord" />
+            <boxcoin-records
+                :postId="postId"
+                :postType="postType"
+                :postClient="finalClient"
+                :cacheRecord="cacheRecord"
+                :mode="mode"
+                @update:boxcoin="updateBoxcoin"
+                v-if="showRecord"
+            />
         </div>
         <div class="w-thx-copyright">
             &copy;
             所有原创作品，著作权归作者所有，所有未经授权的非署名转载或抄袭将有权追究法律责任，所有法律事务由专聘律师代理。<br />
             签约作者独家特约稿件，及所有魔盒官方评分作品用户一经兑现则视为有偿付费稿件，所有商业稿件的转载引用需同时征得魔盒平台授权。
         </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -62,7 +75,7 @@ import Rss from "../interact/Rss.vue";
 
 import User from "@jx3box/jx3box-common/js/user";
 import { getBoxcoinStatus, getPostBoxcoinConfig } from "../../service/thx";
-import {getConfig,getUserPermission} from "../../service/cms"
+import { getConfig, getUserPermission } from "../../service/cms";
 
 export default {
     name: "ThxComp",
@@ -82,7 +95,7 @@ export default {
             default: "normal",
         },
         postId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         postType: {
@@ -94,7 +107,7 @@ export default {
             default: "",
         },
         userId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         authors: {
@@ -126,7 +139,7 @@ export default {
             default: false,
         },
         authorId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         banner: {
@@ -134,9 +147,13 @@ export default {
             default: "",
         },
         contentMetaId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
-        }
+        },
+        category: {
+            type: String,
+            default: "",
+        },
     },
     data: function () {
         return {
@@ -170,11 +187,11 @@ export default {
         post_keys: function () {
             return [this.postId, this.postType];
         },
-        finalClient: function() {
-            if (this.client == 'wujie') {
-                return "std"
+        finalClient: function () {
+            if (this.client == "wujie") {
+                return "std";
             }
-            return this.client
+            return this.client;
         },
         showRecord() {
             // 当admin_boxcoin_visible为0时，作者本人和64及以上权限可见打赏记录
@@ -182,7 +199,7 @@ export default {
                 return this.userId == this.user.uid || this.user.group >= 64;
             }
             return true;
-        }
+        },
     },
     watch: {
         post_keys: {
@@ -224,25 +241,26 @@ export default {
             });
 
             getConfig({
-                key: 'admin_boxcoin_visible'
+                key: "admin_boxcoin_visible",
             }).then((res) => {
-                this.admin_boxcoin_visible = Number(res?.val)
+                this.admin_boxcoin_visible = Number(res?.val);
             });
 
             getConfig({
-                key: `level_has_gift_permission`
+                key: `level_has_gift_permission`,
             }).then((res) => {
-                User.isLogin() && User.getAsset().then((data) => {
-                    const asset = data;
-                    this.lvEnough = asset && asset.experience >= Number(res?.val);
-                });
+                User.isLogin() &&
+                    User.getAsset().then((data) => {
+                        const asset = data;
+                        this.lvEnough = asset && asset.experience >= Number(res?.val);
+                    });
             });
 
-
-            User.isLogin() &&  getUserPermission().then(res => {
-                const permissions = res.data.data.permission?.map(item => item.action)
-                this.hasPermission = permissions.includes(`manage_boxcoin_${this.postType}`)
-            })
+            User.isLogin() &&
+                getUserPermission().then((res) => {
+                    const permissions = res.data.data.permission?.map((item) => item.action);
+                    this.hasPermission = permissions.includes(`manage_boxcoin_${this.postType}`);
+                });
         },
         // 用户打赏
         updateRecord: function (data) {

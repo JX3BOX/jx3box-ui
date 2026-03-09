@@ -15,9 +15,9 @@
             </template>
             <template #op-prepend> </template>
         </breadcrumb>
-        <LeftSidebar :open="true" :uid="7">
+        <LeftSidebar :open="true" :uid="8719">
             <LeftSideToggle :mobileOnly="true" />
-            <Author :uid="7" />
+            <Author :uid="8719" />
         </LeftSidebar>
         <Main :withoutLeft="false" :withoutRight="false">
             <versionBy value=""></versionBy>

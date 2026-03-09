@@ -4,7 +4,7 @@
             <img svg-inline src="../../assets/img/leftsidebar/fans.svg" />
             <span>粉丝榜</span>
         </div>
-        <div class="f-avatar">
+        <div class="f-avatar" v-if="list && list.length">
             <el-tooltip
                 class="item"
                 effect="dark"
@@ -21,7 +21,9 @@
         </div>
         <div class="f-bottom">
             粉丝数: <span class="u-count">{{ fans_count }}</span
-            ><template v-if="boxcoin_count">，累计收到盒币打赏: <span class="u-count">{{ boxcoin_count }}</span></template>
+            ><template v-if="boxcoin_count"
+                >，累计收到盒币打赏: <span class="u-count">{{ boxcoin_count }}</span></template
+            >
         </div>
     </div>
 </template>
@@ -33,7 +35,7 @@ export default {
     name: "AuthorFans",
     props: {
         uid: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
     },
@@ -148,14 +150,22 @@ export default {
         }
     }
     .f-avatar {
-        height: 30px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 6px;
+        line-height: 1;
         .f-avatar-num {
             .fz(12px);
             color: #888;
             font-weight: 700;
         }
-        .u-fan{
+        .u-fan {
             .mr(5px);
+        }
+        .el-tooltip {
+            display: inline-flex;
         }
     }
     .f-bottom {

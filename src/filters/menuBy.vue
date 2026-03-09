@@ -23,7 +23,20 @@
 export default {
     name: "menuBy",
     emits: ["filter"],
-    props: ["data", "type", "placeholder"],
+    props: {
+        data: {
+            type: Object,
+            default: () => ({}),
+        },
+        type: {
+            type: String,
+            default: "menu",
+        },
+        placeholder: {
+            type: String,
+            default: "",
+        },
+    },
     data: function () {
         return {
             value: "",

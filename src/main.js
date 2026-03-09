@@ -4,7 +4,9 @@ import App from "./App.vue";
 const app = createApp(App);
 
 // 2.Router
-
+requestAnimationFrame(() => {
+    window.lucide?.createIcons();
+});
 // 3.Store
 
 // 4.i18n

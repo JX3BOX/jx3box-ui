@@ -13,7 +13,7 @@
             <!-- <template v-if="isAdmin"> -->
             <el-divider content-position="left">状态变更</el-divider>
             <el-radio-group v-model="post_status" class="c-admin-status">
-                <el-radio-button v-for="(option, key) in status_options" :label="key" :key="key">{{
+                <el-radio-button v-for="(option, key) in status_options" :value="key" :key="key">{{
                     option
                 }}</el-radio-button>
             </el-radio-group>
@@ -22,14 +22,14 @@
 
             <el-divider content-position="left">可见性变更</el-divider>
             <el-radio-group v-model="visible" class="c-admin-status">
-                <el-radio-button v-for="(option, key) in visible_options" :label="key" :key="key">{{
+                <el-radio-button v-for="(option, key) in visible_options" :value="key" :key="key">{{
                     option
                 }}</el-radio-button>
             </el-radio-group>
 
             <el-divider content-position="left">推荐角标</el-divider>
             <el-checkbox-group v-model="mark" class="c-admin-mark">
-                <el-checkbox v-for="(option, key) in mark_options" :label="key" :key="key">{{ option }}</el-checkbox>
+                <el-checkbox v-for="(option, key) in mark_options" :value="key" :key="key">{{ option }}</el-checkbox>
             </el-checkbox-group>
 
             <el-divider content-position="left">高亮置顶</el-divider>
@@ -292,7 +292,20 @@ export default {
         // 拉
         pull: function () {
             getSetting(this.pid).then((data) => {
-                let { ID, color, mark, post_status, post_author, sticky, post_banner, post_type, visible, star, post_subtype, topics } = data;
+                let {
+                    ID,
+                    color,
+                    mark,
+                    post_status,
+                    post_author,
+                    sticky,
+                    post_banner,
+                    post_type,
+                    visible,
+                    star,
+                    post_subtype,
+                    topics,
+                } = data;
                 this.pid = ID;
                 this.post_status = post_status;
                 this.visible = visible;
@@ -306,7 +319,7 @@ export default {
                 if (this.sticky) this.isSticky = true;
 
                 this.isStar = star || 0;
-                this.topics = topics?.map(item => item.topic) || [];
+                this.topics = topics?.map((item) => item.topic) || [];
                 this.post_subtype = post_subtype || "";
 
                 // 设置加载完成标识
@@ -348,7 +361,7 @@ export default {
                 type: this.post_type,
                 id: this.pid,
             });
-        }
+        },
     },
     watch: {
         "$route.params.id": function () {

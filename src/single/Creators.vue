@@ -37,7 +37,16 @@ import { showAvatar, authorLink, editLink } from "@jx3box/jx3box-common/js/utils
 import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "SingleCreators",
-    props: ["postId", "postType"],
+    props: {
+        postId: {
+            type: [Number, String],
+            default: 0,
+        },
+        postType: {
+            type: String,
+            default: "",
+        },
+    },
     components: {},
     data: function () {
         return {

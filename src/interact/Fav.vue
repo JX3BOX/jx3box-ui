@@ -16,7 +16,28 @@ import { hasFav, addFav, delFav } from "../../service/fav";
 import JX3BOX  from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "FavoriteComp",
-    props: ["postType", "postId", "postTitle", "hiddenNum", "isOld"],
+    props: {
+        postType: {
+            type: String,
+            default: "",
+        },
+        postId: {
+            type: [String, Number],
+            default: "",
+        },
+        postTitle: {
+            type: String,
+            default: "",
+        },
+        hiddenNum: {
+            type: Boolean,
+            default: false,
+        },
+        isOld: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             login: User.isLogin(),

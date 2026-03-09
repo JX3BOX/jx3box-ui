@@ -6,8 +6,13 @@
 import { getBreadcrumb } from "../../service/breadcrumb";
 
 export default {
-    name: "BeardCrumb",
-    props: ["name"],
+    name: "BreadCrumb",
+    props: {
+        name: {
+            type: String,
+            default: "",
+        },
+    },
     data: function () {
         return {
             html: "",

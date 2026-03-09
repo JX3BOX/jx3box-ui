@@ -130,7 +130,7 @@ import i18nMixin from "../../i18n/mixin";
 
 export default {
     mixins: [i18nMixin],
-    props: [],
+    props: {},
     data: function () {
         return {
             nav: default_nav,

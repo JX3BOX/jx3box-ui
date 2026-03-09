@@ -10,8 +10,8 @@
             <div class="c-resource-content" v-loading="loading">
                 <div class="m-database-search">
                     <el-radio-group class="u-client" v-model="client" @change="search">
-                        <el-radio-button label="std">剑三</el-radio-button>
-                        <el-radio-button label="origin">缘起</el-radio-button>
+                        <el-radio-button value="std">剑三</el-radio-button>
+                        <el-radio-button value="origin">缘起</el-radio-button>
                     </el-radio-group>
                     <el-input
                         class="u-input"
@@ -47,8 +47,8 @@
                             <div class="u-mode">
                                 插入模式：
                                 <el-radio-group v-model="buff_mode" size="small" @change="changeMode">
-                                    <el-radio-button label="simple">简版</el-radio-button>
-                                    <el-radio-button label="full">完整版</el-radio-button>
+                                    <el-radio-button value="simple">简版</el-radio-button>
+                                    <el-radio-button value="full">完整版</el-radio-button>
                                 </el-radio-group>
                             </div>
                         </div>
@@ -91,8 +91,8 @@
                             <div class="u-mode">
                                 插入模式：
                                 <el-radio-group v-model="skill_mode" size="small" @change="changeMode">
-                                    <el-radio-button label="simple">简版</el-radio-button>
-                                    <el-radio-button label="full">完整版</el-radio-button>
+                                    <el-radio-button value="simple">简版</el-radio-button>
+                                    <el-radio-button value="full">完整版</el-radio-button>
                                 </el-radio-group>
                             </div>
                         </div>

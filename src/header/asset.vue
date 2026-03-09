@@ -84,7 +84,19 @@ export default {
     components: {
         // coinIcon,
     },
-    props: ["asset"],
+    props: {
+        asset: {
+            type: Object,
+            default: () => ({
+                experience: 0,
+                box_coin: 0,
+                points: 0,
+                ext_info: {
+                    keycode: 0,
+                },
+            }),
+        },
+    },
     data() {
         return {
             // VIP

@@ -1,5 +1,6 @@
 // 输出样式
 .w-qixue-box {
+    /* assets/css/module/talent.less */
     @url: "https://img.jx3box.com/img/";
 
     zoom: 1;
@@ -19,6 +20,7 @@
     @item-description: 999; //描述
 
     .white() {
+        /* assets/css/module/talent.less */
         color: #fff;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
     }
@@ -41,16 +43,19 @@
     // display: block;
 
     &.isQQBrowser{
+        /* assets/css/module/talent.less */
         padding-right: 30px !important; //fix
     }
 
     //单项
     li {
+        /* assets/css/module/talent.less */
         list-style: none;
     }
 
     //图片
     img {
+        /* assets/css/module/talent.less */
         .db;
         .size(48px);
         .r(5px);
@@ -63,6 +68,7 @@
 
     //心法label
     .w-qixue-xf {
+        /* assets/css/module/talent.less */
         // .dbi;
         .y(top);
         .fz(14px);
@@ -91,21 +97,26 @@
     }
 
     .w-qixue-clist {
+        /* assets/css/module/talent.less */
         margin: 0;
     }
 
     //公共单项
     .w-qixue-clist-item,
     .w-qixue-olist-item {
+        /* assets/css/module/talent.less */
         .u-pic {
+            /* assets/css/module/talent.less */
             .db;
             .pr;
             &:before,
             &:after {
+                /* assets/css/module/talent.less */
                 content: "";
                 .db;
             }
             &:after {
+                /* assets/css/module/talent.less */
                 .size(52px);
                 .pa;
                 .lt(-2px,-2px);
@@ -114,6 +125,7 @@
             }
         }
         img {
+            /* assets/css/module/talent.less */
             .r(48px);
             //针对正文覆写
             padding: 0;
@@ -121,6 +133,7 @@
             border: none;
         }
         .u-title {
+            /* assets/css/module/talent.less */
             .white;
             .fz(13px,14px);
             .x;
@@ -133,6 +146,7 @@
 
     //当前盒子
     .w-qixue-clist {
+        /* assets/css/module/talent.less */
         .dbi;
         .y(top);
         font-size: 0;
@@ -146,6 +160,7 @@
     }
     //当前单项
     .w-qixue-clist-item {
+        /* assets/css/module/talent.less */
         .dbi;
         .y;
         padding-left: @space;
@@ -153,6 +168,7 @@
         .pr;
 
         &:last-child {
+            /* assets/css/module/talent.less */
             margin-right: 0;
         }
 
@@ -165,6 +181,7 @@
         } */
 
         &:before {
+            /* assets/css/module/talent.less */
             content: "";
             .size(44px,11px);
             background: url("@{url}qixue/fold.png") no-repeat 0 0;
@@ -174,7 +191,9 @@
         }
 
         &.on {
+            /* assets/css/module/talent.less */
             &:before {
+                /* assets/css/module/talent.less */
                 background-image: url("@{url}qixue/unfold.png");
             }
         }
@@ -184,20 +203,24 @@
     .w-qixue-obox,
     .w-qixue-olist,
     .w-qixue-item-pop {
+        /* assets/css/module/talent.less */
         .none;
     }
     //全部扩展列表容器
     .w-qixue-obox {
+        /* assets/css/module/talent.less */
         .pa;
         .lb(@lp,100%);
         white-space: nowrap;
         font-size: 0;
         &.on {
+            /* assets/css/module/talent.less */
             .db;
         }
     }
     //单个扩展列表
     .w-qixue-olist {
+        /* assets/css/module/talent.less */
         .pr;
         .z(1000);
         .dbi;
@@ -211,20 +234,25 @@
         box-shadow: 3px -3px 3px rgba(0, 0, 0, 0.4);
 
         &:last-child {
+            /* assets/css/module/talent.less */
             margin-right: 0;
         }
 
         transform: scale(0);
         &.on {
+            /* assets/css/module/talent.less */
             transform: scale(1);
         }
     }
     .w-qixue-olist-item {
+        /* assets/css/module/talent.less */
         margin-bottom: 8px;
         .pr;
 
         .u-pic {
+            /* assets/css/module/talent.less */
             &:before {
+                /* assets/css/module/talent.less */
                 .size(100%);
                 .pa;
                 .lt(0);
@@ -235,26 +263,34 @@
         }
 
         &:hover {
+            /* assets/css/module/talent.less */
             .u-pic {
+                /* assets/css/module/talent.less */
                 &:before {
+                    /* assets/css/module/talent.less */
                     .tm(0);
                 }
             }
         }
 
         &:last-child {
+            /* assets/css/module/talent.less */
             margin-bottom: 0;
         }
     }
 
     //特殊技能
     .w-qixue-is_skill {
+        /* assets/css/module/talent.less */
         .u-pic {
+            /* assets/css/module/talent.less */
             &:before,
             img {
+                /* assets/css/module/talent.less */
                 .r(0);
             }
             &:after {
+                /* assets/css/module/talent.less */
                 .none;
             }
         }
@@ -262,6 +298,7 @@
 
     //单个浮层描述
     .w-qixue-item-pop {
+        /* assets/css/module/talent.less */
         .pa;
         .lt(100%,0);
         .z(@item-description);
@@ -273,6 +310,7 @@
         max-width:none;
 
         * {
+            /* assets/css/module/talent.less */
             .db;
             white-space: normal;
             word-wrap: break-word;
@@ -280,30 +318,37 @@
         }
         .u-name,
         .u-desc {
+            /* assets/css/module/talent.less */
             color: #ffff00;
         }
         .u-name {
+            /* assets/css/module/talent.less */
             .fz(14px,2);
         }
         .u-desc {
+            /* assets/css/module/talent.less */
             .fz(12px,20px);
         }
         .u-skill {
+            /* assets/css/module/talent.less */
             color: #fff;
             .fz(13px,20px);
         }
         .u-meta,
         .u-extend {
+            /* assets/css/module/talent.less */
             color: #ff9600;
             .fz(13px,2);
             font-style: normal;
         }
         &.on {
+            /* assets/css/module/talent.less */
             .db;
         }
     }
     //展示版奇穴的pop显示位置
     .w-qixue-clist-item .w-qixue-item-pop {
+        /* assets/css/module/talent.less */
         left: 0;
         top: auto;
         bottom: 100%;
@@ -311,7 +356,9 @@
     }
 }
 @media screen and (max-width: @ipad) {
+    /* assets/css/module/talent.less */
     .w-qixue-box {
+        /* assets/css/module/talent.less */
         // zoom: 0.8;
         .clearfix;
 
@@ -319,13 +366,16 @@
         .w(auto);
         li,
         .w-qixue-xf {
+            /* assets/css/module/talent.less */
             .fl;
             margin-bottom: 10px;
         }
         .w-qixue-xf {
+            /* assets/css/module/talent.less */
             .none;
         }
         .w-qixue-clist{
+            /* assets/css/module/talent.less */
             // .w(100%);
             // overflow-x: auto;
             .db;
@@ -336,20 +386,26 @@
 }
 
 .w-qixue-editable {
+    /* assets/css/module/talent.less */
     .w-qixue-xf{
+        /* assets/css/module/talent.less */
         margin-top: 5px;
     }
     li {
+        /* assets/css/module/talent.less */
         .pointer;
     }
     .w-qixue-clist-item {
+        /* assets/css/module/talent.less */
         user-select: none;
     }
     .w-qixue-clist-item:before {
+        /* assets/css/module/talent.less */
         .db;
     }
 
     &.disabled:after {
+        /* assets/css/module/talent.less */
         content: "";
         .db;
         .size(100%);
@@ -360,18 +416,23 @@
     }
 
     &.active {
+        /* assets/css/module/talent.less */
         &:after {
+            /* assets/css/module/talent.less */
             .none;
         }
     }
     //编辑模式下当前版不加载pop
     .w-qixue-clist-item .w-qixue-item-pop {
+        /* assets/css/module/talent.less */
         .none !important;
     }
 }
 
 @media screen and (max-width: @ipad) {
+    /* assets/css/module/talent.less */
     .w-qixue-editable {
+        /* assets/css/module/talent.less */
         // zoom: 0.8;
 
         .db;
@@ -380,22 +441,28 @@
         //overflow-y:visible;
         li,
         .w-qixue-xf {
+            /* assets/css/module/talent.less */
             .fl;
             margin-bottom: 10px;
         }
         .w-qixue-obox {
+            /* assets/css/module/talent.less */
             left: 0;
         }
         .w-qixue-olist {
+            /* assets/css/module/talent.less */
             .clearfix;
             .none;
             &.on {
+                /* assets/css/module/talent.less */
                 .db;
             }
 
             li {
+                /* assets/css/module/talent.less */
                 .mr(10px);
                 &:last-child {
+                    /* assets/css/module/talent.less */
                     .mr(0);
                 }
                 transform: scale(1);
@@ -403,6 +470,7 @@
         }
 
         .w-qixue-item-pop {
+            /* assets/css/module/talent.less */
             left: 0;
             top: auto;
             bottom: 100%;
@@ -412,10 +480,13 @@
 
 // 打印样式
 @media print{
+    /* assets/css/module/talent.less */
 	.w-qixue-box{
+	    /* assets/css/module/talent.less */
         page-break-inside: avoid !important;
         padding-right:40px;
         .w-qixue-clist-item{
+            /* assets/css/module/talent.less */
             padding-left:5px;
             padding-right:0;
             transform: scale(0.85);

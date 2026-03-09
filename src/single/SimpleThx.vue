@@ -79,7 +79,7 @@ export default {
             default: "normal",
         },
         postId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         postType: {
@@ -91,7 +91,7 @@ export default {
             default: "",
         },
         userId: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
         authors: {
