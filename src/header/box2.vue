@@ -41,6 +41,14 @@
                                 <span class="u-txt">{{ item.abbr }}</span>
                             </a>
                         </li>
+                        <li v-if="allMatched && filteredList.length > 0">
+                            <a class="u-item" href="/app">
+                                <div class="u-icon-wrap">
+                                    <img class="u-pic" svg-inline :src="allicon" />
+                                </div>
+                                <span class="u-txt">{{ $jx3boxT("jx3boxUi.header.all", "全部") }}</span>
+                            </a>
+                        </li>
                     </ul>
                     <div v-if="searchQuery && !homeMatched && filteredList.length === 0" class="u-empty">
                         未找到匹配应用
@@ -57,8 +65,10 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
 import box from "../../assets/data/box.json";
 import { getMenu } from "../../service/header.js";
+import axios from "axios";
+import { flatten } from "lodash";
 
-const { __imgPath, __cdn } = JX3BOX;
+const { __cdn, __imgPath } = JX3BOX;
 
 export default {
     name: "Box2",
@@ -67,17 +77,27 @@ export default {
         return {
             status: false,
             searchQuery: "",
-            data: box,
+            data: [],
             client: location.href.includes("origin") ? "origin" : "std",
         };
     },
     computed: {
         homeicon: function () {
-            return __imgPath + "image/box/home.svg";
+            return this.getBoxIcon("home.svg");
+        },
+        allicon: function () {
+            return this.getBoxIcon("more.svg");
         },
         list: function () {
             return this.data.filter((item) => {
-                return item.status && (item.client == this.client || item.client == "all");
+                const currentClient = String(this.client || "").toLowerCase();
+                const rawClient = item.client;
+                const matchedClient = !rawClient
+                    ? true
+                    : Array.isArray(rawClient)
+                    ? rawClient.map((c) => String(c || "").toLowerCase()).includes(currentClient)
+                    : String(rawClient || "").toLowerCase().includes(currentClient);
+                return matchedClient;
             });
         },
         filteredList: function () {
@@ -95,7 +115,12 @@ export default {
         homeMatched: function () {
             const query = (this.searchQuery || "").toLowerCase().trim();
             if (!query) return true;
-            return "首页".includes(query);
+            return this.$jx3boxT("jx3boxUi.header.home", "首页").includes(query);
+        },
+        allMatched: function () {
+            const query = (this.searchQuery || "").toLowerCase().trim();
+            if (!query) return true;
+            return this.$jx3boxT("jx3boxUi.header.all", "全部").includes(query);
         },
     },
     methods: {
@@ -135,18 +160,26 @@ export default {
         },
         loadMenu() {
             try {
-                const _box = JSON.parse(sessionStorage.getItem("box"));
-                if (_box) {
-                    this.data = _box;
+                const data = JSON.parse(sessionStorage.getItem("box"));
+                if (data) {
+                    this.data = data;
                 } else {
-                    getMenu("box").then((res) => {
-                        this.data = res.data?.data?.val;
+                    axios.get(__imgPath + "logo/app.json").then((res) => {
+                        const _data = flatten(Object.values(res.data || {}));
+                        this.data = _data.map((item) => ({
+                            img: item.key + ".svg",
+                            uuid: item.key,
+                            abbr: item.label,
+                            href: item.link,
+                            client: item.client || ["std", "origin"],
+                        }));
+
+                        if (!this.data.length) this.data = box;
                         sessionStorage.setItem("box", JSON.stringify(this.data));
                     });
                 }
             } catch (e) {
                 this.data = box;
-                console.log("loadBox2 error", e);
             }
         },
         onEsc(e) {

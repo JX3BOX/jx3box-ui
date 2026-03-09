@@ -55,6 +55,7 @@ export default {
         panel: {
             manageCenter: "Admin",
         },
+        all: "All",
     },
     footer: {
         slogan1: "All-in-one tools & resources for JX3.",

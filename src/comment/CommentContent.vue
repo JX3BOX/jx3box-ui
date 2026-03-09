@@ -213,27 +213,27 @@ export default {
             default: "",
         },
         hasReply: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         canDelete: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         canSetTop: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         canCancelTop: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         canHide: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         isLike: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         likes: {
@@ -241,11 +241,11 @@ export default {
             default: 0,
         },
         canSetStar: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         canCancelStar: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         attachments: {
@@ -257,11 +257,11 @@ export default {
             default: 0,
         },
         canAddWhite: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
         canRemoveWhite: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
     },
