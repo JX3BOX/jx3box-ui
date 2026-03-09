@@ -1,7 +1,6 @@
 <template>
     <div class="c-header-panel c-lang-switcher" id="c-header-lang-switcher">
         <span class="u-translator" href="/dashboard/boxcoin">
-            <!-- <langIcon class="u-icon" /> -->
             <img
                 class="u-icon"
                 svg-inline
