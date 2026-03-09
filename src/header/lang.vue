@@ -85,7 +85,7 @@ export default {
             if (!normalized) return;
 
             const ok = setJx3boxUiLocale(normalized);
-            if (!ok) location.reload();
+            if (ok) location.reload();
         },
     },
 };

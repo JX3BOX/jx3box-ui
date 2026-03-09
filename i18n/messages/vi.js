@@ -55,6 +55,7 @@ export default {
         panel: {
             manageCenter: "Quản trị",
         },
+        all: "Tất cả",
     },
     footer: {
         slogan1: "Tổng hợp công cụ & tài nguyên JX3.",

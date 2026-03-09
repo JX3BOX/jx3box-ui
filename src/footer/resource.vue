@@ -62,7 +62,7 @@
                         :alt="$jx3boxT('jx3boxUi.footer.qqBot', 'QQ机器人')"
                     />
                 </div>
-                <div>
+                <div @click="copyText('3889010020')" class="cursor-pointer">
                     <p class="font-bold uppercase tracking-wider text-gray-500" style="font-size: 10px">
                         {{ $jx3boxT("jx3boxUi.footer.qqBotService", "QQ 机器人服务") }}
                     </p>
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import { copyText } from "../../utils";
 import i18nMixin from "../../i18n/mixin";
 export default {
     name: "FooterResource",
@@ -127,6 +128,7 @@ export default {
     computed: {},
     watch: {},
     methods: {
+        copyText,
         getDownloadName(item) {
             if (item?.key) {
                 const k = item.key === "harmonyNext" ? "harmonyNext" : item.key;

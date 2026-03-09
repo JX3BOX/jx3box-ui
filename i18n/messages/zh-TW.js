@@ -55,6 +55,7 @@ export default {
         panel: {
             manageCenter: "管理中心",
         },
+        all: "全部",
     },
     footer: {
         slogan1: "一站式劍三工具與資源聚合站。",

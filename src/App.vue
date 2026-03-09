@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import singlebox from "./single/cms-single.vue";
+import singlebox from "./single/CmsSingle.vue";
 import UploadAlum from "./editor/UploadAlum.vue";
 import Author from "./single/Author.vue";
 import SimpleThxVue from "./single/SimpleThx.vue";

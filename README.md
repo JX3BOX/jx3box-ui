@@ -50,3 +50,54 @@
 - topicBy 主题筛选
 - versionBy 版本筛选
 - zlpBy 资料片筛选
+
+
+### 顶部模块
+
+主要是header的模块
+
+- alternate 马甲切换
+- asset 用户资产
+- box 魔盒矩阵（移动端）
+- box2 魔盒矩阵（PC）
+- client 客户端切换
+- lang 语言切换
+- logo
+- manage 后台管理入口
+- message 消息中心入口
+- nav 导航栏
+- publish 创作中心入口
+- search 搜索框
+- shop 商城入口
+- user 用户头像+信息pop
+- 会员中心入口
+
+### 交互模块
+
+主要是文章详情中用于用户交互的组件，包含打赏，分享，收藏等等
+
+- BoxcoinAdmin 管理员品鉴
+- BoxcoinRecords 品鉴+打赏记录
+- BoxcoinUser 用户打赏
+- Contributors 多人合作文章中打赏目标选择
+- Fav 收藏
+- Like 点赞
+- Rss 订阅
+- Share 分享
+- WatchLater 稍后再看
+
+
+### 单页
+
+主要是用于详情页的展示内容
+
+- Author 侧边栏作者信息
+- CmsSingle 单页框架
+- Collection 小册
+- Comment 评论
+- Creators 联合创作
+- PostDirectory 目录
+- PostHeader 创作信息
+- PostTopic 右侧边栏头条
+- SimpleThx 简单交互组件集合
+- Thx 交互组件
