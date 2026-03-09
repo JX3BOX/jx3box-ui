@@ -3,10 +3,10 @@
         <div class="mx-auto w-full" style="max-width: 92rem">
             <div class="grid grid-cols-1 gap-10 pb-10 lg:grid-cols-12 lg:gap-8">
                 <section class="lg:col-span-3">
-                    <div class="flex items-center space-x-3">
+                    <a class="flex items-center space-x-3 cursor-pointer" href="/">
                         <img class="u-logo h-9 w-9" svg-inline src="../assets/img/common/logo.svg" alt="JX3BOX" />
                         <span class="text-2xl font-bold tracking-tight text-white">JX3BOX</span>
-                    </div>
+                    </a>
                     <p class="mt-5 text-sm leading-7 text-gray-400" style="max-width: 20rem">
                         {{ $jx3boxT("jx3boxUi.footer.slogan1", "一站式剑三工具与资源聚合站。") }}<br />
                         {{ $jx3boxT("jx3boxUi.footer.slogan2", "江湖路远，幸甚有你。") }}
