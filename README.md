@@ -5,19 +5,29 @@
 
 ## 模块
 
+### 全局
+- CommonHeader 公共头
+- Breadcrumb 面包屑
+- Main 默认内容框架（非必须）
+- LeftSidebar 左侧边栏（非必须）
+- LeftSideToggle 左侧边栏触发器（非必须，可独立使用）
+- RightSidebar 右侧边栏（非必须）
+- CommonFooter 公共底
+- SuspendCommon 移动侧浮窗底（此组件需要手动引入）
+
 ### 内容单页 single
 
 主要是用于详情页的展示内容
 
 - CmsSingle 单页框架
-- Author 侧边栏作者信息
+- Author 侧边栏作者信息整合
 - PostDirectory 目录
 - PostHeader 创作信息
 - Creators 联合创作
 - Collection 小册
 - Article 文章内容
 - Thx 交互组件
-- SimpleThx 简单交互组件集合
+- SimpleThx 交互组件简化版（仅PVP栏目使用，需要手动引入）
 - Comment 评论
 
 ### 筛选模块 list
@@ -37,6 +47,7 @@
 
 一般用于文章详情的左侧边栏，个人主页等
 
+-   Avatar 头像
 -   AuthorFans 粉丝榜
 -   AuthorFollow 关注用户（区分rss，此处用户更新不会收到消息）
 -   AuthorGift 打赏用户
@@ -47,7 +58,6 @@
 -   AuthorPosts 用户作品
 -   AuthorRss 订阅用户
 -   AuthorTeams 所在团队
--   Avatar 头像
 -   UserPop 搜索用户弹窗
 
 

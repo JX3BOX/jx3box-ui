@@ -17,9 +17,35 @@
                     <template #reference>
                         <a
                             class="flex h-12 items-center rounded-xl border border-gray-700 bg-gray-800 px-4 text-xs text-gray-300 transition hover:border-blue-500 hover:bg-gray-700"
-                            :href="item.href || 'javascript:;'"
+                            :href="item.href || '#'"
                             :target="item.href ? '_blank' : null"
                             :rel="item.href ? 'noopener noreferrer' : null"
+                            @click="handleLinkClick($event, item)"
+                        >
+                            <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
+                                <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
+                            </span>
+                            <span>{{ getDownloadName(item) }}</span>
+                        </a>
+                    </template>
+                </el-popover>
+                <el-popover
+                    v-else-if="item.placeholder"
+                    trigger="hover"
+                    placement="top"
+                    :show-after="150"
+                    popper-class="c-footer--v4__popover"
+                >
+                    <div class="p-3 text-center text-xs font-semibold">
+                        {{ item.placeholder }}
+                    </div>
+                    <template #reference>
+                        <a
+                            class="flex h-12 items-center rounded-xl border border-gray-700 bg-gray-800 px-4 text-xs text-gray-300 transition hover:border-blue-500 hover:bg-gray-700"
+                            :href="item.href || '#'"
+                            :target="item.href ? '_blank' : null"
+                            :rel="item.href ? 'noopener noreferrer' : null"
+                            @click="handleLinkClick($event, item)"
                         >
                             <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
                                 <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
@@ -31,9 +57,10 @@
                 <a
                     v-else
                     class="flex h-12 items-center rounded-xl border border-gray-700 bg-gray-800 px-4 text-xs text-gray-300 transition hover:border-blue-500 hover:bg-gray-700"
-                    :href="item.href || 'javascript:;'"
+                    :href="item.href || '#'"
                     :target="item.href ? '_blank' : null"
                     :rel="item.href ? 'noopener noreferrer' : null"
+                    @click="handleLinkClick($event, item)"
                 >
                     <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
                         <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
@@ -98,6 +125,7 @@ export default {
                     href: "",
                     icon: require("../../assets/img/common/ios.svg"),
                     // qrcode: require("../../assets/img/common/ios.jpg"),
+                    placeholder: "即将上线",
                 },
                 {
                     key: "android",
@@ -105,6 +133,7 @@ export default {
                     href: "",
                     icon: require("../../assets/img/common/android.svg"),
                     // qrcode: require("../../assets/img/common/android.jpg"),
+                    placeholder: "即将上线",
                 },
                 {
                     key: "harmonyNext",
@@ -112,6 +141,7 @@ export default {
                     href: "",
                     icon: require("../../assets/img/common/harmony.svg"),
                     // qrcode: require("../../assets/img/common/harmony.jpg"),
+                    placeholder: "即将上线",
                 },
                 {
                     key: "miniProgram",
@@ -140,6 +170,9 @@ export default {
         getDownloadLabel(item) {
             if (item?.labelKey) return this.$jx3boxT(`jx3boxUi.footer.${item.labelKey}`, item.label || item.labelKey);
             return item?.label || "";
+        },
+        handleLinkClick(e, item) {
+            if (!item?.href) e.preventDefault();
         },
     },
     created: function () {},
