@@ -125,7 +125,7 @@ import { showDate } from "@jx3box/jx3box-common/js/moment";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { copyText } from "./utils";
 import { getMenu } from "../../service/header";
-import Bus from "./bus";
+import Bus from "../../utils/bus";
 import alternate from "./alternate.vue";
 import i18nMixin from "../../i18n/mixin";
 
@@ -272,7 +272,7 @@ export default {
             }
         },
         changeAlternate: function () {
-            Bus.$emit("showAlternate");
+            Bus.emit("showAlternate");
         },
     },
 };

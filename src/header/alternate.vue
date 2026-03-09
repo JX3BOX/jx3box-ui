@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Bus from "./bus";
+import Bus from "../../utils/bus";
 import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 import dayjs from "dayjs";
 import User from "@jx3box/jx3box-common/js/user";
@@ -75,7 +75,7 @@ export default {
         },
     },
     mounted() {
-        Bus.$on("showAlternate", () => {
+        Bus.on("showAlternate", () => {
             this.visible = true;
         });
         this.init();

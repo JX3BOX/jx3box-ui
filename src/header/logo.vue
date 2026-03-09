@@ -14,7 +14,7 @@
 <script>
 // import { useLayoutStore } from "@/store/layout";
 import i18nMixin from "../../i18n/mixin";
-import Bus from "./bus";
+import Bus from "../../utils/bus";
 
 export default {
     name: "c-header-logo",
@@ -34,7 +34,7 @@ export default {
         // 盒子
         toggleBox: function (e) {
             e.stopPropagation();
-            Bus.$emit("toggleBox");
+            Bus.emit("toggleBox");
         },
     },
     mounted: function () {},

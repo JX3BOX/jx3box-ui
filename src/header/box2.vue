@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import Bus from "./bus";
+import Bus from "../../utils/bus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
 import box from "../../assets/data/box.json";
@@ -199,12 +199,12 @@ export default {
                 this.status = !!status;
             }
         };
-        Bus.$on("toggleBox", this.__toggleHandler);
+        Bus.on("toggleBox", this.__toggleHandler);
         window.addEventListener("keydown", this.onEsc);
     },
     beforeUnmount() {
         if (this.__toggleHandler) {
-            Bus.$off("toggleBox", this.__toggleHandler);
+            Bus.off("toggleBox", this.__toggleHandler);
             this.__toggleHandler = null;
         }
         window.removeEventListener("keydown", this.onEsc);

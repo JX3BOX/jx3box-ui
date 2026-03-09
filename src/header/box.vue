@@ -30,7 +30,7 @@
 <script>
 import search from "./search.vue";
 import _ from "lodash";
-import Bus from "./bus";
+import Bus from "../../utils/bus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
 import box from "../../assets/data/box.json";
@@ -76,7 +76,7 @@ export default {
     },
     methods: {
         closeBox: function () {
-            Bus.$emit("toggleBox", false);
+            Bus.emit("toggleBox", false);
         },
         matchedClient: function (client) {
             return client == "all" ? true : client == this.client;
@@ -126,7 +126,7 @@ export default {
         this.loadMenu();
     },
     mounted: function () {
-        Bus.$on("toggleBox", (status) => {
+        Bus.on("toggleBox", (status) => {
             if (status == undefined) {
                 this.status = !this.status;
             } else {
@@ -134,7 +134,7 @@ export default {
             }
         });
         document.addEventListener("click", function () {
-            Bus.$emit("toggleBox", false);
+            Bus.emit("toggleBox", false);
         });
     },
     components: {
