@@ -203,23 +203,68 @@ function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
 export default {
-    props: [
-    "content",
-        "date",
-        "hasReply",
-        "canDelete",
-        "canSetTop",
-        "canCancelTop",
-        "canHide",
-        "isLike", // 是否已点赞
-        "likes", // 点赞数
-        "canSetStar",
-        "canCancelStar",
-        "attachments",
-        "commentId",
-        "canAddWhite", // 是否可以添加到过滤白名单， 因为对于一般用户，它看不到非白名单的评论，所以“可以添加到白名单”的权限不要在加一次用户层面的权限判定
-        "canRemoveWhite", // 是否可以从过滤白名单移除
-    ],
+    props: {
+        content: {
+            type: String,
+            default: "",
+        },
+        date: {
+            type: [String, Number, Date],
+            default: "",
+        },
+        hasReply: {
+            type: Boolean,
+            default: false,
+        },
+        canDelete: {
+            type: Boolean,
+            default: false,
+        },
+        canSetTop: {
+            type: Boolean,
+            default: false,
+        },
+        canCancelTop: {
+            type: Boolean,
+            default: false,
+        },
+        canHide: {
+            type: Boolean,
+            default: false,
+        },
+        isLike: {
+            type: Boolean,
+            default: false,
+        },
+        likes: {
+            type: Number,
+            default: 0,
+        },
+        canSetStar: {
+            type: Boolean,
+            default: false,
+        },
+        canCancelStar: {
+            type: Boolean,
+            default: false,
+        },
+        attachments: {
+            type: Array,
+            default: () => [],
+        },
+        commentId: {
+            type: [Number, String],
+            default: 0,
+        },
+        canAddWhite: {
+            type: Boolean,
+            default: false,
+        },
+        canRemoveWhite: {
+            type: Boolean,
+            default: false,
+        },
+    },
     components: {
         Uploader,
         Emotion,

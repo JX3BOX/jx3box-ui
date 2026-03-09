@@ -5,7 +5,7 @@
 <script>
 export default {
    name : 'PostDirectory',
-   props:[],
+   props: {},
    components : {},
    data : function(){
        return {

@@ -38,7 +38,14 @@ const { tvLink } = utilModule;
 
 export default {
     name: "AuthorLink",
-    props: ["data"],
+    props: {
+        data: {
+            type: Object,
+            default: function () {
+                return {};
+            },
+        },
+    },
     components: {
         // AuthorMsg
     },

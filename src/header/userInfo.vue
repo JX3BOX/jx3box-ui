@@ -133,7 +133,20 @@ const { __Links, __Root, __imgPath, __OriginRoot } = JX3BOX;
 export default {
     name: "info",
     mixins: [i18nMixin],
-    props: ["asset"],
+    props: {
+        asset: {
+            type: Object,
+            default: () => ({
+                experience: 0,
+                box_coin: 0,
+                points: 0,
+                pro_expire_date: "",
+                ext_info: {
+                    keycode: 0,
+                },
+            }),
+        },
+    },
     emits: ["update"],
     components: {
         alternate,

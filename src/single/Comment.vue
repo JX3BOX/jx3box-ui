@@ -6,8 +6,8 @@
                 <div class="u-order">
                     <span class="u-label">排序模式：</span>
                     <el-radio-group v-model="isDesc" @change="changeOrder" size="small">
-                        <el-radio-button label="DESC">最后靠前</el-radio-button>
-                        <el-radio-button label="ASC">最早靠前</el-radio-button>
+                        <el-radio-button value="DESC">最后靠前</el-radio-button>
+                        <el-radio-button value="ASC">最早靠前</el-radio-button>
                     </el-radio-group>
                 </div>
                 <div class="u-op">
@@ -89,7 +89,24 @@ import { getConfig } from "../../service/cms";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "CommentComp",
-    props: ["id", "category", "normal", "order"],
+    props: {
+        id: {
+            type: [Number, String],
+            default: 0,
+        },
+        category: {
+            type: String,
+            default: "",
+        },
+        normal: {
+            type: Boolean,
+            default: true,
+        },
+        order: {
+            type: String,
+            default: "",
+        },
+    },
     components: {
         // CommentAvatar,
         CommentWithReply,

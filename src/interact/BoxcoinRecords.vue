@@ -67,7 +67,28 @@ import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 export default {
     name: "BoxcoinRecords",
-    props: ["postType", "postId", "cacheRecord", "postClient", "mode"],
+    props: {
+        postType: {
+            type: String,
+            default: "",
+        },
+        postId: {
+            type: [String, Number],
+            default: "",
+        },
+        cacheRecord: {
+            type: Object,
+            default: () => null,
+        },
+        postClient: {
+            type: String,
+            default: "",
+        },
+        mode: {
+            type: String,
+            default: "normal",
+        },
+    },
     components: {},
     data: function () {
         return {

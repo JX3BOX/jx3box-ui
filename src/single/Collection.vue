@@ -25,7 +25,16 @@ const { getLink } = utilModule;
 import { getCollection } from "../../service/cms";
 export default {
     name: "SingleCollection",
-    props: ["id", "defaultVisible"],
+    props: {
+        id: {
+            type: [Number, String],
+            default: 0,
+        },
+        defaultVisible: {
+            type: Boolean,
+            default: false,
+        },
+    },
     inject: [],
     components: {},
     data: function() {

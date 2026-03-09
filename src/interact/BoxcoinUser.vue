@@ -7,9 +7,9 @@
             </div>
         </el-tooltip>
         <el-tooltip effect="dark" content="您当前等级不够，不能够进行投币。" placement="top" v-else>
-             <div class="w-boxcoin-block disabled">
+            <div class="w-boxcoin-block disabled">
                 <img class="u-icon" svg-inline :src="iconPath" />
-                <span class="u-count" v-if="boxcoin">{{boxcoin}}</span>
+                <span class="u-count" v-if="boxcoin">{{ boxcoin }}</span>
             </div>
         </el-tooltip>
         <el-dialog
@@ -30,11 +30,11 @@
                     <Contributors v-if="authors && authors.length" :authors="authors" @chosen="handleChosen" />
                     <div class="u-points">
                         <el-radio-group v-model="count">
-                            <el-radio :label="item" v-for="item in fitPoints" :key="item" border>
+                            <el-radio :value="item" v-for="item in fitPoints" :key="item" border>
                                 <b>{{ item }}</b
                                 >盒币
                             </el-radio>
-                            <el-radio label="custom" border>自定义</el-radio>
+                            <el-radio value="custom" border>自定义</el-radio>
                             <el-input
                                 v-model="amount"
                                 v-show="count === 'custom'"
@@ -71,10 +71,51 @@ import { rewardBoxcoin } from "../../service/thx.js";
 import User from "@jx3box/jx3box-common/js/user";
 import Contributors from "./Contributors.vue";
 import { debounce } from "lodash";
-import JX3BOX  from "@jx3box/jx3box-common/data/jx3box.json";
+import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "BoxcoinUser",
-    props: ["boxcoin", "postType", "postId", "userId", "own", "points", "authors", "client","category","canGift"],
+    props: {
+        boxcoin: {
+            type: Number,
+            default: 0,
+        },
+        postType: {
+            type: String,
+            default: "",
+        },
+        postId: {
+            type: [String, Number],
+            default: "",
+        },
+        userId: {
+            type: [String, Number],
+            default: "",
+        },
+        own: {
+            type: Number,
+            default: 0,
+        },
+        points: {
+            type: Array,
+            default: () => [],
+        },
+        authors: {
+            type: Array,
+            default: () => [],
+        },
+        client: {
+            type: String,
+            default: "",
+        },
+        category: {
+            type: String,
+            default: "",
+        },
+        canGift: {
+            type: Boolean,
+            default: true,
+        },
+    },
     components: {
         Contributors,
     },
@@ -115,7 +156,7 @@ export default {
             return this.points; //.filter(item => item <= this.left)
         },
         iconPath() {
-            return JX3BOX.__cdn + "design/vector/icon/reward.svg"
+            return JX3BOX.__cdn + "design/vector/icon/reward.svg";
         },
     },
     watch: {
@@ -145,7 +186,7 @@ export default {
             rewardBoxcoin(this.postType, this.postId, this.chosen || this.userId, count, {
                 remark: this.remark,
                 client: this.client || this.hostClient,
-                redirect: this.category ? `/${this.category}/${this.postId}` : undefined
+                redirect: this.category ? `/${this.category}/${this.postId}` : undefined,
             })
                 .then((res) => {
                     this.$message({

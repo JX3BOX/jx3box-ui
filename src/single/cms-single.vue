@@ -99,7 +99,16 @@ export default {
         Comment,
         // RightAffix,
     },
-    props: ["post", "stat"],
+    props: {
+        post: {
+            type: Object,
+            default: () => ({}),
+        },
+        stat: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
     data: function () {
         return {
             collection_data: "",

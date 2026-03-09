@@ -34,9 +34,7 @@
                 <el-icon><InfoFilled /></el-icon>
                 <span>反馈</span>
             </a>
-            <!-- <AdminButton v-if="adminEnable" class="u-admin" /> -->
             <Admin v-if="adminEnable" :marksOptions="adminMarks" :show-extend="showExtend" :app="slug" :subtypeMap="subtypeMap" />
-            <!-- <AdminDrop v-if="adminEnable" /> -->
             <slot name="op-prepend"></slot>
         </div>
     </div>
@@ -53,22 +51,22 @@ import Bus from "../utils/bus";
 
 export default {
     name: "CommonBreadcrumb",
-    props: [
-    "name",
-        "slug",
-        "root",
-        "publishEnable",
-        "adminEnable",
-        "topicEnable",
-        "feedbackEnable",
-        "overlayEnable",
-        "crumbEnable",
-        "withoutLeft",
-        "adminMarks",
-        "icon",
-        "subtypeMap",
-        "showExtend"
-    ],
+    props: {
+        name: { type: String, default: "" },
+        slug: { type: String, default: "" },
+        root: { type: String, default: "" },
+        publishEnable: { type: Boolean, default: false },
+        adminEnable: { type: Boolean, default: false },
+        topicEnable: { type: Boolean, default: false },
+        feedbackEnable: { type: Boolean, default: false },
+        overlayEnable: { type: Boolean, default: false },
+        crumbEnable: { type: Boolean, default: false },
+        withoutLeft: { type: Boolean, default: false },
+        adminMarks: { type: Object, default: () => ({}) },
+        icon: { type: String, default: "" },
+        subtypeMap: { type: Object, default: () => ({}) },
+        showExtend: { type: Boolean, default: false },
+    },
     data: function () {
         return {
             isOpen: true,
@@ -130,8 +128,6 @@ export default {
     components: {
         Admin,
         Crumb,
-        // AdminButton,
-        // AdminDrop
     },
 };
 </script>

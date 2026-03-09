@@ -37,7 +37,7 @@ export default {
     name: "AuthorFollow",
     props: {
         uid: {
-            type: Number,
+            type: [Number, String],
             default: 0,
         },
     },

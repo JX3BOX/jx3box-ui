@@ -1,17 +1,26 @@
 <template>
-    <el-dialog class="m-design-task" :width="isPhone ? '95%' : '600px'" :model-value="modelValue" @close="close" title="快捷推送" append-to-body>
+    <el-dialog
+        class="m-design-task"
+        :width="isPhone ? '95%' : '600px'"
+        :model-value="modelValue"
+        @close="close"
+        title="快捷推送"
+        append-to-body
+    >
         <el-form :model="form" ref="form" :label-position="isPhone ? 'top' : 'left'" label-width="80px">
             <el-form-item label="标题">
                 <el-input v-model="form.title" placeholder="请输入标题"></el-input>
             </el-form-item>
             <el-form-item label="类型">
-                <el-select v-model="form.type" placeholder="请选择类型" style="width:100%;" filterable>
+                <el-select v-model="form.type" placeholder="请选择类型" style="width: 100%" filterable>
                     <el-option v-for="item in config" :key="item.id" :label="item.label" :value="item.name"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="版本">
                 <el-radio-group v-model="form.version">
-                    <el-radio-button v-for="(label, key) in versions" :key="key" :label="key">{{ label }}</el-radio-button>
+                    <el-radio-button v-for="(label, key) in versions" :key="key" :value="key">{{
+                        label
+                    }}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="备注">
@@ -22,19 +31,17 @@
             </el-form-item>
         </el-form>
 
-        <el-divider content-position="left">
-            近期推送
-        </el-divider>
+        <el-divider content-position="left"> 近期推送 </el-divider>
         <template v-if="logs && logs.length">
             <el-table :data="logs" border size="small" max-height="300px">
                 <el-table-column label="推送时间" prop="push_at" align="center">
-                    <template #default="{row}">
+                    <template #default="{ row }">
                         {{ formatTime(row.push_at) }}
                     </template>
                 </el-table-column>
                 <el-table-column label="推送人" prop="pusher.display_name" align="center"></el-table-column>
                 <el-table-column label="星级" prop="star" align="center">
-                    <template #default="{row}">
+                    <template #default="{ row }">
                         <el-rate v-model="row.star" disabled :colors="colors"></el-rate>
                     </template>
                 </el-table-column>
@@ -51,7 +58,7 @@
 
 <script>
 import { createDesignTask, getDesignTask, getConfigBannerTypes } from "../../service/design";
-import {pick} from "lodash";
+import { pick } from "lodash";
 import dayjs from "dayjs";
 import User from "@jx3box/jx3box-common/js/user";
 export default {
@@ -59,16 +66,16 @@ export default {
     props: {
         modelValue: {
             type: Boolean,
-            default: false
+            default: false,
         },
         post: {
             type: Object,
-            default: () => {}
-        }
+            default: () => {},
+        },
     },
     model: {
         prop: "modelValue",
-        event: "update:modelValue"
+        event: "update:modelValue",
     },
     emits: ["update:modelValue"],
     data() {
@@ -78,9 +85,9 @@ export default {
                 remark: "",
                 star: 0,
                 subtype: "",
-                version: "std"
+                version: "std",
             },
-            colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
+            colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
 
             logs: [],
             config: [],
@@ -89,12 +96,12 @@ export default {
             isEditor: User.isEditor(),
 
             versions: {
-                "std": "剑三",
-                "origin": "缘起",
-                "wujie": "无界",
-                "test": "体服"
-            }
-        }
+                std: "剑三",
+                origin: "缘起",
+                wujie: "无界",
+                test: "体服",
+            },
+        };
     },
     watch: {
         modelValue(val) {
@@ -108,11 +115,11 @@ export default {
                     this.loadConfig();
                 }
             }
-        }
+        },
     },
     methods: {
-        close(){
-            this.$emit("update:modelValue",false)
+        close() {
+            this.$emit("update:modelValue", false);
         },
         clearForm() {
             this.form = {
@@ -121,7 +128,7 @@ export default {
                 star: 0,
                 subtype: "",
                 version: "std",
-            }
+            };
 
             this.$refs?.form?.clearValidate();
         },
@@ -142,7 +149,7 @@ export default {
             createDesignTask(data).then(() => {
                 this.$message.success("提交成功");
                 this.close();
-            })
+            });
         },
         onCancel() {
             this.close();
@@ -150,28 +157,28 @@ export default {
         },
         loadLogs() {
             if (!this.post?.ID) return;
-            getDesignTask({ source_id: this.post?.ID }).then(res => {
+            getDesignTask({ source_id: this.post?.ID }).then((res) => {
                 this.logs = res.data.data || [];
-            })
+            });
         },
         loadConfig() {
-            getConfigBannerTypes({ _no_page: 1 }).then(res => {
+            getConfigBannerTypes({ _no_page: 1 }).then((res) => {
                 this.config = res.data.data || [];
-                this.config = this.config.filter(item => item.parent_id == 1);
-            })
+                this.config = this.config.filter((item) => item.parent_id == 1);
+            });
         },
         formatTime(time) {
             return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style lang="less">
 .m-design-task {
-.el-form-item {
-    margin-bottom: 12px;
-}
+    .el-form-item {
+        margin-bottom: 12px;
+    }
     .m-star-line {
         .el-form-item__content {
             top: 10px;

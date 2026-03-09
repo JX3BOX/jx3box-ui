@@ -8,10 +8,15 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getUserHonor } from "../../service/cms";
 import { inRange } from "lodash";
 
-const { __imgPath, __Root } = JX3BOX;
+const { __cdn, __Root } = JX3BOX;
 const HONOR_IMG_KEY = "honor_img";
 export default {
-    props: ["uid"],
+    props: {
+        uid: {
+            type: [Number, String],
+            default: 0,
+        },
+    },
     data: function () {
         return {
             honor: "",
@@ -35,12 +40,9 @@ export default {
     },
     methods: {
         imgUrl: function () {
-            let item = this.honor;
+            let item = this.honor?.honor_info;
             if (!item) return;
-            if (item.isImgIndex) {
-                return __imgPath + `decoration/honor/${item.img}/${item.img}_${item.imgIndex}.${item.img_ext}`;
-            }
-            return __imgPath + `decoration/honor/${item.img}/${item.img}.${item.img_ext}`;
+            return __cdn + `design/decoration/honor/${item.img}/${item.img}.${item.img_ext}`;
         },
         getHonor() {
             let user_id = this.uid;
@@ -72,7 +74,6 @@ export default {
             let ranking = honorConfig.ranking;
             let honorStr = honorConfig.year || "";
 
-            console.log(honorConfig, regPrefix);
             if (!only) {
                 if (regPrefix) {
                     honorStr = honorStr + (data[regPrefix[0].slice(1, -1)] || "");

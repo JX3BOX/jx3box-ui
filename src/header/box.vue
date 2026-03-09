@@ -41,7 +41,12 @@ const { __imgPath, __cdn } = JX3BOX;
 export default {
     name: "Box",
     mixins: [i18nMixin],
-    props: ["overlayEnable"],
+    props: {
+        overlayEnable: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             status: false,

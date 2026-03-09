@@ -4,15 +4,11 @@
             <el-radio
                 v-for="(item, i) in authors"
                 v-model="value"
-                :label="String(item.user_id)"
+                :value="String(item.user_id)"
                 :key="i"
                 @change="handleAuthorChange"
             >
-                <img
-                    class="u-pic"
-                    :src="showAvatar(item.user_avatar)"
-                    :alt="item.display_name"
-                />
+                <img class="u-pic" :src="showAvatar(item.user_avatar)" :alt="item.display_name" />
                 <span class="u-txt" :title="item.display_name">
                     {{ item.display_name }}
                 </span>
@@ -42,15 +38,15 @@ export default {
             deep: true,
             immediate: true,
             handler(val) {
-                if (val && val.length) this.value = String(val[0]?.user_id)
-            }
+                if (val && val.length) this.value = String(val[0]?.user_id);
+            },
         },
         value: {
             immediate: true,
             handler(val) {
-                val && this.$emit('chosen', this.value)
-            }
-        }
+                val && this.$emit("chosen", this.value);
+            },
+        },
     },
     methods: {
         handleAuthorChange() {},

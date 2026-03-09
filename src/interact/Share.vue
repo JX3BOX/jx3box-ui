@@ -52,7 +52,24 @@ import QrcodeVue from "qrcode.vue";
 const { __imgPath } = JX3BOX;
 export default {
     name: "ShareComp",
-    props: ["postType", "postId", "meta", "simple"],
+    props: {
+        postType: {
+            type: String,
+            default: "",
+        },
+        postId: {
+            type: [String, Number],
+            default: "",
+        },
+        meta: {
+            type: Object,
+            default: () => ({}),
+        },
+        simple: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             apis: {

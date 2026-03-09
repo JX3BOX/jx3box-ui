@@ -27,11 +27,11 @@
                     <Contributors v-if="authors && authors.length" :authors="authors" @chosen="handleChosen" />
                     <div class="u-points">
                         <el-radio-group v-model="count">
-                            <el-radio :label="item" v-for="item in fitPoints" :key="item" border>
+                            <el-radio :value="item" v-for="item in fitPoints" :key="item" border>
                                 <b>{{ item }}</b
                                 >盒币
                             </el-radio>
-                            <el-radio label="custom" border>自定义</el-radio>
+                            <el-radio value="custom" border>自定义</el-radio>
                             <el-input
                                 v-model="amount"
                                 v-show="count === 'custom'"
@@ -71,10 +71,51 @@ import { grantBoxcoin } from "../../service/thx.js";
 import { getBreadcrumb } from "../../service/breadcrumb.js";
 import User from "@jx3box/jx3box-common/js/user";
 import Contributors from "./Contributors.vue";
-import JX3BOX  from "@jx3box/jx3box-common/data/jx3box.json";
+import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "BoxcoinAdmin",
-    props: ["postType", "postId", "userId", "own", "total", "points", "max", "min", "authors", "client"],
+    props: {
+        postType: {
+            type: String,
+            default: "",
+        },
+        postId: {
+            type: [String, Number],
+            default: "",
+        },
+        userId: {
+            type: [String, Number],
+            default: "",
+        },
+        own: {
+            type: Number,
+            default: 0,
+        },
+        total: {
+            type: Number,
+            default: 0,
+        },
+        points: {
+            type: Array,
+            default: () => [],
+        },
+        max: {
+            type: Number,
+            default: 0,
+        },
+        min: {
+            type: Number,
+            default: 0,
+        },
+        authors: {
+            type: Array,
+            default: () => [],
+        },
+        client: {
+            type: String,
+            default: "",
+        },
+    },
     components: {
         Contributors,
     },
@@ -120,7 +161,7 @@ export default {
             return this.points.filter((item) => item <= this.left);
         },
         iconPath() {
-            return JX3BOX.__cdn + "design/vector/icon/taste.svg"
+            return JX3BOX.__cdn + "design/vector/icon/taste.svg";
         },
     },
     watch: {

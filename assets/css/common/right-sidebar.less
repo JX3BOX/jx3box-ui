@@ -1,4 +1,5 @@
 .c-sidebar-right {
+    /* assets/css/common/right-sidebar.less */
     // .pa;.lt(100%,0);
     .pf;
     .rt(0,@header-height + @bread-height);
@@ -11,11 +12,13 @@
     box-sizing: border-box;
 
     &.show-toggle {
+        /* assets/css/common/right-sidebar.less */
         background-color: @bg-light;
     }
 }
 
 .c-sidebar-right-title {
+    /* assets/css/common/right-sidebar.less */
     font-size: 18px;
     line-height: 24px;
     font-weight: 300;
@@ -24,6 +27,7 @@
     border-bottom: 1px solid #ebeef5;
 
     .u-icon {
+        /* assets/css/common/right-sidebar.less */
         width: 24px;
         height: 24px;
         margin-right: 10px;
@@ -31,7 +35,9 @@
 }
 
 .c-sidebar-right-list {
+    /* assets/css/common/right-sidebar.less */
     .u-item {
+        /* assets/css/common/right-sidebar.less */
         .db;
         height: 48px;
         line-height: 48px;
@@ -46,10 +52,12 @@
         .pr;
 
         &:hover {
+            /* assets/css/common/right-sidebar.less */
             color: @primary;
         }
 
         &:after {
+            /* assets/css/common/right-sidebar.less */
             content: "\e6e0";
             .pa;
             .rt(0,50%);
@@ -77,11 +85,14 @@
 
 // // 平板横屏
 @media screen and (max-width: @smallpc) {
+    /* assets/css/common/right-sidebar.less */
     .c-sidebar-right {
+        /* assets/css/common/right-sidebar.less */
         .pr;
         width: 100%;
         top: 0;
         &.show-toggle {
+            /* assets/css/common/right-sidebar.less */
             background-color: #fff;
             .pf;
             .rt(0,@header-height + @bread-height);
@@ -93,20 +104,24 @@
 }
 
 .c-sidebar-right-inner {
+    /* assets/css/common/right-sidebar.less */
     .size(100%);
     overflow-y: auto;
 
     &::-webkit-scrollbar {
+        /* assets/css/common/right-sidebar.less */
         width: 4px;
     }
 
     &::-webkit-scrollbar-track,
     &::-webkit-scrollbar-track-piece {
+        /* assets/css/common/right-sidebar.less */
         background-color: #fafafa;
         border-radius: 6px;
     }
 
     &::-webkit-scrollbar-thumb {
+        /* assets/css/common/right-sidebar.less */
         background-color: #eee;
         border-radius: 6px;
     }
@@ -114,11 +129,13 @@
     &::-webkit-scrollbar-button,
     &::-webkit-scrollbar-corner,
     &::-webkit-resizer {
+        /* assets/css/common/right-sidebar.less */
         display: none;
     }
 }
 // 折叠相关逻辑
 .c-sidebar-right-toggle {
+    /* assets/css/common/right-sidebar.less */
     display: block;
     .pa;
     .lb(-21px, calc(50% - 20px));
@@ -136,58 +153,72 @@
     color: #999;
 
     &:hover {
+        /* assets/css/common/right-sidebar.less */
         color: #222;
     }
 
     &.close-sidebar-right {
+        /* assets/css/common/right-sidebar.less */
         left: 0;
     }
 
     svg {
+        /* assets/css/common/right-sidebar.less */
         fill: @color;
     }
 }
 
 .closeLeftSidebar() {
+    /* assets/css/common/right-sidebar.less */
     transition: 0.2s ease-in-out;
     transform: translateX(100%);
 }
 
 .openLeftSidebar() {
+    /* assets/css/common/right-sidebar.less */
     transition: 0.2s ease-in-out;
     transform: translateX(0);
 }
 
 .c-sidebar-right.is-close {
+    /* assets/css/common/right-sidebar.less */
     .closeLeftSidebar();
 
     .c-sidebar-right-toggle {
+        /* assets/css/common/right-sidebar.less */
         transition: 0.2s ease-in-out;
         transform: translateX(-100%);
     }
 }
 
 .c-sidebar-right.is-open {
+    /* assets/css/common/right-sidebar.less */
     .openLeftSidebar();
 
     .c-sidebar-right-toggle {
+        /* assets/css/common/right-sidebar.less */
         transition: 0.2s ease-in-out;
         transform: translateX(0);
     }
 }
 
 @media screen and (max-width: @ipad) {
+    /* assets/css/common/right-sidebar.less */
     .c-sidebar-right-toggle {
+        /* assets/css/common/right-sidebar.less */
         // .none;
     }
 
     .c-sidebar-right.isopen {
+        /* assets/css/common/right-sidebar.less */
         box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1);
     }
 }
 
 @media print {
+    /* assets/css/common/right-sidebar.less */
     .c-sidebar-right {
+        /* assets/css/common/right-sidebar.less */
         .none;
     }
 }

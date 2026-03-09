@@ -94,7 +94,24 @@ const { __clients } = JX3BOX;
 
 export default {
     name: "PostHeader",
-    props: ["post", "stat", "titleExtra", "anonymous",],
+    props: {
+        post: {
+            type: Object,
+            default: () => ({}),
+        },
+        stat: {
+            type: Object,
+            default: () => ({}),
+        },
+        titleExtra: {
+            type: String,
+            default: "",
+        },
+        anonymous: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             wordCount: 0,

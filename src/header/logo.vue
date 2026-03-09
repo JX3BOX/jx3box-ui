@@ -22,7 +22,7 @@ export default {
     components: {
         // Logo,
     },
-    props: [],
+    props: {},
     data: function () {
         return {
             isIndex: /\/index\/?/.test(location.pathname),

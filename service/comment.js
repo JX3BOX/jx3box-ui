@@ -1,11 +1,12 @@
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
 import { ElNotification as Notification } from "element-plus";
-import { $cms } from "@jx3box/jx3box-common/js/api";
+import { $cms, $next } from "@jx3box/jx3box-common/js/api";
 import User from "@jx3box/jx3box-common/js/user";
 
 const KEY = "cmt_order";
-const { __Links, __next } = JX3BOX;
+const { __Links } = JX3BOX;
+const $ = $next({ interceptor: false, mute: true });
 
 export async function getOrderMode() {
     if (User.isLogin()) {
@@ -51,14 +52,12 @@ export async function setOrderMode(val) {
 }
 
 export const GET = function (url, queryParams) {
-    let options = {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-    };
-    return __fetch(url, queryParams, options);
+    return $
+        .get(url, {
+            params: queryParams,
+        })
+        .then((res) => res.data)
+        .catch((err) => __handleError(err));
 };
 
 const postRecord = {};
@@ -90,98 +89,59 @@ export const POST = function (url, queryParams, body) {
             count: 0,
         };
     }
-    let options = {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-    };
-    return __fetch(url, queryParams, options);
+    return $
+        .post(url, body, {
+            params: queryParams,
+        })
+        .then((res) => res.data)
+        .catch((err) => __handleError(err));
 };
 export const PUT = function (url, queryParams, body) {
-    let options = {
-        method: "PUT",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-    };
-    return __fetch(url, queryParams, options);
+    return $
+        .put(url, body, {
+            params: queryParams,
+        })
+        .then((res) => res.data)
+        .catch((err) => __handleError(err));
 };
 
 export const DELETE = function (url, queryParams) {
-    let options = {
-        method: "DELETE",
-    };
-    return __fetch(url, queryParams, options);
+    return $
+        .delete(url, {
+            params: queryParams,
+        })
+        .then((res) => res.data)
+        .catch((err) => __handleError(err));
 };
 
-function __fetch(url, queryParams, options) {
-    let domain = process.env.NODE_ENV == "production" ? __next : "/";
-    if (domain[domain.length - 1] == "/") {
-        domain = domain.substring(0, domain.length - 1);
+function __handleError(err) {
+    const status = err?.response?.status;
+    const statusText = err?.response?.statusText || "Request Error";
+    const message = err?.response?.data?.msg || err?.response?.data || "";
+    switch (status) {
+        case 401:
+        case 403:
+            window.location.href = __Links.account.login + "?redirect=" + encodeURIComponent(window.location.href);
+            break;
+        case 423:
+            window.location.href = __Links.account.email_verify + "?redirect=" + encodeURIComponent(window.location.href);
+            break;
+        case 406:
+            Notification.warning({
+                title: "系统",
+                message: message || "提交内容不合法,请重新提交",
+                duration: 3000,
+                position: "bottom-right",
+            });
+            break;
+        default:
+            Notification.error({
+                title: "系统:" + statusText,
+                message: message || "系统错误,请稍后重试!",
+                duration: 3000,
+                position: "bottom-right",
+            });
+            break;
     }
-    url = domain + url;
-    options.credentials = "include";
-    if (queryParams) {
-        let queryQueue = [];
-        Object.keys(queryParams).forEach((key) => {
-            queryQueue.push(key + "=" + queryParams[key]);
-        });
-        let domain = __next;
-        if (domain[domain.length - 1] == "/") {
-            domain = domain.substring(0, domain.length - 1);
-        }
-        url = url + "?" + queryQueue.join("&");
-    }
-
-    return fetch(url, options).then((resp) => {
-        switch (resp.status) {
-            case 200:
-                break;
-            case 401:
-                window.location.href = __Links.account.login + "?redirect=" + encodeURIComponent(window.location.href);
-                throw new Error("错误:" + resp.statusText);
-            case 403:
-                window.location.href = __Links.account.login + "?redirect=" + encodeURIComponent(window.location.href);
-                throw new Error("错误:" + resp.statusText);
-            case 423:
-                window.location.href =
-                    __Links.account.email_verify + "?redirect=" + encodeURIComponent(window.location.href);
-                throw new Error("错误:" + resp.statusText);
-            case 406:
-                resp.text().then((body) => {
-                    Notification.warning({
-                        title: "系统",
-                        message: body || "提交内容不合法,请重新提交",
-                        duration: 3000,
-                        position: "bottom-right",
-                    });
-                });
-
-                throw new Error("错误:" + resp.statusText);
-            default:
-                resp.text().then((body) => {
-                    Notification.error({
-                        title: "系统:" + resp.statusText,
-                        message: body || "系统错误,请稍后重试!",
-                        duration: 3000,
-                        position: "bottom-right",
-                    });
-                });
-
-                throw new Error("错误:" + resp.statusText);
-        }
-        let contentType = resp.headers.get("Content-Type");
-        contentType = contentType && contentType.split(";").shift();
-        switch (contentType) {
-            case "application/json":
-                return resp.json();
-            default:
-                return resp.text();
-        }
-    });
+    return Promise.reject(err);
 }

@@ -7,16 +7,11 @@
             :disabled="isSelf || !status"
             :title="btnTitle"
             plain
+            size="small"
             >赠礼</el-button
         >
 
-        <el-dialog
-            title="赠礼"
-            v-model="visible"
-            :append-to-body="true"
-            class="c-author-gift-dialog"
-            v-if="status"
-        >
+        <el-dialog title="赠礼" v-model="visible" :append-to-body="true" class="c-author-gift-dialog" v-if="status">
             <div class="u-content">
                 <div class="u-left">
                     <em class="u-label">🌟 金箔</em>
@@ -27,7 +22,7 @@
                     <em class="u-label">❤️ 赠送</em>
                     <div class="u-points">
                         <el-radio-group v-model="count">
-                            <el-radio :label="item" v-for="item in fitPoints" :key="item" border>
+                            <el-radio :value="item" v-for="item in fitPoints" :key="item" border>
                                 <b>{{ item }}</b
                                 >金箔
                             </el-radio>
@@ -64,7 +59,12 @@ import User from "@jx3box/jx3box-common/js/user";
 import { sendCny, checkCnyStatus, checkGiftStatus } from "../../service/thx";
 export default {
     name: "AuthorGift",
-    props: ["uid"],
+    props: {
+        uid: {
+            type: [Number, String],
+            default: 0,
+        },
+    },
     components: {},
     data: function () {
         return {

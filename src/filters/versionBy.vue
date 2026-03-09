@@ -18,7 +18,12 @@
 <script>
 export default {
     name: "versionBy",
-    props: ["value"],
+    props: {
+        value: {
+            type: [String, Number],
+            default: "",
+        },
+    },
     emits: ["filter"],
     data: function () {
         return {

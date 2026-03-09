@@ -40,7 +40,7 @@ const order_map = {
 export default {
     name: "orderBy",
     emits: ["filter"],
-    props: [],
+    props: {},
     data: function () {
         return {
             visible: false,

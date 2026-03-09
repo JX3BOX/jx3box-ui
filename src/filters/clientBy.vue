@@ -26,7 +26,20 @@ const clients = {
 export default {
     name: "clientBy",
     emits: ["filter"],
-    props: ["type", "clients", "showWujie"],
+    props: {
+        type: {
+            type: String,
+            default: "",
+        },
+        clients: {
+            type: Object,
+            default: () => null,
+        },
+        showWujie: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             client: this.type || "",

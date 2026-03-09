@@ -14,7 +14,16 @@ import { postStat, getStat } from "@jx3box/jx3box-common/js/stat";
 import JX3BOX  from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "LikeComp",
-    props: ["postType", "postId"],
+    props: {
+        postType: {
+            type: String,
+            default: "",
+        },
+        postId: {
+            type: [String, Number],
+            default: "",
+        },
+    },
     data: function () {
         return {
             status: true,

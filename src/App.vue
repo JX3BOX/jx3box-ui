@@ -1,7 +1,7 @@
 <template>
     <div class="container-page">
         <CommonHeader></CommonHeader>
-        <!-- <breadcrumb
+        <breadcrumb
             name="频道名称"
             slug="slug"
             root="/slug"
@@ -15,9 +15,9 @@
             </template>
             <template #op-prepend> </template>
         </breadcrumb>
-        <LeftSidebar :open="true" :uid="7">
+        <LeftSidebar :open="true" :uid="8719">
             <LeftSideToggle :mobileOnly="true" />
-            <Author :uid="7" />
+            <Author :uid="8719" />
         </LeftSidebar>
         <Main :withoutLeft="false" :withoutRight="false">
             <versionBy value=""></versionBy>
@@ -72,42 +72,42 @@
                     </div>
                 </template>
             </SuspendCommon>
-        </Main> -->
+        </Main>
         <CommonFooter> </CommonFooter>
     </div>
 </template>
 
 <script>
-// import singlebox from "./single/cms-single.vue";
-// import UploadAlum from "./editor/UploadAlum.vue";
-// import Author from "./single/Author.vue";
-// import SimpleThxVue from "./single/SimpleThx.vue";
-// import Comment from "./single/Comment.vue";
-// import Thx from "./single/Thx.vue";
-// import PostHeader from "./single/PostHeader.vue";
-// import PostTopic from "./single/PostTopic.vue";
-// import axios from "axios";
-// import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
-// import { get_item } from "../service/item";
-// import AdminDirectMessage from "./bread/AdminDirectMessage.vue";
-// import Admin from "@/bread/Admin.vue";
-// import versionBy from "./filters/versionBy.vue";
-// import SuspendCommon from "./SuspendCommon.vue";
+import singlebox from "./single/cms-single.vue";
+import UploadAlum from "./editor/UploadAlum.vue";
+import Author from "./single/Author.vue";
+import SimpleThxVue from "./single/SimpleThx.vue";
+import Comment from "./single/Comment.vue";
+import Thx from "./single/Thx.vue";
+import PostHeader from "./single/PostHeader.vue";
+import PostTopic from "./single/PostTopic.vue";
+import axios from "axios";
+import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
+import { get_item } from "../service/item";
+import AdminDirectMessage from "./bread/AdminDirectMessage.vue";
+import Admin from "@/bread/Admin.vue";
+import versionBy from "./filters/versionBy.vue";
+import SuspendCommon from "./SuspendCommon.vue";
 export default {
     name: "App",
     components: {
-        // SimpleThxVue,
-        // Author,
-        // Comment,
-        // Thx,
-        // // PostHeader,
-        // PostTopic,
-        // UploadAlum,
-        // // AdminDirectMessage,
-        // singlebox,
-        // versionBy,
-        // SuspendCommon,
-        // // Admin,
+        SimpleThxVue,
+        Author,
+        Comment,
+        Thx,
+        // PostHeader,
+        PostTopic,
+        UploadAlum,
+        // AdminDirectMessage,
+        singlebox,
+        versionBy,
+        SuspendCommon,
+        // Admin,
     },
     data() {
         return {
