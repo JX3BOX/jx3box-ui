@@ -2,13 +2,13 @@
     <div class="c-author-fans" v-if="list && list.length">
         <div class="u-label">
             <img svg-inline src="../../assets/img/leftsidebar/fans.svg" />
-            <span>粉丝榜</span>
+            <span>{{ $jx3boxT("jx3boxUi.authorFans.title", "粉丝榜") }}</span>
         </div>
         <div class="f-avatar" v-if="list && list.length">
             <el-tooltip
                 class="item"
                 effect="dark"
-                :content="'累计打赏' + item.summary.toString() + '盒币'"
+                :content="$jx3boxT('jx3boxUi.authorFans.summary', '累计打赏{count}盒币', { count: item.summary.toString() })"
                 placement="top"
                 v-for="item in list"
                 :key="item.pay_user_id"
@@ -20,9 +20,9 @@
             </el-tooltip>
         </div>
         <div class="f-bottom">
-            粉丝数: <span class="u-count">{{ fans_count }}</span
+            {{ $jx3boxT("jx3boxUi.authorFans.fansCount", "粉丝数: {count}", { count: fans_count }) }}
             ><template v-if="boxcoin_count"
-                >，累计收到盒币打赏: <span class="u-count">{{ boxcoin_count }}</span></template
+                >{{ $jx3boxT("jx3boxUi.authorFans.boxcoinCount", "，累计收到盒币打赏: {count}", { count: boxcoin_count }) }}</template
             >
         </div>
     </div>
@@ -31,8 +31,10 @@
 <script>
 import { getFansList, getSummary } from "../../service/author";
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AuthorFans",
+    mixins: [i18nMixin],
     props: {
         uid: {
             type: [Number, String],

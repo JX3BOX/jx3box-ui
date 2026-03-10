@@ -7,7 +7,7 @@
                     type="text"
                     autocomplete="off"
                     name="q"
-                    :placeholder="$jx3boxT('jx3boxUi.header.searchPlaceholder', '搜索..')"
+                    :placeholder="$jx3boxT('jx3boxUi.commonHeader.searchPlaceholder', '搜索..')"
                     ref="searchInput"
                 />
                 <input type="hidden" name="client" :value="client" />
@@ -16,7 +16,7 @@
                     <img
                         svg-inline
                         src="../../assets/img/common/search-key-slash.svg"
-                        :alt="$jx3boxT('jx3boxUi.header.search', '搜索')"
+                        :alt="$jx3boxT('jx3boxUi.commonHeader.search', '搜索')"
                     />
                 </i>
             </form>

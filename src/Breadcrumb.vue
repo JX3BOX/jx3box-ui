@@ -22,7 +22,7 @@
                 class="u-publish el-button el-button--primary el-button--medium u-op-public"
             >
                 <el-icon><Edit /></el-icon>
-                <span>发布</span>
+                <span>{{ $jx3boxT("jx3boxUi.breadcrumb.publish", "发布") }}</span>
             </a>
             <a
                 v-if="feedbackEnable"
@@ -32,7 +32,7 @@
                 target="_blank"
             >
                 <el-icon><InfoFilled /></el-icon>
-                <span>反馈</span>
+                <span>{{ $jx3boxT("jx3boxUi.breadcrumb.feedback", "反馈") }}</span>
             </a>
             <Admin v-if="adminEnable" :marksOptions="adminMarks" :show-extend="showExtend" :app="slug" :subtypeMap="subtypeMap" />
             <slot name="op-prepend"></slot>
@@ -48,9 +48,11 @@ import Admin from "./bread/Admin.vue";
 import Crumb from "./bread/Crumb.vue";
 import { isApp } from "../assets/js/app.js";
 import Bus from "../utils/bus";
+import i18nMixin from "../i18n/mixin";
 
 export default {
     name: "CommonBreadcrumb",
+    mixins: [i18nMixin],
     props: {
         name: { type: String, default: "" },
         slug: { type: String, default: "" },

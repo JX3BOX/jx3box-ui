@@ -4,7 +4,7 @@
             <span class="el-dropdown-link">
                 <span class="u-menu-label">
                     <el-icon> <operation /> </el-icon>
-                    {{ value ? value : "资料片" }}
+                    {{ value ? value : $jx3boxT("jx3boxUi.zlpBy.default", "资料片") }}
                     <el-icon>
                         <arrow-down />
                     </el-icon>
@@ -13,7 +13,7 @@
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item @click="filter('')">
-                        {{ "全部" }}
+                        {{ $jx3boxT("jx3boxUi.zlpBy.all", "全部") }}
                     </el-dropdown-item>
                     <el-dropdown-item v-for="item in data" :key="item" @click="filter(item)">{{
                         item
@@ -26,8 +26,10 @@
 
 <script>
 import zlps from "@jx3box/jx3box-common/data/jx3_zlp.json";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "zlpBy",
+    mixins: [i18nMixin],
     emits: ["filter"],
     props: {
         client: {

@@ -6,25 +6,25 @@
                     <span class="u-meta u-action">
                         <el-icon><Trophy /></el-icon>
                     </span>
-                    <span class="u-meta u-user">参与打赏</span>
-                    <span class="u-meta u-user">收益作者</span>
-                    <span class="u-meta u-count">盒币</span>
-                    <span class="u-meta u-remark">寄语</span>
+                    <span class="u-meta u-user">{{ $jx3boxT("jx3boxUi.boxcoinRecords.participant", "参与打赏") }}</span>
+                    <span class="u-meta u-user">{{ $jx3boxT("jx3boxUi.boxcoinRecords.author", "收益作者") }}</span>
+                    <span class="u-meta u-count">{{ $jx3boxT("jx3boxUi.boxcoinRecords.boxcoin", "盒币") }}</span>
+                    <span class="u-meta u-remark">{{ $jx3boxT("jx3boxUi.boxcoinRecords.remark", "寄语") }}</span>
                     <time class="u-meta u-time"></time>
                 </li>
                 <li v-for="(item, i) in list" :key="i" class="u-item u-body">
                     <span class="u-meta u-action">
                         <template v-if="item.is_user_gift">
-                            <i title="打赏"><img class svg-inline src="../../assets/img/widget/gift.svg" /></i>
+                            <i :title="$jx3boxT('jx3boxUi.boxcoinRecords.reward', '打赏')"><img class svg-inline src="../../assets/img/widget/gift.svg" /></i>
                         </template>
                         <template v-else>
-                            <i title="品鉴"><img class svg-inline src="../../assets/img/widget/admin_gift.svg" /></i>
+                            <i :title="$jx3boxT('jx3boxUi.boxcoinRecords.appraise', '品鉴')"><img class svg-inline src="../../assets/img/widget/admin_gift.svg" /></i>
                         </template>
                     </span>
                     <template v-if="item.ext_operate_user_info?.id == 1">
                         <span class="u-meta u-user u-default">
                             <img class="u-user-avatar" :src="showAvatar(item.ext_operate_user_info.avatar)" alt />
-                            <span>系统</span>
+                            <span>{{ $jx3boxT("jx3boxUi.boxcoinRecords.system", "系统") }}</span>
                         </span>
                     </template>
                     <a v-else class="u-meta u-user" :href="authorLink(item.operate_user_id)" target="_blank">
@@ -43,7 +43,7 @@
                     <time class="u-meta u-time">{{ showTime(item.created_at) }}</time>
                     <span class="u-client" v-if="isSuperAdmin">{{ item.client }}</span>
                     <span class="u-delete" v-if="isSuperAdmin" @click="recovery(item, i)">
-                        <i class="Delete"></i>撤销
+                        <i class="Delete"></i>{{ $jx3boxT("jx3boxUi.boxcoinRecords.revoke", "撤销") }}
                     </span>
                 </li>
             </ul>
@@ -65,8 +65,10 @@ import { getPostBoxcoinRecords, recoveryBoxcoin } from "../../service/thx";
 import User from "@jx3box/jx3box-common/js/user";
 import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "BoxcoinRecords",
+    mixins: [i18nMixin],
     props: {
         postType: {
             type: String,
@@ -149,13 +151,16 @@ export default {
             });
         },
         recovery: function (item, i) {
-            this.$alert("是否确定撤销该评分？", "确认", {
-                confirmButtonText: "确定",
+            this.$alert(
+                this.$jx3boxT("jx3boxUi.boxcoinRecords.confirmRevoke", "是否确定撤销该评分？"),
+                this.$jx3boxT("jx3boxUi.boxcoinRecords.confirmTitle", "确认"),
+                {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
                 callback: (action) => {
                     if (action == "confirm") {
                         recoveryBoxcoin(item.id).then(() => {
                             this.$message({
-                                message: "撤销成功",
+                                message: this.$jx3boxT("jx3boxUi.boxcoinRecords.revokeSuccess", "撤销成功"),
                                 type: "success",
                             });
                             this.list.splice(i, 1);

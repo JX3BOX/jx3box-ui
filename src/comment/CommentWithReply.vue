@@ -12,16 +12,16 @@
             <div class="u-flex-1">
                 <div class="c-comment-cmt__author">
                     <el-link class="u-name" type="primary" target="_blank" :href="userHref">{{
-                        username || "人字榜800线无名小侠"
+                        username || $jx3boxT("jx3boxUi.commentWithReply.defaultName", "人字榜800线无名小侠")
                     }}</el-link>
                     <span class="u-mark u-top" v-if="item.is_top"
-                        ><el-icon><Download></Download></el-icon>置顶</span
+                        ><el-icon><Download></Download></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.top", "置顶") }}</span
                     >
                     <span class="u-mark u-star" v-if="item.is_star"
-                        ><el-icon><Star></Star></el-icon>精华</span
+                        ><el-icon><Star></Star></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.star", "精华") }}</span
                     >
                     <span class="u-mark u-secret" v-if="item.is_secret"
-                        ><el-icon><Cherry></Cherry></el-icon>悄悄话</span
+                        ><el-icon><Cherry></Cherry></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.secret", "悄悄话") }}</span
                     >
                 </div>
                 <CommentContent
@@ -71,9 +71,11 @@ import { POST, DELETE, GET } from "../../service/comment";
 import CommentAvatar from "../comment/Avatar.vue";
 import { getDecoration } from "../../service/cms";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../../i18n/mixin";
 const { __imgPath } = JX3BOX;
 const DECORATION_KEY = "decoration_comment_";
 export default {
+    mixins: [i18nMixin],
     props: {
         item: {
             type: Object,
@@ -195,7 +197,7 @@ export default {
                 .then(() => {
                     this.$notify({
                         title: "",
-                        message: "评论成功!",
+                        message: this.$jx3boxT("jx3boxUi.commentWithReply.commentSuccess", "评论成功!"),
                         type: "success",
                         duration: 3000,
                         position: "bottom-right",
@@ -210,7 +212,7 @@ export default {
                 .then(() => {
                     this.$notify({
                         title: "",
-                        message: "删除成功!",
+                        message: this.$jx3boxT("jx3boxUi.commentWithReply.deleteSuccess", "删除成功!"),
                         type: "success",
                         duration: 3000,
                         position: "bottom-right",

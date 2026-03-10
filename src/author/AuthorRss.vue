@@ -17,8 +17,10 @@
 import { getAuthorRss, subscribeAuthor, unsubscribeAuthor } from "@jx3box/jx3box-common/js/rss";
 import User from "@jx3box/jx3box-common/js/user";
 const jx3box = require("@jx3box/jx3box-common/data/jx3box.json");
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AuthorRss",
+    mixins: [i18nMixin],
     props: {
         uid: {
             type: Number,
@@ -38,7 +40,9 @@ export default {
     },
     computed: {
         btnText() {
-            return this.subscribed ? "已关注" : "关注";
+            return this.subscribed
+                ? this.$jx3boxT("jx3boxUi.authorRss.followed", "已关注")
+                : this.$jx3boxT("jx3boxUi.authorRss.follow", "关注");
         },
         btnType() {
             return !this.subscribed ? "info" : "warning";
@@ -82,7 +86,7 @@ export default {
                 subscribeAuthor({ id: this.uid, data: { title: this.data?.display_name } })
                     .then(() => {
                         this.subscribed = true;
-                        this.$message.success("关注成功");
+                        this.$message.success(this.$jx3boxT("jx3boxUi.authorRss.followSuccess", "关注成功"));
                     })
                     .catch((err) => {
                         console.log(err);
@@ -98,7 +102,7 @@ export default {
             // }).then(() => {
                 unsubscribeAuthor({ id: this.uid })
                     .then(() => {
-                        this.$message.success("操作成功");
+                        this.$message.success(this.$jx3boxT("jx3boxUi.authorRss.success", "操作成功"));
                         this.subscribed = false;
                     })
                     .catch((err) => {

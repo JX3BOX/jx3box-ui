@@ -2,7 +2,7 @@
     <div class="c-author-teams" v-if="ready">
         <div class="u-label">
             <img svg-inline src="../../assets/img/leftsidebar/united.svg" />
-            <span>所在团队</span>
+            <span>{{ $jx3boxT("jx3boxUi.authorTeams.title", "所在团队") }}</span>
         </div>
         <div class="u-teams">
             <el-tooltip
@@ -25,9 +25,11 @@
 <script>
 import { getLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import { getUserPublicTeams } from "../../service/author";
+import i18nMixin from "../../i18n/mixin";
 
 export default {
     name: "AuthorTeams",
+    mixins: [i18nMixin],
     props: ["uid"],
     components: {},
     data: function () {

@@ -2,7 +2,7 @@
     <div class="c-header-msg" id="c-header-msg">
         <el-tooltip
             effect="dark"
-            :content="$jx3boxT('jx3boxUi.header.messageCenter', '消息中心')"
+            :content="$jx3boxT('jx3boxUi.commonHeader.messageCenter', '消息中心')"
             placement="bottom"
             popper-class="c-header-tooltip"
         >
@@ -13,7 +13,7 @@
                     <img
                         svg-inline
                         src="../../assets/img/common/bell.svg"
-                        :alt="$jx3boxT('jx3boxUi.header.messageCenter', '消息中心')"
+                        :alt="$jx3boxT('jx3boxUi.commonHeader.messageCenter', '消息中心')"
                     />
                 </i>
             </a>

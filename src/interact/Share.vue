@@ -8,7 +8,7 @@
                         class="u-share2-item"
                         :key="shareItem.key"
                         @click="share(shareItem.key)"
-                        title="分享"
+                        :title="$jx3boxT('jx3boxUi.share.share', '分享')"
                     >
                         <img class="u-share-icon" svg-inline :src="shareItem.img" :alt="shareItem.name">
                         <div class="u-share2-name">{{ shareItem.name }}</div>
@@ -22,7 +22,7 @@
                         :size="75"
                         level="H"
                     ></qrcode-vue>
-                    <span>微信扫一扫分享</span>
+                    <span>{{ $jx3boxT("jx3boxUi.share.wechatShare", "微信扫一扫分享") }}</span>
                 </div>
             </div>
 
@@ -31,7 +31,7 @@
                     <div v-if="simple">
                         <img class="u-icon u-simple-icon" svg-inline :src="iconPath" />
                         <!-- <i class="el-icon-position"></i> -->
-                        <span class="u-text">分享</span>
+                        <span class="u-text">{{ $jx3boxT("jx3boxUi.share.share", "分享") }}</span>
                     </div>
                     <img
                         v-else
@@ -48,10 +48,12 @@
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import QrcodeVue from "qrcode.vue";
+import i18nMixin from "../../i18n/mixin";
 
 const { __imgPath } = JX3BOX;
 export default {
     name: "ShareComp",
+    mixins: [i18nMixin],
     props: {
         postType: {
             type: String,
@@ -81,22 +83,22 @@ export default {
             },
             shareList: [
                 {
-                    name: '微博',
+                    name: this.$jx3boxT("jx3boxUi.share.weibo", "微博"),
                     key: 'weibo',
                     img: require('../../assets/img/widget/weibo.svg'),
                 },
                 {
-                    name: 'QQ',
+                    name: this.$jx3boxT("jx3boxUi.share.qq", "QQ"),
                     key: 'qq',
                     img: require('../../assets/img/widget/qq.svg'),
                 },
                 {
-                    name: 'QQ空间',
+                    name: this.$jx3boxT("jx3boxUi.share.qzone", "QQ空间"),
                     key: 'qzone',
                     img: require('../../assets/img/widget/qzone.svg'),
                 },
                 {
-                    name: '贴吧',
+                    name: this.$jx3boxT("jx3boxUi.share.tieba", "贴吧"),
                     key: 'tieba',
                     img: require('../../assets/img/widget/tieba.svg'),
                 },

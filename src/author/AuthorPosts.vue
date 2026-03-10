@@ -2,7 +2,7 @@
     <div class="c-author-posts" v-if="ready">
         <div class="u-label">
             <img svg-inline src="../../assets/img/leftsidebar/post.svg" />
-            <span>最新作品</span>
+            <span>{{ $jx3boxT("jx3boxUi.authorPosts.latest", "最新作品") }}</span>
             <a :href="authorLink(uid)" class="u-more" target="_blank"
                 ><img svg-inline src="../../assets/img/leftsidebar/more.svg"
             /></a>
@@ -12,7 +12,10 @@
             <li v-for="(item, i) in data" :key="i">
                 <a class="u-item" :href="url(item.ID, item.post_type)" target="_blank">
                     <img svg-inline src="../../assets/img/leftsidebar/arrow.svg" class="u-icon" />
-                    <span class="u-title">{{ item.post_title || item.post_type + "/无标题" }}</span>
+                    <span class="u-title">{{
+                        item.post_title ||
+                        $jx3boxT("jx3boxUi.authorPosts.noTitle", "{type}/无标题", { type: item.post_type })
+                    }}</span>
                 </a>
             </li>
         </ul>
@@ -22,8 +25,10 @@
 <script>
 import { authorLink, getLink } from "@jx3box/jx3box-common/js/utils";
 import { getUserPosts } from "../../service/author";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AuthorPosts",
+    mixins: [i18nMixin],
     props: ["uid"],
     data: function () {
         return {

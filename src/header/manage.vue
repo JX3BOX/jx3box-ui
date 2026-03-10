@@ -7,7 +7,7 @@
                 class="u-add"
                 svg-inline
                 src="../../assets/img/common/manage.svg"
-                :alt="$jx3boxT('jx3boxUi.header.manageCenter', '扩展中心')"
+                :alt="$jx3boxT('jx3boxUi.commonHeader.manageCenter', '扩展中心')"
             />
         </span>
         <ul class="u-menu u-pop-content">
@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         getPanelLabel(item) {
-            if (item?.key) return this.$jx3boxT(`jx3boxUi.header.panel.${item.key}`, item.label || item.key);
+            if (item?.key) return this.$jx3boxT(`jx3boxUi.commonHeader.panel.${item.key}`, item.label || item.key);
             return item?.label || "";
         },
         loadPanel: function () {

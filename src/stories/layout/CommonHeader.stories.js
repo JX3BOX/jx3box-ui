@@ -5,6 +5,11 @@ const meta = {
     component: CommonHeader,
     parameters: {
         layout: 'fullscreen',
+        shell: {
+            enabled: true,
+            placement: 'header',
+            showHeader: false,
+        },
     },
     argTypes: {
         overlayEnable: { control: 'boolean' },
@@ -23,7 +28,7 @@ export const Default = {
             return { args };
         },
         template: `
-            <div style="min-height: 200vh; background: linear-gradient(180deg, #0b1220 0%, #1f2937 100%);">
+            <div style="min-height: 100vh;">
                 <CommonHeader v-bind="args" />
                 <div style="height: 1600px;"></div>
             </div>

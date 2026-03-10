@@ -32,7 +32,7 @@
             </div>
             <div class="m-more" v-if="btnConfig.showMore" @click="setMore">
                 <!--                <img class="u-icon" src="../assets/img/suspend/more.svg" svg-inline /> -->
-                更多
+                {{ $jx3boxT("jx3boxUi.suspendCommon.more", "更多") }}
             </div>
         </div>
         <!-- 样式分类（icon&more） -->
@@ -46,7 +46,7 @@
                 <div
                     v-if="btnConfig.showFixed"
                     class="u-icon-d"
-                    @click="clickDrawer({ type: 'pin', text: '固定按钮' }, 1)"
+                    @click="clickDrawer({ type: 'pin', text: $jx3boxT('jx3boxUi.suspendCommon.pinButton', '固定按钮') }, 1)"
                 >
                     <img
                         class="u-icon active"
@@ -60,7 +60,7 @@
                 <div
                     v-if="btnConfig.showCollect"
                     class="u-icon-d"
-                    @click="clickDrawer({ type: 'collect', text: '收藏' }, 1)"
+                    @click="clickDrawer({ type: 'collect', text: $jx3boxT('jx3boxUi.suspendCommon.collect', '收藏') }, 1)"
                 >
                     <img class="u-icon active" src="../assets/img/suspend/collect.svg" svg-inline v-if="!isCollect" />
                     <img class="u-icon active" src="../assets/img/suspend/collect_slash.svg" svg-inline v-else />
@@ -72,14 +72,14 @@
             </div>
             <div class="m-more" v-if="btnConfig.showMore" @click="setMore">
                 <!--                <img class="u-icon" src="../assets/img/suspend/more.svg" svg-inline /> -->
-                更多
+                {{ $jx3boxT("jx3boxUi.suspendCommon.more", "更多") }}
             </div>
         </div>
         <!-- 横向固定内容区域 -->
         <div class="m-pin-box" v-if="btnConfig.showPin && !btnConfig.showHome && !btnConfig.showIcon">
             <div class="u-item" v-for="(item, index) in fixList" :key="'fix' + index">
-                <div class="u-text-r" v-if="item.type == 'text'">
-                    {{ item.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || "固" }}
+                    <div class="u-text-r" v-if="item.type == 'text'">
+                    {{ item.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || $jx3boxT("jx3boxUi.suspendCommon.pinShort", "固") }}
                 </div>
                 <img :src="item.imgUrl" class="u-icon" v-else />
             </div>
@@ -94,7 +94,7 @@
             v-model="drawer"
             :direction="drawerConfig.direction"
             :with-header="false"
-            custom-class="u-drawer"
+            class="u-drawer"
             modal-class="p-drawer-suspend"
             :modal-append-to-body="false"
             append-to-body
@@ -119,7 +119,7 @@
                             <div class="u-circle-top">
                                 <div v-if="fixList?.[0]">
                                     <div class="u-text-r" v-if="fixList?.[0]?.type == 'text'">
-                                        {{ fixList?.[0]?.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || "固" }}
+                                        {{ fixList?.[0]?.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || $jx3boxT("jx3boxUi.suspendCommon.pinShort", "固") }}
                                     </div>
                                     <img :src="fixList?.[0]?.imgUrl" class="u-icon" v-else />
                                 </div>
@@ -131,7 +131,7 @@
                                         <div class="u-text-r" v-if="fixList?.[index + 1]?.type == 'text'">
                                             {{
                                                 fixList?.[index + 1].title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] ||
-                                                "固"
+                                                $jx3boxT("jx3boxUi.suspendCommon.pinShort", "固")
                                             }}
                                         </div>
                                         <img :src="fixList?.[index + 1].imgUrl" class="u-icon" v-else />
@@ -214,28 +214,40 @@
                             class="u-text"
                             v-if="(areaKey === 'collect' && !isCollect) || (areaKey === 'rss' && !isSubscribe)"
                         >
-                            {{ areaKey === "collect" ? "收藏" : "订阅" }}作品
+                            {{
+                                areaKey === "collect"
+                                    ? $jx3boxT("jx3boxUi.suspendCommon.collectWork", "收藏作品")
+                                    : $jx3boxT("jx3boxUi.suspendCommon.subscribeWork", "订阅作品")
+                            }}
                         </div>
                     </div>
                     <div class="u-collect-tips" v-if="areaKey === 'collect'">
-                        {{ isCollect ? "你已经收藏该作品" : "喜欢程度不够？可以试试添加到稍后再看" }}
+                        {{
+                            isCollect
+                                ? $jx3boxT("jx3boxUi.suspendCommon.alreadyCollected", "你已经收藏该作品")
+                                : $jx3boxT("jx3boxUi.suspendCommon.tryWatchLater", "喜欢程度不够？可以试试添加到稍后再看")
+                        }}
                     </div>
                     <div class="u-collect-tips" v-if="areaKey === 'rss'">
-                        {{ isSubscribe ? "你已经订阅该作品" : "喜欢程度不够？可以试试添加到稍后再看" }}
+                        {{
+                            isSubscribe
+                                ? $jx3boxT("jx3boxUi.suspendCommon.alreadySubscribed", "你已经订阅该作品")
+                                : $jx3boxT("jx3boxUi.suspendCommon.tryWatchLater", "喜欢程度不够？可以试试添加到稍后再看")
+                        }}
                     </div>
                     <div class="u-btn-box">
                         <div class="u-btn collect" @click="collectOrSubscribe">
                             {{
                                 areaKey === "collect"
                                     ? isCollect
-                                        ? "取消收藏"
-                                        : "收藏"
+                                        ? $jx3boxT("jx3boxUi.suspendCommon.cancelCollect", "取消收藏")
+                                        : $jx3boxT("jx3boxUi.suspendCommon.collect", "收藏")
                                     : isSubscribe
-                                    ? "取消订阅"
-                                    : "订阅"
-                            }}作品
+                                    ? $jx3boxT("jx3boxUi.suspendCommon.cancelSubscribe", "取消订阅")
+                                    : $jx3boxT("jx3boxUi.suspendCommon.subscribe", "订阅")
+                            }}{{ $jx3boxT("jx3boxUi.suspendCommon.workSuffix", "作品") }}
                         </div>
-                        <div class="u-btn" @click="laterOn">添加到稍后再看</div>
+                        <div class="u-btn" @click="laterOn">{{ $jx3boxT("jx3boxUi.suspendCommon.addWatchLater", "添加到稍后再看") }}</div>
                     </div>
                 </div>
             </transition>
@@ -255,16 +267,16 @@
                             v-if="fixIsActive && !fixIsFull"
                         />
                         <img src="../assets/img/suspend/report_100.svg" svg-inline v-if="fixIsFull" />
-                        <div class="u-text">{{ fixIsActive ? "取消固定" : "固定内容" }}</div>
+                        <div class="u-text">{{ fixIsActive ? $jx3boxT("jx3boxUi.suspendCommon.cancelPin", "取消固定") : $jx3boxT("jx3boxUi.suspendCommon.pinContent", "固定内容") }}</div>
                     </div>
                     <div class="u-collect-tips" v-if="!fixIsActive && !fixIsEdit">
-                        你可以随时在其他页面查看固定的内容
+                        {{ $jx3boxT("jx3boxUi.suspendCommon.viewPinnedAnywhere", "你可以随时在其他页面查看固定的内容") }}
                     </div>
-                    <div class="u-edit-title" v-if="fixIsEdit">固定内容</div>
+                    <div class="u-edit-title" v-if="fixIsEdit">{{ $jx3boxT("jx3boxUi.suspendCommon.pinContent", "固定内容") }}</div>
                     <div class="u-pin-box">
                         <div class="u-item" v-if="!fixIsEdit">
                             <div class="u-text-r" v-if="fixPageConfig.type == 'text'">
-                                {{ fixPageConfig.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || "固" }}
+                                {{ fixPageConfig.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || $jx3boxT("jx3boxUi.suspendCommon.pinShort", "固") }}
                             </div>
                             <img :src="fixPageConfig.imgUrl" class="u-icon" v-else />
                             <div class="u-text">{{ fixPageConfig.title }}</div>
@@ -277,7 +289,7 @@
                             @click="fixDataClick(item)"
                         >
                             <div class="u-text-r" v-if="item.type == 'text'">
-                                {{ item.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || "固" }}
+                                {{ item.title.match(/[\u3400-\u9FFF\uF900-\uFAFF]/)?.[0] || $jx3boxT("jx3boxUi.suspendCommon.pinShort", "固") }}
                             </div>
                             <img :src="item.imgUrl" class="u-icon" v-else />
                             <div class="u-text">{{ item.title }}</div>
@@ -295,14 +307,14 @@
                         </div>
                     </div>
                     <div class="u-btn-box" v-if="!fixIsEdit">
-                        <div class="u-btn collect" @click="fixClick">确定</div>
+                        <div class="u-btn collect" @click="fixClick">{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</div>
                         <!-- <div class="u-btn">编辑固定内容</div> -->
                     </div>
-                    <div class="u-collect-tips" v-if="fixIsActive && !fixIsEdit">你可以在原页面再次将其固定</div>
+                    <div class="u-collect-tips" v-if="fixIsActive && !fixIsEdit">{{ $jx3boxT("jx3boxUi.suspendCommon.pinAgain", "你可以在原页面再次将其固定") }}</div>
                     <div class="u-collect-tips edit" v-if="fixIsEdit">
-                        在支持固定的页面可以按
+                        {{ $jx3boxT("jx3boxUi.suspendCommon.supportedPinPrefix", "在支持固定的页面可以按") }}
                         <img src="../assets/img/suspend/pin_touchbar_24.svg" svg-inline class="u-icon" />
-                        将页面固定
+                        {{ $jx3boxT("jx3boxUi.suspendCommon.supportedPinSuffix", "将页面固定") }}
                     </div>
                 </div>
             </transition>
@@ -321,7 +333,7 @@
                         v-if="iframeInfo?.url"
                         class="u-iframe"
                     />
-                    <span v-else>查找页面失败</span>
+                    <span v-else>{{ $jx3boxT("jx3boxUi.suspendCommon.openFailed", "查找页面失败") }}</span>
                 </div>
             </transition>
         </el-drawer>
@@ -357,9 +369,11 @@ import pinSlashTouchbar40 from "../assets/img/suspend/pin_slash_touchbar_40.svg"
 import collectTouchbar from "../assets/img/suspend/collect_touchbar.svg";
 import rssTouchbar from "../assets/img/suspend/rss_touchbar.svg";
 import lafterTouchbar from "../assets/img/suspend/lafter_touchbar.svg";
+import i18nMixin from "../i18n/mixin";
 
 export default {
     name: "SuspendCommon",
+    mixins: [i18nMixin],
     props: {
         btnOptions: {
             type: Object,
@@ -399,24 +413,24 @@ export default {
             //弹窗type组合
             drawerType: {
                 one: [
-                    { type: "search", text: "搜索内容", icon: searchTouchbar },
+                    { type: "search", text: this.$jx3boxT("jx3boxUi.suspendCommon.searchContent", "搜索内容"), icon: searchTouchbar },
                     {
                         type: "pin",
-                        text: "固定本页",
+                        text: this.$jx3boxT("jx3boxUi.suspendCommon.pinCurrent", "固定本页"),
                         icon: pinTouchbar,
-                        text_slash: "取消固定",
+                        text_slash: this.$jx3boxT("jx3boxUi.suspendCommon.cancelPin", "取消固定"),
                         icon_slash: pinSlashTouchbar40,
                     },
-                    { type: "fix", text: "查看固定", icon: null, isSlot: true },
+                    { type: "fix", text: this.$jx3boxT("jx3boxUi.suspendCommon.viewPinned", "查看固定"), icon: null, isSlot: true },
                 ],
                 two: [
-                    { type: "collect", text: "收藏作品", icon: collectTouchbar },
-                    { type: "rss", text: "订阅作品", icon: rssTouchbar },
-                    { type: "laterOn", text: "稍后再看", icon: lafterTouchbar },
+                    { type: "collect", text: this.$jx3boxT("jx3boxUi.suspendCommon.collectWork", "收藏作品"), icon: collectTouchbar },
+                    { type: "rss", text: this.$jx3boxT("jx3boxUi.suspendCommon.subscribeWork", "订阅作品"), icon: rssTouchbar },
+                    { type: "laterOn", text: this.$jx3boxT("jx3boxUi.suspendCommon.watchLater", "稍后再看"), icon: lafterTouchbar },
                 ],
                 three: [
-                    { type: "user", text: "作者", isSlot: true },
-                    { type: "report", text: "举报" },
+                    { type: "user", text: this.$jx3boxT("jx3boxUi.suspendCommon.author", "作者"), isSlot: true },
+                    { type: "report", text: this.$jx3boxT("jx3boxUi.suspendCommon.report", "举报") },
                 ],
             },
             fixList: [],
@@ -691,7 +705,7 @@ export default {
                 title: conf.title,
             };
             later(params).then((res) => {
-                ElMessage.success("已添加稍后再看");
+                ElMessage.success(this.$jx3boxT("jx3boxUi.suspendCommon.addedWatchLater", "已添加稍后再看"));
                 this.areaKey = "home";
                 this.$emit("laterOn");
             });

@@ -3,7 +3,7 @@
         <!-- 标题 -->
         <div class="m-single-title">
             <span class="u-title u-sub-block" :href="url" :title="title">
-                <i class="u-original" v-if="isOriginal">原创</i>
+                <i class="u-original" v-if="isOriginal">{{ $jx3boxT("jx3boxUi.postHeader.original", "原创") }}</i>
                 <i class="u-private" v-if="post.post_status != 'publish' || !!~~post.visible">
                     <el-icon
                         v-if="post.post_status == 'draft' || post.post_status == 'pending' || !!~~post.visible"
@@ -16,7 +16,7 @@
                 <template v-if="titleExtra">
                     <span class="u-client" :class="'i-client-' + client">{{ showClientLabel(client) }}</span>
                     <span class="u-client u-zlp" v-if="zlp">{{ zlp }}</span>
-                    <span class="u-client i-client-wujie" v-if="is_wujie">无界</span>
+                    <span class="u-client i-client-wujie" v-if="is_wujie">{{ $jx3boxT("jx3boxUi.postHeader.wujie", "无界") }}</span>
                 </template>
             </span>
         </div>
@@ -29,7 +29,7 @@
                     <img svg-inline src="../../assets/img/single/author.svg" />
                 </i>
                 <a class="u-name" :href="author_link" v-if="!anonymous">{{ author_name }}</a>
-                <span class="u-name u-anonymous" v-else>神秘侠士</span>
+                <span class="u-name u-anonymous" v-else>{{ $jx3boxT("jx3boxUi.postHeader.mysterious", "神秘侠士") }}</span>
             </div>
 
             <!-- 自定义字段 -->
@@ -43,13 +43,16 @@
 
             <!-- 客户端 -->
             <div class="u-meta u-sub-block">
-                <em class="u-label">适用客户端</em>
+                <em class="u-label">{{ $jx3boxT("jx3boxUi.postHeader.client", "适用客户端") }}</em>
                 <span class="u-value u-client" :class="client">{{ showClientLabel(client) }}</span>
-                <span class="u-value u-client wujie" v-if="is_wujie">无界</span>
+                <span class="u-value u-client wujie" v-if="is_wujie">{{ $jx3boxT("jx3boxUi.postHeader.wujie", "无界") }}</span>
             </div>
 
             <!-- 发布日期 -->
-            <span class="u-podate u-sub-block" :title="'发布日期:' + post_time">
+            <span
+                class="u-podate u-sub-block"
+                :title="$jx3boxT('jx3boxUi.postHeader.publishDateTitle', '发布日期:{time}', { time: post_time })"
+            >
                 <i class="u-icon-podate">
                     <img svg-inline src="../../assets/img/single/podate.svg" />
                 </i>
@@ -57,7 +60,10 @@
             </span>
 
             <!-- 最后更新 -->
-            <span class="u-modate u-sub-block" :title="'最后更新:' + update_time">
+            <span
+                class="u-modate u-sub-block"
+                :title="$jx3boxT('jx3boxUi.postHeader.updateDateTitle', '最后更新:{time}', { time: update_time })"
+            >
                 <i class="u-icon-modate">
                     <img svg-inline src="../../assets/img/single/modate.svg" />
                 </i>
@@ -70,7 +76,11 @@
                 {{ views }}
             </span>
 
-            <span class="u-word-count u-sub-block" v-if="wordCount" title="累计字数">
+            <span
+                class="u-word-count u-sub-block"
+                v-if="wordCount"
+                :title="$jx3boxT('jx3boxUi.postHeader.wordCount', '累计字数')"
+            >
                 <el-icon :size="15"><Sunny /></el-icon>
                 {{ wordCount }}
             </span>
@@ -78,7 +88,7 @@
             <!-- 编辑 -->
             <a class="u-edit u-sub-block" :href="edit_link" v-if="canEdit && !anonymous">
                 <el-icon class="u-icon-edit" :size="16"><Edit /></el-icon>
-                <span>编辑</span>
+                <span>{{ $jx3boxT("jx3boxUi.postHeader.edit", "编辑") }}</span>
             </a>
         </div>
     </header>
@@ -90,10 +100,12 @@ import { showDate, showTime } from "@jx3box/jx3box-common/js/moment";
 import { editLink, authorLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import $ from "jquery";
+import i18nMixin from "../../i18n/mixin";
 const { __clients } = JX3BOX;
 
 export default {
     name: "PostHeader",
+    mixins: [i18nMixin],
     props: {
         post: {
             type: Object,
@@ -125,13 +137,13 @@ export default {
             return !!~~this.post?.original;
         },
         title: function () {
-            return this.post?.post_title || "无标题";
+            return this.post?.post_title || this.$jx3boxT("jx3boxUi.postHeader.noTitle", "无标题");
         },
         author_link: function () {
             return authorLink(this.post?.post_author);
         },
         author_name: function () {
-            return this.post?.author_info?.display_name || "匿名";
+            return this.post?.author_info?.display_name || this.$jx3boxT("jx3boxUi.postHeader.anonymous", "匿名");
         },
         post_date: function () {
             return showDate(new Date(this.post?.post_date));

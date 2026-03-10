@@ -1,7 +1,7 @@
 <template>
     <section class="lg:col-span-4 lg:col-start-9">
         <h3 class="text-sm font-semibold tracking-wide text-white">
-            {{ $jx3boxT("jx3boxUi.footer.downloadCenter", "下载中心") }}
+            {{ $jx3boxT("jx3boxUi.commonFooter.downloadCenter", "下载中心") }}
         </h3>
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div v-for="item in downloadLinks" :key="item.name">
@@ -86,12 +86,12 @@
                         class="h-6 w-6"
                         svg-inline
                         src="../../assets/img/common/qqbot.svg"
-                        :alt="$jx3boxT('jx3boxUi.footer.qqBot', 'QQ机器人')"
+                        :alt="$jx3boxT('jx3boxUi.commonFooter.qqBot', 'QQ机器人')"
                     />
                 </div>
                 <div @click="copyText('3889010020')" class="cursor-pointer">
                     <p class="font-bold uppercase tracking-wider text-gray-500" style="font-size: 10px">
-                        {{ $jx3boxT("jx3boxUi.footer.qqBotService", "QQ 机器人服务") }}
+                        {{ $jx3boxT("jx3boxUi.commonFooter.qqBotService", "QQ 机器人服务") }}
                     </p>
                     <p class="mt-1 font-mono text-sm font-semibold text-white">3889 010 020</p>
                 </div>
@@ -102,7 +102,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                {{ $jx3boxT("jx3boxUi.footer.add", "添加") }}
+                {{ $jx3boxT("jx3boxUi.commonFooter.add", "添加") }}
             </a>
         </div>
     </section>
@@ -162,13 +162,13 @@ export default {
         getDownloadName(item) {
             if (item?.key) {
                 const k = item.key === "harmonyNext" ? "harmonyNext" : item.key;
-                const maybe = `jx3boxUi.footer.${k}`;
+                const maybe = `jx3boxUi.commonFooter.${k}`;
                 return this.$jx3boxT(maybe, item.name || k);
             }
             return item?.name || "";
         },
         getDownloadLabel(item) {
-            if (item?.labelKey) return this.$jx3boxT(`jx3boxUi.footer.${item.labelKey}`, item.label || item.labelKey);
+            if (item?.labelKey) return this.$jx3boxT(`jx3boxUi.commonFooter.${item.labelKey}`, item.label || item.labelKey);
             return item?.label || "";
         },
         handleLinkClick(e, item) {

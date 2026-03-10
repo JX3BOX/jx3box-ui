@@ -30,13 +30,13 @@
             <lang />
 
             <a class="c-header-console" :href="login_url">{{
-                $jx3boxT("jx3boxUi.header.loginRegister", "登录/注册")
+                $jx3boxT("jx3boxUi.commonHeader.loginRegister", "登录/注册")
             }}</a>
 
             <!-- <div class="c-header-login">
-                <a class="u-register u-default" :href="register_url">注册</a>
+                <a class="u-register u-default" :href="register_url">{{ $jx3boxT("jx3boxUi.user.register", "注册") }}</a>
                 <em>|</em>
-                <a class="u-login u-default" :href="login_url">登录</a>
+                <a class="u-login u-default" :href="login_url">{{ $jx3boxT("jx3boxUi.user.login", "登录") }}</a>
             </div> -->
         </template>
     </div>
@@ -118,7 +118,7 @@ export default {
                             .then(() => {
                                 let msg = this.$message({
                                     type: "success",
-                                    message: this.$jx3boxT("jx3boxUi.header.signInSuccess", "签到成功"),
+                                    message: this.$jx3boxT("jx3boxUi.commonHeader.signInSuccess", "签到成功"),
                                     customClass: "c-header-signin",
                                     duration: 0,
                                 });

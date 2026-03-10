@@ -3,7 +3,7 @@
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
             <div v-for="group in footerGroups" :key="group.title">
                 <h3 class="text-sm font-semibold tracking-wide text-white">
-                    {{ $jx3boxT(`jx3boxUi.footer.${group.key}`, group.title) }}
+                    {{ $jx3boxT(`jx3boxUi.commonFooter.${group.key}`, group.title) }}
                 </h3>
                 <div class="mt-4 space-y-3">
                     <a
@@ -14,7 +14,7 @@
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {{ $jx3boxT(`jx3boxUi.footer.${item.key}`, item.name) }}
+                        {{ $jx3boxT(`jx3boxUi.commonFooter.${item.key}`, item.name) }}
                     </a>
                 </div>
             </div>

@@ -82,7 +82,6 @@ import singlebox from "./single/CmsSingle.vue";
 import UploadAlum from "./editor/UploadAlum.vue";
 import Author from "./single/Author.vue";
 import SimpleThxVue from "./single/SimpleThx.vue";
-import Comment from "./single/Comment.vue";
 import Thx from "./single/Thx.vue";
 import PostHeader from "./single/PostHeader.vue";
 import PostTopic from "./single/PostTopic.vue";
@@ -92,13 +91,11 @@ import { get_item } from "../service/item";
 import AdminDirectMessage from "./bread/AdminDirectMessage.vue";
 import Admin from "@/bread/Admin.vue";
 import versionBy from "./filters/versionBy.vue";
-import SuspendCommon from "./SuspendCommon.vue";
 export default {
     name: "App",
     components: {
         SimpleThxVue,
         Author,
-        Comment,
         Thx,
         // PostHeader,
         PostTopic,
@@ -106,7 +103,6 @@ export default {
         // AdminDirectMessage,
         singlebox,
         versionBy,
-        SuspendCommon,
         // Admin,
     },
     data() {

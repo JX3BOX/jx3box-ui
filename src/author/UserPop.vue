@@ -12,14 +12,16 @@
         <div class="u-input">
             <el-input
                 v-model.trim.lazy="search"
-                placeholder="请输入用户 UID 或者昵称进行搜索"
+                :placeholder="$jx3boxT('jx3boxUi.userPop.placeholder', '请输入用户 UID 或者昵称进行搜索')"
                 @keydown.enter="onSearch"
             >
                 <template #prepend>
                     <el-icon><Search /></el-icon>
                 </template>
             </el-input>
-            <el-button class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">搜索</el-button>
+            <el-button class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">{{
+                $jx3boxT("jx3boxUi.userPop.search", "搜索")
+            }}</el-button>
         </div>
         <div class="u-preview" v-loading="loading">
             <template v-if="searched && status">
@@ -32,14 +34,18 @@
                 <img class="u-avatar" :src="showAvatar('')" />
                 <span class="u-name">-</span>
                 <div class="u-empty">
-                    <el-icon><Warning /></el-icon>{{ searched ? "未找到匹配项" : "请输入搜索条件" }}
+                    <el-icon><Warning /></el-icon>{{
+                        searched
+                            ? $jx3boxT("jx3boxUi.userPop.notFound", "未找到匹配项")
+                            : $jx3boxT("jx3boxUi.userPop.empty", "请输入搜索条件")
+                    }}
                 </div>
             </template>
         </div>
         <template #footer>
             <div class="dialog-footer">
-                <el-button @click="cancel">取 消</el-button>
-                <el-button type="primary" @click="confirm">确 定</el-button>
+                <el-button @click="cancel">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
+                <el-button type="primary" @click="confirm">{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</el-button>
             </div>
         </template>
     </el-dialog>
@@ -49,9 +55,20 @@
 import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { showAvatar } = utilModule;
 import { getUserInfoByUidOrName } from "../../service/author";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "UserPop",
-    props: ["title", "show"],
+    mixins: [i18nMixin],
+    props: {
+        title: {
+            type: String,
+            default: "",
+        },
+        show: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             visible: false,
@@ -84,8 +101,8 @@ export default {
                 this.visible = false;
                 this.$emit("confirm", this.userdata);
             } else {
-                this.$alert("用户不存在 或 UID不正确", "提醒", {
-                    confirmButtonText: "确定",
+                this.$alert(this.$jx3boxT("jx3boxUi.userPop.invalid", "用户不存在 或 UID不正确"), this.$jx3boxT("jx3boxUi.userPop.alertTitle", "提醒"), {
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
                 });
             }
         },

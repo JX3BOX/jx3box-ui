@@ -9,7 +9,7 @@
                 class="c-sidebar-right-toggle"
                 :class="!isOpen && 'close-sidebar-right'"
                 @click="toggleRightSide"
-                :title="isOpen ? '收起侧边栏' : '打开侧边栏'"
+                :title="isOpen ? $jx3boxT('jx3boxUi.rightSidebar.collapse', '收起侧边栏') : $jx3boxT('jx3boxUi.rightSidebar.expand', '打开侧边栏')"
             >
                 <el-icon>
                     <ArrowLeft v-show="!isOpen" />
@@ -23,8 +23,10 @@
 <script>
 import { isApp } from "../assets/js/app.js";
 import Bus from "../utils/bus";
+import i18nMixin from "../i18n/mixin";
 export default {
     name: "RightSidebar",
+    mixins: [i18nMixin],
     props: {
         // 展示收起按钮
         showToggle: {

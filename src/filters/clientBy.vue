@@ -2,7 +2,7 @@
     <div class="w-filter-client">
         <ul>
             <li class="u-client" :class="{on: client == ''}" @click="filter('')" v-if="clients">
-                全部
+                {{ $jx3boxT("jx3boxUi.clientBy.all", "全部") }}
             </li>
             <li
                 class="u-client"
@@ -18,13 +18,10 @@
 </template>
 
 <script>
-const clients = {
-    all: "全端",
-    std: "剑三",
-    origin: "缘起",
-};
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "clientBy",
+    mixins: [i18nMixin],
     emits: ["filter"],
     props: {
         type: {
@@ -47,12 +44,17 @@ export default {
     },
     computed: {
         computedClients: function () {
+            const clients = {
+                all: this.$jx3boxT("jx3boxUi.clientBy.allClients", "全端"),
+                std: this.$jx3boxT("jx3boxUi.clientBy.std", "剑三"),
+                origin: this.$jx3boxT("jx3boxUi.clientBy.origin", "缘起"),
+            };
             if (this.showWujie) {
                 return Object.assign({}, this.clients || clients, {
-                    wujie: "无界",
+                    wujie: this.$jx3boxT("jx3boxUi.clientBy.wujie", "无界"),
                 });
             }
-            return clients;
+            return this.clients || clients;
         },
     },
     methods: {

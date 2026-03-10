@@ -13,8 +13,8 @@
             </span>
             <template #dropdown>
                 <el-dropdown-menu>
-                    <el-dropdown-item @click="filter('')">{{ "全部" }}</el-dropdown-item>
-                    <el-dropdown-item v-for="(item, key) in marks" :key="key" @click="filter(key)">{{
+                    <el-dropdown-item @click="filter('')">{{ $jx3boxT("jx3boxUi.markBy.all", "全部") }}</el-dropdown-item>
+                    <el-dropdown-item v-for="(item, key) in resolvedMarks" :key="key" @click="filter(key)">{{
                         item
                     }}</el-dropdown-item>
                 </el-dropdown-menu>
@@ -24,14 +24,10 @@
 </template>
 
 <script>
-const default_marks = {
-    newbie: "新手易用",
-    advanced: "进阶推荐",
-    recommended: "编辑精选",
-    geek: "骨灰必备",
-};
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "markBy",
+    mixins: [i18nMixin],
     emits: ["filter"],
     props: {
         placeholder: {
@@ -44,7 +40,7 @@ export default {
         },
         marks: {
             type: Object,
-            default: () => default_marks,
+            default: () => null,
         },
     },
     data: function () {
@@ -55,10 +51,20 @@ export default {
     },
     computed: {
         current: function () {
-            return this.marks[this.mark];
+            return this.resolvedMarks[this.mark];
         },
         deftext: function () {
-            return this.placeholder || "精选";
+            return this.placeholder || this.$jx3boxT("jx3boxUi.markBy.default", "精选");
+        },
+        resolvedMarks: function () {
+            return (
+                this.marks || {
+                    newbie: this.$jx3boxT("jx3boxUi.markBy.newbie", "新手易用"),
+                    advanced: this.$jx3boxT("jx3boxUi.markBy.advanced", "进阶推荐"),
+                    recommended: this.$jx3boxT("jx3boxUi.markBy.recommended", "编辑精选"),
+                    geek: this.$jx3boxT("jx3boxUi.markBy.geek", "骨灰必备"),
+                }
+            );
         },
     },
     methods: {

@@ -63,6 +63,20 @@ function getConfig(params) {
         });
 }
 
+// 获取用户config
+function getUserConfig(params) {
+    return $cms()
+        .get(`/api/cms/user/conf`, { params })
+        .then((res) => {
+            return res.data.data;
+        });
+}
+
+// 设置用户config
+function setUserConfig(data) {
+    return $cms().put(`/api/cms/user/conf`, data);
+}
+
 // 获取用户meta
 function getUserMeta(params) {
     return $cms()
@@ -134,4 +148,6 @@ export {
     uploadFile,
     refreshQQBotImage,
     getUserPermission,
+    getUserConfig,
+    setUserConfig,
 };

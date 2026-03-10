@@ -1,7 +1,12 @@
 <template>
     <el-form ref="form" :model="newComment" class="c-comment-box">
         <div class="u-mask">
-            参与评论，需先进行<a href="/dashboard/auth" target="_blank" class="u-link">账号认证</a>。
+            {{ $jx3boxT("jx3boxUi.commentInputForm.authMaskPrefix", "参与评论，需先进行") }}<a
+                href="/dashboard/auth"
+                target="_blank"
+                class="u-link"
+                >{{ $jx3boxT("jx3boxUi.commentInputForm.authLink", "账号认证") }}</a
+            >{{ $jx3boxT("jx3boxUi.commentInputForm.authMaskSuffix", "。") }}
         </div>
         <el-form-item>
             <el-input
@@ -10,7 +15,7 @@
                 maxlength="300"
                 show-word-limit
                 v-model="newComment.content"
-                placeholder="参与讨论..."
+                :placeholder="$jx3boxT('jx3boxUi.commentInputForm.placeholder', '参与讨论...')"
                 :id="inputId"
             ></el-input>
             <div class="c-comment-tools">
@@ -23,8 +28,15 @@
                 </Emotion>
                 <quickReply @reply="onQuickReply"></quickReply>
                 <div class="c-comment-secret">
-                    <el-checkbox class="u-secret" v-model="is_secret" border size="small">悄悄话
-                        <el-tooltip class="item" effect="dark" content="勾选悄悄话后仅作者和你可见，并且不可再变更状态" placement="top">
+                    <el-checkbox class="u-secret" v-model="is_secret" border size="small">{{
+                        $jx3boxT("jx3boxUi.commentInputForm.secret", "悄悄话")
+                    }}
+                        <el-tooltip
+                            class="item"
+                            effect="dark"
+                            :content="$jx3boxT('jx3boxUi.commentInputForm.secretTip', '勾选悄悄话后仅作者和你可见，并且不可再变更状态')"
+                            placement="top"
+                        >
                             <el-icon><InfoFilled></InfoFilled></el-icon> </el-tooltip></el-checkbox>
                 </div>
             </div>
@@ -41,7 +53,7 @@
                     @click="onSubmit"
                     class="u-publish"
                     :disabled="disableSubmitBtn"
-                    >发表评论</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentInputForm.publish", "发表评论") }}</el-button
                 >
             </div>
         </el-form-item>
@@ -52,8 +64,10 @@
 import Uploader from "./Upload.vue";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
 import QuickReply from "./QuickReply.vue";
+import i18nMixin from "../../i18n/mixin";
 
 export default {
+    mixins: [i18nMixin],
     components: {
         Uploader,
         Emotion,

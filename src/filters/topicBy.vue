@@ -49,7 +49,7 @@ export default {
         },
         label: {
             type: String,
-            default: "主题",
+            default: "",
         },
     },
     emits: ["update:modelValue"],
@@ -60,27 +60,29 @@ export default {
     data() {
         return {
             visible: false,
-            value: "全部",
+            value: "",
         };
     },
     computed: {
         activeText() {
             const { value } = this;
-            return value === "全部" ? this.label : value;
+            const allLabel = this.$jx3boxT("jx3boxUi.topicBy.all", "全部");
+            const defaultLabel = this.label || this.$jx3boxT("jx3boxUi.topicBy.label", "主题");
+            return value === allLabel ? defaultLabel : value;
         },
         computedTopics() {
-            return ["全部", ...this.topics];
+            return [this.$jx3boxT("jx3boxUi.topicBy.all", "全部"), ...this.topics];
         },
     },
     watch: {
         modelValue: {
             immediate: true,
             handler(val) {
-                this.value = val === "" ? "全部" : val;
+                this.value = val === "" ? this.$jx3boxT("jx3boxUi.topicBy.all", "全部") : val;
             },
         },
         value(val) {
-            if (val === "全部") val = "";
+            if (val === this.$jx3boxT("jx3boxUi.topicBy.all", "全部")) val = "";
             this.$emit("update:modelValue", val);
         },
     },

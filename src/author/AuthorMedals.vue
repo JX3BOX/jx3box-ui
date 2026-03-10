@@ -2,7 +2,7 @@
     <div class="c-author-medals" v-if="ready">
         <div class="u-label">
             <img svg-inline src="../../assets/img/leftsidebar/medal.svg" />
-            <span>作者荣誉</span>
+            <span>{{ $jx3boxT("jx3boxUi.authorMedals.title", "作者荣誉") }}</span>
         </div>
         <div class="u-medals" v-if="medals && medals.length">
             <el-tooltip
@@ -26,10 +26,12 @@ import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { getMedalLink } = utilModule;
 import { getUserMedals } from "../../service/author";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../../i18n/mixin";
 const { __cdn, __Root } = JX3BOX;
 
 export default {
     name: "AuthorMedals",
+    mixins: [i18nMixin],
     props: ["uid"],
     components: {},
     data: function () {

@@ -10,13 +10,18 @@
                             <img svg-inline src="../../assets/img/common/logo.svg" alt="JX3BOX" />
                         </div>
                         <div>
-                            <h2 class="u-title">魔盒矩阵</h2>
+                            <h2 class="u-title">{{ $jx3boxT("jx3boxUi.box2.title", "魔盒矩阵") }}</h2>
                             <p class="u-subtitle">THE BOX MATRIX NAVIGATION</p>
                         </div>
                     </div>
                     <div class="u-search">
                         <i class="el-icon-search u-search-icon"></i>
-                        <input v-model.trim="searchQuery" class="u-search-input" type="text" placeholder="搜索应用" />
+                        <input
+                            v-model.trim="searchQuery"
+                            class="u-search-input"
+                            type="text"
+                            :placeholder="$jx3boxT('jx3boxUi.box2.searchPlaceholder', '搜索应用')"
+                        />
                         <button v-if="searchQuery" class="u-search-clear" type="button" @click="searchQuery = ''">
                             <i class="el-icon-close"></i>
                         </button>
@@ -30,7 +35,7 @@
                                 <div class="u-icon-wrap">
                                     <img class="u-pic" svg-inline :src="homeicon" />
                                 </div>
-                                <span class="u-txt">{{ $jx3boxT("jx3boxUi.header.home", "首页") }}</span>
+                                <span class="u-txt">{{ $jx3boxT("jx3boxUi.commonHeader.home", "首页") }}</span>
                             </a>
                         </li>
                         <li v-for="(item, i) in filteredList" :key="i">
@@ -46,12 +51,12 @@
                                 <div class="u-icon-wrap">
                                     <img class="u-pic" svg-inline :src="allicon" />
                                 </div>
-                                <span class="u-txt">{{ $jx3boxT("jx3boxUi.header.all", "全部") }}</span>
+                                <span class="u-txt">{{ $jx3boxT("jx3boxUi.commonHeader.all", "全部") }}</span>
                             </a>
                         </li>
                     </ul>
                     <div v-if="searchQuery && !homeMatched && filteredList.length === 0" class="u-empty">
-                        未找到匹配应用
+                        {{ $jx3boxT("jx3boxUi.box2.empty", "未找到匹配应用") }}
                     </div>
                 </div>
             </section>
@@ -120,12 +125,12 @@ export default {
         homeMatched: function () {
             const query = (this.searchQuery || "").toLowerCase().trim();
             if (!query) return true;
-            return this.$jx3boxT("jx3boxUi.header.home", "首页").includes(query);
+            return this.$jx3boxT("jx3boxUi.commonHeader.home", "首页").includes(query);
         },
         allMatched: function () {
             const query = (this.searchQuery || "").toLowerCase().trim();
             if (!query) return true;
-            return this.$jx3boxT("jx3boxUi.header.all", "全部").includes(query);
+            return this.$jx3boxT("jx3boxUi.commonHeader.all", "全部").includes(query);
         },
     },
     methods: {

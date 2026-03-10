@@ -4,10 +4,10 @@
             <CommentInputForm @submit="userSubmitInputForm" />
             <div class="c-comment-panel">
                 <div class="u-order">
-                    <span class="u-label">排序模式：</span>
+                    <span class="u-label">{{ $jx3boxT("jx3boxUi.comment.sortMode", "排序模式：") }}</span>
                     <el-radio-group v-model="isDesc" @change="changeOrder" size="small">
-                        <el-radio-button value="DESC">最后靠前</el-radio-button>
-                        <el-radio-button value="ASC">最早靠前</el-radio-button>
+                        <el-radio-button value="DESC">{{ $jx3boxT("jx3boxUi.comment.desc", "最后靠前") }}</el-radio-button>
+                        <el-radio-button value="ASC">{{ $jx3boxT("jx3boxUi.comment.asc", "最早靠前") }}</el-radio-button>
                     </el-radio-group>
                 </div>
                 <div class="u-op">
@@ -15,7 +15,7 @@
                         class="c-comment-panel-likes"
                         v-model="orderByLikes"
                         @change="changeOrderByLikes"
-                        active-text="获赞靠前"
+                        :active-text="$jx3boxT('jx3boxUi.comment.likesFirst', '获赞靠前')"
                     >
                     </el-switch>
                     <el-switch
@@ -23,8 +23,8 @@
                         v-model="openWhiteList"
                         @change="changeWhiteList"
                         v-if="commentPower.is_author || commentPower.is_editor"
-                        active-text="开启过滤"
-                        title="开启过滤后，仅设为显示的评论可被其他人所见"
+                        :active-text="$jx3boxT('jx3boxUi.comment.openWhitelist', '开启过滤')"
+                        :title="$jx3boxT('jx3boxUi.comment.openWhitelistTip', '开启过滤后，仅设为显示的评论可被其他人所见')"
                     >
                     </el-switch>
                 </div>
@@ -87,8 +87,10 @@ import CommentWithReply from "../comment/CommentWithReply.vue";
 import { GET, POST, DELETE, PUT, getOrderMode, setOrderMode } from "../../service/comment";
 import { getConfig } from "../../service/cms";
 import User from "@jx3box/jx3box-common/js/user";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "CommentComp",
+    mixins: [i18nMixin],
     props: {
         id: {
             type: [Number, String],
@@ -197,7 +199,7 @@ export default {
                 .then(() => {
                     this.$notify({
                         title: "",
-                        message: "删除成功!",
+                        message: this.$jx3boxT("jx3boxUi.comment.deleteSuccess", "删除成功!"),
                         type: "success",
                         duration: 3000,
                         position: "bottom-right",
@@ -211,7 +213,7 @@ export default {
                 .then(() => {
                     this.$notify({
                         title: "",
-                        message: "操作成功!",
+                        message: this.$jx3boxT("jx3boxUi.comment.actionSuccess", "操作成功!"),
                         type: "success",
                         duration: 3000,
                         position: "bottom-right",
@@ -245,7 +247,7 @@ export default {
                 .then((responseJSON) => {
                     if (responseJSON && ~~responseJSON.code > 0) {
                         this.$notify({
-                            title: "评论失败",
+                            title: this.$jx3boxT("jx3boxUi.comment.commentFailed", "评论失败"),
                             message: responseJSON.msg || "",
                             type: "error",
                             duration: 3000,
@@ -255,7 +257,7 @@ export default {
                     }
                     this.$notify({
                         title: "",
-                        message: "评论成功!",
+                        message: this.$jx3boxT("jx3boxUi.comment.commentSuccess", "评论成功!"),
                         type: "success",
                         duration: 3000,
                         position: "bottom-right",

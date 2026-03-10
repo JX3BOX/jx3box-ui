@@ -14,8 +14,10 @@
 import User from "@jx3box/jx3box-common/js/user";
 import { hasFav, addFav, delFav } from "../../service/fav";
 import JX3BOX  from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "FavoriteComp",
+    mixins: [i18nMixin],
     props: {
         postType: {
             type: String,
@@ -47,7 +49,9 @@ export default {
     },
     computed: {
         favContent() {
-            return this.favorite ? "已收藏" : "收藏";
+            return this.favorite
+                ? this.$jx3boxT("jx3boxUi.fav.collected", "已收藏")
+                : this.$jx3boxT("jx3boxUi.fav.collect", "收藏");
         },
         starIcon() {
             return this.isOld ? require("../../assets/img/widget/star.svg") : JX3BOX.__cdn + "design/vector/icon/collect.svg"

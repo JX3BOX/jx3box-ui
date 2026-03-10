@@ -2,7 +2,7 @@
     <div class="u-reply">
         <div class="u-reply-content">
             <span class="u-reply-label" v-if="replyForUserId != 0">
-                回复
+                {{ $jx3boxT("jx3boxUi.commentContentSimple.reply", "回复") }}
                 <el-link type="primary" target="_blank" :href="userHref"
                     >@{{ replyForUsername }}</el-link
                 >
@@ -32,7 +32,7 @@
                     class="u-up"
                     src="../../assets/img/comment/heart_1.svg"
                     alt=""
-                />点赞<span class="u-like-count">{{
+                />{{ $jx3boxT("jx3boxUi.commentContentSimple.like", "点赞") }}<span class="u-like-count">{{
                     likesFormat(hasLikeCount)
                 }}</span></el-button
             >
@@ -46,7 +46,7 @@
                     class="u-up"
                     src="../../assets/img/comment/heart_2.svg"
                     alt=""
-                />已赞<span class="u-like-count">{{
+                />{{ $jx3boxT("jx3boxUi.commentContentSimple.liked", "已赞") }}<span class="u-like-count">{{
                     likesFormat(hasLikeCount)
                 }}</span></el-button
             >
@@ -58,7 +58,7 @@
                 size="small"
                 @click="showReplyForReplyInput"
                 type="primary"
-                >回复</el-button
+                >{{ $jx3boxT("jx3boxUi.commentContentSimple.reply", "回复") }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -68,7 +68,7 @@
                 size="small"
                 type="danger"
                 @click="deleteComment"
-                >删除</el-button
+                >{{ $jx3boxT("jx3boxUi.commentContentSimple.delete", "删除") }}</el-button
             >
             <el-button
                 class="u-admin"
@@ -77,9 +77,9 @@
                 icon="Delete"
                 v-if="canHide"
                 @click="hideComment"
-                title="拉入黑洞后，仅评论者自己独自可见"
+                :title="$jx3boxT('jx3boxUi.commentContentSimple.hideTip', '拉入黑洞后，仅评论者自己独自可见')"
             >
-                黑洞</el-button
+                {{ $jx3boxT("jx3boxUi.commentContentSimple.hide", "黑洞") }}</el-button
             >
             <time class="u-date">
                 <i class="Clock"></i>
@@ -92,10 +92,12 @@
 <script>
 import { resolveImagePath, authorLink } from "@jx3box/jx3box-common/js/utils";
 import { formatContent } from "../../utils/emotion";
+import i18nMixin from "../../i18n/mixin";
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
 export default {
+    mixins: [i18nMixin],
     props: {
         commentId: {
             type: [Number, String],
@@ -198,9 +200,12 @@ export default {
             this.$emit("setLikeComment", setLike);
         },
         deleteComment() {
-            this.$confirm("确定删除该评论吗？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.commentContentSimple.confirmDelete", "确定删除该评论吗？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
                 type: "warning",
             })
                 .then(() => {
@@ -209,9 +214,12 @@ export default {
                 .catch(() => {});
         },
         hideComment() {
-            this.$confirm("确定隐藏该评论吗？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.commentContentSimple.confirmHide", "确定隐藏该评论吗？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
                 type: "warning",
             })
                 .then(() => {

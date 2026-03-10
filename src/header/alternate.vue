@@ -4,7 +4,7 @@
         v-model="visible"
         custom-class="c-alternate"
         width="320px"
-        :title="$jx3boxT('jx3boxUi.alternate.title', '切换马甲')"
+        :title="$jx3boxT('jx3boxUi.commonHeader.alternate.title', '切换马甲')"
     >
         <div class="c-alternate__content">
             <div
@@ -20,14 +20,14 @@
                 </div>
                 <div class="m-misc">
                     <span class="u-name"
-                        ><span class="u-label">{{ $jx3boxT("jx3boxUi.alternate.userNickname", "用户昵称：") }}</span
+                        ><span class="u-label">{{ $jx3boxT("jx3boxUi.commonHeader.alternate.userNickname", "用户昵称：") }}</span
                         >{{ item.name }}</span
                     >
                     <span class="u-time">
-                        <span class="u-label">{{ $jx3boxT("jx3boxUi.alternate.lastLogin", "上次登录：") }}</span
+                        <span class="u-label">{{ $jx3boxT("jx3boxUi.commonHeader.alternate.lastLogin", "上次登录：") }}</span
                         >{{ getFormatTime(item.created_at) }}
                         <span class="u-extra" v-if="isExpired(item.created_at)">{{
-                            $jx3boxT("jx3boxUi.alternate.expired", "(已过期)")
+                            $jx3boxT("jx3boxUi.commonHeader.alternate.expired", "(已过期)")
                         }}</span>
                     </span>
                 </div>
@@ -138,17 +138,23 @@ export default {
         // 选择马甲
         onSelectAlternate(item) {
             if (this.isExpired(item.created_at)) {
-                this.$message.error(this.$jx3boxT("jx3boxUi.alternate.expiredNeedRelogin", "该马甲已过期，请重新登录"));
+                this.$message.error(
+                    this.$jx3boxT("jx3boxUi.commonHeader.alternate.expiredNeedRelogin", "该马甲已过期，请重新登录")
+                );
                 return;
             }
             if (this.profile.uid == item.uid) {
                 return;
             }
-            this.$confirm(this.$jx3boxT("jx3boxUi.alternate.switchConfirm", "确定要切换到该马甲吗？"), this.$jx3boxT("jx3boxUi.common.tip", "提示"), {
-                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
-                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
-                type: "warning",
-            })
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.commonHeader.alternate.switchConfirm", "确定要切换到该马甲吗？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     User.update(item).then(async () => {
                         localStorage.setItem(
@@ -167,11 +173,15 @@ export default {
         },
         // 删除马甲
         onRemoveAlternate(item) {
-            this.$confirm(this.$jx3boxT("jx3boxUi.alternate.deleteConfirm", "确定要删除该马甲吗？"), this.$jx3boxT("jx3boxUi.common.tip", "提示"), {
-                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
-                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
-                type: "warning",
-            })
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.commonHeader.alternate.deleteConfirm", "确定要删除该马甲吗？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     localStorage.removeItem("jx3box-alternate-" + item.uid);
 
@@ -182,7 +192,7 @@ export default {
         // 新增马甲
         onAddAlternate() {
             if (this.overLength) {
-                this.$message.error(this.$jx3boxT("jx3boxUi.alternate.maxFive", "最多只能添加5个马甲"));
+                this.$message.error(this.$jx3boxT("jx3boxUi.commonHeader.alternate.maxFive", "最多只能添加5个马甲"));
                 return;
             }
             // 跳转至登录页

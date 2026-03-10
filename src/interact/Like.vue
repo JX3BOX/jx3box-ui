@@ -1,6 +1,6 @@
 <template>
     <div class="w-like2" :class="{ disabled: !status }" @click="addLike" v-if="ready">
-        <el-tooltip effect="dark" content="点赞" placement="top-start">
+        <el-tooltip effect="dark" :content="$jx3boxT('jx3boxUi.like.like', '点赞')" placement="top-start">
             <div>
                 <img class="u-icon" svg-inline :src="iconPath" />
                 <span class="u-count" v-if="count">{{ count }}</span>
@@ -12,8 +12,10 @@
 <script>
 import { postStat, getStat } from "@jx3box/jx3box-common/js/stat";
 import JX3BOX  from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "LikeComp",
+    mixins: [i18nMixin],
     props: {
         postType: {
             type: String,

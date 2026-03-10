@@ -48,13 +48,19 @@
                 :authors="authors"
                 :client="post_client"
                 showRss
+                v-if="showThx"
             />
 
             <!-- 评论 -->
             <div ref="commentView" class="m-single-comment">
-                <el-divider content-position="left">评论</el-divider>
+                <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.cmsSingle.comment", "评论") }}</el-divider>
                 <Comment :id="id" category="post" v-if="id && allow_comment" />
-                <el-alert title="作者没有开启评论功能" type="warning" show-icon v-else></el-alert>
+                <el-alert
+                    :title="$jx3boxT('jx3boxUi.cmsSingle.commentDisabled', '作者没有开启评论功能')"
+                    type="warning"
+                    show-icon
+                    v-else
+                ></el-alert>
             </div>
         </div>
 
@@ -81,14 +87,15 @@ import Thx from "./Thx.vue";
 // import RightAffix from "./right-affix.vue";
 import Article from "../editor/Article.vue";
 // import ArticleMarkdown from "@jx3box/jx3box-editor/src/ArticleMarkdown.vue";
-import Comment from "./Comment.vue";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getAppType } from "@jx3box/jx3box-common/js/utils";
+import i18nMixin from "../../i18n/mixin";
 
 const { __visibleMap } = JX3BOX;
 
 export default {
     name: "cms-single",
+    mixins: [i18nMixin],
     components: {
         PostHeader,
         Creators,
@@ -96,7 +103,6 @@ export default {
         Thx,
         Article,
         // ArticleMarkdown,
-        Comment,
         // RightAffix,
     },
     props: {
@@ -107,6 +113,10 @@ export default {
         stat: {
             type: Object,
             default: () => ({}),
+        },
+        showThx: {
+            type: Boolean,
+            default: true,
         },
     },
     data: function () {
@@ -145,7 +155,7 @@ export default {
             return !!this.post?._check;
         },
         null_tip: function () {
-            let str = "作者设置了【";
+            let str = this.$jx3boxT("jx3boxUi.cmsSingle.authorSet", "作者设置了【");
             str += __visibleMap[this.post?.visible];
             str += "】";
             return str;
@@ -185,6 +195,10 @@ export default {
         }
     },
     methods: {
+        shouldSkipNavigation: function () {
+            if (typeof window === "undefined" || typeof location === "undefined") return false;
+            return location.pathname.includes("iframe.html") || !!window.__STORYBOOK_PREVIEW__;
+        },
         updateCollection: function (val) {
             this.collection_data = val;
         },
@@ -214,7 +228,7 @@ export default {
             deep: true,
             immediate: true,
             handler: function (val) {
-                if (location.host.includes("localhost")) {
+                if (location.host.includes("localhost") || this.shouldSkipNavigation()) {
                     return;
                 }
 
@@ -226,6 +240,9 @@ export default {
         community_id: {
             immediate: true,
             handler(val) {
+                if (this.shouldSkipNavigation()) {
+                    return;
+                }
                 if (val && val != 0) {
                     // 防止死循环
                     if (location.href.includes(`/community/${val}`)) {

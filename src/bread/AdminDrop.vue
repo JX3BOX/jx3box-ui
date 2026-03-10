@@ -2,21 +2,21 @@
     <div class="c-admin-drop">
         <el-dropdown trigger="click" @command="handleCommand">
             <el-button type="primary" class="c-admin-button c-admin-drop__button" :size="buttonSize" icon="Setting">
-                管理 <el-icon style="margin-left: 5px"><ArrowDown></ArrowDown></el-icon>
+                {{ $jx3boxT("jx3boxUi.adminDrop.manage", "管理") }} <el-icon style="margin-left: 5px"><ArrowDown></ArrowDown></el-icon>
             </el-button>
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item v-if="isEditor" command="toggleAdminPanel" icon="Setting">
-                        <span>设置</span>
+                        <span>{{ $jx3boxT("jx3boxUi.adminDrop.setting", "设置") }}</span>
                     </el-dropdown-item>
                     <el-dropdown-item v-if="isEditor" command="directMessage" icon="Message">
-                        <span>私信</span>
+                        <span>{{ $jx3boxT("jx3boxUi.adminDrop.message", "私信") }}</span>
                     </el-dropdown-item>
                     <el-dropdown-item icon="UploadFilled" command="designTask" v-if="hasPermission('push_banner')">
-                        <span>推送</span>
+                        <span>{{ $jx3boxT("jx3boxUi.adminDrop.push", "推送") }}</span>
                     </el-dropdown-item>
                     <el-dropdown-item v-if="showRobotPic" icon="Refresh" command="pictureTask">
-                        <span>刷图</span>
+                        <span>{{ $jx3boxT("jx3boxUi.adminDrop.pictureTask", "刷图") }}</span>
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </template>
@@ -32,8 +32,10 @@ import User from "@jx3box/jx3box-common/js/user";
 import DesignTask from "./DesignTask.vue";
 import { sendMessage } from "../../service/admin";
 import { refreshQQBotImage } from "../../service/cms";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AdminDrop",
+    mixins: [i18nMixin],
     components: {
         DesignTask,
     },
@@ -79,13 +81,13 @@ export default {
             Bus.emit("toggleAdminPanel");
         },
         directMessage() {
-            this.$prompt("请输入私信内容", "管理私信", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                inputPlaceholder: "请输入私信内容",
+            this.$prompt(this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容"), this.$jx3boxT("jx3boxUi.adminDrop.messageTitle", "管理私信"), {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                inputPlaceholder: this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容"),
                 inputValidator: (value) => {
                     if (!value) {
-                        return "请输入私信内容";
+                        return this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容");
                     }
                 },
                 beforeClose: (action, instance, done) => {
@@ -94,12 +96,13 @@ export default {
                             source_id: String(this.sourceId),
                             source_type: this.sourceType,
                             user_id: this.userId,
-                            content: "运营通知：" + instance.inputValue,
+                            content:
+                                this.$jx3boxT("jx3boxUi.adminDrop.noticePrefix", "运营通知：") + instance.inputValue,
                             type: "system",
                             subtype: "admin_message",
                         };
                         sendMessage(data).then(() => {
-                            this.$message.success("私信成功");
+                            this.$message.success(this.$jx3boxT("jx3boxUi.adminDrop.messageSuccess", "私信成功"));
                             done();
                         });
                     } else {
@@ -128,11 +131,11 @@ export default {
                     task_target_id,
                 }).then((res) => {
                     if (!res.data.code) {
-                        this.$message.success("QQ机器人图片生成提交成功");
+                        this.$message.success(this.$jx3boxT("jx3boxUi.adminDrop.pictureSuccess", "QQ机器人图片生成提交成功"));
                     }
                 });
             } else {
-                this.$message.error("参数不正确");
+                this.$message.error(this.$jx3boxT("jx3boxUi.adminDrop.invalidParams", "参数不正确"));
             }
         },
         hasPermission(permission) {

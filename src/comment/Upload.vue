@@ -19,9 +19,17 @@
             <el-icon><Plus></Plus></el-icon>
             <template #tip>
                 <div class="el-upload__tip">
-                    最多上传 {{ maxCount }} 张
-                    {{ acceptedExtensions.join(" / ").toUpperCase() }} 格式图片，单张图片不能超过
-                    {{ maxSize / 1024 / 1024 }} MB
+                    {{
+                        $jx3boxT(
+                            "jx3boxUi.commentUpload.tip",
+                            "最多上传 {count} 张 {types} 格式图片，单张图片不能超过 {size} MB",
+                            {
+                                count: maxCount,
+                                types: acceptedExtensions.join(" / ").toUpperCase(),
+                                size: maxSize / 1024 / 1024,
+                            }
+                        )
+                    }}
                 </div>
             </template>
         </el-upload>
@@ -32,8 +40,10 @@
 </template>
 
 <script>
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "CommentUploader",
+    mixins: [i18nMixin],
     data() {
         return {
             dialogImageUrl: "",
@@ -55,7 +65,9 @@ export default {
         onExceed() {
             this.$notify({
                 title: "",
-                message: `最多上传 ${this.maxCount} 张图片！`,
+                message: this.$jx3boxT("jx3boxUi.commentUpload.exceed", "最多上传 {count} 张图片！", {
+                    count: this.maxCount,
+                }),
                 type: "error",
                 duration: 3000,
                 position: "bottom-right",
@@ -66,7 +78,13 @@ export default {
                 if (file.size > this.maxSize) {
                     this.$notify({
                         title: "",
-                        message: `单张图片大小不能超过 ${this.maxSize / 1024 / 1024} MB！`,
+                        message: this.$jx3boxT(
+                            "jx3boxUi.commentUpload.maxSize",
+                            "单张图片大小不能超过 {size} MB！",
+                            {
+                                size: this.maxSize / 1024 / 1024,
+                            }
+                        ),
                         type: "error",
                         duration: 3000,
                         position: "bottom-right",
@@ -95,7 +113,7 @@ export default {
         onError() {
             this.$notify({
                 title: "",
-                message: "图片上传失败!",
+                message: this.$jx3boxT("jx3boxUi.commentUpload.uploadFailed", "图片上传失败!"),
                 type: "error",
                 duration: 3000,
                 position: "bottom-right",

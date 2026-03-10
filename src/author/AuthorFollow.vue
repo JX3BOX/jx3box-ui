@@ -33,8 +33,10 @@
 <script>
 import { follow, unfollow, getFansCount } from "../../service/follow";
 import User from "@jx3box/jx3box-common/js/user";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AuthorFollow",
+    mixins: [i18nMixin],
     props: {
         uid: {
             type: [Number, String],
@@ -50,7 +52,9 @@ export default {
     },
     computed: {
         btnText() {
-            return this.isFollow ? "已粉" : "关注";
+            return this.isFollow
+                ? this.$jx3boxT("jx3boxUi.authorFollow.followed", "已粉")
+                : this.$jx3boxT("jx3boxUi.authorFollow.follow", "关注");
         },
         btnType() {
             return this.isFollow ? "info" : "warning";
@@ -64,7 +68,7 @@ export default {
                 //     },
                 // },
                 {
-                    label: "取消关注",
+                    label: this.$jx3boxT("jx3boxUi.authorFollow.unfollow", "取消关注"),
                     action: () => {
                         this.unfollow();
                     },
@@ -106,7 +110,7 @@ export default {
             }
             follow(this.uid)
                 .then(() => {
-                    this.$message.success("关注成功");
+                    this.$message.success(this.$jx3boxT("jx3boxUi.authorFollow.followSuccess", "关注成功"));
                     this.isFollow = true;
                     this.loadFans();
                 })
@@ -116,14 +120,17 @@ export default {
         },
         // 取消关注
         unfollow() {
-            this.$confirm("确定不再关注此人？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.authorFollow.confirmUnfollow", "确定不再关注此人？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
                 type: "warning",
             }).then(() => {
                 unfollow(this.uid)
                     .then(() => {
-                        this.$message.success("取关成功");
+                        this.$message.success(this.$jx3boxT("jx3boxUi.authorFollow.unfollowSuccess", "取关成功"));
                         this.isFollow = false;
                         this.loadFans();
                     })

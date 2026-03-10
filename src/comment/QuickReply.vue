@@ -9,7 +9,7 @@
         >
             <div class="c-jx3box-reply-pop__content">
                 <el-icon class="u-close" @click="closePop"><Close></Close></el-icon>
-                <div class="u-title">快捷回复</div>
+                <div class="u-title">{{ $jx3boxT("jx3boxUi.quickReply.title", "快捷回复") }}</div>
                 <div class="m-reply-list">
                     <div
                         class="m-reply-list__item"
@@ -36,8 +36,10 @@
 
 <script>
 import replyTemplate from "../../assets/data/reply_template.json";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "QuickReply",
+    mixins: [i18nMixin],
     data() {
         return {
             replyTemplate,

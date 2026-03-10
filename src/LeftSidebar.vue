@@ -16,7 +16,7 @@
             class="c-sidebar-left-toggle"
             :class="!isOpen && 'close-sidebar-left'"
             @click="toggleLeftSide"
-            :title="isOpen ? '收起侧边栏' : '打开侧边栏'"
+            :title="isOpen ? $jx3boxT('jx3boxUi.leftSidebar.collapse', '收起侧边栏') : $jx3boxT('jx3boxUi.leftSidebar.expand', '打开侧边栏')"
         >
             <el-icon>
                 <ArrowRight v-if="!isOpen" />
@@ -31,9 +31,11 @@ import Bus from "../utils/bus";
 import { isApp } from "../assets/js/app.js";
 import { getDecoration } from "../service/cms";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../i18n/mixin";
 const DECORATION_SIDEBAR = "decoration_sidebar";
 export default {
     name: "LeftSidebar",
+    mixins: [i18nMixin],
     props: ["open", "withoutBread", "uid"],
     data: function () {
         return {

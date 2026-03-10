@@ -2,7 +2,7 @@
     <div class="w-filter-client">
         <ul>
             <li class="u-client" :class="{on: version == ''}" @click="filter('')">
-                双端
+                {{ $jx3boxT("jx3boxUi.versionBy.all", "双端") }}
             </li>
             <li
                 class="u-client"
@@ -16,8 +16,10 @@
 </template>
 
 <script>
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "versionBy",
+    mixins: [i18nMixin],
     props: {
         value: {
             type: [String, Number],
@@ -33,8 +35,8 @@ export default {
     computed: {
         versions: function () {
             const versions = {
-                0: "旗舰",
-                1: "无界"
+                0: this.$jx3boxT("jx3boxUi.versionBy.standard", "旗舰"),
+                1: this.$jx3boxT("jx3boxUi.versionBy.wujie", "无界"),
             }
             return versions;
         },

@@ -19,10 +19,20 @@ import menuBy from "./src/filters/menuBy.vue";
 import clientBy from "./src/filters/clientBy.vue";
 import zlpBy from "./src/filters/zlpBy.vue";
 import topicBy from "./src/filters/topicBy.vue";
+import versionBy from "./src/filters/versionBy.vue";
 
 import Item from "./src/editor/components/Item.vue";
 import ItemSimple from "./src/editor/components/ItemSimple.vue";
 import GameText from "./src/editor/components/GameText.vue";
+
+// 单页
+import CmsSingle from "./src/single/CmsSingle.vue";
+import Comment from "./src/single/Comment.vue";
+import Thx from "./src/single/Thx.vue";
+
+// 其他/工具
+import UserPop from "./src/author/UserPop.vue";
+import SuspendCommon from "./src/SuspendCommon.vue";
 
 import {
     Jx3boxUiI18n,
@@ -52,10 +62,18 @@ const components = {
     clientBy,
     zlpBy,
     topicBy,
+    versionBy,
 
     Item,
     ItemSimple,
     GameText,
+
+    CmsSingle,
+    Comment,
+    Thx,
+
+    UserPop,
+    SuspendCommon,
 };
 
 const install = function (app) {

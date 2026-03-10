@@ -8,33 +8,39 @@
             :title="btnTitle"
             plain
             size="small"
-            >赠礼</el-button
+            >{{ $jx3boxT("jx3boxUi.authorGift.button", "赠礼") }}</el-button
         >
 
-        <el-dialog title="赠礼" v-model="visible" :append-to-body="true" class="c-author-gift-dialog" v-if="status">
+        <el-dialog
+            :title="$jx3boxT('jx3boxUi.authorGift.dialogTitle', '赠礼')"
+            v-model="visible"
+            :append-to-body="true"
+            class="c-author-gift-dialog"
+            v-if="status"
+        >
             <div class="u-content">
                 <div class="u-left">
-                    <em class="u-label">🌟 金箔</em>
+                    <em class="u-label">🌟 {{ $jx3boxT("jx3boxUi.authorGift.leaf", "金箔") }}</em>
                     <b>{{ left }}</b>
-                    <a class="u-charge" :href="chargeLink" target="_blank">[充值]</a>
+                    <a class="u-charge" :href="chargeLink" target="_blank">[{{ $jx3boxT("jx3boxUi.authorGift.recharge", "充值") }}]</a>
                 </div>
                 <div class="u-list">
-                    <em class="u-label">❤️ 赠送</em>
+                    <em class="u-label">❤️ {{ $jx3boxT("jx3boxUi.authorGift.give", "赠送") }}</em>
                     <div class="u-points">
                         <el-radio-group v-model="count">
                             <el-radio :value="item" v-for="item in fitPoints" :key="item" border>
                                 <b>{{ item }}</b
-                                >金箔
+                                >{{ $jx3boxT("jx3boxUi.authorGift.leaf", "金箔") }}
                             </el-radio>
                         </el-radio-group>
                     </div>
                 </div>
                 <div class="u-msg">
-                    <em class="u-label">📝 寄语</em>
+                    <em class="u-label">📝 {{ $jx3boxT("jx3boxUi.authorGift.remark", "寄语") }}</em>
                     <div class="u-input">
                         <el-input
                             v-model="remark"
-                            placeholder="请输入寄语（必填）"
+                            :placeholder="$jx3boxT('jx3boxUi.authorGift.remarkPlaceholder', '请输入寄语（必填）')"
                             :minlength="2"
                             :maxlength="30"
                             show-word-limit
@@ -44,9 +50,9 @@
             </div>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="visible = false">取 消</el-button>
+                    <el-button @click="visible = false">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
                     <el-button type="primary" @click="submit" :disabled="!ready || loading" :loading="loading"
-                        >确 定</el-button
+                        >{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</el-button
                     >
                 </span>
             </template>
@@ -57,8 +63,10 @@
 <script>
 import User from "@jx3box/jx3box-common/js/user";
 import { sendCny, checkCnyStatus, checkGiftStatus } from "../../service/thx";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AuthorGift",
+    mixins: [i18nMixin],
     props: {
         uid: {
             type: [Number, String],
@@ -77,7 +85,7 @@ export default {
             chargeLink: "/vip/cny?redirect=" + location.href,
 
             count: 0, //打赏数量
-            remark: "辛苦，感谢！",
+            remark: this.$jx3boxT("jx3boxUi.authorGift.defaultRemark", "辛苦，感谢！"),
         };
     },
     computed: {
@@ -96,9 +104,9 @@ export default {
         },
         btnTitle: function () {
             if (this.isSelf) {
-                return "不能给自己赠送礼物";
+                return this.$jx3boxT("jx3boxUi.authorGift.selfDisabled", "不能给自己赠送礼物");
             } else if (!this.status) {
-                return "作者没有开启接受礼物";
+                return this.$jx3boxT("jx3boxUi.authorGift.statusDisabled", "作者没有开启接受礼物");
             }
             return "";
         },
@@ -131,7 +139,7 @@ export default {
                 // 状态轮询
                 const loading = this.$loading({
                     lock: true,
-                    text: "正在处理中",
+                    text: this.$jx3boxT("jx3boxUi.authorGift.processing", "正在处理中"),
                     spinner: "el-icon-loading",
                     background: "rgba(255, 255, 255, 0.8)",
                 });
@@ -154,14 +162,14 @@ export default {
                                 this.visible = false;
                                 this.loading = false;
                                 this.$message({
-                                    message: "赠送成功",
+                                    message: this.$jx3boxT("jx3boxUi.authorGift.success", "赠送成功"),
                                     type: "success",
                                 });
 
                                 // 结算与重置
                                 this.left = this.left - this.count;
                                 this.count = 100;
-                                this.remark = "辛苦，感谢！";
+                                this.remark = this.$jx3boxT("jx3boxUi.authorGift.defaultRemark", "辛苦，感谢！");
                             } else {
                                 console.info(`[AUTHOR.CNY]重新轮询`);
                             }
@@ -180,7 +188,7 @@ export default {
                         // 关闭加载状态 & 消息提醒
                         this.visible = false;
                         this.loading = false;
-                        this.$message("交易繁忙，请稍后再试");
+                        this.$message(this.$jx3boxT("jx3boxUi.authorGift.busy", "交易繁忙，请稍后再试"));
                     }
                 }, 1000);
             });

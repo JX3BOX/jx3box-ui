@@ -5,7 +5,7 @@
                 class="u-icon"
                 svg-inline
                 src="../../assets/img/common/coin.svg"
-                :alt="$jx3boxT('jx3boxUi.header.asset', '资产')"
+                :alt="$jx3boxT('jx3boxUi.commonHeader.asset', '资产')"
             />
         </a>
 
@@ -14,7 +14,7 @@
                 <span class="u-item">
                     <a class="u-item-primary" href="/about/incentives" :target="target">
                         <span class="u-label"
-                            ><el-icon><User /></el-icon> {{ $jx3boxT("jx3boxUi.header.level", "等级") }}</span
+                            ><el-icon><User /></el-icon> {{ $jx3boxT("jx3boxUi.commonHeader.level", "等级") }}</span
                         >
                         <span class="u-value u-level" :style="levelStyle">Lv.{{ level }}</span>
                     </a>
@@ -23,13 +23,13 @@
                 <span class="u-item">
                     <a class="u-item-primary" href="/dashboard/boxcoin" :target="target"
                         ><span class="u-label"
-                            ><el-icon><Coin /></el-icon> {{ $jx3boxT("jx3boxUi.header.boxCoin", "盒币") }}</span
+                            ><el-icon><Coin /></el-icon> {{ $jx3boxT("jx3boxUi.commonHeader.boxCoin", "盒币") }}</span
                         >
                         <span class="u-value">{{ asset.box_coin }}</span></a
                     >
                     <span class="u-item-extend"
                         ><a href="/dashboard/boxcoin" :target="target"
-                            >[{{ $jx3boxT("jx3boxUi.header.exchangeTongbao", "兑换通宝") }}]</a
+                            >[{{ $jx3boxT("jx3boxUi.commonHeader.exchangeTongbao", "兑换通宝") }}]</a
                         ></span
                     >
                 </span>
@@ -46,26 +46,26 @@
                 <span class="u-item">
                     <a class="u-item-primary" href="/dashboard/points" :target="target"
                         ><span class="u-label"
-                            ><el-icon><Sugar /></el-icon> {{ $jx3boxT("jx3boxUi.header.points", "积分") }}</span
+                            ><el-icon><Sugar /></el-icon> {{ $jx3boxT("jx3boxUi.commonHeader.points", "积分") }}</span
                         >
                         <span class="u-value">{{ asset.points }}</span></a
                     >
                     <span class="u-item-extend"
-                        ><a href="/vip/mall" :target="target">[{{ $jx3boxT("jx3boxUi.header.redeem", "兑礼") }}]</a
+                        ><a href="/vip/mall" :target="target">[{{ $jx3boxT("jx3boxUi.commonHeader.redeem", "兑礼") }}]</a
                         ><a href="/vip/lottery" :target="target"
-                            >[{{ $jx3boxT("jx3boxUi.header.lottery", "抽奖") }}]</a
+                            >[{{ $jx3boxT("jx3boxUi.commonHeader.lottery", "抽奖") }}]</a
                         ></span
                     >
                 </span>
                 <span class="u-item">
                     <a class="u-item-primary" href="/dashboard/card" :target="target"
                         ><span class="u-label"
-                            ><el-icon><CreditCard /></el-icon> {{ $jx3boxT("jx3boxUi.header.card", "卡密") }}</span
+                            ><el-icon><CreditCard /></el-icon> {{ $jx3boxT("jx3boxUi.commonHeader.card", "卡密") }}</span
                         >
                         <span class="u-value">{{ asset.ext_info ? asset.ext_info.keycode : 0 }}</span></a
                     >
                     <span class="u-item-extend"
-                        ><a href="/dashboard/card" :target="target">[{{ $jx3boxT("jx3boxUi.header.view", "查看") }}]</a></span
+                        ><a href="/dashboard/card" :target="target">[{{ $jx3boxT("jx3boxUi.commonHeader.view", "查看") }}]</a></span
                     >
                 </span>
             </div>

@@ -2,7 +2,7 @@
     <div class="c-header-panel c-header-vip" id="c-header-vip">
         <el-tooltip
             effect="dark"
-            :content="$jx3boxT('jx3boxUi.header.vipCenter', '会员中心')"
+            :content="$jx3boxT('jx3boxUi.commonHeader.vipCenter', '会员中心')"
             placement="bottom"
             popper-class="c-header-tooltip"
         >
@@ -14,7 +14,7 @@
                         class="u-add"
                         svg-inline
                         src="../../assets/img/common/vip.svg"
-                        :alt="$jx3boxT('jx3boxUi.header.vipCenter', '会员中心')"
+                        :alt="$jx3boxT('jx3boxUi.commonHeader.vipCenter', '会员中心')"
                     />
                 </i>
             </a>

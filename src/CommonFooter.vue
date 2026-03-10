@@ -8,8 +8,8 @@
                         <span class="text-2xl font-bold tracking-tight text-white">JX3BOX</span>
                     </a>
                     <p class="mt-5 text-sm leading-7 text-gray-400" style="max-width: 20rem">
-                        {{ $jx3boxT("jx3boxUi.footer.slogan1", "一站式剑三工具与资源聚合站。") }}<br />
-                        {{ $jx3boxT("jx3boxUi.footer.slogan2", "江湖路远，幸甚有你。") }}
+                        {{ $jx3boxT("jx3boxUi.commonFooter.slogan1", "一站式剑三工具与资源聚合站。") }}<br />
+                        {{ $jx3boxT("jx3boxUi.commonFooter.slogan2", "江湖路远，幸甚有你。") }}
                     </p>
                     <footer-official />
                 </section>

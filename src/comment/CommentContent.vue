@@ -26,7 +26,7 @@
                         class="u-up"
                         src="../../assets/img/comment/heart_1.svg"
                         alt=""
-                    />点赞<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
+                    />{{ $jx3boxT("jx3boxUi.commentContent.like", "点赞") }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
                 <el-button
                     class="u-admin"
@@ -38,7 +38,7 @@
                         class="u-up"
                         src="../../assets/img/comment/heart_2.svg"
                         alt=""
-                    />已赞<span class="u-like-count">{{
+                    />{{ $jx3boxT("jx3boxUi.commentContent.liked", "已赞") }}<span class="u-like-count">{{
                         likesFormat(hasLikeCount)
                     }}</span></el-button
                 >
@@ -49,7 +49,7 @@
                     icon="ChatRound"
                     @click="showForm = !showForm"
                     type="primary"
-                    >回复</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.reply", "回复") }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -59,7 +59,7 @@
                     size="small"
                     @click="deleteComment()"
                     type="danger"
-                    >删除</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.delete", "删除") }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -68,8 +68,8 @@
                     icon="Delete"
                     v-if="canHide"
                     @click="hideComment()"
-                    title="拉入黑洞后，仅评论者自己独自可见"
-                    >黑洞</el-button
+                    :title="$jx3boxT('jx3boxUi.commentContent.hideTip', '拉入黑洞后，仅评论者自己独自可见')"
+                    >{{ $jx3boxT("jx3boxUi.commentContent.hide", "黑洞") }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -79,7 +79,7 @@
                     size="small"
                     @click="topComment(true)"
                     type="primary"
-                    >置顶</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.top", "置顶") }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -89,7 +89,7 @@
                     size="small"
                     @click="topComment(false)"
                     type="primary"
-                    >取消置顶</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.cancelTop", "取消置顶") }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -99,7 +99,7 @@
                     size="small"
                     @click="starComment(true)"
                     type="primary"
-                    >加精</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.star", "加精") }}</el-button
                 >
                 <el-button
                     class="u-admin"
@@ -109,7 +109,7 @@
                     size="small"
                     @click="starComment(false)"
                     type="primary"
-                    >取消加精</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.cancelStar", "取消加精") }}</el-button
                 >
                 <time class="u-date">
                     <i class="Clock"></i>
@@ -127,9 +127,9 @@
                     <img
                         class="u-icon-filter"
                         src="../../assets/img/editor/view.svg"
-                        alt="显示"
+                        :alt="$jx3boxT('jx3boxUi.commentContent.show', '显示')"
                     />
-                    显示</el-button
+                    {{ $jx3boxT("jx3boxUi.commentContent.show", "显示") }}</el-button
                 >
                 <el-button
                     class="u-admin u-filter"
@@ -140,8 +140,8 @@
                     ><img
                         class="u-icon-filter"
                         src="../../assets/img/comment/hide.svg"
-                        alt="隐藏"
-                    />隐藏</el-button
+                        :alt="$jx3boxT('jx3boxUi.commentContent.hidden', '隐藏')"
+                    />{{ $jx3boxT("jx3boxUi.commentContent.hidden", "隐藏") }}</el-button
                 >
             </div>
         </div>
@@ -155,7 +155,7 @@
                 <el-input
                     type="textarea"
                     v-model="newComment.content"
-                    placeholder="参与评论..."
+                    :placeholder="$jx3boxT('jx3boxUi.commentContent.placeholder', '参与评论...')"
                     :id="'id' + inputId"
                 ></el-input>
             </el-form-item>
@@ -182,10 +182,10 @@
                     type="primary"
                     @click="submit()"
                     :disabled="disableSubmitBtn"
-                    >提交</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.submit", "提交") }}</el-button
                 >
                 <el-button size="small" link @click="showForm = false" type="primary"
-                    >收起</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.collapse", "收起") }}</el-button
                 >
             </el-form-item>
         </el-form>
@@ -198,11 +198,13 @@ import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { resolveImagePath } = utilModule;
 import { formatContent } from "../../utils/emotion";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
+import i18nMixin from "../../i18n/mixin";
 
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
 }
 export default {
+    mixins: [i18nMixin],
     props: {
         content: {
             type: String,
@@ -324,22 +326,30 @@ export default {
             this.$emit("setWhiteComment", white);
         },
         deleteComment() {
-            this.$confirm("确定删除该评论吗？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "warning",
-            })
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.commentContent.confirmDelete", "确定删除该评论吗？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     this.$emit("deleteComment");
                 })
                 .catch(() => {});
         },
         hideComment() {
-            this.$confirm("确定隐藏该评论吗？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "warning",
-            })
+            this.$confirm(
+                this.$jx3boxT("jx3boxUi.commentContent.confirmHide", "确定隐藏该评论吗？"),
+                this.$jx3boxT("jx3boxUi.common.tip", "提示"),
+                {
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     this.$emit("hide", this.commentId);
                 })

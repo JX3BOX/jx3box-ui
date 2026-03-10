@@ -2,7 +2,7 @@
     <div class="c-header-panel" id="c-header-panel">
         <el-tooltip
             effect="dark"
-            :content="$jx3boxT('jx3boxUi.header.createCenter', '创作中心')"
+            :content="$jx3boxT('jx3boxUi.commonHeader.createCenter', '创作中心')"
             placement="bottom"
             popper-class="c-header-tooltip"
         >
@@ -12,7 +12,7 @@
                     class="u-add"
                     svg-inline
                     src="../../assets/img/common/edit.svg"
-                    :alt="$jx3boxT('jx3boxUi.header.createCenter', '创作中心')"
+                    :alt="$jx3boxT('jx3boxUi.commonHeader.createCenter', '创作中心')"
                 />
             </a>
         </el-tooltip>

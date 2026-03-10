@@ -25,7 +25,7 @@
             role="menu"
         >
             <div class="px-3 py-2 text-[10px] text-gray-500 uppercase tracking-widest border-b border-gray-800 mb-1">
-                {{ $jx3boxT("jx3boxUi.header.chooseGameVersion", "选择游戏版本") }}
+                {{ $jx3boxT("jx3boxUi.commonHeader.chooseGameVersion", "选择游戏版本") }}
             </div>
 
             <!-- 剑网3 -->
@@ -45,13 +45,13 @@
                             class="w-4 h-4"
                             svg-inline
                             src="../../assets/img/common/jx3-www.svg"
-                            :alt="$jx3boxT('jx3boxUi.header.jx3Full', '剑网3 / 无界')"
+                            :alt="$jx3boxT('jx3boxUi.commonHeader.jx3Full', '剑网3 / 无界')"
                         />
                         <!-- <Jx3Icon class="w-4 h-4" /> -->
                     </span>
                     <div>
                         <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">
-                            {{ $jx3boxT("jx3boxUi.header.jx3Full", "剑网3 / 无界") }}
+                            {{ $jx3boxT("jx3boxUi.commonHeader.jx3Full", "剑网3 / 无界") }}
                         </div>
                         <div class="text-[10px] text-gray-500 group-hover/item:text-indigo-200">www.jx3box.com</div>
                     </div>
@@ -79,13 +79,13 @@
                             class="w-4 h-4"
                             svg-inline
                             src="../../assets/img/common/jx3-origin.svg"
-                            :alt="$jx3boxT('jx3boxUi.header.originFull', '剑网3·缘起')"
+                            :alt="$jx3boxT('jx3boxUi.commonHeader.originFull', '剑网3·缘起')"
                         />
                         <!-- <OriginIcon class="w-4 h-4" /> -->
                     </span>
                     <div>
                         <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">
-                            {{ $jx3boxT("jx3boxUi.header.originFull", "剑网3·缘起") }}
+                            {{ $jx3boxT("jx3boxUi.commonHeader.originFull", "剑网3·缘起") }}
                         </div>
                         <div class="text-[10px] text-gray-500 group-hover/item:text-indigo-200">origin.jx3box.com</div>
                     </div>
@@ -121,8 +121,8 @@ export default {
     computed: {
         currentGameLabel: function () {
             return this.activeKey === "origin"
-                ? this.$jx3boxT("jx3boxUi.header.originShort", "缘起")
-                : this.$jx3boxT("jx3boxUi.header.jx3Short", "剑网3");
+                ? this.$jx3boxT("jx3boxUi.commonHeader.originShort", "缘起")
+                : this.$jx3boxT("jx3boxUi.commonHeader.jx3Short", "剑网3");
         },
     },
     watch: {

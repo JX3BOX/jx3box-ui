@@ -57,8 +57,18 @@
         </div>
         <div class="w-thx-copyright">
             &copy;
-            所有原创作品，著作权归作者所有，所有未经授权的非署名转载或抄袭将有权追究法律责任，所有法律事务由专聘律师代理。<br />
-            签约作者独家特约稿件，及所有魔盒官方评分作品用户一经兑现则视为有偿付费稿件，所有商业稿件的转载引用需同时征得魔盒平台授权。
+            {{
+                $jx3boxT(
+                    "jx3boxUi.thx.copyright1",
+                    "所有原创作品，著作权归作者所有，所有未经授权的非署名转载或抄袭将有权追究法律责任，所有法律事务由专聘律师代理。"
+                )
+            }}<br />
+            {{
+                $jx3boxT(
+                    "jx3boxUi.thx.copyright2",
+                    "签约作者独家特约稿件，及所有魔盒官方评分作品用户一经兑现则视为有偿付费稿件，所有商业稿件的转载引用需同时征得魔盒平台授权。"
+                )
+            }}
         </div>
     </div>
 </template>
@@ -76,9 +86,11 @@ import Rss from "../interact/Rss.vue";
 import User from "@jx3box/jx3box-common/js/user";
 import { getBoxcoinStatus, getPostBoxcoinConfig } from "../../service/thx";
 import { getConfig, getUserPermission } from "../../service/cms";
+import i18nMixin from "../../i18n/mixin";
 
 export default {
     name: "ThxComp",
+    mixins: [i18nMixin],
     components: {
         Like,
         Fav,

@@ -1,7 +1,7 @@
 <template>
     <el-form ref="form" class="c-comment-subbox">
         <div class="u-subbox-label">
-            回复
+            {{ $jx3boxT("jx3boxUi.replyForReply.reply", "回复") }}
             <el-link type="primary" target="_blank" :href="userHref"
                 >＠{{ username }}</el-link
             >
@@ -12,7 +12,7 @@
                 type="textarea"
                 v-model="content"
                 :id="'id' + inputId"
-                placeholder="输入回复..."
+                :placeholder="$jx3boxT('jx3boxUi.replyForReply.placeholder', '输入回复...')"
             ></el-input>
         </el-form-item>
         <el-form-item>
@@ -38,10 +38,10 @@
                 type="primary"
                 @click="submitReply"
                 :disabled="disableSubmitBtn"
-                >提交</el-button
+                >{{ $jx3boxT("jx3boxUi.replyForReply.submit", "提交") }}</el-button
             >
             <el-button size="small" link @click="hideForm()"
-                >收起</el-button
+                >{{ $jx3boxT("jx3boxUi.replyForReply.collapse", "收起") }}</el-button
             >
         </el-form-item>
     </el-form>
@@ -50,7 +50,9 @@
 <script>
 import Uploader from "./Upload.vue";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
+import i18nMixin from "../../i18n/mixin";
 export default {
+    mixins: [i18nMixin],
     props: {
         username: {
             type: String,

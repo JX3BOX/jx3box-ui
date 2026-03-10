@@ -43,21 +43,5 @@
 - versionBy 版本筛选
 - zlpBy 资料片筛选
 
-### 个人模块 author
-
-一般用于文章详情的左侧边栏，个人主页等
-
--   Avatar 头像
--   AuthorFans 粉丝榜
--   AuthorFollow 关注用户（区分rss，此处用户更新不会收到消息）
--   AuthorGift 打赏用户
--   AuthorHonor 用户称号
--   AuthorInfo 用户基础信息
--   AuthorLink 用户绑定平台账号（微博，github，直播间）
--   AuthorMedals 用户勋章
--   AuthorPosts 用户作品
--   AuthorRss 订阅用户
--   AuthorTeams 所在团队
--   UserPop 搜索用户弹窗
-
-
+### 其他
+- UserPop 搜索用户弹窗

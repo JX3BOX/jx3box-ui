@@ -29,7 +29,7 @@
                 @updateRecord="updateRecord"
                 :client="client"
             />
-            <el-tooltip effect="dark" content="打赏记录" placement="top-start">
+            <el-tooltip effect="dark" :content="$jx3boxT('jx3boxUi.simpleThx.record', '打赏记录')" placement="top-start">
                 <!-- <div class="w-boxcoin-block"> -->
                 <img
                     src="../../assets/img/widget/records.svg"
@@ -42,7 +42,7 @@
             </el-tooltip>
         </div>
 
-        <el-drawer v-model="showDrawer" title="打赏记录" append-to-body>
+        <el-drawer v-model="showDrawer" :title="$jx3boxT('jx3boxUi.simpleThx.record', '打赏记录')" append-to-body>
             <BoxcoinRecords
                 :postId="postId"
                 :postType="postType"
@@ -63,9 +63,11 @@ import BoxcoinUser from "../interact/BoxcoinUser.vue";
 import BoxcoinRecords from "../interact/BoxcoinRecords.vue";
 import User from "@jx3box/jx3box-common/js/user";
 import { getBoxcoinStatus, getPostBoxcoinConfig } from "../../service/thx";
+import i18nMixin from "../../i18n/mixin";
 
 export default {
     name: "SimpleThx",
+    mixins: [i18nMixin],
     components: {
         Like,
         Fav,

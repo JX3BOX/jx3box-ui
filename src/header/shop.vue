@@ -2,7 +2,7 @@
     <div class="c-header-panel c-header-shop">
         <el-tooltip
             effect="dark"
-            :content="$jx3boxT('jx3boxUi.header.mallPoints', '积分商城')"
+            :content="$jx3boxT('jx3boxUi.commonHeader.mallPoints', '积分商城')"
             placement="bottom"
             popper-class="c-header-tooltip"
         >
@@ -14,7 +14,7 @@
                         class="u-icon"
                         svg-inline
                         src="../../assets/img/common/gift.svg"
-                        :alt="$jx3boxT('jx3boxUi.header.mallPoints', '积分商城')"
+                        :alt="$jx3boxT('jx3boxUi.commonHeader.mallPoints', '积分商城')"
                     />
                 </i>
             </a>

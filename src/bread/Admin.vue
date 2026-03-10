@@ -1,7 +1,7 @@
 <template>
     <el-drawer
         class="c-admin"
-        title="管理面板"
+        :title="$jx3boxT('jx3boxUi.admin.title', '管理面板')"
         v-model="dialog_visible"
         :before-close="close"
         append-to-body
@@ -11,40 +11,48 @@
     >
         <div class="c-admin-wrapper" ref="adminDrawer">
             <!-- <template v-if="isAdmin"> -->
-            <el-divider content-position="left">状态变更</el-divider>
+            <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.status", "状态变更") }}</el-divider>
             <el-radio-group v-model="post_status" class="c-admin-status">
                 <el-radio-button v-for="(option, key) in status_options" :value="key" :key="key">{{
                     option
                 }}</el-radio-button>
             </el-radio-group>
-            <el-button type="primary" class="u-refresh-btn" @click="onRefreshCache">刷新缓存</el-button>
+            <el-button type="primary" class="u-refresh-btn" @click="onRefreshCache">{{
+                $jx3boxT("jx3boxUi.admin.refreshCache", "刷新缓存")
+            }}</el-button>
             <!-- </template> -->
 
-            <el-divider content-position="left">可见性变更</el-divider>
+            <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.visible", "可见性变更") }}</el-divider>
             <el-radio-group v-model="visible" class="c-admin-status">
                 <el-radio-button v-for="(option, key) in visible_options" :value="key" :key="key">{{
                     option
                 }}</el-radio-button>
             </el-radio-group>
 
-            <el-divider content-position="left">推荐角标</el-divider>
+            <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.mark", "推荐角标") }}</el-divider>
             <el-checkbox-group v-model="mark" class="c-admin-mark">
                 <el-checkbox v-for="(option, key) in mark_options" :value="key" :key="key">{{ option }}</el-checkbox>
             </el-checkbox-group>
 
-            <el-divider content-position="left">高亮置顶</el-divider>
-            <el-checkbox class="c-admin-highlight-checkbox" v-model="isSticky">置顶</el-checkbox>
-            <el-checkbox class="c-admin-highlight-checkbox" v-model="isHighlight">开启高亮</el-checkbox>
+            <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.highlight", "高亮置顶") }}</el-divider>
+            <el-checkbox class="c-admin-highlight-checkbox" v-model="isSticky">{{
+                $jx3boxT("jx3boxUi.admin.sticky", "置顶")
+            }}</el-checkbox>
+            <el-checkbox class="c-admin-highlight-checkbox" v-model="isHighlight">{{
+                $jx3boxT("jx3boxUi.admin.enableHighlight", "开启高亮")
+            }}</el-checkbox>
             <template v-if="isHighlight">
                 <el-color-picker
                     class="c-admin-highlight-block"
                     v-model="color"
                     :predefine="color_options"
                 ></el-color-picker>
-                <span class="c-admin-highlight-preview" :style="{ color: color }">预览高亮效果</span>
+                <span class="c-admin-highlight-preview" :style="{ color: color }">{{
+                    $jx3boxT("jx3boxUi.admin.previewHighlight", "预览高亮效果")
+                }}</span>
             </template>
 
-            <el-divider content-position="left">封面海报</el-divider>
+            <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.banner", "封面海报") }}</el-divider>
             <div class="c-admin-banner">
                 <el-upload
                     class="c-admin-upload el-upload--picture-card"
@@ -59,25 +67,25 @@
                 </el-upload>
                 <el-input class="u-banner" v-model="post_banner">
                     <template #prepend>
-                        <span>海报地址</span>
+                        <span>{{ $jx3boxT("jx3boxUi.admin.bannerUrl", "海报地址") }}</span>
                     </template>
                     <template #append>
                         <span>
                             <span class="u-btn" @click="removeBanner">
-                                <el-icon><CircleClose /></el-icon> 移除海报
+                                <el-icon><CircleClose /></el-icon> {{ $jx3boxT("jx3boxUi.admin.removeBanner", "移除海报") }}
                             </span>
                         </span>
                     </template>
                 </el-input>
             </div>
 
-            <el-divider content-position="left">元信息</el-divider>
+            <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.meta", "元信息") }}</el-divider>
             <div class="c-admin-info">
                 <div class="w-select c-admin-type">
-                    <div class="u-select-label">板块</div>
+                    <div class="u-select-label">{{ $jx3boxT("jx3boxUi.admin.section", "板块") }}</div>
                     <el-select
                         v-model="post_type"
-                        placeholder="请选择板块"
+                        :placeholder="$jx3boxT('jx3boxUi.admin.sectionPlaceholder', '请选择板块')"
                         style="width: 100%"
                         class="u-select drawer-item-content"
                         :disabled="appDisabled"
@@ -91,17 +99,21 @@
                     </el-select>
                 </div>
                 <div class="c-admin-author">
-                    <el-input v-model="post_author" placeholder="请输入作者ID" class="input-author drawer-item-content">
+                    <el-input
+                        v-model="post_author"
+                        :placeholder="$jx3boxT('jx3boxUi.admin.authorPlaceholder', '请输入作者ID')"
+                        class="input-author drawer-item-content"
+                    >
                         <template #prepend>
-                            <span class="u-keyword">作者ID</span>
+                            <span class="u-keyword">{{ $jx3boxT("jx3boxUi.admin.authorId", "作者ID") }}</span>
                         </template>
                     </el-input>
                 </div>
             </div>
 
             <div class="c-admin-buttons">
-                <el-button type="primary" @click="submit" :loading="pushing">提交</el-button>
-                <el-button plain @click="close">取消</el-button>
+                <el-button type="primary" @click="submit" :loading="pushing">{{ $jx3boxT("jx3boxUi.admin.submit", "提交") }}</el-button>
+                <el-button plain @click="close">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
             </div>
         </div>
     </el-drawer>
@@ -117,11 +129,13 @@ import User from "@jx3box/jx3box-common/js/user";
 import CMS_MARKS from "@jx3box/jx3box-common/data/mark.json";
 import { getTopicBucket } from "../../service/cms";
 import emitter from "../../utils/bus";
+import i18nMixin from "../../i18n/mixin";
 
 const { cms: marks } = CMS_MARKS;
 // import { onClickOutside } from "@vueuse/core";
 export default {
     name: "BreadAdmin",
+    mixins: [i18nMixin],
     emits: ["update"],
     props: {
         marksOptions: {
@@ -176,10 +190,10 @@ export default {
             // 状态
             post_status: "publish",
             status_options: {
-                publish: "默认",
-                draft: "草稿",
-                pending: "待审核",
-                dustbin: "删除",
+                publish: this.$jx3boxT("jx3boxUi.admin.statusDefault", "默认"),
+                draft: this.$jx3boxT("jx3boxUi.admin.statusDraft", "草稿"),
+                pending: this.$jx3boxT("jx3boxUi.admin.statusPending", "待审核"),
+                dustbin: this.$jx3boxT("jx3boxUi.admin.statusDeleted", "删除"),
             },
             visible: "0",
             visible_options: JX3BOX.__visibleMap,
@@ -276,7 +290,7 @@ export default {
             this.post_banner = res.data[0];
         },
         uploadFail: function (err) {
-            this.$message.error("上传失败");
+            this.$message.error(this.$jx3boxT("jx3boxUi.admin.uploadFailed", "上传失败"));
             console.log(err);
         },
         removeBanner: function () {
@@ -340,7 +354,7 @@ export default {
                         data: this.data,
                     });
                     this.$message({
-                        message: "设置成功",
+                        message: this.$jx3boxT("jx3boxUi.admin.success", "设置成功"),
                         type: "success",
                     });
                 })

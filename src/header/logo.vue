@@ -2,12 +2,12 @@
     <div
         class="c-header-logo"
         @click="toggleBox($event)"
-        :title="$jx3boxT('jx3boxUi.header.expandBoxMatrix', '点击展开魔盒矩阵')"
+        :title="$jx3boxT('jx3boxUi.commonHeader.expandBoxMatrix', '点击展开魔盒矩阵')"
     >
         <i class="u-pic" id="c-header-logo">
             <img svg-inline src="../../assets/img/common/logo.svg" alt="JX3BOX" />
         </i>
-        <span class="u-txt" :class="{ on: isIndex }" href="/">{{ $jx3boxT("jx3boxUi.header.box", "魔盒") }}</span>
+        <span class="u-txt" :class="{ on: isIndex }" href="/">{{ $jx3boxT("jx3boxUi.commonHeader.box", "魔盒") }}</span>
     </div>
 </template>
 

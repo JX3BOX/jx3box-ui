@@ -4,20 +4,30 @@
             <Avatar class="u-avatar" :uid="uid" :url="data.user_avatar" size="s" :frame="data.user_avatar_frame" />
             <div class="u-info">
                 <div class="u-name">
-                    <el-tooltip class="item" effect="dark" content="签约作者" placement="top" v-if="isSuperAuthor">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="$jx3boxT('jx3boxUi.authorInfo.superAuthor', '签约作者')"
+                        placement="top"
+                        v-if="isSuperAuthor"
+                    >
                         <a class="u-superauthor" href="/about/superauthor" target="_blank">
                             <img :src="super_author_icon" alt="superauthor" />
                         </a>
                     </el-tooltip>
                     <a class="u-displayname" :href="authorLink(uid)" target="_blank" v-if="!anonymous">
-                        {{ data.display_name || "未知" }}
+                        {{ data.display_name || $jx3boxT("jx3boxUi.authorInfo.unknown", "未知") }}
                     </a>
-                    <span class="u-displayname u-anonymous" v-else>神秘侠士</span>
+                    <span class="u-displayname u-anonymous" v-else>{{ $jx3boxT("jx3boxUi.authorInfo.mysterious", "神秘侠士") }}</span>
                 </div>
                 <div class="u-extend">
                     <el-tooltip class="item" effect="dark" placement="top" v-if="!anonymous">
                         <template #content>
-                            <span class="u-tips">经验值：{{ data.experience }}</span>
+                            <span class="u-tips">{{
+                                $jx3boxT("jx3boxUi.authorInfo.experience", "经验值：{value}", {
+                                    value: data.experience,
+                                })
+                            }}</span>
                         </template>
                         <a
                             class="u-level"
@@ -58,10 +68,12 @@ import User from "@jx3box/jx3box-common/js/user";
 import { getUserInfo } from "../../service/author";
 import Avatar from "./Avatar.vue";
 import Honor from "./AuthorHonor.vue";
+import i18nMixin from "../../i18n/mixin";
 
 const { __imgPath, __userLevelColor } = JX3BOX;
 export default {
     name: "AuthorInfo",
+    mixins: [i18nMixin],
     props: {
         uid: {
             type: [Number, String],
@@ -94,7 +106,9 @@ export default {
             return this.data?.is_pro ? "PRO" : "PRE";
         },
         vipTypeTitle: function () {
-            return this.data?.is_pro ? "专业版会员" : "高级版会员";
+            return this.data?.is_pro
+                ? this.$jx3boxT("jx3boxUi.authorInfo.proVip", "专业版会员")
+                : this.$jx3boxT("jx3boxUi.authorInfo.preVip", "高级版会员");
         },
         isVip: function () {
             return this.data?.is_pro || this.data?.is_pre;

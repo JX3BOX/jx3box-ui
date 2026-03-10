@@ -24,9 +24,11 @@ import {
     unsubscribePost,
 } from "@jx3box/jx3box-common/js/rss";
 const jx3box = require("@jx3box/jx3box-common/data/jx3box.json");
+import i18nMixin from "../../i18n/mixin";
 
 export default {
     name: "RssComponent",
+    mixins: [i18nMixin],
     props: {
         type: {
             type: String,
@@ -53,7 +55,9 @@ export default {
     },
     computed: {
         tooltipContent() {
-            return this.subscribed ? "已订阅" : "加入订阅";
+            return this.subscribed
+                ? this.$jx3boxT("jx3boxUi.rss.subscribed", "已订阅")
+                : this.$jx3boxT("jx3boxUi.rss.subscribe", "加入订阅");
         },
         addSrc() {
             return jx3box.__cdn + "design/vector/icon/rss.svg";

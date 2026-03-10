@@ -10,7 +10,7 @@
                                 :class="{ on: isFocus(item.link) }"
                                 :href="item.link"
                                 :target="isSelf(item.link)"
-                                >{{ $jx3boxT(`jx3boxUi.nav.${item.key}`, item.label) }}</a
+                                >{{ $jx3boxT(`jx3boxUi.commonHeader.nav.${item.key}`, item.label) }}</a
                             >
                             <template #dropdown>
                                 <el-dropdown-menu class="c-header-menu">
@@ -21,7 +21,7 @@
                                             class="u-menu-item"
                                         >
                                             <a :href="subitem.link" :target="isSelf(subitem.link)"
-                                                >{{ $jx3boxT(`jx3boxUi.nav.${subitem.key}`, subitem.label) }}
+                                                >{{ $jx3boxT(`jx3boxUi.commonHeader.nav.${subitem.key}`, subitem.label) }}
                                                 <span v-if="subitem.desc">{{ subitem.desc }}</span></a
                                             >
                                         </el-dropdown-item>
@@ -32,7 +32,7 @@
                     </template>
                     <template v-else>
                         <a class="u-item" :class="{ on: isFocus(item.link) }" :href="item.link">{{
-                            $jx3boxT(`jx3boxUi.nav.${item.key}`, item.label)
+                            $jx3boxT(`jx3boxUi.commonHeader.nav.${item.key}`, item.label)
                         }}</a>
                     </template>
                 </template>
@@ -41,7 +41,7 @@
         <!-- <div class="c-header-nav--pad">
             <el-menu mode="horizontal" class="c-quick-menu" :default-active="activeIndex">
                 <el-sub-menu index="quick-menu" popper-class="c-quick-menu__submenu">
-                    <template #title>快捷导航</template>
+                    <template #title>{{ $jx3boxT("jx3boxUi.nav.quickNav", "快捷导航") }}</template>
                     <template v-for="item in finalNav" :key="'header-nav-' + item.key">
                         <el-sub-menu
                             v-if="matchedClient(item.client) && item.children && item.children.length"
@@ -127,13 +127,14 @@ const activeNav = {
 import { getMenu } from "../../service/header";
 import { trimSlash } from "./utils";
 import i18nMixin from "../../i18n/mixin";
+import navData from "../../assets/data/nav.json";
 
 export default {
     mixins: [i18nMixin],
     props: {},
     data: function () {
         return {
-            nav: default_nav,
+            nav: navData,
 
             activeIndex: "",
         };
@@ -190,24 +191,25 @@ export default {
             return link.startsWith("/") ? "_self" : "_blank";
         },
         loadNav() {
-            try {
-                const nav = (sessionStorage.getItem("nav") && JSON.parse(sessionStorage.getItem("nav"))) || null;
-                if (nav) {
-                    this.nav = nav;
-                    this.syncActiveIndex();
-                } else {
-                    getMenu("nav").then((res) => {
-                        if (res.data) {
-                            this.nav = res?.data?.data?.val;
-                            sessionStorage.setItem("nav", JSON.stringify(this.nav));
-                            this.syncActiveIndex();
-                        }
-                    });
-                }
-            } catch (e) {
-                this.nav = default_nav;
-                console.log("loadNav error", e);
-            }
+            this.nav = navData;
+            // try {
+            //     const nav = (sessionStorage.getItem("nav") && JSON.parse(sessionStorage.getItem("nav"))) || null;
+            //     if (nav) {
+            //         this.nav = nav;
+            //         this.syncActiveIndex();
+            //     } else {
+            //         getMenu("nav").then((res) => {
+            //             if (res.data) {
+            //                 this.nav = res?.data?.data?.val;
+            //                 sessionStorage.setItem("nav", JSON.stringify(this.nav));
+            //                 this.syncActiveIndex();
+            //             }
+            //         });
+            //     }
+            // } catch (e) {
+            //     this.nav = default_nav;
+            //     console.log("loadNav error", e);
+            // }
         },
         trimSlash(link) {
             return trimSlash(`${this.prefix}:${link}`);

@@ -25,7 +25,7 @@
             :class="'u-link__' + data.tv_type"
             :href="tv_link"
             target="_blank"
-            :title="`房间号:${data.tv_id}`"
+            :title="$jx3boxT('jx3boxUi.authorLink.roomId', '房间号:{id}', { id: data.tv_id })"
         >
             <img :src="getIcon(data.tv_type)" />
         </a>
@@ -35,9 +35,11 @@
 <script>
 import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { tvLink } = utilModule;
+import i18nMixin from "../../i18n/mixin";
 
 export default {
     name: "AuthorLink",
+    mixins: [i18nMixin],
     props: {
         data: {
             type: Object,

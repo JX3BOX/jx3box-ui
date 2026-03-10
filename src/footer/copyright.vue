@@ -5,9 +5,9 @@
     >
         <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
             <span>{{
-                $jx3boxT("jx3boxUi.footer.copyright", "© 2019-{year} JX3BOX {poweredBy}", {
+                $jx3boxT("jx3boxUi.commonFooter.copyright", "© 2019-{year} JX3BOX {poweredBy}", {
                     year: new Date().getFullYear(),
-                    poweredBy: $jx3boxT("jx3boxUi.footer.poweredBy", "All rights reserved."),
+                    poweredBy: $jx3boxT("jx3boxUi.commonFooter.poweredBy", "All rights reserved."),
                 })
             }}</span>
             <a
@@ -16,7 +16,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                {{ $jx3boxT("jx3boxUi.footer.icp", "湘ICP备2021002288号") }}
+                {{ $jx3boxT("jx3boxUi.commonFooter.icp", "湘ICP备2021002288号") }}
             </a>
         </div>
         <div class="mt-4 flex items-center space-x-6 md:mt-0">
@@ -26,7 +26,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                {{ $jx3boxT("jx3boxUi.footer.contactUs", "联系我们") }}
+                {{ $jx3boxT("jx3boxUi.commonFooter.contactUs", "联系我们") }}
             </a>
             <a
                 class="text-gray-500 transition-colors hover:text-white"
@@ -34,7 +34,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                {{ $jx3boxT("jx3boxUi.footer.feedback", "反馈建议") }}
+                {{ $jx3boxT("jx3boxUi.commonFooter.feedback", "反馈建议") }}
             </a>
         </div>
     </div>

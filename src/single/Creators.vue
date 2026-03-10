@@ -1,6 +1,6 @@
 <template>
     <div class="w-creators" v-if="visible">
-        <span class="w-creators-title">联合创作</span>
+        <span class="w-creators-title">{{ $jx3boxT("jx3boxUi.creators.title", "联合创作") }}</span>
         <a
             class="w-creators-super w-creators-item"
             v-if="super_author"
@@ -26,7 +26,7 @@
             </a>
         </div>
         <a class="w-creators-edit" :href="editLink" v-if="isCreator">
-            <el-icon><Edit /></el-icon> 编辑当前作品
+            <el-icon><Edit /></el-icon> {{ $jx3boxT("jx3boxUi.creators.editCurrent", "编辑当前作品") }}
         </a>
     </div>
 </template>
@@ -35,8 +35,10 @@
 import { getPostAuthors } from "../../service/cms";
 import { showAvatar, authorLink, editLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "SingleCreators",
+    mixins: [i18nMixin],
     props: {
         postId: {
             type: [Number, String],

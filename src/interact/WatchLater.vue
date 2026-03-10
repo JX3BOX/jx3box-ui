@@ -14,8 +14,10 @@ import User from "@jx3box/jx3box-common/js/user";
 const JX3BOX = require("@jx3box/jx3box-common/data/jx3box.json");
 import { addWatchLater, delWatchLater } from "../../service/fav";
 import { omit } from "lodash";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "WatchLater",
+    mixins: [i18nMixin],
     props: {
         category: {
             type: String,
@@ -46,7 +48,9 @@ export default {
     },
     computed: {
         favContent() {
-            return this.favorite ? "已添加稍后在看" : "添加至稍后再看";
+            return this.favorite
+                ? this.$jx3boxT("jx3boxUi.watchLater.added", "已添加稍后在看")
+                : this.$jx3boxT("jx3boxUi.watchLater.add", "添加至稍后再看");
         },
         addSrc() {
             return JX3BOX.__cdn + "design/vector/icon/time.svg"

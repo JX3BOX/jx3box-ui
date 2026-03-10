@@ -123,7 +123,7 @@ export default {
                 douyin: "douyin",
             };
             const tKey = map[item.key] || item.key;
-            return this.$jx3boxT(`jx3boxUi.footer.${tKey}`, item.name || tKey);
+            return this.$jx3boxT(`jx3boxUi.commonFooter.${tKey}`, item.name || tKey);
         },
     },
     created: function () {},

@@ -14,8 +14,12 @@
         <!-- 分页 -->
         <el-row v-if="data.length >= 3 || showPager">
             <el-col :span="4">
-                <el-button link v-show="showPager" @click="showLess()">收起</el-button>
-                <el-button link v-show="!showPager" @click="showMore()">查看更多</el-button>
+                <el-button link v-show="showPager" @click="showLess()">{{
+                    $jx3boxT("jx3boxUi.replyList.collapse", "收起")
+                }}</el-button>
+                <el-button link v-show="!showPager" @click="showMore()">{{
+                    $jx3boxT("jx3boxUi.replyList.showMore", "查看更多")
+                }}</el-button>
             </el-col>
             <el-col :span="20" class="c-comment-reply-pages">
                 <el-pagination
@@ -34,7 +38,9 @@
 
 <script>
 import ReplyItem from "./ReplyItem.vue";
+import i18nMixin from "../../i18n/mixin";
 export default {
+    mixins: [i18nMixin],
     props: {
         data: {
             type: Array,

@@ -5,7 +5,7 @@
                 class="u-icon"
                 svg-inline
                 src="../../assets/img/common/lang.svg"
-                :alt="$jx3boxT('jx3boxUi.header.langSwitch', '语言切换')"
+                :alt="$jx3boxT('jx3boxUi.commonHeader.langSwitch', '语言切换')"
             />
         </span>
         <ul class="u-menu u-pop-content">
@@ -25,6 +25,8 @@
 // import langIcon from "@/assets/img/components/common/header/lang.svg";
 import { getJx3boxUiAvailableLocales, setJx3boxUiLocale } from "../../i18n";
 import i18nMixin from "../../i18n/mixin";
+import User from "@jx3box/jx3box-common/js/user";
+import { getUserConfig, setUserConfig } from "../../service/cms";
 
 function normalizeLocaleKey(key) {
     if (!key) return null;
@@ -40,6 +42,11 @@ export default {
     mixins: [i18nMixin],
     components: {
         // langIcon,
+    },
+    computed: {
+        isLogin() {
+            return User.isLogin();
+        }
     },
     data() {
         const supported = getJx3boxUiAvailableLocales();
@@ -70,10 +77,7 @@ export default {
         };
     },
     mounted() {
-        const lang = localStorage.getItem("lang") || "zh-cn";
-        this.currentLang = lang;
-        const normalized = normalizeLocaleKey(lang);
-        normalized && setJx3boxUiLocale(normalized);
+        this.init();
     },
     methods: {
         onLangChange({ disabled, key }) {
@@ -85,8 +89,39 @@ export default {
             if (!normalized) return;
 
             const ok = setJx3boxUiLocale(normalized);
-            if (ok) location.reload();
+            if (ok) {
+                if (this.isLogin) {
+                    setUserConfig({ default_lang: key }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    location.reload();
+                }
+            }
         },
+        init() {
+            if (!this.isLogin) {
+                const lang = localStorage.getItem("lang") || "zh-cn";
+                this.currentLang = lang;
+                const normalized = normalizeLocaleKey(lang);
+                normalized && setJx3boxUiLocale(normalized);
+            } else {
+                const lang = localStorage.getItem("lang");
+                if (lang) {
+                    this.currentLang = lang;
+                    const normalized = normalizeLocaleKey(lang);
+                    normalized && setJx3boxUiLocale(normalized);
+                } else {
+                    getUserConfig({ key: "default_lang" }).then((res) => {
+                        const defaultLang = res || "zh-cn";
+                        this.currentLang = defaultLang;
+                        const normalized = normalizeLocaleKey(defaultLang);
+                        normalized && setJx3boxUiLocale(normalized);
+                        localStorage.setItem("lang", defaultLang);
+                    });
+                }
+            }
+        }
     },
 };
 </script>

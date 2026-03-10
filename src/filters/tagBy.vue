@@ -5,7 +5,7 @@
                 ><el-icon>
                     <collection-tag />
                 </el-icon>
-                {{ current || "全部" }}</span
+                {{ current || $jx3boxT("jx3boxUi.tagBy.all", "全部") }}</span
             >
             <span class="u-toggle">
                 <el-icon class="el-icon-arrow-down">
@@ -21,7 +21,7 @@
                 ><el-icon>
                     <collection-tag />
                 </el-icon>
-                全部</span
+                {{ $jx3boxT("jx3boxUi.tagBy.all", "全部") }}</span
             >
             <span
                 v-for="(item, key) in data"
@@ -40,8 +40,10 @@
 </template>
 
 <script>
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "tagBy",
+    mixins: [i18nMixin],
     emits: ["filter"],
     props: {
         data: {

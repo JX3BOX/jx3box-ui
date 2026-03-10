@@ -1,7 +1,11 @@
 <template>
     <div class="w-filter-order" :class="{ on: visible }">
         <span class="u-label" @click="toggleFilter">
-            <span class="u-current-order">排序 : {{ current || "最后更新" }}</span>
+            <span class="u-current-order">{{
+                $jx3boxT("jx3boxUi.orderBy.sortLabel", "排序 : {current}", {
+                    current: current || $jx3boxT("jx3boxUi.orderBy.lastUpdate", "最后更新"),
+                })
+            }}</span>
             <span class="u-toggle">
                 <el-icon class="el-icon-arrow-down">
                     <arrow-down />
@@ -16,13 +20,13 @@
                 ><el-icon>
                     <refresh />
                 </el-icon>
-                最后更新</span
+                {{ $jx3boxT("jx3boxUi.orderBy.lastUpdate", "最后更新") }}</span
             >
             <span class="u-mode u-podate" :class="{ on: order == 'podate' }" @click="filter('podate')"
                 ><el-icon>
                     <sort />
                 </el-icon>
-                最早发布</span
+                {{ $jx3boxT("jx3boxUi.orderBy.earliestPublish", "最早发布") }}</span
             >
             <slot></slot>
         </span>
@@ -30,15 +34,10 @@
 </template>
 
 <script>
-const order_map = {
-    update: "最后更新",
-    podate: "最早发布",
-    favs: "收藏最多",
-    likes: "点赞最多",
-    downs: "下载最多",
-};
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "orderBy",
+    mixins: [i18nMixin],
     emits: ["filter"],
     props: {},
     data: function () {
@@ -49,7 +48,14 @@ export default {
     },
     computed: {
         current: function () {
-            return order_map[this.order];
+            const orderMap = {
+                update: this.$jx3boxT("jx3boxUi.orderBy.lastUpdate", "最后更新"),
+                podate: this.$jx3boxT("jx3boxUi.orderBy.earliestPublish", "最早发布"),
+                favs: this.$jx3boxT("jx3boxUi.orderBy.mostFavs", "收藏最多"),
+                likes: this.$jx3boxT("jx3boxUi.orderBy.mostLikes", "点赞最多"),
+                downs: this.$jx3boxT("jx3boxUi.orderBy.mostDownloads", "下载最多"),
+            };
+            return orderMap[this.order];
         },
     },
     methods: {

@@ -1,19 +1,29 @@
 <template>
     <div class="w-boxcoin-user" v-if="allowBoxcoin">
-        <el-tooltip effect="dark" content="投币" placement="top-start" v-if="canGift">
+        <el-tooltip
+            effect="dark"
+            :content="$jx3boxT('jx3boxUi.boxcoinUser.tooltip', '投币')"
+            placement="top-start"
+            v-if="canGift"
+        >
             <div class="w-boxcoin-block" @click="openBoxcoinPop">
                 <img class="u-icon" svg-inline :src="iconPath" />
                 <span class="u-count" v-if="boxcoin">{{ boxcoin }}</span>
             </div>
         </el-tooltip>
-        <el-tooltip effect="dark" content="您当前等级不够，不能够进行投币。" placement="top" v-else>
+        <el-tooltip
+            effect="dark"
+            :content="$jx3boxT('jx3boxUi.boxcoinUser.disabledTooltip', '您当前等级不够，不能够进行投币。')"
+            placement="top"
+            v-else
+        >
             <div class="w-boxcoin-block disabled">
                 <img class="u-icon" svg-inline :src="iconPath" />
                 <span class="u-count" v-if="boxcoin">{{ boxcoin }}</span>
             </div>
         </el-tooltip>
         <el-dialog
-            title="投币打赏"
+            :title="$jx3boxT('jx3boxUi.boxcoinUser.dialogTitle', '投币打赏')"
             v-model="visible"
             class="w-boxcoin-pop"
             append-to-body
@@ -21,34 +31,34 @@
         >
             <div class="w-boxcoin-user-content">
                 <div class="u-left">
-                    <em class="u-label">当前拥有盒币</em>
+                    <em class="u-label">{{ $jx3boxT("jx3boxUi.boxcoinUser.currentBoxcoin", "当前拥有盒币") }}</em>
                     <b>{{ left }}</b>
-                    <a class="u-charge" :href="chargeLink" target="_blank">[充值]</a>
+                    <a class="u-charge" :href="chargeLink" target="_blank">[{{ $jx3boxT("jx3boxUi.boxcoinUser.recharge", "充值") }}]</a>
                 </div>
                 <div class="u-list">
-                    <em class="u-label">❤️ 打赏</em>
+                    <em class="u-label">❤️ {{ $jx3boxT("jx3boxUi.boxcoinUser.reward", "打赏") }}</em>
                     <Contributors v-if="authors && authors.length" :authors="authors" @chosen="handleChosen" />
                     <div class="u-points">
                         <el-radio-group v-model="count">
                             <el-radio :value="item" v-for="item in fitPoints" :key="item" border>
                                 <b>{{ item }}</b
-                                >盒币
+                                >{{ $jx3boxT("jx3boxUi.boxcoinUser.boxcoin", "盒币") }}
                             </el-radio>
-                            <el-radio value="custom" border>自定义</el-radio>
+                            <el-radio value="custom" border>{{ $jx3boxT("jx3boxUi.boxcoinUser.custom", "自定义") }}</el-radio>
                             <el-input
                                 v-model="amount"
                                 v-show="count === 'custom'"
-                                placeholder="输入自定义数量"
+                                :placeholder="$jx3boxT('jx3boxUi.boxcoinUser.customPlaceholder', '输入自定义数量')"
                             ></el-input>
                         </el-radio-group>
                     </div>
                 </div>
                 <div class="u-msg">
-                    <em class="u-label">📝 寄语</em>
+                    <em class="u-label">📝 {{ $jx3boxT("jx3boxUi.boxcoinUser.remark", "寄语") }}</em>
                     <div class="u-input">
                         <el-input
                             v-model="remark"
-                            placeholder="请输入寄语（必填）"
+                            :placeholder="$jx3boxT('jx3boxUi.boxcoinUser.remarkPlaceholder', '请输入寄语（必填）')"
                             :minlength="2"
                             :maxlength="30"
                             show-word-limit
@@ -58,8 +68,10 @@
             </div>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="visible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit" :disabled="!ready">确 定</el-button>
+                    <el-button @click="visible = false">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
+                    <el-button type="primary" @click="submit" :disabled="!ready">{{
+                        $jx3boxT("jx3boxUi.common.confirm", "确定")
+                    }}</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -72,8 +84,10 @@ import User from "@jx3box/jx3box-common/js/user";
 import Contributors from "./Contributors.vue";
 import { debounce } from "lodash";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "BoxcoinUser",
+    mixins: [i18nMixin],
     props: {
         boxcoin: {
             type: Number,
@@ -124,7 +138,7 @@ export default {
             visible: false,
 
             count: 0,
-            remark: "辛苦了，谢谢大大！",
+            remark: this.$jx3boxT("jx3boxUi.boxcoinUser.defaultRemark", "辛苦了，谢谢大大！"),
             amount: "",
 
             left: this.own,
@@ -190,7 +204,7 @@ export default {
             })
                 .then((res) => {
                     this.$message({
-                        message: "操作成功",
+                        message: this.$jx3boxT("jx3boxUi.boxcoinUser.success", "操作成功"),
                         type: "success",
                     });
                     return res.data.data;
