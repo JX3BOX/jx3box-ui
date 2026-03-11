@@ -22,7 +22,6 @@
         <Main :withoutLeft="false" :withoutRight="false">
             <versionBy value=""></versionBy>
             <el-divider></el-divider>
-            <UploadAlum />
             <singlebox :post="post" />
             <SimpleThxVue
                 postType="bbs"
@@ -98,7 +97,6 @@ export default {
         Thx,
         // PostHeader,
         PostTopic,
-        UploadAlum,
         // AdminDirectMessage,
         singlebox,
         versionBy,
