@@ -1,7 +1,7 @@
 <template>
     <div class="w-like2" :class="{ disabled: !status }" @click="addLike" v-if="ready">
         <el-tooltip effect="dark" :content="$jx3boxT('jx3boxUi.like.like', '点赞')" placement="top-start">
-            <div>
+            <div class="w-like2__trigger">
                 <img class="u-icon" svg-inline :src="iconPath" />
                 <span class="u-count" v-if="count">{{ count }}</span>
             </div>

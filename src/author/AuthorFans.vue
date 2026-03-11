@@ -15,7 +15,7 @@
             >
                 <a class="u-fan" :href="authorLink(item.user_id)"
                     ><el-avatar class="u-avatar" shape="circle" :size="20" :src="showAvatar(item.user_info.avatar)"
-                        ><i class="el-icon-s-custom"></i></el-avatar
+                        ><el-icon><Avatar></Avatar></el-icon></el-avatar
                 ></a>
             </el-tooltip>
         </div>

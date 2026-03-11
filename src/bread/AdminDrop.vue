@@ -2,15 +2,48 @@
     <div class="c-admin-drop">
         <el-dropdown trigger="click" @command="handleCommand">
             <el-button type="primary" class="c-admin-button c-admin-drop__button" :size="buttonSize" icon="Setting">
-                {{ $jx3boxT("jx3boxUi.adminDrop.manage", "管理") }} <el-icon style="margin-left: 5px"><ArrowDown></ArrowDown></el-icon>
+                {{ $jx3boxT("jx3boxUi.adminDrop.manage", "管理") }}
+                <el-icon style="margin-left: 5px"><ArrowDown></ArrowDown></el-icon>
             </el-button>
             <template #dropdown>
                 <el-dropdown-menu>
-                    <el-dropdown-item v-if="isEditor" command="toggleAdminPanel" icon="Setting">
+                    <el-dropdown-item
+                        v-if="!isCommunity && hasPermission('update_post')"
+                        command="toggleAdminPanel"
+                        icon="Setting"
+                    >
                         <span>{{ $jx3boxT("jx3boxUi.adminDrop.setting", "设置") }}</span>
                     </el-dropdown-item>
-                    <el-dropdown-item v-if="isEditor" command="directMessage" icon="Message">
+                    <el-dropdown-item
+                        v-else-if="isCommunity"
+                        command="toggleCommunityAdminPanel"
+                        icon="Setting"
+                    >
+                        <span>{{ $jx3boxT("jx3boxUi.adminDrop.setting", "设置") }}</span>
+                    </el-dropdown-item>
+                    <el-dropdown-item
+                        v-if="hasPermission('update_post') && !isCommunity"
+                        command="editPost"
+                        icon="Edit"
+                    >
+                        <span>{{ $jx3boxT("jx3boxUi.adminDrop.edit", "编辑") }}</span>
+                    </el-dropdown-item>
+                    <el-dropdown-item
+                        v-if="hasPermission('create_system_message')"
+                        command="directMessage"
+                        icon="Message"
+                    >
                         <span>{{ $jx3boxT("jx3boxUi.adminDrop.message", "私信") }}</span>
+                    </el-dropdown-item>
+                    <el-dropdown-item
+                        v-if="hasPermission('manage_post_move') && showMove"
+                        command="onMoveToCommunity"
+                        icon="Refresh"
+                    >
+                        <span>转移</span>
+                    </el-dropdown-item>
+                    <el-dropdown-item command="migrate" v-if="isCommunity" icon="Refresh">
+                        <span>迁移</span>
                     </el-dropdown-item>
                     <el-dropdown-item icon="UploadFilled" command="designTask" v-if="hasPermission('push_banner')">
                         <span>{{ $jx3boxT("jx3boxUi.adminDrop.push", "推送") }}</span>
@@ -23,6 +56,9 @@
         </el-dropdown>
 
         <design-task v-model="showDesignTask" :post="post"></design-task>
+        <CommunityAdmin v-model="communityAdminVisible" :postId="post && post.id" />
+        <MoveToCommunityDialog v-model="moveVisible" :post="post" />
+        <MigrateCommunity v-model="showMigrate" :communityId="sourceId" />
     </div>
 </template>
 
@@ -30,6 +66,9 @@
 import Bus from "../../utils/bus";
 import User from "@jx3box/jx3box-common/js/user";
 import DesignTask from "./DesignTask.vue";
+import MoveToCommunityDialog from "./MoveToCommunityDialog.vue";
+import MigrateCommunity from "./MigrateCommunity.vue";
+import CommunityAdmin from "./CommunityAdmin.vue";
 import { sendMessage } from "../../service/admin";
 import { refreshQQBotImage } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
@@ -38,8 +77,19 @@ export default {
     mixins: [i18nMixin],
     components: {
         DesignTask,
+        MoveToCommunityDialog,
+        MigrateCommunity,
+        CommunityAdmin,
     },
     props: {
+        isCommunity: {
+            type: Boolean,
+            default: false,
+        },
+        showMove: {
+            type: Boolean,
+            default: false,
+        },
         buttonSize: {
             type: String,
             default: "default",
@@ -59,7 +109,10 @@ export default {
     },
     data() {
         return {
+            moveVisible: false,
+            communityAdminVisible: false,
             showDesignTask: false,
+            showMigrate: false,
         };
     },
     computed: {
@@ -67,49 +120,71 @@ export default {
             return User.isEditor();
         },
         sourceId() {
-            return this.post?.ID;
+            if (this.isCommunity) {
+                return this.post?.id;
+            } else {
+                return this.post?.ID;
+            }
         },
         sourceType() {
-            return this.post?.post_type;
+            if (this.isCommunity) {
+                return "community";
+            } else {
+                return this.post?.post_type;
+            }
+        },
+        edit_link: function () {
+            return editLink(this.post?.post_type, this.post?.ID);
         },
     },
     methods: {
         handleCommand(command) {
             this[command]();
         },
+        toggleCommunityAdminPanel() {
+            this.communityAdminVisible = true;
+        },
         toggleAdminPanel() {
             Bus.emit("toggleAdminPanel");
         },
+        onMoveToCommunity() {
+            this.moveVisible = true;
+        },
         directMessage() {
-            this.$prompt(this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容"), this.$jx3boxT("jx3boxUi.adminDrop.messageTitle", "管理私信"), {
-                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
-                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
-                inputPlaceholder: this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容"),
-                inputValidator: (value) => {
-                    if (!value) {
-                        return this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容");
-                    }
-                },
-                beforeClose: (action, instance, done) => {
-                    if (action === "confirm") {
-                        const data = {
-                            source_id: String(this.sourceId),
-                            source_type: this.sourceType,
-                            user_id: this.userId,
-                            content:
-                                this.$jx3boxT("jx3boxUi.adminDrop.noticePrefix", "运营通知：") + instance.inputValue,
-                            type: "system",
-                            subtype: "admin_message",
-                        };
-                        sendMessage(data).then(() => {
-                            this.$message.success(this.$jx3boxT("jx3boxUi.adminDrop.messageSuccess", "私信成功"));
+            this.$prompt(
+                this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容"),
+                this.$jx3boxT("jx3boxUi.adminDrop.messageTitle", "管理私信"),
+                {
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    inputPlaceholder: this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容"),
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return this.$jx3boxT("jx3boxUi.adminDrop.messageInput", "请输入私信内容");
+                        }
+                    },
+                    beforeClose: (action, instance, done) => {
+                        if (action === "confirm") {
+                            const data = {
+                                source_id: String(this.sourceId),
+                                source_type: this.sourceType,
+                                user_id: this.userId,
+                                content:
+                                    this.$jx3boxT("jx3boxUi.adminDrop.noticePrefix", "运营通知：") +
+                                    instance.inputValue,
+                                type: "system",
+                                subtype: "admin_message",
+                            };
+                            sendMessage(data).then(() => {
+                                this.$message.success(this.$jx3boxT("jx3boxUi.adminDrop.messageSuccess", "私信成功"));
+                                done();
+                            });
+                        } else {
                             done();
-                        });
-                    } else {
-                        done();
-                    }
-                },
-            }).catch(() => {});
+                        }
+                    },
+                }
+            ).catch(() => {});
         },
         designTask() {
             this.showDesignTask = true;
@@ -131,15 +206,23 @@ export default {
                     task_target_id,
                 }).then((res) => {
                     if (!res.data.code) {
-                        this.$message.success(this.$jx3boxT("jx3boxUi.adminDrop.pictureSuccess", "QQ机器人图片生成提交成功"));
+                        this.$message.success(
+                            this.$jx3boxT("jx3boxUi.adminDrop.pictureSuccess", "QQ机器人图片生成提交成功")
+                        );
                     }
                 });
             } else {
                 this.$message.error(this.$jx3boxT("jx3boxUi.adminDrop.invalidParams", "参数不正确"));
             }
         },
+        editPost() {
+            location.href = this.edit_link + "?from=admin";
+        },
         hasPermission(permission) {
             return User.hasPermission(permission);
+        },
+        migrate() {
+            this.showMigrate = true;
         },
     },
 };

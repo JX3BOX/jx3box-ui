@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="u-search">
-                        <i class="el-icon-search u-search-icon"></i>
+                        <el-icon class="u-search-icon"><Search></Search></el-icon>
                         <input
                             v-model.trim="searchQuery"
                             class="u-search-input"
@@ -23,7 +23,7 @@
                             :placeholder="$jx3boxT('jx3boxUi.box2.searchPlaceholder', '搜索应用')"
                         />
                         <button v-if="searchQuery" class="u-search-clear" type="button" @click="searchQuery = ''">
-                            <i class="el-icon-close"></i>
+                            <el-icon><Close /></el-icon>
                         </button>
                     </div>
                 </div>
@@ -339,6 +339,8 @@ export default {
         width: min(460px, 100%);
         margin-left: auto;
         position: relative;
+        .flex;
+        align-items: center;
     }
 
     .u-search-input {

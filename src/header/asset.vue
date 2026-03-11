@@ -33,16 +33,6 @@
                         ></span
                     >
                 </span>
-                <!-- <span class="u-item">
-                    <a class="u-item-primary" href="/dashboard/cny" :target="target"
-                        ><span class="u-label"><i class="el-icon-wallet"></i> 金箔</span
-                        ><span class="u-value">{{ asset.cny }}</span></a
-                    >
-                    <span class="u-item-extend"
-                        ><a href="/vip/cny" :target="target">[充值]</a>
-                        <a href="/dashboard/cny" :target="target">[提现]</a></span
-                    >
-                </span> -->
                 <span class="u-item">
                     <a class="u-item-primary" href="/dashboard/points" :target="target"
                         ><span class="u-label"

@@ -27,19 +27,16 @@
             </div>
 
             <template #reference>
-                <!-- <el-tooltip class="item" effect="dark" content="分享" placement="top"> -->
-                    <div v-if="simple">
-                        <img class="u-icon u-simple-icon" svg-inline :src="iconPath" />
-                        <!-- <i class="el-icon-position"></i> -->
-                        <span class="u-text">{{ $jx3boxT("jx3boxUi.share.share", "分享") }}</span>
-                    </div>
-                    <img
-                        v-else
-                        class="u-icon"
-                        svg-inline
-                        :src="iconPath"
-                    />
-                <!-- </el-tooltip> -->
+                <div v-if="simple">
+                    <img class="u-icon u-simple-icon" svg-inline :src="iconPath" />
+                    <span class="u-text">{{ $jx3boxT("jx3boxUi.share.share", "分享") }}</span>
+                </div>
+                <img
+                    v-else
+                    class="u-icon"
+                    svg-inline
+                    :src="iconPath"
+                />
             </template>
         </el-popover>
     </div>

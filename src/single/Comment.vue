@@ -382,7 +382,6 @@ export default {
     .c-jx3box-emotion {
         margin: 0;
         position: relative;
-        top: 7px;
     }
     .c-comment-emotion {
         overflow: hidden;
@@ -449,6 +448,10 @@ export default {
     }
     b {
         color: #0366d6;
+    }
+    .u-order{
+        .flex;
+        align-items: center;
     }
 }
 .c-comment-emotion {

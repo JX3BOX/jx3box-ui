@@ -1,7 +1,7 @@
 <template>
     <div class="w-rss">
         <el-tooltip effect="dark" :content="tooltipContent" placement="top-start">
-            <div @click="onRssClick">
+            <div class="w-rss__trigger" @click="onRssClick">
                 <img v-if="subscribed" class="u-icon" svg-inline :src="rmSrc" />
                 <img v-else class="u-icon" svg-inline :src="addSrc" />
                 <span class="u-count" v-if="!hiddenNum && total > 0">{{ total }}</span>
@@ -157,11 +157,13 @@ export default {
         .y;
         .pr;
     }
+    .w-rss__trigger {
+        .flex;
+        align-items: center;
+    }
     .u-count {
         color: #888;
         .ml(10px);
-        top: 2px;
-        .pr;
     }
 }
 </style>

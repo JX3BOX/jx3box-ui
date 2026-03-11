@@ -13,7 +13,7 @@
         <!-- 面包屑内容 -->
         <Crumb :name="slug" v-if="crumbEnable" />
         <slot></slot>
-        <slot v-if="show" name="title"></slot>
+        <slot v-if="showTitle" name="title"></slot>
         <div class="u-op">
             <slot name="op-append"></slot>
             <a
@@ -34,7 +34,13 @@
                 <el-icon><InfoFilled /></el-icon>
                 <span>{{ $jx3boxT("jx3boxUi.breadcrumb.feedback", "反馈") }}</span>
             </a>
-            <Admin v-if="adminEnable" :marksOptions="adminMarks" :show-extend="showExtend" :app="slug" :subtypeMap="subtypeMap" />
+            <Admin
+                v-if="adminEnable"
+                :marksOptions="adminMarks"
+                :show-extend="showExtend"
+                :app="slug"
+                :subtypeMap="subtypeMap"
+            />
             <slot name="op-prepend"></slot>
         </div>
     </div>
@@ -73,10 +79,10 @@ export default {
         return {
             isOpen: true,
             feedback: "/feedback?refer=" + encodeURIComponent(window.location.href),
-            isNotAdmin: !User.isEditor(),
+            isNotAdmin: !User.isEditor(), // 非管理员都显示反馈链接
             isOverlay: false,
             isApp: isApp(),
-            show: false,
+            showTitle: false,
         };
     },
     computed: {
@@ -98,11 +104,11 @@ export default {
             }
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             if (scrollTop > 100) {
-                this.show = true;
+                this.showTitle = true;
             } else {
-                this.show = false;
+                this.showTitle = false;
             }
-        }
+        },
     },
     beforeUnmount() {
         document.removeEventListener("scroll", this.onShowTitle);

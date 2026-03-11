@@ -16,14 +16,12 @@
                     <hr />
                     <li v-for="item in userPanel" :key="item.label">
                         <a :href="item.link" :target="item.target || '_self'">
-                            <!-- <i :class="item.icon || 'el-icon-present'"></i> -->
                             {{ item.label }}
                         </a>
                     </li>
                     <template v-if="isTeammate">
                         <li v-for="item in adminPanel" :key="item.label">
                             <a :href="item.link" :target="item.target || '_self'">
-                                <!-- <i :class="item.icon || 'el-icon-present'"></i> -->
                                 {{ item.label }}
                             </a>
                         </li>
@@ -66,7 +64,7 @@
                             <span
                                 >{{ $jx3boxT("jx3boxUi.commonHeader.uidPrefix", "魔盒UID：") }}<b>{{ user.ID }}</b></span
                             >
-                            <el-icon class="el-icon-document-copy u-copy" @click.stop="copyText(user.ID)"
+                            <el-icon class="u-copy" @click.stop="copyText(user.ID)"
                                 ><DocumentCopy
                             /></el-icon>
                         </div>

@@ -5,6 +5,11 @@ function getPostAuthors(post_id) {
     return $cms({ mute: true }).get(`/api/cms/post/${post_id}/authors`);
 }
 
+// 获取文章内容
+function getPost(post_id) {
+    return $cms().get(`/api/cms/post/${post_id}`)
+}
+
 function uploadImage(formData) {
     return $cms().post(`/api/cms/upload/avatar`, formData);
 }
@@ -129,6 +134,7 @@ function getUserPermission() {
 }
 
 export {
+    getPost,
     getPostAuthors,
     uploadImage,
     upload,

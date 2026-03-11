@@ -1,26 +1,24 @@
 <template>
-    <span class="w-filter-menu">
-        <el-dropdown>
-            <span class="el-dropdown-link">
-                <span class="u-menu-label"
-                    ><el-icon>
-                        <operation />
-                    </el-icon>
-                    {{ current ? current : deftext
-                    }}<el-icon>
-                        <arrow-down /> </el-icon
-                ></span>
-            </span>
-            <template #dropdown>
-                <el-dropdown-menu>
-                    <el-dropdown-item @click="filter('')">{{ $jx3boxT("jx3boxUi.markBy.all", "全部") }}</el-dropdown-item>
-                    <el-dropdown-item v-for="(item, key) in resolvedMarks" :key="key" @click="filter(key)">{{
-                        item
-                    }}</el-dropdown-item>
-                </el-dropdown-menu>
-            </template>
-        </el-dropdown>
-    </span>
+    <el-dropdown class="w-filter-menu">
+        <span class="el-dropdown-link">
+            <span class="u-menu-label"
+                ><el-icon>
+                    <operation />
+                </el-icon>
+                {{ current ? current : deftext
+                }}<el-icon>
+                    <arrow-down /> </el-icon
+            ></span>
+        </span>
+        <template #dropdown>
+            <el-dropdown-menu>
+                <el-dropdown-item @click="filter('')">{{ $jx3boxT("jx3boxUi.markBy.all", "全部") }}</el-dropdown-item>
+                <el-dropdown-item v-for="(item, key) in resolvedMarks" :key="key" @click="filter(key)">{{
+                    item
+                }}</el-dropdown-item>
+            </el-dropdown-menu>
+        </template>
+    </el-dropdown>
 </template>
 
 <script>

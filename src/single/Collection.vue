@@ -12,7 +12,6 @@
                 <ol v-if="list && list.length" class="u-list" :style="{ display: visible ? 'block' : 'none' }">
                     <li v-for="(item, i) in list" :key="i" class="u-item">
                         <a v-if="item" :href="showLink(item)" target="_blank">
-                            <!-- <i class="el-icon-link"></i> -->
                             {{ item.title }}
                         </a>
                     </li>
@@ -36,7 +35,7 @@ export default {
             default: 0,
         },
         defaultVisible: {
-            type: Boolean,
+            type: [Boolean, Number],
             default: false,
         },
     },

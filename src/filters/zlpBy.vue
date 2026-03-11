@@ -1,27 +1,25 @@
 <template>
-    <span class="w-filter-menu">
-        <el-dropdown>
-            <span class="el-dropdown-link">
-                <span class="u-menu-label">
-                    <el-icon> <operation /> </el-icon>
-                    {{ value ? value : $jx3boxT("jx3boxUi.zlpBy.default", "资料片") }}
-                    <el-icon>
-                        <arrow-down />
-                    </el-icon>
-                </span>
+    <el-dropdown class="w-filter-menu">
+        <span class="el-dropdown-link">
+            <span class="u-menu-label">
+                <el-icon> <operation /> </el-icon>
+                {{ value ? value : $jx3boxT("jx3boxUi.zlpBy.default", "资料片") }}
+                <el-icon>
+                    <arrow-down />
+                </el-icon>
             </span>
-            <template #dropdown>
-                <el-dropdown-menu>
-                    <el-dropdown-item @click="filter('')">
-                        {{ $jx3boxT("jx3boxUi.zlpBy.all", "全部") }}
-                    </el-dropdown-item>
-                    <el-dropdown-item v-for="item in data" :key="item" @click="filter(item)">{{
-                        item
-                    }}</el-dropdown-item>
-                </el-dropdown-menu>
-            </template>
-        </el-dropdown>
-    </span>
+        </span>
+        <template #dropdown>
+            <el-dropdown-menu>
+                <el-dropdown-item @click="filter('')">
+                    {{ $jx3boxT("jx3boxUi.zlpBy.all", "全部") }}
+                </el-dropdown-item>
+                <el-dropdown-item v-for="item in data" :key="item" @click="filter(item)">{{
+                    item
+                }}</el-dropdown-item>
+            </el-dropdown-menu>
+        </template>
+    </el-dropdown>
 </template>
 
 <script>

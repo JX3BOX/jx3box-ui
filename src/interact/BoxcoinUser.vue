@@ -230,6 +230,10 @@ export default {
 .w-boxcoin-user {
     .dbi;
     .x(left);
+    .w-boxcoin-block {
+        .flex;
+        align-items: center;
+    }
     .u-icon {
         .size(26px);
         .y;
@@ -238,8 +242,6 @@ export default {
     .u-count {
         color: #888;
         .ml(10px);
-        .pr;
-        top: 4px;
     }
     .u-charge {
         .underline(@color-link);

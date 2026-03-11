@@ -81,10 +81,6 @@ export default {
             default: () => {},
         },
     },
-    model: {
-        prop: "modelValue",
-        event: "update:modelValue",
-    },
     emits: ["update:modelValue"],
     data() {
         return {

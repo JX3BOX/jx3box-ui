@@ -12,14 +12,16 @@
         <div class="c-admin-wrapper" ref="adminDrawer">
             <!-- <template v-if="isAdmin"> -->
             <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.status", "状态变更") }}</el-divider>
-            <el-radio-group v-model="post_status" class="c-admin-status">
-                <el-radio-button v-for="(option, key) in status_options" :value="key" :key="key">{{
-                    option
-                }}</el-radio-button>
-            </el-radio-group>
-            <el-button type="primary" class="u-refresh-btn" @click="onRefreshCache">{{
-                $jx3boxT("jx3boxUi.admin.refreshCache", "刷新缓存")
-            }}</el-button>
+            <div class="m-status-op">
+                <el-radio-group v-model="post_status" class="c-admin-status">
+                    <el-radio-button v-for="(option, key) in status_options" :value="key" :key="key">{{
+                        option
+                    }}</el-radio-button>
+                </el-radio-group>
+                <el-button type="primary" class="u-refresh-btn" @click="onRefreshCache">{{
+                    $jx3boxT("jx3boxUi.admin.refreshCache", "刷新缓存")
+                }}</el-button>
+            </div>
             <!-- </template> -->
 
             <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.visible", "可见性变更") }}</el-divider>

@@ -11,6 +11,7 @@
         </div>
         <div class="u-input">
             <el-input
+                size="large"
                 v-model.trim.lazy="search"
                 :placeholder="$jx3boxT('jx3boxUi.userPop.placeholder', '请输入用户 UID 或者昵称进行搜索')"
                 @keydown.enter="onSearch"
@@ -19,7 +20,7 @@
                     <el-icon><Search /></el-icon>
                 </template>
             </el-input>
-            <el-button class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">{{
+            <el-button size="large" class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">{{
                 $jx3boxT("jx3boxUi.userPop.search", "搜索")
             }}</el-button>
         </div>
@@ -44,8 +45,8 @@
         </div>
         <template #footer>
             <div class="dialog-footer">
-                <el-button @click="cancel">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
-                <el-button type="primary" @click="confirm">{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</el-button>
+                <el-button size="large" @click="cancel">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
+                <el-button size="large" type="primary" @click="confirm">{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</el-button>
             </div>
         </template>
     </el-dialog>
@@ -64,7 +65,7 @@ export default {
             type: String,
             default: "",
         },
-        show: {
+        modelValue: {
             type: Boolean,
             default: false,
         },
@@ -83,16 +84,13 @@ export default {
             loading: false,
         };
     },
-    model: {
-        prop: "show",
-        event: "switchUserPop",
-    },
+    emits: ["update:modelValue", "confirm"],
     watch: {
-        show: function (val) {
+        modelValue: function (val) {
             this.visible = val;
         },
         visible: function (val) {
-            this.$emit("switchUserPop", val);
+            this.$emit("update:modelValue", val);
         },
     },
     methods: {
@@ -159,9 +157,7 @@ export default {
     .el-dialog {
         min-width: 520px;
     }
-    .el-dialog__body {
-        padding: 0 20px;
-    }
+
     .u-avatar {
         .mt(20px);
         .size(120px);

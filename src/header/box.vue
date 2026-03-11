@@ -15,13 +15,12 @@
             <li v-for="(item, i) in list" :key="i" :class="{ 'u-app-start': item.lf }">
                 <a class="u-item" :href="item.href" :target="getTarget(item.href)">
                     <img class="u-pic" :src="getBoxIcon(item.img)" />
-                    <!-- <img class="u-pic-hover" svg-inline :src="item.hover | getBoxIcon" /> -->
                     <span class="u-txt">{{ item.abbr }}</span>
                 </a>
             </li>
         </ul>
         <span class="u-close" @click="closeBox($event)">
-            <i class="el-icon-upload2"></i>
+            <el-icon><Upload /></el-icon>
             <span>{{ $jx3boxT("jx3boxUi.commonHeader.collapse", "收起") }}</span>
         </span>
     </div>

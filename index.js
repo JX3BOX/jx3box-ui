@@ -29,6 +29,7 @@ import Thx from "./src/single/Thx.vue";
 // 其他/工具
 import UserPop from "./src/author/UserPop.vue";
 import SuspendCommon from "./src/SuspendCommon.vue";
+import AdminDrop from "./src/bread/AdminDrop.vue";
 
 import {
     Jx3boxUiI18n,
@@ -66,7 +67,8 @@ const components = {
 
     UserPop,
     SuspendCommon,
-};
+    AdminDrop,
+}
 
 const install = function (app) {
     Object.keys(components).forEach((key) => {

@@ -495,8 +495,8 @@ export default {
         width: 12px;
         height: 12px;
         position: relative;
-        top: 1px;
-        margin-right: 5px;
+        // top: 1px;
+        margin-right: 4px;
     }
     .u-like-count {
         margin-left: 3px;
