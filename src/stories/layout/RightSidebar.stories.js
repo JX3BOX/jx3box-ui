@@ -5,10 +5,6 @@ const meta = {
     component: RightSidebar,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'right',
-        },
     },
     argTypes: {
         showToggle: { control: 'boolean' },

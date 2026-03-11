@@ -5,10 +5,6 @@ const meta = {
     component: Main,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'main',
-        },
     },
     argTypes: {
         withoutLeft: { control: 'boolean' },

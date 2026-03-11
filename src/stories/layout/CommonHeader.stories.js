@@ -5,11 +5,6 @@ const meta = {
     component: CommonHeader,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'header',
-            showHeader: false,
-        },
     },
     argTypes: {
         overlayEnable: { control: 'boolean' },

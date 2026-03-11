@@ -8,7 +8,6 @@ import { install } from '../index';
 import { Jx3boxUiI18n } from '../i18n';
 import navData from '../assets/data/nav.json';
 import boxData from '../assets/data/box.json';
-import StorybookShell from '../src/stories/layout/StorybookShell.vue';
 import { resolveAdapter, resolveStorybookMock } from './storybookMocks';
 
 import '@jx3box/jx3box-common/css/normalize.css';
@@ -80,34 +79,7 @@ setup((app) => {
 });
 
 patchAxiosForStorybook();
-
-export const decorators = [
-    (story, context) => {
-        bootstrapRuntimeData();
-
-        const storyResult = story();
-        const shell = context.parameters?.shell;
-
-        if (!shell?.enabled) {
-            return storyResult;
-        }
-
-        return {
-            components: {
-                StorybookShell,
-                StoryResult: storyResult,
-            },
-            setup() {
-                return { shell };
-            },
-            template: `
-                <StorybookShell v-bind="shell">
-                    <StoryResult />
-                </StorybookShell>
-            `,
-        };
-    },
-];
+bootstrapRuntimeData();
 
 export const parameters = {
     actions: { argTypesRegex: '^on[A-Z].*' },

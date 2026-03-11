@@ -5,12 +5,6 @@ const meta = {
     component: CommonFooter,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'footer',
-            showFooter: false,
-            showRightSidebar: false,
-        },
     },
 };
 

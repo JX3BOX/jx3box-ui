@@ -21,10 +21,6 @@ import zlpBy from "./src/filters/zlpBy.vue";
 import topicBy from "./src/filters/topicBy.vue";
 import versionBy from "./src/filters/versionBy.vue";
 
-import Item from "./src/editor/components/Item.vue";
-import ItemSimple from "./src/editor/components/ItemSimple.vue";
-import GameText from "./src/editor/components/GameText.vue";
-
 // 单页
 import CmsSingle from "./src/single/CmsSingle.vue";
 import Comment from "./src/single/Comment.vue";
@@ -63,10 +59,6 @@ const components = {
     zlpBy,
     topicBy,
     versionBy,
-
-    Item,
-    ItemSimple,
-    GameText,
 
     CmsSingle,
     Comment,

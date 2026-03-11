@@ -6,7 +6,6 @@ const meta = {
     component: Collection,
     parameters: {
         layout: 'fullscreen',
-        shell: { enabled: true, placement: 'main', showLeftSidebar: false, showRightSidebar: false },
     },
 };
 

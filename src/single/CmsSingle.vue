@@ -25,7 +25,7 @@
             <div class="m-single-content">
                 <slot></slot>
                 <!-- <ArticleMarkdown v-if="isMarkdown" :content="post_content" @directoryRendered="updateDirectory" /> -->
-                <Article :content="post_content" @directoryRendered="updateDirectory" />
+                <!-- <Article :content="post_content" @directoryRendered="updateDirectory" /> -->
             </div>
         </div>
         <div class="m-single-null" v-else>
@@ -85,7 +85,6 @@ import Creators from "./Creators.vue";
 import Collection from "./Collection.vue";
 import Thx from "./Thx.vue";
 // import RightAffix from "./right-affix.vue";
-import Article from "../editor/Article.vue";
 // import ArticleMarkdown from "@jx3box/jx3box-editor/src/ArticleMarkdown.vue";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getAppType } from "@jx3box/jx3box-common/js/utils";
@@ -101,7 +100,6 @@ export default {
         Creators,
         Collection,
         Thx,
-        Article,
         // ArticleMarkdown,
         // RightAffix,
     },

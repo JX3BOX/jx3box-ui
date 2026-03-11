@@ -12,12 +12,6 @@ const meta = {
     title: 'Filters/Index',
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'main',
-            showLeftSidebar: false,
-            showRightSidebar: false,
-        },
     },
 };
 
@@ -93,13 +87,13 @@ export const Default = {
                 <section style="border-radius: 20px; background: rgba(255,255,255,0.92); padding: 24px; box-shadow: 0 24px 60px rgba(15,23,42,0.08);">
                     <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
                         <clientBy :show-wujie="true" />
-                        <markBy />
-                        <menuBy :data="menuOptions" placeholder="栏目" />
+                        <markBy style="position:relative;top:4px;" />
+                        <menuBy style="position:relative;top:4px;" :data="menuOptions" placeholder="栏目" />
                         <orderBy />
                         <tagBy :data="tagOptions" />
                         <topicBy v-model="selectedTopic" :topics="topics" />
                         <versionBy />
-                        <zlpBy client="std" />
+                        <zlpBy client="std" style="position:relative;top:4px;" />
                     </div>
                 </section>
 

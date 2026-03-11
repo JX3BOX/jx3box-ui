@@ -25,7 +25,6 @@
 - PostHeader 创作信息
 - Creators 联合创作
 - Collection 小册
-- Article 文章内容
 - Thx 交互组件
 - SimpleThx 交互组件简化版（仅PVP栏目使用，需要手动引入）
 - Comment 评论

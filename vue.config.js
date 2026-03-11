@@ -14,18 +14,6 @@ module.exports = {
             filename: "index.html",
             title: "JX3BOX",
         },
-        article: {
-            title: "Article",
-            entry: "demo/A.js",
-            template: "public/article.html",
-            filename: "article/index.html",
-        },
-        tinymce: {
-            title: "Tinymce",
-            entry: "demo/T.js",
-            template: "public/tinymce.html",
-            filename: "tinymce/index.html",
-        },
     },
 
 

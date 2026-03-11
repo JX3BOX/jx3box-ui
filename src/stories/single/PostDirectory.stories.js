@@ -6,7 +6,6 @@ const meta = {
     component: PostDirectory,
     parameters: {
         layout: 'fullscreen',
-        shell: { enabled: true, placement: 'right', showLeftSidebar: false },
     },
 };
 

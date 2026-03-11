@@ -5,13 +5,6 @@ const meta = {
     component: LeftSidebar,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'left',
-            leftSidebarProps: {
-                open: true,
-            },
-        },
     },
     argTypes: {
         open: { control: 'boolean' },

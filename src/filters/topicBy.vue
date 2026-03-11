@@ -36,8 +36,10 @@
 </template>
 
 <script>
+import i18nMixin from "../../i18n/mixin";
 export default {
     name: "topicBy",
+    mixins: [i18nMixin],
     props: {
         topics: {
             type: Array,

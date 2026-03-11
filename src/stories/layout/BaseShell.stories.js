@@ -2,10 +2,6 @@ const meta = {
     title: 'Layout/BaseShell',
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'main',
-        },
     },
 };
 

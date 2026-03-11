@@ -5,11 +5,6 @@ const meta = {
     component: Breadcrumb,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'breadcrumb',
-            showBreadcrumb: false,
-        },
     },
     argTypes: {
         publishEnable: { control: 'boolean' },

@@ -6,12 +6,6 @@ const meta = {
     component: UserPop,
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'main',
-            showLeftSidebar: false,
-            showRightSidebar: false,
-        },
     },
 };
 

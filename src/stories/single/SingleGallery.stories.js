@@ -1,4 +1,4 @@
-import Article from '../../editor/Article.vue';
+
 import StoryPropsTable from '../components/StoryPropsTable.vue';
 import SingleAuthor from '../../single/Author.vue';
 import CmsSingle from '../../single/CmsSingle.vue';
@@ -15,11 +15,6 @@ const meta = {
     title: 'Single/Index',
     parameters: {
         layout: 'fullscreen',
-        shell: {
-            enabled: true,
-            placement: 'main',
-            showRightSidebar: false,
-        },
     },
 };
 
@@ -32,7 +27,6 @@ export const Overview = {
             PostHeader,
             Creators,
             Collection,
-            Article,
             PostDirectory,
             StoryPropsTable,
         },
