@@ -14,11 +14,7 @@
                     >
                         <span>{{ $jx3boxT("jx3boxUi.adminDrop.setting", "设置") }}</span>
                     </el-dropdown-item>
-                    <el-dropdown-item
-                        v-else-if="isCommunity"
-                        command="toggleCommunityAdminPanel"
-                        icon="Setting"
-                    >
+                    <el-dropdown-item v-else-if="isCommunity" command="toggleCommunityAdminPanel" icon="Setting">
                         <span>{{ $jx3boxT("jx3boxUi.adminDrop.setting", "设置") }}</span>
                     </el-dropdown-item>
                     <el-dropdown-item
@@ -230,12 +226,9 @@ export default {
 
 <style lang="less">
 .c-admin-drop {
-    float: right;
-    margin-top: -2px;
-    margin-right: 10px;
-}
-.c-admin-drop__button {
-    padding: 8px 18px !important;
-    align-items: center;
+    .c-admin-drop__button {
+        // padding: 8px 12px !important;
+        // align-items: center;
+    }
 }
 </style>

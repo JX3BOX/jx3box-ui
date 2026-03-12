@@ -120,6 +120,8 @@ export default {
         color: #606266;
         font-size: 12px;
         .pointer;
+        .flex(y);
+        gap:5px;
     }
 }
 .w-filter-topic__content {

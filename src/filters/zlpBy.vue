@@ -1,5 +1,5 @@
 <template>
-    <el-dropdown class="w-filter-menu">
+    <el-dropdown class="w-filter-menu w-filter-zlp">
         <span class="el-dropdown-link">
             <span class="u-menu-label">
                 <el-icon> <operation /> </el-icon>
@@ -10,7 +10,7 @@
             </span>
         </span>
         <template #dropdown>
-            <el-dropdown-menu>
+            <el-dropdown-menu class="w-filter-zlp__list">
                 <el-dropdown-item @click="filter('')">
                     {{ $jx3boxT("jx3boxUi.zlpBy.all", "全部") }}
                 </el-dropdown-item>
@@ -66,10 +66,14 @@ export default {
 .w-filter-menu {
     .pointer;
     .u-menu-label {
-        i {
-            .mr(5px);
-        }
+        .flex;
+        align-items: center;
+        gap: 5px;
         .fz(12px);
     }
+}
+.w-filter-zlp__list{
+    max-height: 200px;
+    overflow-y: auto;
 }
 </style>

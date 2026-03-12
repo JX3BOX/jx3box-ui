@@ -18,7 +18,9 @@
                     <a class="u-displayname" :href="authorLink(uid)" target="_blank" v-if="!anonymous">
                         {{ data.display_name || $jx3boxT("jx3boxUi.authorInfo.unknown", "未知") }}
                     </a>
-                    <span class="u-displayname u-anonymous" v-else>{{ $jx3boxT("jx3boxUi.authorInfo.mysterious", "神秘侠士") }}</span>
+                    <span class="u-displayname u-anonymous" v-else>{{
+                        $jx3boxT("jx3boxUi.authorInfo.mysterious", "神秘侠士")
+                    }}</span>
                 </div>
                 <div class="u-extend">
                     <el-tooltip class="item" effect="dark" placement="top" v-if="!anonymous">
@@ -47,7 +49,13 @@
                         target="_blank"
                         >Lv.{{ level }}</a
                     >
-                    <el-tooltip class="item" effect="dark" :content="vipTypeTitle" placement="top" v-if="isVip && !anonymous">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="vipTypeTitle"
+                        placement="top"
+                        v-if="isVip && !anonymous"
+                    >
                         <a class="u-vip" href="/vip/premium?from=sidebar_author" target="_blank">
                             <i class="i-icon-vip on">{{ vipType }}</i>
                         </a>
@@ -149,22 +157,35 @@ export default {
 <style lang="less">
 .c-author-info {
     .u-author {
-        .clearfix;
-        .db;
+        .flex(y);
+        gap:15px;
+        // .db;
         .mb(10px);
         .pr;
     }
     .u-avatar {
-        .fl;
-        .mr(15px);
+        // .fl;
+        // .mr(15px);
         .size(68px);
+        flex-shrink: 0;
+    }
+    .u-info {
+        .pr;
+        // top: -4px;
+        // .h(68px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap:8px;
     }
     .u-name {
         .flex;
         align-items: center;
+        max-width: 120px;
+        .break;
     }
     .u-displayname {
-        .lh(2.2);
+        .lh(1.2);
         .bold;
         color: @darkblue;
         .nobreak;
@@ -189,14 +210,6 @@ export default {
         }
     }
 
-    .u-info {
-        .pr;
-        top: -4px;
-        .h(68px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
     .u-bio {
         .fz(12px, 2);
         .break(3);

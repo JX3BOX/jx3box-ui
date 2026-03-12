@@ -80,14 +80,14 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .c-post-topic {
     margin-bottom: 10px;
 }
 .c-post-topic__banner {
     position: relative;
     margin-bottom: 10px;
-    padding: 10px 10px 0 10px;
+    //padding: 10px 10px 0 10px;
     .c-topic-text {
         font-size: 12px;
         font-weight: 700;

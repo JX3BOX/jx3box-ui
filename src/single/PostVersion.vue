@@ -1,7 +1,7 @@
 <template>
     <div class="c-post-version" v-if="list && list.length">
         <div class="m-title">
-            <div class="u-title"><el-icon class="u-icon"><Timer></Timer></el-icon>历史版本</div>
+            <div class="u-title"><el-icon class="u-icon"><Clock /></el-icon>历史版本</div>
             <div class="u-op" @click="toggle"><el-icon><DCaret></DCaret></el-icon> 折叠</div>
         </div>
         <ul v-show="show" class="u-list">
@@ -125,27 +125,31 @@ export default {
         .flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 5px;
+        //margin-bottom: 5px;
+        line-height: 24px;
         .u-op {
             font-size: 14px;
-            float: right;
+            line-height: 18px;
+            //float: right;
             padding: 0 5px;
-            line-height: 25px;
             color: #cdd1db;
             cursor: pointer;
+            .flex(y);
             &:hover {
                 color: #a1a9bb;
             }
         }
     }
     .u-title {
-        font-weight: 300;
-        font-size: 18px;
+        //font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;;
+        color:#333;
         .flex;
         align-items: center;
         gap: 5px;
         .u-icon {
-            font-size: 20px;
+            font-size: 18px;
         }
     }
     .u-list {
@@ -161,7 +165,8 @@ export default {
             transition: 0.15s ease-in-out;
             .nobreak;
             &:hover {
-                background-color: #e6f0fb;
+                background-color: #fcfcfc;
+                .r(4px);
 
                 .u-compare {
                     .db;

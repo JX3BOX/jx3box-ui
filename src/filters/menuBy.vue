@@ -67,9 +67,7 @@ export default {
     .u-menu-label {
         .flex;
         align-items: center;
-        i {
-            .mr(5px);
-        }
+        gap: 5px;
         .fz(12px);
     }
 }

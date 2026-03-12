@@ -19,7 +19,6 @@
             </template>
         </breadcrumb>
         <LeftSidebar :open="true" :uid="8">
-            <LeftSideToggle :mobileOnly="true" />
             <Author :uid="8" />
         </LeftSidebar>
         <Main :withoutLeft="false" :withoutRight="false">
@@ -37,19 +36,7 @@
                         client="std"
                     ></Homework>
 
-                    <hr />
-                    <div class="m-filters">
-                        <markBy />
-                        <menuBy :data="['test1', 'test2']" />
-                        <orderBy />
-                        <zlpBy />
-                        <tagBy :data="['PVE', 'PVX']" :type="tag" />
-                        <topicBy v-model="tag2" :topics="post_topics" />
-                        <clientBy type="" />
-                        <versionBy value="" />
-                    </div>
-
-                    <hr />
+                    <LeftSideToggle :mobileOnly="true" />
 
                     <PostGuide :post="post" />
 
@@ -76,7 +63,33 @@
                         </template>
                     </SuspendCommon> -->
                 </el-tab-pane>
-                <el-tab-pane label="CMS作品" name="content">
+                <el-tab-pane label="文章列表" name="list">
+
+                    <h1 class="m-title">筛选</h1>
+                    <div class="m-block">
+                        <markBy />
+                        <menuBy :data="['test1', 'test2']" />
+                        <zlpBy />
+                        <topicBy v-model="tag2" :topics="post_topics" />
+                        <tagBy :data="['PVE', 'PVX']" :type="tag" />
+                    </div>
+
+                    <h2 class="m-title">客户端</h2>
+                    <div class="m-block">
+                        <clientBy type="" />
+                        <versionBy value="" />
+                    </div>
+
+                    <h2 class="m-title">排序</h2>
+                    <div class="m-block">
+                        <orderBy />
+                    </div>
+
+
+                </el-tab-pane>
+                <el-tab-pane label="文章详情" name="single">
+                </el-tab-pane>
+                <el-tab-pane label="文章内容" name="content">
                     <el-radio-group v-model="post_id">
                         <el-radio value="41346">临时测试</el-radio>
                         <el-radio value="32035">仅小册</el-radio>
@@ -126,6 +139,9 @@ export default {
     },
     data() {
         return {
+
+            tab: "single",
+
             post_id: "28837",
             post: "",
             client: location.href.includes("origin") ? "origin" : "std",
@@ -135,8 +151,6 @@ export default {
             item4: null,
             item5: null,
             item6: null,
-
-            tab: "widget",
 
             // 列表
             tag: "post",
@@ -238,14 +252,15 @@ export default {
 </script>
 
 <style lang="less">
-body {
-    padding-top: @header-height;
+.m-title{
+    margin: 20px 0 10px;
+    font-size: 16px;
+    font-weight: 500;
 }
-.container-page {
-    .m-filters {
-        .flex;
-        align-items: center;
-        gap: 20px;
-    }
+.m-block{
+    padding: 15px;
+    .flex;
+    flex-direction: column;
+    gap:20px;
 }
 </style>
