@@ -436,6 +436,9 @@ export default {
 
 <style lang="less">
 .c-comment-cmt {
+
+    --el-color-primary:@primary;
+
     flex-grow: 1;
     position: relative;
     .u-toolbar {

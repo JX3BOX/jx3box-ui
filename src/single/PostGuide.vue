@@ -57,7 +57,9 @@ export default {
 
         &:hover {
             // color: #0366d6;
-            box-shadow: 0 1px 0 #0366d6;
+            // box-shadow: 0 1px 0 #0366d6;
+            .underline(var(--el-color-primary));
+            color:var(--el-color-primary);
         }
     }
 }

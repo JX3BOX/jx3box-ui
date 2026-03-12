@@ -24,23 +24,73 @@
         <Main :withoutLeft="false" :withoutRight="false">
             <el-tabs v-model="tab" type="card">
                 <el-tab-pane label="通用组件" name="widget">
-                    <el-button @click="userpop = true">用户POP</el-button>
-                    <el-button @click="homeworkVisible = true">作业组件</el-button>
+                    <h1 class="m-title">UC泛用组件</h1>
+                    <div class="m-block">
+                        <el-button @click="userpop = true" style="width:100px;">用户POP</el-button>
+                        <UserPop title="添加用户" v-model="userpop"></UserPop>
+                    </div>
 
-                    <UserPop title="添加用户" v-model="userpop"></UserPop>
-                    <Homework
-                        v-model="homeworkVisible"
-                        post-type="comment"
-                        :post-id="19382"
-                        :userId="8719"
-                        client="std"
-                    ></Homework>
+                    <h1 class="m-title">切换侧边栏</h1>
+                    <div class="m-block">
+                        <LeftSideToggle :mobileOnly="false" />
+                        <LeftSideToggle :mobileOnly="true" />
+                    </div>
 
-                    <LeftSideToggle :mobileOnly="true" />
+                </el-tab-pane>
+                <el-tab-pane label="文章列表" name="list">
+                    <h1 class="m-title">筛选</h1>
+                    <div class="m-block">
+                        <markBy />
+                        <menuBy :data="['test1', 'test2']" />
+                        <zlpBy />
+                        <topicBy v-model="tag2" :topics="post_topics" />
+                        <tagBy :data="['PVE', 'PVX']" :type="tag" />
+                    </div>
 
-                    <PostGuide :post="post" />
+                    <h2 class="m-title">客户端</h2>
+                    <div class="m-block">
+                        <clientBy type="" />
+                        <versionBy value="" />
+                    </div>
 
-                    <!-- <SuspendCommon
+                    <h2 class="m-title">排序</h2>
+                    <div class="m-block">
+                        <orderBy />
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="文章详情" name="single">
+                    <h1 class="m-title">Append</h1>
+                    <div class="m-block">
+                        <PostGuide :post="post" />
+                    </div>
+                    <h1 class="m-title">Comment</h1>
+                    <div class="m-block">
+                        <el-button @click="homeworkVisible = true" style="width: 100px" size="small"
+                            >作业组件</el-button
+                        >
+                        <Homework
+                            v-model="homeworkVisible"
+                            post-type="comment"
+                            :post-id="19382"
+                            :userId="8719"
+                            client="std"
+                        ></Homework>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="文章内容" name="content">
+                    <el-radio-group v-model="post_id">
+                        <el-radio value="41346">临时测试</el-radio>
+                        <el-radio value="32035">仅小册</el-radio>
+                        <el-radio value="30017">仅联合创作者</el-radio>
+                        <el-radio value="30582">小册和联合创作者</el-radio>
+                        <el-radio value="31129">无小册和联合创作者</el-radio>
+                    </el-radio-group>
+                    <singlebox :post="post" />
+                </el-tab-pane>
+                <el-tab-pane label="移动组件" name="mobile">
+                    <h1 class="m-title">Common</h1>
+                    <div class="m-block">
+                        <!-- <SuspendCommon
                         :drawerOptions="{
                             author: {
                                 name: '作者名字',
@@ -62,42 +112,7 @@
                             </div>
                         </template>
                     </SuspendCommon> -->
-                </el-tab-pane>
-                <el-tab-pane label="文章列表" name="list">
-
-                    <h1 class="m-title">筛选</h1>
-                    <div class="m-block">
-                        <markBy />
-                        <menuBy :data="['test1', 'test2']" />
-                        <zlpBy />
-                        <topicBy v-model="tag2" :topics="post_topics" />
-                        <tagBy :data="['PVE', 'PVX']" :type="tag" />
                     </div>
-
-                    <h2 class="m-title">客户端</h2>
-                    <div class="m-block">
-                        <clientBy type="" />
-                        <versionBy value="" />
-                    </div>
-
-                    <h2 class="m-title">排序</h2>
-                    <div class="m-block">
-                        <orderBy />
-                    </div>
-
-
-                </el-tab-pane>
-                <el-tab-pane label="文章详情" name="single">
-                </el-tab-pane>
-                <el-tab-pane label="文章内容" name="content">
-                    <el-radio-group v-model="post_id">
-                        <el-radio value="41346">临时测试</el-radio>
-                        <el-radio value="32035">仅小册</el-radio>
-                        <el-radio value="30017">仅联合创作者</el-radio>
-                        <el-radio value="30582">小册和联合创作者</el-radio>
-                        <el-radio value="31129">无小册和联合创作者</el-radio>
-                    </el-radio-group>
-                    <singlebox :post="post" />
                 </el-tab-pane>
             </el-tabs>
             <el-divider></el-divider>
@@ -139,7 +154,6 @@ export default {
     },
     data() {
         return {
-
             tab: "single",
 
             post_id: "28837",
@@ -161,7 +175,7 @@ export default {
             userpop: false,
             homeworkVisible: false,
 
-            community: {}
+            community: {},
         };
     },
     watch: {
@@ -250,17 +264,16 @@ export default {
     },
 };
 </script>
-
 <style lang="less">
-.m-title{
+.m-title {
     margin: 20px 0 10px;
     font-size: 16px;
     font-weight: 500;
 }
-.m-block{
+.m-block {
     padding: 15px;
     .flex;
     flex-direction: column;
-    gap:20px;
+    gap: 20px;
 }
 </style>

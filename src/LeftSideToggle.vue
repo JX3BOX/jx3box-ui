@@ -59,7 +59,7 @@ export default {
     }
     &.on {
         svg {
-            fill: @primary;
+            fill: var(--el-color-primary);
         }
     }
 }
