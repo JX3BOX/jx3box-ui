@@ -14,7 +14,6 @@
             <div class="c-admin-extend">
                 <el-input
                     v-model="form.title"
-                    size="large"
                     placeholder="请输入标题"
                     class="input-author drawer-item-content"
                 >
@@ -24,7 +23,7 @@
                             style="width: 140px"
                             filterable
                             placeholder="请选择"
-                            size="large"
+
                         >
                             <el-option
                                 v-for="item in categoryList"
@@ -51,7 +50,7 @@
                         default-first-option
                         placeholder="请选择"
                         clearable
-                        size="large"
+
                         @change="onTagChange"
                     >
                         <el-option v-for="item in tags" :value="item.label" :label="item.label" :key="item.label">
@@ -61,7 +60,7 @@
                 <div class="m-community-tag__content">
                     <template v-if="finalTags && finalTags.length">
                         <div class="m-community-tag__list" v-for="item in finalTags" :key="item.uuid">
-                            <el-input v-model="item.label" size="large"></el-input>
+                            <el-input v-model="item.label" ></el-input>
                             <el-color-picker v-model="item.color" :predefine="color_options"></el-color-picker>
                         </div>
                     </template>
@@ -73,7 +72,7 @@
                     v-model="form.user_id"
                     placeholder="请输入作者ID"
                     class="input-author drawer-item-content"
-                    size="large"
+
                 >
                     <template #prepend>
                         <span class="u-keyword">作者ID</span>
@@ -100,7 +99,7 @@
                     <img v-if="post_banner" :src="post_banner" />
                     <el-icon><Plus></Plus></el-icon>
                 </el-upload>
-                <el-input class="u-banner" v-model="post_banner" size="large">
+                <el-input class="u-banner" v-model="post_banner" >
                     <template #prepend>海报地址</template>
                     <template #append>
                         <span class="u-btn" @click="removeBanner">
@@ -163,14 +162,14 @@ import {
     getCommunityTags,
     getTopicBucket,
     getTopicDetails,
-    manageTopic,
     updateTopicItem,
     manageTopicAll,
 } from "../../service/community";
-import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getUserInfo } from "../../service/author";
 import { debounce } from "lodash";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
+const { __cms } = JX3BOX;
 
 export default {
     name: "CommunityAdmin",
@@ -460,6 +459,8 @@ export default {
 
         .u-select-label {
             border-bottom-left-radius: 0;
+            height: 32px;
+            line-height: 32px;
         }
         .el-select__wrapper {
             border-bottom-right-radius: 0;

@@ -47,12 +47,19 @@ export default {
         },
     },
     mounted: function () {
-        Bus.on("toggleRightSide", (data) => {
+        this.__toggleRightSideHandler = (data) => {
             this.isOpen = data;
-        });
+        };
+        Bus.on("toggleRightSide", this.__toggleRightSideHandler);
 
         if (window.innerWidth <= 1440) {
             this.isOpen = false;
+        }
+    },
+    beforeUnmount() {
+        if (this.__toggleRightSideHandler) {
+            Bus.off("toggleRightSide", this.__toggleRightSideHandler);
+            this.__toggleRightSideHandler = null;
         }
     },
 };

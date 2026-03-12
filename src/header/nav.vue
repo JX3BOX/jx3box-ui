@@ -289,6 +289,7 @@ export default {
 
 .c-header-nav--pc,
 .c-header-nav--pad {
+    // .flex;
     .flex(y);
 }
 .c-header-nav--pad {

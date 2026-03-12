@@ -11,7 +11,7 @@
         <el-drawer
             class="c-admin"
             title="管理主题"
-            :visible.sync="show"
+            v-model:visible="show"
             :before-close="close"
             :append-to-body="true"
             :modal="false"
@@ -23,17 +23,16 @@
                     <div v-for="item in list" :key="item.id" class="m-bucket-item">
                         <el-tag size="medium" :type="item.status ? '' : 'info'">{{ item.name }}</el-tag>
                         <div class="m-bucket-op">
-                            <el-button :type="item.status ? 'warning' : 'success'" plain size="mini" class="u-op-btn" :icon="item.status ? 'el-icon-download' : 'el-icon-upload2'" @click="update(item.id, item.status)">{{ item.status ? '下架' : '上架' }}</el-button>
-                            <el-button @click="edit(item)" plain size="mini" icon="el-icon-edit">修改</el-button>
-                            <el-button type="info" plain size="mini" class="u-op-btn" icon="el-icon-delete" @click="del(item.id)">删除</el-button>
+                            <el-button :type="item.status ? 'warning' : 'success'" plain size="mini" class="u-op-btn" :icon="item.status ? 'Download' : 'Upload'" @click="update(item.id, item.status)">{{ item.status ? '下架' : '上架' }}</el-button>
+                            <el-button @click="edit(item)" plain size="mini" icon="Edit">修改</el-button>
+                            <el-button type="info" plain size="mini" class="u-op-btn" icon="Delete" @click="del(item.id)">删除</el-button>
                         </div>
                     </div>
                 </div>
                 <el-empty v-else description="暂无主题"></el-empty>
 
                 <div class="c-admin-buttons">
-                    <el-button type="success" @click="add" icon="el-icon-plus">新增</el-button>
-                    <!-- <el-button type="plain" @click="close" icon="el-icon-close">关闭</el-button> -->
+                    <el-button type="success" @click="add" icon="Plus">新增</el-button>
                 </div>
             </div>
         </el-drawer>

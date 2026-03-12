@@ -75,10 +75,17 @@ export default {
         },
     },
     mounted() {
-        Bus.on("showAlternate", () => {
+        this.__showAlternateHandler = () => {
             this.visible = true;
-        });
+        };
+        Bus.on("showAlternate", this.__showAlternateHandler);
         this.init();
+    },
+    beforeUnmount() {
+        if (this.__showAlternateHandler) {
+            Bus.off("showAlternate", this.__showAlternateHandler);
+            this.__showAlternateHandler = null;
+        }
     },
     methods: {
         init() {

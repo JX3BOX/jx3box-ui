@@ -125,16 +125,29 @@ export default {
         this.loadMenu();
     },
     mounted: function () {
-        Bus.on("toggleBox", (status) => {
+        this.__toggleBoxHandler = (status) => {
             if (status == undefined) {
                 this.status = !this.status;
             } else {
                 this.status = status;
             }
-        });
-        document.addEventListener("click", function () {
+        };
+        Bus.on("toggleBox", this.__toggleBoxHandler);
+
+        this.__docClickHandler = () => {
             Bus.emit("toggleBox", false);
-        });
+        };
+        document.addEventListener("click", this.__docClickHandler);
+    },
+    beforeUnmount() {
+        if (this.__toggleBoxHandler) {
+            Bus.off("toggleBox", this.__toggleBoxHandler);
+            this.__toggleBoxHandler = null;
+        }
+        if (this.__docClickHandler) {
+            document.removeEventListener("click", this.__docClickHandler);
+            this.__docClickHandler = null;
+        }
     },
     components: {
         "header-search": search,

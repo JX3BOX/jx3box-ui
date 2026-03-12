@@ -92,17 +92,29 @@ export default {
             }
         },
     },
+    beforeUnmount() {
+        if (this.__toggleLeftSideHandler) {
+            Bus.off("toggleLeftSide", this.__toggleLeftSideHandler);
+            this.__toggleLeftSideHandler = null;
+        }
+        if (this.__docClickHandler) {
+            document.removeEventListener("click", this.__docClickHandler);
+            this.__docClickHandler = null;
+        }
+    },
     mounted: function () {
-        Bus.on("toggleLeftSide", (data) => {
+        this.__toggleLeftSideHandler = (data) => {
             this.isOpen = data;
-        });
+        };
+        Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
 
         if (window.innerWidth < 1024) {
             this.isOpen = false;
 
-            document.addEventListener("click", function () {
+            this.__docClickHandler = () => {
                 Bus.emit("toggleLeftSide", false);
-            });
+            };
+            document.addEventListener("click", this.__docClickHandler);
         }
     },
     created: function () {

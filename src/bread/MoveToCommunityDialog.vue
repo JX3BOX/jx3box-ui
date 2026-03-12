@@ -2,7 +2,7 @@
     <el-dialog
         custom-class="m-design-task"
         :width="isPhone ? '95%' : '600px'"
-        :visible="modelValue"
+        v-model="visible"
         @close="close"
         title="迁移至论坛"
         append-to-body
@@ -83,14 +83,10 @@ export default {
     },
     watch: {
         modelValue(val) {
+            this.visible = val;
             if (val) {
                 this.getCategoryList();
                 this.initForm();
-            }
-        },
-        checked(val) {
-            if (val) {
-                this.visible = false;
             }
         },
     },
@@ -144,10 +140,10 @@ export default {
         },
         getIntroduction(str) {
             // 使用正则表达式匹配HTML标签并将其替换为空字符串
-            const withoutTags = str.replace(/<[^>]*>|\n|&nbsp;| &nbsp;/g, "");
+            const withoutTags = str?.replace(/<[^>]*>|\n|&nbsp;| &nbsp;/g, "");
 
             // 获取前100个字符，如果字符串长度小于200，则获取全部字符
-            return withoutTags.slice(0, 200);
+            return withoutTags?.slice(0, 200);
         },
         getImgSrc: function (htmlString) {
             // 创建一个正则表达式来匹配没有class属性的<img>标签，并且捕获src属性的值

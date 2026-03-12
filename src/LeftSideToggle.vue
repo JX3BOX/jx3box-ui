@@ -26,12 +26,19 @@ export default {
         },
     },
     mounted: function () {
-        Bus.on("toggleLeftSide", (data) => {
+        this.__toggleLeftSideHandler = (data) => {
             this.isOpen = data;
-        });
+        };
+        Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
 
         if (window.innerWidth < 1024) {
             this.isOpen = false;
+        }
+    },
+    beforeUnmount() {
+        if (this.__toggleLeftSideHandler) {
+            Bus.off("toggleLeftSide", this.__toggleLeftSideHandler);
+            this.__toggleLeftSideHandler = null;
         }
     },
     components: {},

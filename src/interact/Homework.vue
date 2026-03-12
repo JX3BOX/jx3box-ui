@@ -35,7 +35,7 @@
                                 <b>{{ item }}</b
                                 >盒币
                             </el-radio>
-                            <el-radio value="custom" size="large" border>自定义</el-radio>
+                            <el-radio value="custom"  border>自定义</el-radio>
                             <el-input
                                 v-model="amount"
                                 v-show="count === 'custom'"
@@ -48,22 +48,22 @@
                     <em class="u-label">📝 寄语</em>
                     <div class="u-input">
                         <el-input
-                        size="large"
+
                             v-model="remark"
                             placeholder="请输入寄语（必填）"
                             :minlength="2"
                             :maxlength="30"
                             show-word-limit
                         ></el-input>
-                        <el-button size="large" :disabled="fetchingCurrentRelease" @click="insertCurrentRelease"
+                        <el-button  :disabled="fetchingCurrentRelease" @click="insertCurrentRelease"
                             >插入当前版本</el-button
                         >
                     </div>
                 </div>
             </div>
             <template #footer>
-                <el-button @click="onClose" size="large">取 消</el-button>
-                <el-button type="primary" @click="submit" :disabled="!ready || submitting" size="large">确 定</el-button>
+                <el-button @click="onClose" >取 消</el-button>
+                <el-button type="primary" @click="submit" :disabled="!ready || submitting" >确 定</el-button>
             </template>
         </el-dialog>
     </div>

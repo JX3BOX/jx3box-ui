@@ -33,9 +33,16 @@ export default {
     },
     methods: {},
     mounted: function () {
-        Bus.on("toggleLeftSide", (data) => {
+        this.__toggleLeftSideHandler = (data) => {
             this.expanding = !data;
-        });
+        };
+        Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
+    },
+    beforeUnmount() {
+        if (this.__toggleLeftSideHandler) {
+            Bus.off("toggleLeftSide", this.__toggleLeftSideHandler);
+            this.__toggleLeftSideHandler = null;
+        }
     },
     created: function () {
         this.expanding = this.withoutLeft === undefined ? false : !!this.withoutLeft;

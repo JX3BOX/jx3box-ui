@@ -112,12 +112,17 @@ export default {
     },
     beforeUnmount() {
         document.removeEventListener("scroll", this.onShowTitle);
+        if (this.__toggleLeftSideHandler) {
+            Bus.off("toggleLeftSide", this.__toggleLeftSideHandler);
+            this.__toggleLeftSideHandler = null;
+        }
     },
     mounted: function () {
         document.addEventListener("scroll", this.onShowTitle);
-        Bus.on("toggleLeftSide", (data) => {
+        this.__toggleLeftSideHandler = (data) => {
             this.isOpen = data;
-        });
+        };
+        Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
 
         if (window.innerWidth < 1024) {
             this.isOpen = false;

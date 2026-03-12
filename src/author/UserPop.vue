@@ -11,7 +11,6 @@
         </div>
         <div class="u-input">
             <el-input
-                size="large"
                 v-model.trim.lazy="search"
                 :placeholder="$jx3boxT('jx3boxUi.userPop.placeholder', '请输入用户 UID 或者昵称进行搜索')"
                 @keydown.enter="onSearch"
@@ -20,7 +19,7 @@
                     <el-icon><Search /></el-icon>
                 </template>
             </el-input>
-            <el-button size="large" class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">{{
+            <el-button  class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">{{
                 $jx3boxT("jx3boxUi.userPop.search", "搜索")
             }}</el-button>
         </div>
@@ -45,8 +44,8 @@
         </div>
         <template #footer>
             <div class="dialog-footer">
-                <el-button size="large" @click="cancel">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
-                <el-button size="large" type="primary" @click="confirm">{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</el-button>
+                <el-button  @click="cancel">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
+                <el-button  type="primary" @click="confirm">{{ $jx3boxT("jx3boxUi.common.confirm", "确定") }}</el-button>
             </div>
         </template>
     </el-dialog>

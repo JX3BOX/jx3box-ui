@@ -25,8 +25,8 @@
         <Main :withoutLeft="false" :withoutRight="false">
             <el-tabs v-model="tab" type="card">
                 <el-tab-pane label="通用组件" name="widget">
-                    <el-button size="large" @click="userpop = true">用户POP</el-button>
-                    <el-button size="large" @click="homeworkVisible = true">作业组件</el-button>
+                    <el-button @click="userpop = true">用户POP</el-button>
+                    <el-button @click="homeworkVisible = true">作业组件</el-button>
 
                     <UserPop title="添加用户" v-model="userpop"></UserPop>
                     <Homework
@@ -47,8 +47,12 @@
                         <topicBy v-model="tag2" :topics="post_topics" />
                         <clientBy type="" />
                         <versionBy value="" />
-
                     </div>
+
+                    <hr />
+
+                    <PostGuide :post="post" />
+
                     <!-- <SuspendCommon
                         :drawerOptions="{
                             author: {
@@ -75,7 +79,6 @@
                 <el-tab-pane label="CMS作品" name="content">
                     <el-radio-group v-model="post_id">
                         <el-radio value="41346">临时测试</el-radio>
-                        <el-radio value="35605">Markdown</el-radio>
                         <el-radio value="32035">仅小册</el-radio>
                         <el-radio value="30017">仅联合创作者</el-radio>
                         <el-radio value="30582">小册和联合创作者</el-radio>
@@ -85,9 +88,10 @@
                 </el-tab-pane>
             </el-tabs>
             <el-divider></el-divider>
-            <RightSidebar :show-toggle="true">
+            <RightSidebar :show-toggle="true" style="padding: 15px">
                 <PostTopic type="bps" :id="48857"></PostTopic>
                 <div id="directory"></div>
+                <PostVersion :post="post"></PostVersion>
             </RightSidebar>
         </Main>
         <CommonFooter> </CommonFooter>
@@ -95,14 +99,18 @@
 </template>
 
 <script>
+import { getPost } from "../service/cms";
+import { get_item } from "../service/item";
+import { getTopicDetails } from "../service/community";
+import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
+
+// components
 import singlebox from "./single/CmsSingle.vue";
 import Author from "./single/Author.vue";
 import PostTopic from "./single/PostTopic.vue";
+import PostGuide from "./single/PostGuide.vue";
 import Homework from "./interact/Homework.vue";
-import { getPost } from "../service/cms";
-import { get_item } from "../service/item";
-import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
-import { getTopicDetails } from "../service/community";
+import PostVersion from "./single/PostVersion.vue";
 export default {
     name: "App",
     components: {
@@ -113,10 +121,12 @@ export default {
         singlebox,
         // Admin,
         Homework,
+        PostGuide,
+        PostVersion,
     },
     data() {
         return {
-            post_id: "68836",
+            post_id: "28837",
             post: "",
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,

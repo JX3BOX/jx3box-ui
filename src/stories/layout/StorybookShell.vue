@@ -40,7 +40,7 @@
                 </div>
 
                 <RightSidebar v-if="showRightSidebar" v-bind="resolvedRightSidebarProps">
-                    <slot v-if="placement === 'right'" name="right"></slot>
+                    <slot v-if="placement === 'right' && $slots.right" name="right"></slot>
                     <slot v-else-if="placement === 'right'"></slot>
                     <div v-else class="sb-shell-card">
                         <div class="sb-shell-card__title">RightSidebar</div>

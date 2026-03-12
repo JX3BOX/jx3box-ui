@@ -408,7 +408,7 @@ export default {
         this.checkChannel();
 
         // 绑定监听
-        Bus.on("toggleAdminPanel", () => {
+        this.__toggleAdminPanelHandler = () => {
             this.dialog_visible = !this.dialog_visible;
             this.checkPostID();
             // 文章类型的加载
@@ -419,7 +419,14 @@ export default {
             if (this.showExtend && this.app && this.dialog_visible) {
                 this.loadTopic();
             }
-        });
+        };
+        Bus.on("toggleAdminPanel", this.__toggleAdminPanelHandler);
+    },
+    beforeUnmount() {
+        if (this.__toggleAdminPanelHandler) {
+            Bus.off("toggleAdminPanel", this.__toggleAdminPanelHandler);
+            this.__toggleAdminPanelHandler = null;
+        }
     },
 };
 </script>

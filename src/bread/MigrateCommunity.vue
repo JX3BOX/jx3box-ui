@@ -2,32 +2,34 @@
     <el-dialog
         custom-class="w-dialog m-migrate-dialog"
         :width="isPhone ? '95%' : '600px'"
-        :visible="modelValue"
+        v-model="visible"
         @close="close"
         title="迁回原板块"
         append-to-body
         draggable
     >
-        <div class="m-migrate-box" v-if="post">
+        <div class="m-migrate-box" v-if="post?.ID">
             <div class="m-item">
                 <div class="u-label">标题</div>
-                <div class="u-value">{{ post.post_title }}</div>
+                <div class="u-value">{{ post?.post_title }}</div>
             </div>
             <div class="m-item">
                 <div class="u-label">作者</div>
-                <div class="u-value"><a target="_blank" :href="authorLink(post.post_author)">{{ `${post.author}` }}</a></div>
+                <div class="u-value">
+                    <a target="_blank" :href="authorLink(post?.post_author)">{{ `${post?.author}` }}</a>
+                </div>
             </div>
             <div class="m-item">
                 <div class="u-label">原板块</div>
-                <div class="u-value">{{ showType(post.post_type) }}</div>
+                <div class="u-value">{{ showType(post?.post_type) }}</div>
             </div>
             <div class="m-item">
                 <div class="u-label">原链接</div>
-                <div class="u-value"><a target="_blank" :href="postLink(post.post_type, post.ID)">查看</a></div>
+                <div class="u-value"><a target="_blank" :href="postLink(post?.post_type, post?.ID)">查看</a></div>
             </div>
         </div>
         <el-alert type="warning" title="该帖子不可迁移，不存在原帖子" :closable="false" show-icon v-else></el-alert>
-        <template #footer v-if="post">
+        <template #footer v-if="post?.ID">
             <el-button @click="close" :loading="loading">关闭</el-button>
             <el-button type="primary" @click="submit" :loading="loading">确认</el-button>
         </template>
@@ -37,7 +39,8 @@
 <script>
 import { getOriginalPost, migrateCommunityPost } from "../../service/community";
 import { postLink, authorLink } from "@jx3box/jx3box-common/js/utils";
-import {__postType} from "@jx3box/jx3box-common/data/jx3box.json";
+import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+const { __postType } = JX3BOX;
 export default {
     name: "MigrateCommunity",
     props: {
@@ -50,27 +53,29 @@ export default {
             default: 0,
         },
     },
-    model: {
-        prop: "modelValue",
-        event: "update:modelValue",
-    },
     emits: ["update:modelValue"],
     data() {
         return {
-            post: null,
+            post: {},
             isPhone: window.innerWidth < 768,
 
             loading: false,
+
+            visible: false,
         };
     },
     watch: {
         modelValue(val) {
+            this.visible = val;
             if (val) {
                 if (this.communityId) {
                     this.loadPost();
                 }
             }
         },
+        visible(val) {
+            this.$emit("update:modelValue", val);
+        }
     },
     methods: {
         postLink,
@@ -87,18 +92,22 @@ export default {
             if (!this.post) {
                 return;
             }
-            this.$confirm("确认将该帖子迁回原板块？").then(() => {
-                this.loading = true;
-                migrateCommunityPost({ community_id: this.communityId }).then((res) => {
-                    this.$message.success("迁移成功");
-                    this.close();
-                    location.href = '/community'
-                }).finally(() => {
-                    this.loading = false;
+            this.$confirm("确认将该帖子迁回原板块？")
+                .then(() => {
+                    this.loading = true;
+                    migrateCommunityPost({ community_id: this.communityId })
+                        .then((res) => {
+                            this.$message.success("迁移成功");
+                            this.close();
+                            location.href = "/community";
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+                })
+                .catch(() => {
+                    // 取消操作
                 });
-            }).catch(() => {
-                // 取消操作
-            });
         },
         showType(type) {
             return __postType[type] || type;
