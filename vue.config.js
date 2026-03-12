@@ -126,6 +126,8 @@ function buildEnvProxy() {
                 target: normalized,
                 changeOrigin: true,
                 secure: false,
+                // API 代理不需要 websocket，避免给 dev server 叠加 upgrade 监听器
+                ws: false,
                 cookieDomainRewrite: "",
                 pathRewrite: (p) => p.replace(contextRe, ""),
             },
