@@ -76,10 +76,11 @@ export default {
     .u-medals {
         display: flex;
         flex-wrap: wrap;
+        gap:5px;
+        margin-top: 5px;
     }
     .u-medal {
         cursor: pointer;
-        .mr(2px);
         .u-medal-img {
             width: 20px;
             height: 20px;

@@ -177,3 +177,14 @@ export default {
     },
 };
 </script>
+
+
+<style lang="less">
+.w-boxcoin-records-pages{
+
+    --el-color-primary: @primary;
+
+    .flex(x);
+    margin-top:5px;
+}
+</style>

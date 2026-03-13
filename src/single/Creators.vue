@@ -175,7 +175,7 @@ export default {
         .bold;
         .db;
         color: @color;
-        margin-bottom: 2px;
+        // margin-bottom: 2px;
         .nobreak;
         max-width: 120px;
     }

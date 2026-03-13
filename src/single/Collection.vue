@@ -1,10 +1,8 @@
 <template>
     <div class="w-collection" v-if="list && list.length">
         <div class="w-collection-title" @click="handleShow" :class="{ on: visible }">
-            <span>
-                <el-icon><Notebook /></el-icon>
-                {{ $jx3boxT("jx3boxUi.collection.included", "该作品已被收录至作者的剑三小册") }}
-            </span>
+            <el-icon><Notebook /></el-icon>
+            {{ $jx3boxT("jx3boxUi.collection.included", "该作品已被收录至作者的剑三小册") }}
             <a @click.stop :href="collectionLink(id)" target="_blank">《{{ title }}》</a>
         </div>
         <transition name="fade">
@@ -41,7 +39,7 @@ export default {
     },
     inject: [],
     components: {},
-    data: function() {
+    data: function () {
         return {
             visible: this.defaultVisible || false,
             data: {
@@ -51,17 +49,17 @@ export default {
         };
     },
     computed: {
-        title: function() {
+        title: function () {
             return this.data?.title;
         },
-        list: function() {
+        list: function () {
             return this.data?.posts;
         },
     },
     watch: {
         id: {
             immediate: true,
-            handler: function(val) {
+            handler: function (val) {
                 if (~~val) {
                     this.loadData();
                 } else {
@@ -72,24 +70,24 @@ export default {
                 }
             },
         },
-        defaultVisible: function(val) {
+        defaultVisible: function (val) {
             this.visible = val;
         },
     },
     methods: {
-        handleShow: function() {
+        handleShow: function () {
             this.visible = !this.visible;
         },
-        loadData: function() {
+        loadData: function () {
             getCollection(this.id).then((res) => {
                 this.data = res.data?.data;
-                this.$emit('collectionUpdate',this.data)
+                this.$emit("collectionUpdate", this.data);
             });
         },
-        collectionLink: function(id) {
+        collectionLink: function (id) {
             return getLink("collection", id);
         },
-        showLink: function(item) {
+        showLink: function (item) {
             if (item.type == "custom") {
                 return item.url;
             } else {
@@ -97,20 +95,23 @@ export default {
             }
         },
     },
-    created: function() {},
-    mounted: function() {},
+    created: function () {},
+    mounted: function () {},
 };
 </script>
 
 <style lang="less">
 .w-collection {
+    --el-color-primary: @primary;
+
     .w-collection-title {
         cursor: pointer;
         position: relative;
         border: 1px solid #ddd;
         background-color: #fafbfc;
         padding: 8px 10px 8px 10px;
-        display: block;
+        // display: block;
+        .flex(y);
         margin-bottom: 0;
         border-radius: 4px;
         line-height: 1.6;
@@ -136,7 +137,7 @@ export default {
         a {
             color: var(--el-color-primary);
             &:hover {
-                .underline(@color-link);
+                .underline(var(--el-color-primary));
             }
         }
     }

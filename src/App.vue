@@ -158,7 +158,7 @@ export default {
     },
     data() {
         return {
-            tab: "single",
+            tab: "content",
 
             post_id: "106064",
             post: "",

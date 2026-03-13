@@ -256,7 +256,7 @@ export default {
         // }
         letter-spacing: 0.5px;
         font-weight: 300;
-        .db;
+        // .db;
         .nobreak;
     }
     .u-author {
@@ -297,6 +297,8 @@ export default {
 }
 
 .m-single-info {
+
+
     margin-top: 10px;
     .clearfix;
     .fz(12px, 20px);
@@ -308,6 +310,7 @@ export default {
     @std: #f0b400;
     @all: #a26ef7;
     @wujie: #fc79bf;
+    --el-color-primary: @primary;
 
     .u-client {
         // .fl;
@@ -361,7 +364,7 @@ export default {
             color: var(--el-color-primary);
         }
         a:hover {
-            box-shadow: 0 1px 0 @color-link;
+            .underline(var(--el-color-primary));
         }
         i {
             .pr;
