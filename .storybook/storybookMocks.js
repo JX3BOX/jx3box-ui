@@ -1,6 +1,7 @@
 import {
     mockBoxcoinConfig,
     mockBoxcoinRecords,
+    mockCommitHistories,
     mockCollection,
     mockCommentPage,
     mockCommentPower,
@@ -126,6 +127,27 @@ export function resolveStorybookMock(config) {
 
     if (method === 'get' && path.match(/^\/api\/next2\/comment\/.+\/comment\/\d+\/reply\/page\/\d+$/)) {
         return respond(config, mockCommentPage);
+    }
+
+    if (method === 'get' && path.match(/^\/api\/next2\/userdata\/commit-history\/content-meta\/\d+\/commit\/history$/)) {
+        return respond(config, {
+            data: {
+                list: mockCommitHistories.map(({ content, ...item }) => item),
+                page: {
+                    total: mockCommitHistories.length,
+                },
+            },
+        });
+    }
+
+    if (method === 'get' && path.match(/^\/api\/next2\/userdata\/commit-history\/content-meta\/\d+\/commit\/by-hash\/.+$/)) {
+        const hash = path.split('/').pop();
+        const matched = mockCommitHistories.find((item) => item.commit_hash === hash) || mockCommitHistories[0];
+        return respond(config, {
+            data: {
+                content: matched?.content || '',
+            },
+        });
     }
 
     if (['post', 'put', 'delete'].includes(method) && path.startsWith('/api/next2/comment/')) {

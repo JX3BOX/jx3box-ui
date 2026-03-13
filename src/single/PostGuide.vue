@@ -1,18 +1,18 @@
 <template>
     <div class="w-post-guide" v-if="hasGuide">
         <div class="u-prev">
-            <a :href="getPostLink(post.prev_post)" class="el-button el-button--default el-button--small is-plain" :class="{'is-disabled': !post.prev_post }">
-                <el-icon><ArrowLeft></ArrowLeft></el-icon>
+            <a :href="getPostLink(post?.prev_post)" class="el-button el-button--default el-button--small is-plain" :class="{'is-disabled': !post?.prev_post }">
+                <i class="el-icon-arrow-left"></i>
                 <span>上一篇</span>
             </a>
-            <a :href="getPostLink(post.prev_post)" class="u-post-title">{{ getPostTitle(post.prev_post) }}</a>
+            <a :href="getPostLink(post?.prev_post)" class="u-post-title">{{ getPostTitle(post?.prev_post) }}</a>
         </div>
         <div class="u-next">
-            <a :href="getPostLink(post.next_post)" class="el-button el-button--default el-button--small is-plain" :class="{'is-disabled': !post.next_post }">
+            <a :href="getPostLink(post?.next_post)" class="el-button el-button--default el-button--small is-plain" :class="{'is-disabled': !post.next_post }">
                 <span>下一篇</span>
                 <el-icon><ArrowRight></ArrowRight></el-icon>
             </a>
-            <a :href="getPostLink(post.next_post)" class="u-post-title">{{ getPostTitle(post.next_post) }}</a>
+            <a :href="getPostLink(post?.next_post)" class="u-post-title">{{ getPostTitle(post?.next_post) }}</a>
         </div>
     </div>
 </template>
@@ -29,7 +29,9 @@ export default {
     },
     computed: {
         hasGuide() {
-            return typeof this.post.prev_post === "object" || typeof this.post.next_post === "object";
+            const isPrevValid = this.post.prev_post && typeof this.post.prev_post === "object";
+            const isNextValid = this.post.next_post && typeof this.post.next_post === "object";
+            return isPrevValid || isNextValid;
         }
     },
     methods: {

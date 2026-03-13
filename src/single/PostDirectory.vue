@@ -123,6 +123,8 @@ export default {
         line-height: 25px;
         color: darken(#dcdfe6, 5%);
         cursor: pointer;
+        .flex;
+        align-items: center;
         &:hover {
             color: darken(#dcdfe6, 20%);
         }
@@ -130,6 +132,7 @@ export default {
 }
 .c-article-directory-content {
     padding: 10px 15px;
+    margin-bottom: 20px;
 }
 
 @keyframes focusFade {

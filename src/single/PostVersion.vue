@@ -4,16 +4,18 @@
             <div class="u-title"><el-icon class="u-icon"><Clock /></el-icon>历史版本</div>
             <div class="u-op" @click="toggle"><el-icon><DCaret></DCaret></el-icon> 折叠</div>
         </div>
-        <ul v-show="show" class="u-list">
-            <li v-for="(item, i) in list" class="u-item" :key="i" @click="handleContrast(item)">
-                <div class="u-version">
-                    <span>{{ item.version }}</span> - <span>{{ item.created_at }}</span>
-                </div>
-                <el-button class="u-compare" size="small" type="primary" link
-                    ><el-icon class="u-icon"><Sort></Sort></el-icon>对比</el-button
-                >
-            </li>
-        </ul>
+        <transition name="collapse">
+            <ul v-show="show" class="u-list">
+                <li v-for="(item, i) in list" class="u-item" :key="i" @click="handleContrast(item)">
+                    <div class="u-version">
+                        <span>{{ item.version }}</span> - <span>{{ item.created_at }}</span>
+                    </div>
+                    <el-button class="u-compare" size="small" type="primary" link
+                        ><el-icon class="u-icon"><Sort></Sort></el-icon>对比</el-button
+                    >
+                </li>
+            </ul>
+        </transition>
         <version-dialog
             v-model="visible"
             :link_content_meta_id="link_content_meta_id"
@@ -156,6 +158,7 @@ export default {
         list-style: none;
         padding: 10px;
         margin: 0;
+        overflow: hidden;
         li {
             padding: 0 10px;
             .fz(13px, 36px);
@@ -186,6 +189,25 @@ export default {
                 margin-right: 3px;
             }
         }
+    }
+
+    .collapse-enter-active,
+    .collapse-leave-active {
+        transition: max-height 0.25s ease, opacity 0.2s ease, padding 0.25s ease;
+    }
+
+    .collapse-enter-from,
+    .collapse-leave-to {
+        max-height: 0;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .collapse-enter-to,
+    .collapse-leave-from {
+        max-height: 480px;
+        opacity: 1;
     }
 }
 </style>

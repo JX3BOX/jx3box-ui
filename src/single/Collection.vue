@@ -104,7 +104,7 @@ export default {
 
 <style lang="less">
 .w-collection {
-    &-title {
+    .w-collection-title {
         cursor: pointer;
         position: relative;
         border: 1px solid #ddd;
@@ -134,17 +134,30 @@ export default {
         }
 
         a {
-            .underline(@color-link);
+            color: var(--el-color-primary);
+            &:hover {
+                .underline(@color-link);
+            }
         }
     }
 
     counter-reset: collection;
+
+    .u-list {
+        padding: 10px 20px;
+        margin: 0;
+        border: 1px dashed #ddd;
+        background: none;
+        border-top: none;
+    }
+
     .u-item {
         .fz(13px, 32px);
         border-bottom: 1px solid #eee;
         transition: 0.15s ease-in-out;
         .nobreak;
         a {
+            color: var(--el-color-primary);
             .db;
             &:before {
                 counter-increment: collection;
@@ -160,14 +173,6 @@ export default {
         &:last-child {
             border-bottom: none;
         }
-    }
-
-    .u-list {
-        padding: 10px 20px;
-        margin: 0;
-        border: 1px dashed #ddd;
-        background: none;
-        border-top: none;
     }
 
     .on {

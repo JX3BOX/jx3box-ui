@@ -230,8 +230,8 @@ export default {
     // padding-right: 280px;
     .pr;
     .u-sub-block {
-        .dbi;
-        .y(top);
+        .flex;
+        align-items: center;
     }
 }
 @media screen and (max-width: @phone) {
@@ -301,6 +301,8 @@ export default {
     .clearfix;
     .fz(12px, 20px);
     color: #666;
+    .flex;
+    align-items: center;
 
     @origin: #0eb7ce;
     @std: #f0b400;
@@ -355,6 +357,9 @@ export default {
     }
 
     .u-author {
+        a {
+            color: var(--el-color-primary);
+        }
         a:hover {
             box-shadow: 0 1px 0 @color-link;
         }
@@ -385,9 +390,9 @@ export default {
                 font-size: 16px;
             }
             .pr;
-            top: 4px;
             .mr(1px);
         }
+        color: var(--el-color-primary);
         &:hover {
             box-shadow: 0 1px 0 @color-link;
         }

@@ -237,3 +237,39 @@ export const mockSearchUser = {
     display_name: '薄嘴唇靓仔',
     user_avatar: mockUserInfo.user_avatar,
 };
+
+export const mockCommitHistories = [
+    {
+        id: 301,
+        commit_hash: 'story-hash-003',
+        created_at: '2026-03-10 18:30',
+        content: `
+            <h2>版本概览</h2>
+            <p>第三版补充了实战环境下的起手建议，并优化了小药说明。</p>
+            <h3>核心思路</h3>
+            <p>优先确保循环稳定，再根据副本站位调整爆发时机。</p>
+        `,
+    },
+    {
+        id: 302,
+        commit_hash: 'story-hash-002',
+        created_at: '2026-03-09 21:10',
+        content: `
+            <h2>版本概览</h2>
+            <p>第二版补充了配装对比表，并调整了目录结构。</p>
+            <h3>核心思路</h3>
+            <p>兼顾命中与会心，在多数副本环境里更易复用。</p>
+        `,
+    },
+    {
+        id: 303,
+        commit_hash: 'story-hash-001',
+        created_at: '2026-03-08 15:00',
+        content: `
+            <h2>版本概览</h2>
+            <p>初版主要建立正文结构，包含配装建议与循环说明。</p>
+            <h3>核心思路</h3>
+            <p>先保证阅读完整度，再逐步补足细节。</p>
+        `,
+    },
+];

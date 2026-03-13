@@ -26,7 +26,7 @@
                 <el-tab-pane label="通用组件" name="widget">
                     <h1 class="m-title">UC泛用组件</h1>
                     <div class="m-block">
-                        <el-button @click="userpop = true" style="width:100px;">用户POP</el-button>
+                        <el-button @click="userpop = true" style="width: 100px">用户POP</el-button>
                         <UserPop title="添加用户" v-model="userpop"></UserPop>
                     </div>
 
@@ -35,7 +35,6 @@
                         <LeftSideToggle :mobileOnly="false" />
                         <LeftSideToggle :mobileOnly="true" />
                     </div>
-
                 </el-tab-pane>
                 <el-tab-pane label="文章列表" name="list">
                     <h1 class="m-title">筛选</h1>
@@ -89,29 +88,31 @@
                 </el-tab-pane>
                 <el-tab-pane label="移动组件" name="mobile">
                     <h1 class="m-title">Common</h1>
+                    <el-switch v-model="showSuspendCommon" active-text="展示移动组件"></el-switch>
                     <div class="m-block">
-                        <!-- <SuspendCommon
-                        :drawerOptions="{
-                            author: {
-                                name: '作者名字',
-                                avatar: 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png',
-                                author_id: 8,
-                            },
-                            subscribeType: 'posts',
-                            postType: 'macro',
-                            id: 97147,
-                            title: '薄嘴唇靓仔！！！',
-                        }"
-                        @search="suspendSearch"
-                    >
-                        <template #default>
-                            <div style="display: flex; gap: 1rem">
-                                <div>切换</div>
-                                <div>切换</div>
-                                <div>切换</div>
-                            </div>
-                        </template>
-                    </SuspendCommon> -->
+                        <SuspendCommon
+                            v-if="showSuspendCommon"
+                            :drawerOptions="{
+                                author: {
+                                    name: '作者名字',
+                                    avatar: 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png',
+                                    author_id: 8,
+                                },
+                                subscribeType: 'posts',
+                                postType: 'macro',
+                                id: 97147,
+                                title: '薄嘴唇靓仔！！！',
+                            }"
+                            @search="suspendSearch"
+                        >
+                            <template #default>
+                                <div style="display: flex; gap: 1rem">
+                                    <div>切换</div>
+                                    <div>切换</div>
+                                    <div>切换</div>
+                                </div>
+                            </template>
+                        </SuspendCommon>
                     </div>
                 </el-tab-pane>
             </el-tabs>
@@ -120,6 +121,7 @@
                 <PostTopic type="bps" :id="48857"></PostTopic>
                 <div id="directory"></div>
                 <PostVersion :post="post"></PostVersion>
+                <PostCollection :id="59" />
             </RightSidebar>
         </Main>
         <CommonFooter> </CommonFooter>
@@ -139,6 +141,7 @@ import PostTopic from "./single/PostTopic.vue";
 import PostGuide from "./single/PostGuide.vue";
 import Homework from "./interact/Homework.vue";
 import PostVersion from "./single/PostVersion.vue";
+import PostCollection from "./single/PostCollection.vue";
 export default {
     name: "App",
     components: {
@@ -151,12 +154,13 @@ export default {
         Homework,
         PostGuide,
         PostVersion,
+        PostCollection,
     },
     data() {
         return {
             tab: "single",
 
-            post_id: "106540",
+            post_id: "106064",
             post: "",
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,
@@ -174,6 +178,8 @@ export default {
             // 通用
             userpop: false,
             homeworkVisible: false,
+
+            showSuspendCommon: false,
 
             community: {},
         };

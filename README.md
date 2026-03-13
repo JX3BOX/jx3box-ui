@@ -28,6 +28,10 @@
 - Thx 交互组件
 - SimpleThx 交互组件简化版（仅PVP栏目使用，需要手动引入）
 - Comment 评论
+- RightAffix 固钉
+- PostGuide 快速跳转至上下篇
+- PostVersion 修改历史
+- PostCollection 关联小册
 
 ### 筛选模块 list
 
