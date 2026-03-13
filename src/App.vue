@@ -78,7 +78,8 @@
                 </el-tab-pane>
                 <el-tab-pane label="文章内容" name="content">
                     <el-radio-group v-model="post_id">
-                        <el-radio value="41346">临时测试</el-radio>
+                        <el-radio value="23240">临时测试</el-radio>
+                        <el-radio label="35605">Markdown</el-radio>
                         <el-radio value="32035">仅小册</el-radio>
                         <el-radio value="30017">仅联合创作者</el-radio>
                         <el-radio value="30582">小册和联合创作者</el-radio>
@@ -160,7 +161,7 @@ export default {
         return {
             tab: "content",
 
-            post_id: "106064",
+            post_id: "23240",
             post: "",
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,

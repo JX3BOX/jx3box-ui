@@ -48,12 +48,11 @@
                 </div>
             </div>
             <div v-if="type === 'view'" class="m-content-container">
-                <!-- TODO: 此处应该是Article -->
-                <!-- <Article :content="content1" /> -->
-                <div class="u-content" v-html="content1">
+                <div class="u-content">
+                    <Article :content="content1" />
                 </div>
-                <!-- <Article :content="content2" /> -->
-                <div class="u-content" v-html="content2">
+                <div class="u-content">
+                    <Article :content="content2" />
                 </div>
             </div>
             <div v-if="type === 'code'" class="m-content-container">
@@ -75,13 +74,13 @@
 
 <script>
 import { getCommitByHash } from "../../service/commit-history";
-// import Article from "@jx3box/jx3box-editor/src/Article.vue";
+import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import { CodeDiff } from "v-code-diff";
 export default {
     name: "VersionDialog",
     components: {
         CodeDiff,
-        // Article,
+        Article,
     },
     props: {
         modelValue: {
