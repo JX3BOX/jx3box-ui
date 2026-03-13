@@ -30,7 +30,6 @@ export default {
     },
     computed: {},
     methods: {
-        // TODO: 主页和魔盒矩阵的切换
         // 盒子
         toggleBox: function (e) {
             e.stopPropagation();

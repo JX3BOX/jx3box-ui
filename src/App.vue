@@ -156,7 +156,7 @@ export default {
         return {
             tab: "single",
 
-            post_id: "28837",
+            post_id: "106540",
             post: "",
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,

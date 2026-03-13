@@ -26,7 +26,7 @@
                 <slot></slot>
                 <!-- TODO: 文章内容组件待完善，目前先用slot占位，后续替换为Article组件，支持markdown和html两种模式 -->
                 <!-- <ArticleMarkdown v-if="isMarkdown" :content="post_content" @directoryRendered="updateDirectory" /> -->
-                <!-- <Article :content="post_content" @directoryRendered="updateDirectory" /> -->
+                <Article :content="post_content" @directoryRendered="updateDirectory" />
             </div>
         </div>
         <div class="m-single-null" v-else>
@@ -87,6 +87,7 @@ import Collection from "./Collection.vue";
 import Thx from "./Thx.vue";
 import RightAffix from "./RightAffix.vue";
 // import ArticleMarkdown from "@jx3box/jx3box-editor/src/ArticleMarkdown.vue";
+import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getAppType } from "@jx3box/jx3box-common/js/utils";
 import i18nMixin from "../../i18n/mixin";
@@ -102,6 +103,7 @@ export default {
         Collection,
         Thx,
         // ArticleMarkdown,
+        Article,
         RightAffix,
     },
     props: {

@@ -21,7 +21,7 @@ function renderCombo(selector = ".e-skill-combo .w-skill-combo-item") {
                     <img class="u-skill-icon" src="${iconLink(icon)}" alt="${icon}" title="${name}" />
                     <span class="u-skill-name" title="${name}">${name}</span>
                     <i class="u-gcd-icon ${_extend && _extend.gcd == 0 ? 'is-show' : ''}" title="无GCD技能">
-                        <el-icon><Timer /></el-icon>
+                        <el-icon><Clock /></el-icon>
                     </i>
                 </span>
             `;

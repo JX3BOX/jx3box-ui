@@ -2,7 +2,7 @@
     <div v-if="hasRight" class="u-admin-button">
         <el-button
             type="primary"
-            icon="el-icon-setting"
+            icon="Setting"
             class="c-admin-button u-admin"
             :size="buttonSize"
             @click="show = true"
