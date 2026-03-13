@@ -82,7 +82,8 @@ export default {
         align-items: center;
         line-height: 24px;
         .u-op {
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             line-height: 18px;
             padding: 0 5px;
             color: #cdd1db;

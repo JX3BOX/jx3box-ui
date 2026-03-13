@@ -46,6 +46,7 @@ import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import "element-plus/dist/index.css";
 import "@jx3box/jx3box-common/css/element-plus-theme.scss";
+import "@jx3box/jx3box-common/css/element-fonticon.css";
 
 const __elementLocaleMap = {
     "zh-CN": zhCn,

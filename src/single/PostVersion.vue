@@ -130,7 +130,8 @@ export default {
         //margin-bottom: 5px;
         line-height: 24px;
         .u-op {
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             line-height: 18px;
             //float: right;
             padding: 0 5px;

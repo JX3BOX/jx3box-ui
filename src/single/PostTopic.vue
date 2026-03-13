@@ -82,7 +82,7 @@ export default {
 
 <style lang="less">
 .c-post-topic {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .c-post-topic__banner {
     position: relative;
