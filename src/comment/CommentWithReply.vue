@@ -247,6 +247,7 @@ export default {
 .c-comment-cmt {
     .u-name {
         margin-right: 6px;
+        font-size: 13px;
     }
     .u-mark {
         font-style: normal;

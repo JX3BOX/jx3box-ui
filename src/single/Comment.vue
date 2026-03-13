@@ -373,10 +373,11 @@ export default {
         cursor: pointer;
         margin-right: 10px;
         // margin-left: 10px;
-        color: #3d454d;
+        color: #555;
+        .pr;top:-1px;
 
         &:hover {
-            color: #23ade5;
+            color: var(--el-color-primary);
         }
     }
     .c-jx3box-emotion {

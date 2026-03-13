@@ -1,8 +1,12 @@
 <template>
     <div class="c-post-version" v-if="list && list.length">
         <div class="m-title">
-            <div class="u-title"><el-icon class="u-icon"><Clock /></el-icon>历史版本</div>
-            <div class="u-op" @click="toggle"><el-icon><DCaret></DCaret></el-icon> 折叠</div>
+            <div class="u-title">
+                <el-icon class="u-icon"><Clock /></el-icon>历史版本
+            </div>
+            <div class="u-op" @click="toggle">
+                <el-icon><DCaret></DCaret></el-icon> 折叠
+            </div>
         </div>
         <transition name="collapse">
             <ul v-show="show" class="u-list">
@@ -145,9 +149,10 @@ export default {
     }
     .u-title {
         //font-weight: 400;
-        font-size: 15px;
-        line-height: 24px;;
-        color:#333;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 18px;
+        color: #333;
         .flex;
         align-items: center;
         gap: 5px;

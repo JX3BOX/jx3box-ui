@@ -275,9 +275,11 @@ export default {
     }
 
     .u-private {
-        .y(-4px);
+        // .y(-4px);
         margin-right: 5px;
         color: #111;
+        top:2px;
+        .pr;
     }
 }
 @media screen and (max-width: @phone) {

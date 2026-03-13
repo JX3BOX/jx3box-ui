@@ -115,24 +115,28 @@ export default {
     .c-comment-avatar {
         margin-right: 10px;
         width: auto;
-    }
-    .u-avatar {
-        float: left;
-    }
-    .u-avatar-pic {
-        // width: 28px;
-        // height: 28px;
-        margin-right: 10px;
-    }
 
-    .u-name {
-        font-size: 12px;
-        line-height: 28px;
-        padding: 0 !important;
-        display: inline;
-        white-space: nowrap;
-    }
+        .u-avatar {
+            float: left;
+        }
+        .u-avatar-pic {
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            border:1px solid #eee;
+        }
+        .u-avatar-frame{
+            display: none;
+        }
 
+        .u-name {
+            font-size: 13px;
+            line-height: 28px;
+            padding: 0 !important;
+            display: inline;
+            white-space: nowrap;
+        }
+    }
     .u-reply {
         padding: 5px;
         line-height: 1.715;

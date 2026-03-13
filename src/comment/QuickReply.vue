@@ -6,6 +6,7 @@
             ref="quickReply"
             trigger="click"
             popper-class="c-jx3box-reply-pop"
+            width="300px"
         >
             <div class="c-jx3box-reply-pop__content">
                 <el-icon class="u-close" @click="closePop"><Close></Close></el-icon>
@@ -24,6 +25,7 @@
             <template #reference>
                 <img
                     class="u-reference"
+                    svg-inline
                     width="24"
                     height="24"
                     src="../../assets/img/comment/comment.svg"

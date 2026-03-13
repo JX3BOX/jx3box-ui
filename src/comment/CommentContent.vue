@@ -17,25 +17,23 @@
         <div class="u-toolbar u-toolbar--primary">
             <div class="u-toolbar-left">
                 <el-button
-                    class="u-admin"
                     v-if="!currentUserHadLike"
                     link
                     size="small"
                     @click="doLike(true)"
                     ><img
-                        class="u-up"
+                        class="u-up" svg-inline
                         src="../../assets/img/comment/heart_1.svg"
                         alt=""
                     />{{ $jx3boxT("jx3boxUi.commentContent.like", "点赞") }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
                 <el-button
-                    class="u-admin"
                     link
                     size="small"
                     v-if="currentUserHadLike"
                     @click="doLike(false)"
                     ><img
-                        class="u-up"
+                        class="u-up" svg-inline
                         src="../../assets/img/comment/heart_2.svg"
                         alt=""
                     />{{ $jx3boxT("jx3boxUi.commentContent.liked", "已赞") }}<span class="u-like-count">{{
@@ -43,7 +41,6 @@
                     }}</span></el-button
                 >
                 <el-button
-                    class="u-admin"
                     link
                     size="small"
                     icon="ChatRound"
@@ -52,7 +49,6 @@
                     >{{ $jx3boxT("jx3boxUi.commentContent.reply", "回复") }}</el-button
                 >
                 <el-button
-                    class="u-admin"
                     v-if="canDelete"
                     link
                     icon="Delete"
@@ -62,7 +58,6 @@
                     >{{ $jx3boxT("jx3boxUi.commentContent.delete", "删除") }}</el-button
                 >
                 <el-button
-                    class="u-admin"
                     link
                     size="small"
                     icon="Delete"
@@ -443,6 +438,18 @@ export default {
     position: relative;
     .u-toolbar {
         font-size: 12px;
+        margin-top:5px;
+        color:var(--el-color-primary);
+        .el-button.is-link {
+            color: var(--el-color-primary);
+            &:hover{
+                color:@pink;
+            }
+        }
+        // .el-button.is-link.u-admin{
+        //     color:orange;
+        // }
+
 
         .el-button + .el-button {
             margin-left: 20px;
@@ -475,7 +482,7 @@ export default {
         }
     }
     .u-cmt {
-        padding: 5px 0 10px 0;
+        padding: 10px 0;
         position: relative;
         .u-text {
             line-height: 1.715;

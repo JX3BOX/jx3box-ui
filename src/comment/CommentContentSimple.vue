@@ -3,13 +3,11 @@
         <div class="u-reply-content">
             <span class="u-reply-label" v-if="replyForUserId != 0">
                 {{ $jx3boxT("jx3boxUi.commentContentSimple.reply", "回复") }}
-                <el-link type="primary" target="_blank" :href="userHref"
-                    >@{{ replyForUsername }}</el-link
-                >
+                <el-link type="primary" target="_blank" :href="userHref">@{{ replyForUsername }}</el-link>
                 :
             </span>
             <div class="u-reply-text" v-html="renderContent"></div>
-             <!--<div class="u-reply-text" v-html="content"></div>-->
+            <!--<div class="u-reply-text" v-html="content"></div>-->
             <!-- <p v-for="(p, index) in getPList(content)" :key="index" v-html="formatContent(p)"></p> -->
         </div>
         <div class="u-attachements" v-if="attachments.length">
@@ -22,33 +20,15 @@
             ></el-image>
         </div>
         <div class="u-toolbar">
-            <el-button
-                class="u-admin"
-                v-if="!currentUserHadLike"
-                link
-                size="small"
-                @click="doLike(true)"
-                ><img
-                    class="u-up"
-                    src="../../assets/img/comment/heart_1.svg"
-                    alt=""
-                />{{ $jx3boxT("jx3boxUi.commentContentSimple.like", "点赞") }}<span class="u-like-count">{{
-                    likesFormat(hasLikeCount)
-                }}</span></el-button
+            <el-button class="u-admin" v-if="!currentUserHadLike" link size="small" @click="doLike(true)"
+                ><img class="u-up" svg-inline src="../../assets/img/comment/heart_1.svg" alt=""/>{{
+                    $jx3boxT("jx3boxUi.commentContentSimple.like", "点赞")
+                }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
             >
-            <el-button
-                class="u-admin"
-                link
-                size="small"
-                v-if="currentUserHadLike"
-                @click="doLike(false)"
-                ><img
-                    class="u-up"
-                    src="../../assets/img/comment/heart_2.svg"
-                    alt=""
-                />{{ $jx3boxT("jx3boxUi.commentContentSimple.liked", "已赞") }}<span class="u-like-count">{{
-                    likesFormat(hasLikeCount)
-                }}</span></el-button
+            <el-button class="u-admin" link size="small" v-if="currentUserHadLike" @click="doLike(false)"
+                ><img class="u-up" svg-inline src="../../assets/img/comment/heart_2.svg" alt="" />{{
+                    $jx3boxT("jx3boxUi.commentContentSimple.liked", "已赞")
+                }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
             >
             <el-button
                 class="u-admin"
@@ -194,9 +174,7 @@ export default {
                 return;
             }
             this.currentUserHadLike = setLike;
-            this.hasLikeCount = setLike
-                ? this.hasLikeCount + 1
-                : this.hasLikeCount - 1;
+            this.hasLikeCount = setLike ? this.hasLikeCount + 1 : this.hasLikeCount - 1;
             this.$emit("setLikeComment", setLike);
         },
         deleteComment() {
@@ -204,10 +182,11 @@ export default {
                 this.$jx3boxT("jx3boxUi.commentContentSimple.confirmDelete", "确定删除该评论吗？"),
                 this.$jx3boxT("jx3boxUi.common.tip", "提示"),
                 {
-                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
-                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
-                type: "warning",
-            })
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     this.$emit("delete", this.commentId);
                 })
@@ -218,10 +197,11 @@ export default {
                 this.$jx3boxT("jx3boxUi.commentContentSimple.confirmHide", "确定隐藏该评论吗？"),
                 this.$jx3boxT("jx3boxUi.common.tip", "提示"),
                 {
-                confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
-                cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
-                type: "warning",
-            })
+                    confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
+                    cancelButtonText: this.$jx3boxT("jx3boxUi.common.cancel", "取消"),
+                    type: "warning",
+                }
+            )
                 .then(() => {
                     this.$emit("hide", this.commentId);
                 })
@@ -266,22 +246,32 @@ export default {
 </script>
 
 <style lang="less">
-.u-reply-content {
-    div,
-    p {
-        padding: 0;
-        margin: 0;
-        line-height: 1.75;
-        font-size: 14px;
-        img {
-            vertical-align: -3px;
+.c-comment-reply {
+    .u-reply-content {
+        div,
+        p {
+            padding: 0;
+            margin: 0;
+            line-height: 1.75;
+            font-size: 14px;
+            img {
+                vertical-align: -3px;
+            }
         }
     }
-}
-.u-reply-text {
-    white-space: pre-line;
-}
-.u-attachements {
-    margin-top: 10px;
+    .u-reply-text {
+        white-space: pre-line;
+    }
+    .u-attachements {
+        margin-top: 10px;
+    }
+    .u-reply-label{
+        font-size: 13px;
+        margin-right: 5px;
+        .el-link {
+            font-size: 13px;
+            padding: 0;
+        }
+    }
 }
 </style>

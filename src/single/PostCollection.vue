@@ -102,13 +102,13 @@ export default {
         }
     }
     .c-post-collection-title {
-        font-weight: 500;
-        line-height: 24px;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 18px;
+        color: #333;
         .flex;
         align-items: center;
-        font-size: 15px;
         gap: 5px;
-        color: #333;
     }
     .u-icon {
         font-size: 18px;
