@@ -2,7 +2,7 @@
     <div class="w-post-guide" v-if="hasGuide">
         <div class="u-prev">
             <a :href="getPostLink(post?.prev_post)" class="el-button el-button--default el-button--small is-plain" :class="{'is-disabled': !post?.prev_post }">
-                <i class="el-icon-arrow-left"></i>
+                <el-icon><ArrowLeft></ArrowLeft></el-icon>
                 <span>上一篇</span>
             </a>
             <a :href="getPostLink(post?.prev_post)" class="u-post-title">{{ getPostTitle(post?.prev_post) }}</a>
