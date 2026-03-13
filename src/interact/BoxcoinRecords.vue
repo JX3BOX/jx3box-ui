@@ -56,6 +56,7 @@
             :page-size="per"
             :total="total"
             v-model="page"
+            center
         ></el-pagination>
     </div>
 </template>
