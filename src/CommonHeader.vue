@@ -219,6 +219,7 @@ export default {
     left: 0;
     top: 0;
     z-index: 601;
+    box-sizing: border-box;
 
     width: 100%;
     height: @header-height;

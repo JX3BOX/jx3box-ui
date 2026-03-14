@@ -4,7 +4,9 @@
             <div class="c-post-collection-title">
                 <el-icon class="u-icon"><Connection>></Connection></el-icon> 关联
             </div>
-            <div class="u-op" @click="toggle"><el-icon><DCaret></DCaret></el-icon> 折叠</div>
+            <div class="u-op" @click="toggle">
+                <el-icon><DCaret></DCaret></el-icon> 折叠
+            </div>
         </div>
         <transition name="collapse">
             <ul v-show="show" class="c-post-collection-list">
@@ -108,7 +110,7 @@ export default {
         color: #333;
         .flex;
         align-items: center;
-        gap: 5px;
+        gap: 3px;
     }
     .u-icon {
         font-size: 18px;
