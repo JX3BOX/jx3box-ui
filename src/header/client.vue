@@ -1,5 +1,5 @@
 <template>
-    <div class="c-header-client relative h-full group">
+    <div class="relative h-full group c-header-client">
         <!-- 当前选择展示 (触发器) -->
         <button type="button" class="u-trigger h-full px-4 flex items-center gap-2 transition-colors duration-200">
             <div class="u-client--current">

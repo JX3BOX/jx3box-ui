@@ -12,12 +12,14 @@
                     <span v-if="versions && !versions.length">💧 暂无数据</span>
                 </div>
                 <table v-if="versions && versions.length" class="m-histories">
-                    <tr>
-                        <th>版本</th>
-                        <th>更新时间</th>
-                        <th>贡献者</th>
-                        <th>修订说明</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>版本</th>
+                            <th>更新时间</th>
+                            <th>贡献者</th>
+                            <th>修订说明</th>
+                        </tr>
+                    </thead>
                     <tr class="history" v-for="(ver, key) in versions" :key="key">
                         <td>
                             <a
