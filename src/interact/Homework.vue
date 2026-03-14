@@ -24,8 +24,8 @@
                     <!-- <a class="u-charge" :href="chargeLink" target="_blank">[充值]</a> -->
                 </div>
                 <el-radio-group class="u-homework-type" v-model="type" size="small" v-if="hasPermission">
-                    <el-radio-button label="grant">品鉴</el-radio-button>
-                    <el-radio-button label="reward">打赏</el-radio-button>
+                    <el-radio-button value="grant">品鉴</el-radio-button>
+                    <el-radio-button value="reward">打赏</el-radio-button>
                 </el-radio-group>
                 <div class="u-list">
                     <em class="u-label">❤️ {{ type == "reward" ? "打赏" : "品鉴" }}</em>
@@ -35,7 +35,7 @@
                                 <b>{{ item }}</b
                                 >盒币
                             </el-radio>
-                            <el-radio value="custom"  border>自定义</el-radio>
+                            <el-radio value="custom" border>自定义</el-radio>
                             <el-input
                                 v-model="amount"
                                 v-show="count === 'custom'"
@@ -48,22 +48,21 @@
                     <em class="u-label">📝 寄语</em>
                     <div class="u-input">
                         <el-input
-
                             v-model="remark"
                             placeholder="请输入寄语（必填）"
                             :minlength="2"
                             :maxlength="30"
                             show-word-limit
                         ></el-input>
-                        <el-button  :disabled="fetchingCurrentRelease" @click="insertCurrentRelease"
+                        <el-button :disabled="fetchingCurrentRelease" @click="insertCurrentRelease"
                             >插入当前版本</el-button
                         >
                     </div>
                 </div>
             </div>
             <template #footer>
-                <el-button @click="onClose" >取 消</el-button>
-                <el-button type="primary" @click="submit" :disabled="!ready || submitting" >确 定</el-button>
+                <el-button @click="onClose">取 消</el-button>
+                <el-button type="primary" @click="submit" :disabled="!ready || submitting">确 定</el-button>
             </template>
         </el-dialog>
     </div>
@@ -111,7 +110,7 @@ export default {
         placeholder: {
             type: String,
             default: "",
-        }
+        },
     },
     emits: ["update:modelValue", "updateRecord"],
     data: function () {
@@ -213,7 +212,7 @@ export default {
                 this.loadBoxcoinConfig();
 
                 if (this.hasPermission) {
-                    this.type = 'grant'
+                    this.type = "grant";
                 }
             }
         },
@@ -301,7 +300,7 @@ export default {
             });
         },
         onClose() {
-            this.show = false
+            this.show = false;
         },
     },
     mounted() {

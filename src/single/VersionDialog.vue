@@ -10,7 +10,7 @@
         <div class="m-version-container" v-loading="loading">
             <div class="m-toolbar">
                 <el-radio-group v-model="type">
-                    <el-radio-button :label="item.value" v-for="item in types" :key="item.value">{{
+                    <el-radio-button :value="item.value" v-for="item in types" :key="item.value">{{
                         item.label
                     }}</el-radio-button>
                 </el-radio-group>
@@ -159,7 +159,7 @@ export default {
         },
         visible(val) {
             this.$emit("update:modelValue", val);
-        }
+        },
     },
     methods: {
         close() {
