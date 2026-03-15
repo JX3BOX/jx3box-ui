@@ -146,6 +146,12 @@
             </el-tabs>
             <el-divider></el-divider>
             <RightSidebar :show-toggle="true" style="padding: 15px">
+                <RightSideMsg>
+                    <em>综合交流群</em> :
+                    <strong class="u-link" title="点击复制">
+                        <a>100473604</a>
+                    </strong>
+                </RightSideMsg>
                 <PostTopic type="bps" :id="48857"></PostTopic>
                 <div id="directory"></div>
                 <PostVersion :post="post"></PostVersion>
