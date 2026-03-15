@@ -12,7 +12,7 @@
                     <span v-if="comments && !comments.length">💧 暂无评论</span>
                 </div>
                 <!-- 递归评论组件 -->
-                <Comment :comments="comments" :source-id="sourceId" />
+                <wiki-comment :comments="comments" :source-id="sourceId" />
                 <el-pagination
                     class="u-pagination-box"
                     background
@@ -188,7 +188,7 @@ export default {
     },
     components: {
         WikiPanel,
-        Comment,
+        "wiki-comment": Comment,
     },
     watch: {
         sourceId: {

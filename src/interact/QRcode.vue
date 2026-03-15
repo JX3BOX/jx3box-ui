@@ -1,5 +1,5 @@
 <template>
-    <div ref="trigger" class="w-qrcode" @click="togglePic" v-if="mode == 'cms'">
+    <div ref="trigger" class="w-qrcode" v-bind="$attrs" @click="togglePic" v-if="mode == 'cms'">
         <img class="u-icon" svg-inline src="../../assets/img/widget/qr-code.svg" />
         <span class="u-text">二维码</span>
     </div>
@@ -9,7 +9,7 @@
             <span>扫一扫即可访问</span>
         </div>
     </teleport>
-    <div class="w-qrcode-static" v-if="mode == 'static'">
+    <div class="w-qrcode-static" v-bind="$attrs" v-if="mode == 'static'">
         <div class="u-qrcode">
             <qrcode-vue class="u-pic" :value="value" :size="size" level="H"></qrcode-vue>
             <span class="u-txt"
@@ -24,6 +24,7 @@ import { nextTick } from "vue";
 import QrcodeVue from "qrcode.vue";
 export default {
     name: "QRcode",
+    inheritAttrs: false,
     props: {
         href: {
             type: String,
