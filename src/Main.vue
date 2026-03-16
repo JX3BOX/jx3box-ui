@@ -1,11 +1,11 @@
 <template>
     <main
         class="c-main"
-        :class="{
-            'without-right': withoutRight,
-            'without-left': expanding,
-            'without-bread': withoutBread,
-        }"
+        :class="[
+            withoutRight ? 'without-right' : expandingRight ? 'expanding-right' : '',
+            { 'without-left': expanding },
+            { 'without-bread': withoutBread },
+        ]"
     >
         <slot></slot>
     </main>
@@ -19,6 +19,7 @@ export default {
     data: function () {
         return {
             expanding: false,
+            expandingRight: false,
         };
     },
     computed: {
@@ -30,22 +31,22 @@ export default {
         withoutLeft: function (newval) {
             this.expanding = this.withoutLeft === undefined ? false : newval;
         },
+        withoutRight: function (newval) {
+            this.expandingRight = this.withoutRight === undefined ? false : newval;
+        },
     },
     methods: {},
     mounted: function () {
-        this.__toggleLeftSideHandler = (data) => {
+        Bus.on("toggleLeftSide", (data) => {
             this.expanding = !data;
-        };
-        Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
-    },
-    beforeUnmount() {
-        if (this.__toggleLeftSideHandler) {
-            Bus.off("toggleLeftSide", this.__toggleLeftSideHandler);
-            this.__toggleLeftSideHandler = null;
-        }
+        });
+        Bus.on("toggleRightSide", (data) => {
+            this.expandingRight = !data;
+        });
     },
     created: function () {
         this.expanding = this.withoutLeft === undefined ? false : !!this.withoutLeft;
+        this.expandingRight = this.withoutRight === undefined ? false : !!this.withoutRight;
     },
 };
 </script>

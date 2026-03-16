@@ -59,7 +59,9 @@ app.use(ElementPlus, {
     locale: __elementLocale,
 });
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+const __reservedIconNames = new Set(["Comment"]);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    if (__reservedIconNames.has(key)) continue;
     app.component(key, component);
 }
 

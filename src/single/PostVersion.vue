@@ -155,7 +155,7 @@ export default {
         color: #333;
         .flex;
         align-items: center;
-        gap: 5px;
+        gap: 3px;
         .u-icon {
             font-size: 18px;
         }

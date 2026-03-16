@@ -10,6 +10,7 @@ import Breadcrumb from "./src/Breadcrumb.vue";
 import LeftSidebar from "./src/LeftSidebar.vue";
 import RightSidebar from "./src/RightSidebar.vue";
 import LeftSideToggle from "./src/LeftSideToggle.vue";
+import RightSideMsg from "./src/RightSideMsg.vue";
 
 // 列表页
 import markBy from "./src/filters/markBy.vue";
@@ -51,6 +52,7 @@ const components = {
     LeftSidebar,
     RightSidebar,
     LeftSideToggle,
+    RightSideMsg,
 
     tagBy,
     orderBy,
@@ -68,7 +70,7 @@ const components = {
     UserPop,
     SuspendCommon,
     AdminDrop,
-}
+};
 
 const install = function (app) {
     Object.keys(components).forEach((key) => {

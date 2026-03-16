@@ -273,3 +273,97 @@ export const mockCommitHistories = [
         `,
     },
 ];
+
+export const mockWikiPost = {
+    type: 'achievement',
+    source_id: 1001,
+    post: {
+        title: '25 人普通西津渡首领机制',
+        level: 4,
+        updated: '2026-03-11T20:30:00+08:00',
+    },
+    users: [
+        {
+            id: 8,
+            nickname: '薄嘴唇靓仔',
+            avatar: 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png',
+        },
+        {
+            id: 17,
+            nickname: '藏剑校对君',
+            avatar: 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png',
+        },
+    ],
+};
+
+export const mockWikiStat = {
+    views: 32145,
+};
+
+export const mockWikiComments = {
+    list: [
+        {
+            id: 1,
+            parent_id: 0,
+            user_id: 8,
+            user_nickname: '薄嘴唇靓仔',
+            content: '<p>这条评论用于展示百科评论区的主楼样式、置顶和加精状态。</p>',
+            updated: '2026-03-11 20:40:00',
+            is_top: 1,
+            is_star: 1,
+            children: [
+                {
+                    id: 2,
+                    parent_id: 1,
+                    user_id: 17,
+                    user_nickname: '藏剑校对君',
+                    content: '<p>回复楼层会通过递归组件继续渲染，方便在 Storybook 里检查层级样式。</p>',
+                    updated: '2026-03-11 20:55:00',
+                    is_top: 0,
+                    is_star: 0,
+                    children: [],
+                },
+            ],
+        },
+        {
+            id: 3,
+            parent_id: 0,
+            user_id: 26,
+            user_nickname: '副本小助手',
+            content: '<p>第二条评论保留普通状态，用来对比按钮和时间信息。</p>',
+            updated: '2026-03-11 21:10:00',
+            is_top: 0,
+            is_star: 0,
+            children: [],
+        },
+    ],
+    page: 1,
+    total: 2,
+};
+
+export const mockWikiRevisions = [
+    {
+        id: 201,
+        source_id: 1001,
+        updated: '2026-03-11 21:00:00',
+        user_id: 8,
+        user_nickname: '薄嘴唇靓仔',
+        remark: '补充首领技能预警时序。',
+    },
+    {
+        id: 202,
+        source_id: 1001,
+        updated: '2026-03-10 19:20:00',
+        user_id: 17,
+        user_nickname: '藏剑校对君',
+        remark: '修正文案并补充图片说明。',
+    },
+    {
+        id: 203,
+        source_id: 1001,
+        updated: '2026-03-09 16:45:00',
+        user_id: 26,
+        user_nickname: '副本小助手',
+        remark: '创建初版机制条目。',
+    },
+];

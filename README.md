@@ -6,45 +6,54 @@
 ## 模块
 
 ### 全局
-- CommonHeader 公共头
-- Breadcrumb 面包屑
-- Main 默认内容框架（非必须）
-- LeftSidebar 左侧边栏（非必须）
-- LeftSideToggle 左侧边栏触发器（非必须，可独立使用）
-- RightSidebar 右侧边栏（非必须）
-- CommonFooter 公共底
-- SuspendCommon 移动侧浮窗底（此组件需要手动引入）
+
+-   CommonHeader 公共头
+-   Breadcrumb 面包屑
+-   Main 默认内容框架（非必须）
+-   LeftSidebar 左侧边栏（非必须）
+-   LeftSideToggle 左侧边栏触发器（非必须，可独立使用）
+-   RightSidebar 右侧边栏（非必须）
+-   CommonFooter 公共底
+-   SuspendCommon 移动侧浮窗底（此组件需要手动引入）
 
 ### 内容单页 single
 
 主要是用于详情页的展示内容
 
-- CmsSingle 单页框架
-- Author 侧边栏作者信息整合
-- PostDirectory 目录
-- PostHeader 创作信息
-- Creators 联合创作
-- Collection 小册
-- Thx 交互组件
-- SimpleThx 交互组件简化版（仅PVP栏目使用，需要手动引入）
-- Comment 评论
-- RightAffix 固钉
-- PostGuide 快速跳转至上下篇
-- PostVersion 修改历史
-- PostCollection 关联小册
+-   CmsSingle 单页框架
+-   Author 侧边栏作者信息整合
+-   PostDirectory 目录
+-   PostHeader 创作信息
+-   Creators 联合创作
+-   Collection 小册
+-   Thx 交互组件
+-   SimpleThx 交互组件简化版（仅 PVP 栏目使用，需要手动引入）
+-   Comment 评论
+-   RightAffix 固钉
+-   PostGuide 快速跳转至上下篇
+-   PostVersion 修改历史
+-   PostCollection 关联小册
 
 ### 筛选模块 list
 
 主要用于各栏目的列表筛选
 
-- clientBy 客户端筛选
-- markBy 标记筛选
-- menuBy 通用筛选
-- orderBy 排序筛选
-- tagBy 标签筛选
-- topicBy 主题筛选
-- versionBy 版本筛选
-- zlpBy 资料片筛选
+-   clientBy 客户端筛选
+-   markBy 标记筛选
+-   menuBy 通用筛选
+-   orderBy 排序筛选
+-   tagBy 标签筛选
+-   topicBy 主题筛选
+-   versionBy 版本筛选
+-   zlpBy 资料片筛选
+
+### 百科模块 wiki
+
+-   GamePrice 游戏价格组件
+-   WikiPanel 百科面板
+-   WikiComments 百科评论
+-   WikiRevisions 百科修订
 
 ### 其他
-- UserPop 搜索用户弹窗
+
+-   UserPop 搜索用户弹窗

@@ -2,7 +2,6 @@ const path = require("path");
 const commonDomains = require("@jx3box/jx3box-common/data/jx3box.json");
 
 module.exports = {
-
     //❤️ define path for static files ~
     publicPath: process.env.NODE_ENV === "development" ? "/" : process.env.STATIC_PATH,
 
@@ -16,7 +15,6 @@ module.exports = {
         },
     },
 
-
     //⚛️ Proxy ~
     devServer: {
         host: "localhost",
@@ -25,6 +23,13 @@ module.exports = {
         proxy: buildEnvProxy(),
         allowedHosts: "all",
         port: process.env.DEV_PORT || 12028,
+        client: {
+            overlay: {
+                warnings: false,
+                errors: false,
+                runtimeErrors: false,
+            },
+        },
     },
 
     // 依赖包（element-plus/theme-chalk 等）会输出大量 Sass deprecation 警告
@@ -53,7 +58,6 @@ module.exports = {
 
     //❤️ Webpack configuration
     chainWebpack: (config) => {
-
         //💝 in-line small imgs ~
         config.module.rule("images").set("parser", {
             dataUrlCondition: {
@@ -70,7 +74,7 @@ module.exports = {
 
         config.externals = {
             tinyMCE: "tinyMCE",
-        }
+        };
     },
 };
 
@@ -84,13 +88,12 @@ function addStyleResource(rule) {
         path.resolve(__dirname, "./node_modules/@jx3box/jx3box-common/css/mixin.less"),
         path.resolve(__dirname, "./assets/css/var.less"),
         path.resolve(__dirname, "./assets/css/mixin.less"),
-        path.resolve(__dirname, "./node_modules/csslab/base.less"),
+        path.resolve(__dirname, "./node_modules/csslab/base.less")
     );
     rule.use("style-resource").loader("style-resources-loader").options({
         patterns: preload_styles,
     });
 }
-
 
 function normalizeTarget(value) {
     if (!value) return "";

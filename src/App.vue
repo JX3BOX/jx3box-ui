@@ -75,17 +75,44 @@
                             client="std"
                         ></Homework>
                     </div>
+                    <h1 class="m-title">QRcode</h1>
+                    <div class="m-block">
+                        <QRcode v="cms" />
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane label="文章内容" name="content">
                     <el-radio-group v-model="post_id">
                         <el-radio value="23240">临时测试</el-radio>
-                        <el-radio label="35605">Markdown</el-radio>
+                        <el-radio value="35605">Markdown</el-radio>
                         <el-radio value="32035">仅小册</el-radio>
                         <el-radio value="30017">仅联合创作者</el-radio>
                         <el-radio value="30582">小册和联合创作者</el-radio>
                         <el-radio value="31129">无小册和联合创作者</el-radio>
                     </el-radio-group>
                     <singlebox :post="post" />
+                </el-tab-pane>
+                <el-tab-pane label="百科组件" name="wiki">
+                    <h1 class="m-title">游戏价格组件</h1>
+                    <div class="m-block">
+                        <GamePrice :price="100009999" :align="true"></GamePrice>
+                    </div>
+
+                    <h1 class="m-title">百科面板</h1>
+                    <div class="m-block">
+                        <WikiPanel :wiki-post="wiki_post">
+                            <template #head-title>奇遇攻略</template>
+                        </WikiPanel>
+                    </div>
+
+                    <h1 class="m-title">百科评论</h1>
+                    <div class="m-block">
+                        <WikiComments :source-id="12572" type="achievement" />
+                    </div>
+
+                    <h1 class="m-title">百科修订</h1>
+                    <div class="m-block">
+                        <WikiRevisions type="achievement" :source-id="12572" />
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane label="移动组件" name="mobile">
                     <h1 class="m-title">Common</h1>
@@ -119,6 +146,12 @@
             </el-tabs>
             <el-divider></el-divider>
             <RightSidebar :show-toggle="true" style="padding: 15px">
+                <RightSideMsg>
+                    <em>综合交流群</em> :
+                    <strong class="u-link" title="点击复制">
+                        <a>100473604</a>
+                    </strong>
+                </RightSideMsg>
                 <PostTopic type="bps" :id="48857"></PostTopic>
                 <div id="directory"></div>
                 <PostVersion :post="post"></PostVersion>
@@ -134,6 +167,7 @@ import { getPost } from "../service/cms";
 import { get_item } from "../service/item";
 import { getTopicDetails } from "../service/community";
 import post_topics from "@jx3box/jx3box-common/data/post_topics.json";
+import { wiki } from "@jx3box/jx3box-common/js/wiki.js";
 
 // components
 import singlebox from "./single/CmsSingle.vue";
@@ -143,6 +177,12 @@ import PostGuide from "./single/PostGuide.vue";
 import Homework from "./interact/Homework.vue";
 import PostVersion from "./single/PostVersion.vue";
 import PostCollection from "./single/PostCollection.vue";
+import QRcode from "./interact/QRcode.vue";
+
+import GamePrice from "./wiki/GamePrice.vue";
+import WikiComments from "./wiki/WikiComments.vue";
+import WikiRevisions from "./wiki/WikiRevisions.vue";
+import WikiPanel from "./wiki/WikiPanel.vue";
 export default {
     name: "App",
     components: {
@@ -156,6 +196,12 @@ export default {
         PostGuide,
         PostVersion,
         PostCollection,
+        QRcode,
+
+        GamePrice,
+        WikiComments,
+        WikiRevisions,
+        WikiPanel,
     },
     data() {
         return {
@@ -183,6 +229,11 @@ export default {
             showSuspendCommon: false,
 
             community: {},
+
+            wiki_post: {
+                source: {},
+                post: null,
+            },
         };
     },
     watch: {
@@ -264,10 +315,21 @@ export default {
                 this.community = res.data.data;
             });
         },
+        loadWiki() {
+            wiki.mix({ type: "achievement", id: 12572, client: this.client }).then((res) => {
+                const { post, source, compatible, isEmpty, users } = res;
+                this.wiki_post = {
+                    post: post,
+                    source: source,
+                    users,
+                };
+            });
+        },
     },
     mounted() {
         // this.loadItems();
         this.loadCommunity();
+        this.loadWiki();
     },
 };
 </script>
