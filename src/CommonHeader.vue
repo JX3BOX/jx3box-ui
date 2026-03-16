@@ -222,6 +222,7 @@ export default {
 
     width: 100%;
     height: @header-height;
+    box-sizing: border-box;
 
     background-color: @header-bg;
     color: #fff;
