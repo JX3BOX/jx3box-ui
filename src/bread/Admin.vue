@@ -432,5 +432,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/Admin.vue */
 @import "../../assets/css/bread/admin.less";
 </style>

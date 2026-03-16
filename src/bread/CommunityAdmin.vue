@@ -419,6 +419,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/CommunityAdmin.vue */
 @import "../../assets/css/bread/admin.less";
 .c-community-admin {
     .c-admin-space {

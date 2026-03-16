@@ -129,6 +129,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorRss.vue */
 .c-author-rss.el-button {
     cursor: default;
     &:hover,

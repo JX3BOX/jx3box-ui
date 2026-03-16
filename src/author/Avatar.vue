@@ -63,6 +63,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/Avatar.vue */
 .c-avatar {
     .pr;
     .dbi;

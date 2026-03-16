@@ -246,6 +246,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/CommentContentSimple.vue */
 .c-comment-reply {
     .u-reply-content {
         div,

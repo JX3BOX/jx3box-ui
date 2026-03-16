@@ -224,6 +224,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/nav.vue */
 //菜单
 .c-header-nav {
     padding: 0 20px;

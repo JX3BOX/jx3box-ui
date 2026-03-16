@@ -151,6 +151,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/UserPop.vue */
 .w-userpop {
     .fz(1rem, 2.5);
     .el-dialog {

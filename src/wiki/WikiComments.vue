@@ -202,5 +202,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/wiki/WikiComments.vue */
 @import "../../assets/css/wiki/wiki-comments.less";
 </style>

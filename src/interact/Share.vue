@@ -178,5 +178,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Share.vue */
 @import "../../assets/css/interact/share2.less";
 </style>

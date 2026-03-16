@@ -254,5 +254,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/CmsSingle.vue */
 @import "../../assets/css/single/cms-single.less";
 </style>

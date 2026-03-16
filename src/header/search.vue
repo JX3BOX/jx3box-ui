@@ -62,6 +62,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/search.vue */
 //搜索
 .c-header-search {
     width: 220px;

@@ -41,6 +41,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/logo.vue */
 //logo
 .c-header-logo {
     .pointer;

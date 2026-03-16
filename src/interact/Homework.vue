@@ -310,6 +310,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Homework.vue */
 @import "../../assets/css/single/thx.less";
 .u-homework-type {
     margin-top: 10px;

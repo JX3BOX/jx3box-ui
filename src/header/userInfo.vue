@@ -277,6 +277,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/userInfo.vue */
 @import '../../assets/css/mixin.less';
 //用户相关
 .c-header-user {

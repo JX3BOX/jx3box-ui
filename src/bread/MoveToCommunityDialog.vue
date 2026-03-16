@@ -164,6 +164,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/MoveToCommunityDialog.vue */
 .u_r_box {
     display: flex;
     justify-content: flex-end;

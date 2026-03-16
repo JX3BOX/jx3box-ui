@@ -1,5 +1,5 @@
+/* assets/css/common/left-sidebar.less */
 .c-sidebar-left {
-    /* assets/css/common/left-sidebar.less */
     .w(@aside-left - 40px);
     box-sizing: border-box;
     padding: 10px;
@@ -13,29 +13,24 @@
 }
 
 .c-sidebar-left.without-bread {
-    /* assets/css/common/left-sidebar.less */
     top: @header-height;
 }
 
 .c-sidebar-left-inner {
-    /* assets/css/common/left-sidebar.less */
     .size(100%);
     overflow-y: auto;
 
     &::-webkit-scrollbar {
-        /* assets/css/common/left-sidebar.less */
         width: 4px;
     }
 
     &::-webkit-scrollbar-track,
     &::-webkit-scrollbar-track-piece {
-        /* assets/css/common/left-sidebar.less */
         background-color: #fafafa;
         border-radius: 6px;
     }
 
     &::-webkit-scrollbar-thumb {
-        /* assets/css/common/left-sidebar.less */
         background-color: #eee;
         border-radius: 6px;
     }
@@ -43,40 +38,32 @@
     &::-webkit-scrollbar-button,
     &::-webkit-scrollbar-corner,
     &::-webkit-resizer {
-        /* assets/css/common/left-sidebar.less */
         display: none;
     }
 }
 
 // 笔记本<1440 缩小双边栏
 @media screen and (max-width: @smallpc) {
-    /* assets/css/common/left-sidebar.less */
     .c-sidebar-left {
-        /* assets/css/common/left-sidebar.less */
         .w(@aside-left - 40px);
     }
 }
 
 // 平板横屏
 @media screen and (max-width: @notebook) {
-    /* assets/css/common/left-sidebar.less */
     .c-sidebar-left {
-        /* assets/css/common/left-sidebar.less */
         .w(@aside-left - 60px);
     }
 }
 
 @media screen and (max-width: @phone) {
-    /* assets/css/common/left-sidebar.less */
     .c-sidebar-left-inner {
-        /* assets/css/common/left-sidebar.less */
         overflow-y: auto;
     }
 }
 
 // 折叠相关逻辑
 .c-sidebar-left-toggle {
-    /* assets/css/common/left-sidebar.less */
     display: block;
     .pa;
     .rb(-21px, calc(50% - 20px));
@@ -94,72 +81,58 @@
     color: #999;
 
     &:hover {
-        /* assets/css/common/left-sidebar.less */
         color: #222;
     }
 
     &.close-sidebar-left {
-        /* assets/css/common/left-sidebar.less */
         right: 0;
     }
 
     svg {
-        /* assets/css/common/left-sidebar.less */
         fill: @color;
     }
 }
 
 .closeLeftSidebar() {
-    /* assets/css/common/left-sidebar.less */
     transition: 0.2s ease-in-out;
     transform: translateX(-100%);
 }
 
 .openLeftSidebar() {
-    /* assets/css/common/left-sidebar.less */
     transition: 0.2s ease-in-out;
     transform: translateX(0);
 }
 
 .c-sidebar-left.isclose {
-    /* assets/css/common/left-sidebar.less */
     .closeLeftSidebar();
 
     .c-sidebar-left-toggle {
-        /* assets/css/common/left-sidebar.less */
         transition: 0.2s ease-in-out;
         transform: translateX(100%);
     }
 }
 
 .c-sidebar-left.isopen {
-    /* assets/css/common/left-sidebar.less */
     .openLeftSidebar();
 
     .c-sidebar-left-toggle {
-        /* assets/css/common/left-sidebar.less */
         transition: 0.2s ease-in-out;
         transform: translateX(0);
     }
 }
 
 @media screen and (max-width: @ipad) {
-    /* assets/css/common/left-sidebar.less */
     .c-sidebar-left-toggle {
-        /* assets/css/common/left-sidebar.less */
         .none;
     }
 
     .c-sidebar-left.isopen {
-        /* assets/css/common/left-sidebar.less */
         box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1);
     }
 }
 
 @media print {
-    /* assets/css/common/left-sidebar.less */
     .c-sidebar-left {
-        /* assets/css/common/left-sidebar.less */
         .none;
     }
 }

@@ -77,6 +77,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/single/PostCollection.vue */
 .c-post-collection {
     .m-title {
         .flex;

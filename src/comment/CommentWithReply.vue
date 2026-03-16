@@ -244,6 +244,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/CommentWithReply.vue */
 .c-comment-cmt {
     .u-name {
         margin-right: 6px;

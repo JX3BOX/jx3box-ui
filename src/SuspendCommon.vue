@@ -715,5 +715,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/SuspendCommon.vue */
 @import "../assets/css/common/suspend-common.less";
 </style>

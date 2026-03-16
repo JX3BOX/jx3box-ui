@@ -75,6 +75,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorTeams.vue */
 .c-author-teams {
     .u-teams {
         .flex;

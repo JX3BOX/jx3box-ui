@@ -99,6 +99,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/* src/interact/Fav.vue */
 .w-fav2 {
     .pointer;
     .dbi;

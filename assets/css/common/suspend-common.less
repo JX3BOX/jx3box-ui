@@ -1,9 +1,9 @@
+/* assets/css/common/suspend-common.less */
 @bgColor: #24292e;
 @color: #fedaa3;
 @color2: #24292e;
 
 .p-suspend {
-    /* assets/css/common/suspend-common.less */
     .pf;
     .lb(0);
     .z(1994);
@@ -20,28 +20,23 @@
     .m-home-box,
     .m-pin-box,
     .m-icon-box {
-        /* assets/css/common/suspend-common.less */
         .flex;
         .flex(o);
     }
 
     .m-pin-box {
-        /* assets/css/common/suspend-common.less */
         gap: 1.125rem;
 
         .u-item {
-            /* assets/css/common/suspend-common.less */
             .flex;
             .flex(o);
 
             img {
-                /* assets/css/common/suspend-common.less */
                 .size(1.5rem);
                 .r(50%);
             }
 
             .u-text-r {
-                /* assets/css/common/suspend-common.less */
                 .size(1.5rem);
                 .r(50%);
                 background-color: #d9d9d9;
@@ -52,7 +47,6 @@
     }
 
     .m-btn-box {
-        /* assets/css/common/suspend-common.less */
         .flex;
         align-items: center;
         justify-content: space-between;
@@ -61,15 +55,12 @@
         padding: 0 1.25rem;
 
         .u-icon-d {
-            /* assets/css/common/suspend-common.less */
             .flex;
             .flex(o);
             .size(1.5rem);
 
             .u-icon {
-                /* assets/css/common/suspend-common.less */
                 &.active {
-                    /* assets/css/common/suspend-common.less */
                     fill: #fedaa3;
                     stroke: #fedaa3;
                 }
@@ -78,7 +69,6 @@
     }
 
     .m-more {
-        /* assets/css/common/suspend-common.less */
         .w(7.5rem);
         .flex;
         .flex(o);
@@ -89,12 +79,10 @@
 }
 
 .p-drawer-suspend {
-    /* assets/css/common/suspend-common.less */
     .size(100%);
     .lt(0);
 
     .u-drawer {
-        /* assets/css/common/suspend-common.less */
         border-radius: 1.25rem 1.25rem 0 0;
         position: fixed !important;
         bottom: 0;
@@ -111,14 +99,12 @@
         // .el-drawer__body {}
 
         .p-drawer-suspend_box {
-            /* assets/css/common/suspend-common.less */
             .flex;
             flex-direction: column;
             gap: 0.75rem;
         }
 
         .u-drawer-box {
-            /* assets/css/common/suspend-common.less */
             .flex;
             .w(100%);
             align-items: center;
@@ -126,7 +112,6 @@
             gap: 0.75rem;
 
             .u-item {
-                /* assets/css/common/suspend-common.less */
                 border-radius: 12px;
                 background: rgba(255, 255, 255, 0.05);
                 .flex;
@@ -138,23 +123,19 @@
                 box-sizing: border-box;
 
                 &.top {
-                    /* assets/css/common/suspend-common.less */
                     .h(6.875rem);
                 }
 
                 &.report {
-                    /* assets/css/common/suspend-common.less */
                     max-width: 50%;
                 }
 
                 .u-icon {
-                    /* assets/css/common/suspend-common.less */
                     .flex;
                     .flex(o);
                 }
 
                 .u-self {
-                    /* assets/css/common/suspend-common.less */
                     .h(2.5rem);
 
                     .flex;
@@ -162,25 +143,21 @@
                     .flex(o);
 
                     img {
-                        /* assets/css/common/suspend-common.less */
                         .size(1.5rem);
                         .r(50%);
                     }
 
                     .u-circle-top {
-                        /* assets/css/common/suspend-common.less */
                         .pr;
                         bottom: -0.75rem;
                     }
 
                     .u-circle-bottom {
-                        /* assets/css/common/suspend-common.less */
                         .flex;
                         gap: 0;
                     }
 
                     .u-text-r {
-                        /* assets/css/common/suspend-common.less */
                         .size(1.5rem);
                         .r(50%);
                         background-color: #d9d9d9;
@@ -190,20 +167,17 @@
                 }
 
                 .u-text {
-                    /* assets/css/common/suspend-common.less */
                     color: #acaeaf;
                     .fz(0.875rem, 1.25rem);
                     .bold(700);
 
                     &.search,
                     &.fix {
-                        /* assets/css/common/suspend-common.less */
                         color: #fedaa3;
                     }
                 }
 
                 .u-author {
-                    /* assets/css/common/suspend-common.less */
                     //作者名字最多显示8个中文字符，超出后，第八个中文字符用...代替
 
                     .fz(0.875rem, 1.25rem);
@@ -217,7 +191,6 @@
                     .w(100%);
 
                     .u-avatar {
-                        /* assets/css/common/suspend-common.less */
                         .size(1.25rem);
                         overflow: hidden;
                         .r(50%);
@@ -225,7 +198,6 @@
                     }
 
                     .u-author-name {
-                        /* assets/css/common/suspend-common.less */
                         flex: auto;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -238,11 +210,9 @@
 
         .p-drawer-fix,
         .p-drawer-collect {
-            /* assets/css/common/suspend-common.less */
             color: rgba(255, 255, 255, 0.4);
 
             .u-collect-icon {
-                /* assets/css/common/suspend-common.less */
                 .flex;
                 .flex(o);
                 flex-direction: column;
@@ -250,20 +220,17 @@
                 .mb(1.25rem);
 
                 .u-text {
-                    /* assets/css/common/suspend-common.less */
                     .fz(0.875rem, 1.25rem);
                 }
             }
 
             .u-collect-tips {
-                /* assets/css/common/suspend-common.less */
                 .fz(0.75rem, 1rem);
                 text-align: center;
 
                 .mb(1.25rem);
 
                 &.edit {
-                    /* assets/css/common/suspend-common.less */
                     .flex;
                     align-items: center;
                     .fz(0.875rem, 1.25rem);
@@ -271,14 +238,12 @@
             }
 
             .u-btn-box {
-                /* assets/css/common/suspend-common.less */
                 .flex;
                 .flex(o);
                 gap: 0.75rem;
                 .mb(1.25rem);
 
                 .u-btn {
-                    /* assets/css/common/suspend-common.less */
                     .flex;
                     .flex(o);
                     .fz(1rem, 1.5rem);
@@ -290,7 +255,6 @@
                     flex: auto;
 
                     &.collect {
-                        /* assets/css/common/suspend-common.less */
                         background-color: @color;
                         color: @color2;
                     }
@@ -299,9 +263,7 @@
         }
 
         .p-drawer-fix {
-            /* assets/css/common/suspend-common.less */
             .u-edit-title {
-                /* assets/css/common/suspend-common.less */
                 .mb(1.25rem);
                 color: rgba(255, 255, 255, 0.6);
                 .fz(0.875rem, 1.25rem);
@@ -309,14 +271,12 @@
             }
 
             .u-pin-box {
-                /* assets/css/common/suspend-common.less */
                 .mb(1.25rem);
                 .flex;
                 flex-direction: column;
                 gap: 0.75rem;
 
                 .u-item {
-                    /* assets/css/common/suspend-common.less */
                     .flex;
                     align-items: center;
                     gap: 0.75rem;
@@ -327,14 +287,12 @@
 
                     .u-text-r,
                     .u-icon {
-                        /* assets/css/common/suspend-common.less */
                         .size(1.875rem);
                         .r(50%);
                         flex-shrink: 0;
                     }
 
                     .u-text-r {
-                        /* assets/css/common/suspend-common.less */
                         .flex;
                         .flex(o);
                         background-color: #d9d9d9;
@@ -342,7 +300,6 @@
                     }
 
                     .u-text {
-                        /* assets/css/common/suspend-common.less */
                         flex: auto;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -352,7 +309,6 @@
                     }
 
                     .u-slash {
-                        /* assets/css/common/suspend-common.less */
                         .flex;
                         .flex(o);
                         .size(1.875rem);
@@ -363,31 +319,25 @@
         }
 
         .p-drawer-fixData {
-            /* assets/css/common/suspend-common.less */
             .h(70vh);
             .pr;
             .u-icon {
-                /* assets/css/common/suspend-common.less */
                 .pa;
                 .z(3);
                 right: 1.25rem;
             }
             span {
-                /* assets/css/common/suspend-common.less */
                 color: #fff;
             }
             .u-iframe {
-                /* assets/css/common/suspend-common.less */
                 border-radius: 1.25rem 1.25rem 0 0;
             }
         }
         .slide-up-enter-active,
         .slide-up-leave-active {
-            /* assets/css/common/suspend-common.less */
             transition: transform 0.3s ease-in-out;
         }
         .slide-up-enter, .slide-up-leave-to /* .slide-up-leave-active in <2.1.8 */ {
-            /* assets/css/common/suspend-common.less */
             transform: translateY(100%);
         }
     }

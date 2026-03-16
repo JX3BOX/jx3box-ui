@@ -53,6 +53,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/message.vue */
 //消息面板
 .c-header-msg {
     position: relative;

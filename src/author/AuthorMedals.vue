@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorMedals.vue */
 .c-author-medals {
     .u-medals {
         display: flex;

@@ -64,5 +64,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/QuickReply.vue */
 @import "../../assets/css/comment/quick-reply.less";
 </style>

@@ -81,6 +81,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/PostTopic.vue */
 .c-post-topic {
     margin-bottom: 20px;
 }

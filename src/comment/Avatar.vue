@@ -62,6 +62,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/Avatar.vue */
 .c-comment-avatar {
     vertical-align: top;
     margin-right: 20px;

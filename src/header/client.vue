@@ -151,6 +151,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/client.vue */
 .c-header-client {
     .u-trigger {
         .pr;

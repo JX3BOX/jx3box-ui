@@ -154,6 +154,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/CommentInputForm.vue */
 .c-comment-secret {
     margin-left: 15px;
 

@@ -43,6 +43,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/CommonFooter.vue */
 body::after {
     bottom: 0;
     background: #111827;

@@ -181,6 +181,7 @@ export default {
 
 
 <style lang="less">
+/* src/interact/BoxcoinRecords.vue */
 .w-boxcoin-records-pages{
 
     --el-color-primary: @primary;

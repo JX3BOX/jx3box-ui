@@ -132,6 +132,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/footer/official.vue */
 .c-footer-official {
     .u-link {
         &:hover {

@@ -167,6 +167,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/ListAdmin.vue */
 .u-admin-button {
     padding: 0;
     float: right;

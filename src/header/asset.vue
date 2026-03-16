@@ -110,6 +110,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/asset.vue */
 @import '../../assets/css/mixin.less';
 
 

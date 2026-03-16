@@ -149,6 +149,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Rss.vue */
 .w-rss {
     .pointer;
     .dbi;

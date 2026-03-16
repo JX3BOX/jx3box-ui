@@ -117,5 +117,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/wiki/WikiPanel.vue */
 @import "../../assets/css/wiki/wiki-panel.less";
 </style>

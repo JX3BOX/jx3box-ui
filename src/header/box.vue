@@ -156,10 +156,12 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/box.vue */
 @import "../../assets/css/header/box.less";
 </style>
 
 <style scoped lang="less">
+/* src/header/box.vue */
 .c-jx3box {
     .c-header-search {
         float: none;

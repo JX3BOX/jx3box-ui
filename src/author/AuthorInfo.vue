@@ -155,6 +155,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorInfo.vue */
 .c-author-info {
     .u-author {
         .flex(y);

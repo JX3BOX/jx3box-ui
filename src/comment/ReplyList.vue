@@ -98,6 +98,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/ReplyList.vue */
 .c-comment-replylist {
     padding: 10px 0 10px 68px;
     border-top: 1px dashed #eee;

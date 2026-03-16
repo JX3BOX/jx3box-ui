@@ -214,6 +214,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/CommonHeader.vue */
 .c-header {
     position: fixed;
     left: 0;

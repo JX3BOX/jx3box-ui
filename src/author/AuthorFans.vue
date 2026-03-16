@@ -78,6 +78,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorFans.vue */
 .c-author-fans {
     box-sizing: border-box;
     // padding: 10px;

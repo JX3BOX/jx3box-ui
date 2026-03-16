@@ -286,5 +286,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Thx.vue */
 @import "../../assets/css/single/thx.less";
 </style>

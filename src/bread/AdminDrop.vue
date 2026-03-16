@@ -225,6 +225,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/AdminDrop.vue */
 .c-admin-drop {
     .c-admin-drop__button {
         // padding: 8px 12px !important;

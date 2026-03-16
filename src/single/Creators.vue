@@ -128,6 +128,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Creators.vue */
 .w-creators {
     display: flex;
     border: 1px solid #ddd;

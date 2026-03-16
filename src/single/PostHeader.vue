@@ -205,6 +205,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/PostHeader.vue */
 .i-client-all {
     border: 1px solid #a26ef7;
     color: #a26ef7;

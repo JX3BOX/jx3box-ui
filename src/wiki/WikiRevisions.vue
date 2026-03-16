@@ -123,5 +123,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/wiki/WikiRevisions.vue */
 @import "../../assets/css/wiki/wiki-revisions.less";
 </style>

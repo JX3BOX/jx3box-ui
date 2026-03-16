@@ -81,6 +81,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/filters/markBy.vue */
 .w-filter-menu {
     .pointer;
     .u-menu-label {

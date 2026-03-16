@@ -188,6 +188,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/VersionDialog.vue */
 .m-version-contrast-dialog {
     .el-dialog__body {
         padding: 0 20px 20px;

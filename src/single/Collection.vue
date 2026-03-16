@@ -101,6 +101,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Collection.vue */
 .w-collection {
     --el-color-primary: @primary;
 

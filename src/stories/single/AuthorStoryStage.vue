@@ -33,6 +33,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/stories/single/AuthorStoryStage.vue */
 .story-author-stage {
     display: grid;
     gap: 24px;

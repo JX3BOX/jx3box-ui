@@ -146,5 +146,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/Breadcrumb.vue */
 @import "../assets/css/bread/breadcrumb.less";
 </style>

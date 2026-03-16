@@ -101,5 +101,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/QRcode.vue */
 @import "../../assets/css/interact/qrcode.less";
 </style>

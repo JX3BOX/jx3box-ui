@@ -1,16 +1,14 @@
+/* assets/css/tinymce/fold.less */
 // 折叠文本
 .c-article-tinymce{
-    /* assets/css/tinymce/fold.less */
     .e-details,
     .e-summary {
-        /* assets/css/tinymce/fold.less */
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
             Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
             Segoe UI Symbol;
         margin: 0;
     }
     .e-summary {
-        /* assets/css/tinymce/fold.less */
         cursor: pointer;
         position: relative;
         border: 1px solid #ddd;
@@ -26,7 +24,6 @@
         // color: #0366d6;
         // font-size:14px;
         &:before {
-            /* assets/css/tinymce/fold.less */
             content: ">";
             display: block;
             position: absolute;
@@ -37,7 +34,6 @@
             transform: rotate(0);
         }
         &:after {
-            /* assets/css/tinymce/fold.less */
             content: "🌷";
             display: block;
             position: absolute;
@@ -45,13 +41,10 @@
             top: 8px;
         }
         &.on {
-            /* assets/css/tinymce/fold.less */
             &:before {
-                /* assets/css/tinymce/fold.less */
                 transform: rotate(90deg);
             }
             &:after {
-                /* assets/css/tinymce/fold.less */
                 content: "🌸";
             }
             border-bottom-left-radius: 0;
@@ -60,7 +53,6 @@
     }
 
     .e-details {
-        /* assets/css/tinymce/fold.less */
         padding: 10px;
         border: 1px dashed #ddd;
         margin-top: 0;
@@ -70,13 +62,10 @@
     }
 }
 .c-article-editor {
-    /* assets/css/tinymce/fold.less */
     .e-summary {
-        /* assets/css/tinymce/fold.less */
         cursor: text;
     }
     .e-details {
-        /* assets/css/tinymce/fold.less */
         display: block;
     }
 }

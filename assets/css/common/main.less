@@ -1,6 +1,6 @@
+/* assets/css/common/main.less */
 // 主体
 .c-main {
-    /* assets/css/common/main.less */
     .ml(@aside-left - 40px);
     .mr(@aside-right);
     .pr;
@@ -10,25 +10,20 @@
     padding: 0 30px;
 }
 .c-main.without-bread {
-    /* assets/css/common/main.less */
     margin-top: @header-height;
 }
 .c-main.without-right {
-    /* assets/css/common/main.less */
     .mr(0) !important;
 
     .c-sidebar-right {
-        /* assets/css/common/main.less */
         .none;
     }
 }
 .c-main.without-left {
-    /* assets/css/common/main.less */
     .ml(0) !important;
 }
 
 .c-main.expanding-right {
-    /* assets/css/common/main.less */
     .mr(0) !important;
     .c-sidebar-right {
         .db;
@@ -36,68 +31,52 @@
 }
 
 @media screen and (max-width: @smallpc) {
-    /* assets/css/common/main.less */
     .c-main {
-        /* assets/css/common/main.less */
         .mr(0);
     }
 }
 
 // 笔记本<1440 缩小双边栏
 @media screen and (max-width: @smallpc) {
-    /* assets/css/common/main.less */
     .c-main {
-        /* assets/css/common/main.less */
         .ml(@aside-left - 40px);
     }
 }
 
 // 平板横屏
 @media screen and (max-width: @notebook) {
-    /* assets/css/common/main.less */
     .c-main {
-        /* assets/css/common/main.less */
         .ml(@aside-left - 60px);
     }
 }
 
 //平板横屏与手机
 @media screen and (max-width: @ipad) {
-    /* assets/css/common/main.less */
     .c-main {
-        /* assets/css/common/main.less */
         .ml(0);
     }
 }
 
 @media print {
-    /* assets/css/common/main.less */
     .c-main {
-        /* assets/css/common/main.less */
         margin: 0;
         .w(100%);
     }
 }
 
 @media screen and (max-width: @phone) {
-    /* assets/css/common/main.less */
     .env-app {
-        /* assets/css/common/main.less */
         .c-main {
-            /* assets/css/common/main.less */
             .mt(0);
         }
     }
 
     .wechat-miniprogram {
-        /* assets/css/common/main.less */
         .c-wiki-comments {
-            /* assets/css/common/main.less */
             .none;
         }
 
         .m-single-comment {
-            /* assets/css/common/main.less */
             .none;
         }
     }

@@ -117,6 +117,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/MigrateCommunity.vue */
 .m-migrate-dialog {
     .el-dialog__body {
         padding-top: 20px;

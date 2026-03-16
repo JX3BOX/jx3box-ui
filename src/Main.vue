@@ -52,5 +52,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/Main.vue */
 @import "../assets/css/common/main.less";
 </style>

@@ -430,6 +430,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/CommentContent.vue */
 .c-comment-cmt {
 
     --el-color-primary:@primary;

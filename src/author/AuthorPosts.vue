@@ -67,6 +67,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorPosts.vue */
 .c-author-posts {
     ul {
         list-style: none;

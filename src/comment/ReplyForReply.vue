@@ -134,6 +134,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/ReplyForReply.vue */
 .c-comment {
     .u-subbox-label {
         margin-bottom: 10px;

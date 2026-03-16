@@ -134,6 +134,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/manage.vue */
 // 管理菜单
 .c-header-manage {
     height: 100%;

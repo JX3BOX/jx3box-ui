@@ -20,5 +20,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/RightSideMsg.vue */
 @import "../assets/css/common/right-msg.less";
 </style>

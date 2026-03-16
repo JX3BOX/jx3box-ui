@@ -227,6 +227,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+/* src/interact/BoxcoinUser.vue */
 .w-boxcoin-user {
     .dbi;
     .x(left);

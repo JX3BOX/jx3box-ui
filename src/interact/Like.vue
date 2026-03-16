@@ -68,5 +68,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Like.vue */
 @import "../../assets/css/interact/like2.less";
 </style>

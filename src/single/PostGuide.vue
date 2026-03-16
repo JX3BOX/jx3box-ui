@@ -47,6 +47,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/PostGuide.vue */
 .w-post-guide {
     .flex;
     align-items: center;

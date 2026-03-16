@@ -116,6 +116,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/author/AuthorHonor.vue */
 .c-author-honor {
     .dbi;
     text-align: center;

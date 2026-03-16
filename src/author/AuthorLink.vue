@@ -84,6 +84,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+/* src/author/AuthorLink.vue */
 .c-author-link {
     padding: 0 2px;
     .flex;

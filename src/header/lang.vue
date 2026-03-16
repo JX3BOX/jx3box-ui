@@ -127,6 +127,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/lang.vue */
 .c-lang-switcher {
     .u-translator {
         padding: 0 10px;

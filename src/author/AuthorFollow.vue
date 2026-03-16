@@ -158,6 +158,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/author/AuthorFollow.vue */
 .c-author-follow {
     .u-btn.el-button {
         cursor: default;

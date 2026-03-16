@@ -65,6 +65,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/wiki/GamePrice.vue */
 .c-game-price {
     display: inline-flex;
     align-items: center;

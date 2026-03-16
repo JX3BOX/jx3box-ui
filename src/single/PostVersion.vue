@@ -126,6 +126,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/single/PostVersion.vue */
 .c-post-version {
     .m-title {
         .flex;

@@ -334,6 +334,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/App.vue */
 .m-title {
     margin: 20px 0 10px;
     font-size: 16px;

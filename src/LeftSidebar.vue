@@ -126,6 +126,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/LeftSidebar.vue */
 @import "../assets/css/common/left-sidebar.less";
 // 虚拟装扮主题
 .m-theme {

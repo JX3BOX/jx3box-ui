@@ -91,6 +91,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/RightAffix.vue */
 .closeLeftSidebar() {
     transition: 0.2s ease-in-out;
     transform: translateX(100%);

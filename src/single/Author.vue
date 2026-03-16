@@ -77,5 +77,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Author.vue */
 @import "../../assets/css/single/author.less";
 </style>

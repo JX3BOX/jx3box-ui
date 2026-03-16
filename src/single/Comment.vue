@@ -317,6 +317,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Comment.vue */
 .c-comment {
     font-size: 14px;
     .el-link {
