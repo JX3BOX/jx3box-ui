@@ -35,6 +35,11 @@
                         <LeftSideToggle :mobileOnly="false" />
                         <LeftSideToggle :mobileOnly="true" />
                     </div>
+
+                    <h1 class="m-title">上传组件</h1>
+                    <div class="m-block">
+                        <UploadBanner v-model="uploadBanner" />
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane label="文章列表" name="list">
                     <h1 class="m-title">筛选</h1>
@@ -178,6 +183,7 @@ import Homework from "./interact/Homework.vue";
 import PostVersion from "./single/PostVersion.vue";
 import PostCollection from "./single/PostCollection.vue";
 import QRcode from "./interact/QRcode.vue";
+import UploadBanner from "./upload/UploadBanner.vue";
 
 import GamePrice from "./wiki/GamePrice.vue";
 import WikiComments from "./wiki/WikiComments.vue";
@@ -197,6 +203,7 @@ export default {
         PostVersion,
         PostCollection,
         QRcode,
+        UploadBanner,
 
         GamePrice,
         WikiComments,
