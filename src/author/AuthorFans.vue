@@ -21,7 +21,7 @@
         </div>
         <div class="f-bottom">
             {{ $jx3boxT("jx3boxUi.authorFans.fansCount", "粉丝数: {count}", { count: fans_count }) }}
-            ><template v-if="boxcoin_count"
+            <template v-if="boxcoin_count"
                 >{{ $jx3boxT("jx3boxUi.authorFans.boxcoinCount", "，累计收到盒币打赏: {count}", { count: boxcoin_count }) }}</template
             >
         </div>

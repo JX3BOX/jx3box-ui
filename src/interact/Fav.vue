@@ -98,7 +98,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 /* src/interact/Fav.vue */
 .w-fav2 {
     .pointer;

@@ -226,7 +226,7 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 /* src/interact/BoxcoinUser.vue */
 .w-boxcoin-user {
     .dbi;

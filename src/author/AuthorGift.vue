@@ -207,7 +207,7 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 /* src/author/AuthorGift.vue */
 .c-author-gift {
     .u-btn {
