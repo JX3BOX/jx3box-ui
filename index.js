@@ -3,6 +3,7 @@ import CommonHeader from "./src/CommonHeader.vue";
 import Footer from "./src/Footer.vue";
 import CommonFooter from "./src/CommonFooter.vue";
 import Icon from "./src/Icon.vue";
+import CommonBottom from "./src/CommonBottom.vue";
 
 // 布局
 import Main from "./src/Main.vue";
@@ -46,6 +47,7 @@ const components = {
     CommonFooter,
     Footer,
     Icon,
+    CommonBottom,
 
     Main,
     Breadcrumb,

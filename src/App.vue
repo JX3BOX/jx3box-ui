@@ -40,6 +40,11 @@
                     <div class="m-block">
                         <UploadBanner v-model="uploadBanner" />
                     </div>
+
+                    <h1 class="m-title">公共bottom</h1>
+                    <div class="m-block">
+                        <CommonBottom />
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane label="文章列表" name="list">
                     <h1 class="m-title">筛选</h1>
