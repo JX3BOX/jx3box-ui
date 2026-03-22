@@ -182,7 +182,7 @@ export default {
     }
     &:hover {
         .u-name {
-            color: @color-link;
+            color: var(--el-color-primary);
         }
     }
     .u-up {
@@ -201,8 +201,8 @@ export default {
         .dbi;
         .fz(12px,1);
         font-style: normal;
-        border: 1px solid @color-link;
-        color: @color-link;
+        border: 1px solid var(--el-color-primary);
+        color: var(--el-color-primary);
         padding: 3px 10px;
         .r(2px);
         .mt(5px);

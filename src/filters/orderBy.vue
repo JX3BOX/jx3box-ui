@@ -111,7 +111,7 @@ export default {
         align-items: center;
         .pointer;
         &.on {
-            color: @primary;
+            color: var(--el-color-primary);
         }
         &:hover {
             color: @pink;

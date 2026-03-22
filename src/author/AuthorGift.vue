@@ -248,7 +248,7 @@ export default {
         }
         b {
             // color:#49c10f;
-            // color:@color-link;
+            // color:var(--el-color-primary);
             color: #fba524;
             .fz(20px,1);
             .dbi;

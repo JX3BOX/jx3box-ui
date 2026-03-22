@@ -147,7 +147,7 @@ export default {
             background-color: #f1f8ff;
         }
         &:hover {
-            border: 1px solid @color-link;
+            border: 1px solid var(--el-color-primary);
         }
     }
 }

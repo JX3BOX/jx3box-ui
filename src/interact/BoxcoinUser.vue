@@ -245,7 +245,7 @@ export default {
         .ml(10px);
     }
     .u-charge {
-        .underline(@color-link);
+        .underline(var(--el-color-primary));
         .ml(10px);
     }
 }

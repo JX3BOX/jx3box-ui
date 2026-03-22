@@ -1,5 +1,5 @@
 <template>
-    <div class="w-filter-client">
+    <div class="w-filter-version">
         <ul>
             <li class="u-client" :class="{on: version == ''}" @click="filter('')">
                 {{ $jx3boxT("jx3boxUi.versionBy.all", "双端") }}
@@ -53,5 +53,37 @@ export default {
 
 <style lang="less">
 /* src/filters/versionBy.vue */
-@import "../../assets/css/filters/client-by.less";
+.w-filter-version {
+    font-size: 0;
+    ul,
+    li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    ul {
+        .clearfix;
+        .dbi;
+        background-color: @bg-gray;
+        border: 1px solid #eee;
+        .r(3px);
+        overflow: hidden;
+    }
+    li {
+        padding: 5px 10px;
+        .fl;
+        .fz(12px);
+        border-right: 1px solid #eee;
+        &:last-child {
+            border-right: none;
+        }
+        .pointer;
+
+        &.on {
+            background-color: var(--el-color-primary);
+            color: #fff;
+            border-color: var(--el-color-primary);
+        }
+    }
+}
 </style>
