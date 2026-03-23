@@ -433,16 +433,17 @@ export default {
 /* src/comment/CommentContent.vue */
 .c-comment-cmt {
 
-    --el-color-primary:@primary;
+    //--el-color-primary:@primary;
 
     flex-grow: 1;
     position: relative;
     .u-toolbar {
         font-size: 12px;
         margin-top:5px;
-        color:var(--el-color-primary);
+        color:@v4tip;
         .el-button.is-link {
-            color: var(--el-color-primary);
+            color:@v4tip;
+            font-weight: normal;
             &:hover{
                 color:@pink;
             }
