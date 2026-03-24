@@ -52,14 +52,14 @@ export default {
         // 关闭弹窗
         closePop() {
             if (this.$refs.quickReply) {
-                this.$refs.quickReply.doClose();
+                this.$refs.quickReply?.doClose() || this.$refs.quickReply?.hide();
             }
         },
         reply(item) {
             this.$emit("reply", item);
             this.closePop();
         },
-    }
+    },
 };
 </script>
 
