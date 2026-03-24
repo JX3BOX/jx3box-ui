@@ -15,13 +15,15 @@
                         username || $jx3boxT("jx3boxUi.commentWithReply.defaultName", "人字榜800线无名小侠")
                     }}</el-link>
                     <span class="u-mark u-top" v-if="item.is_top"
-                        ><el-icon><Download></Download></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.top", "置顶") }}</span
+                        ><el-icon><Download></Download></el-icon
+                        >{{ $jx3boxT("jx3boxUi.commentWithReply.top", "置顶") }}</span
                     >
                     <span class="u-mark u-star" v-if="item.is_star"
                         ><el-icon><Star></Star></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.star", "精华") }}</span
                     >
                     <span class="u-mark u-secret" v-if="item.is_secret"
-                        ><el-icon><Cherry></Cherry></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.secret", "悄悄话") }}</span
+                        ><el-icon><Cherry></Cherry></el-icon
+                        >{{ $jx3boxT("jx3boxUi.commentWithReply.secret", "悄悄话") }}</span
                     >
                 </div>
                 <CommentContent
@@ -273,6 +275,8 @@ export default {
     }
     .u-secret {
         background-color: #ff99cc;
+        display: inline-flex;
+        align-items: center;
     }
 }
 .c-comment-cmt__box {

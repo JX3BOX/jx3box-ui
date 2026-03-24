@@ -78,7 +78,7 @@ export default {
     data: function () {
         return {
             isOpen: true,
-            feedback: "/feedback?refer=" + encodeURIComponent(window.location.href),
+            feedback: "/dashboard/feedback?refer=" + encodeURIComponent(window.location.href),
             isNotAdmin: !User.isEditor(), // 非管理员都显示反馈链接
             isOverlay: false,
             isApp: isApp(),

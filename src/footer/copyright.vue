@@ -30,7 +30,7 @@
             </a>
             <a
                 class="text-gray-500 transition-colors hover:text-white"
-                href="https://www.jx3box.com/feedback"
+                href="https://www.jx3box.com/dashboard/feedback"
                 target="_blank"
                 rel="noopener noreferrer"
             >

@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-ui",
-    "version": "2.0.23",
+    "version": "2.0.24",
     "description": "JX3BOX Vue3 UI",
     "main": "index.js",
     "scripts": {
@@ -13,7 +13,6 @@
         "build:dev": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vue-cli-service build --mode development",
         "build:prod": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vue-cli-service build --mode production",
         "lint": "vue-cli-service lint",
-        "header": "vue-cli-service build --target lib --name newheader src/Header.vue && cp public/index.html dist/newheader.html",
         "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common@latest @jx3box/jx3box-data@latest @jx3box/jx3box-emotion@latest @jx3box/jx3box-macro@latest @jx3box/jx3box-talent@latest"
     },
     "eslintConfig": {
