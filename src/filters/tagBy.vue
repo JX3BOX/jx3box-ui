@@ -123,7 +123,7 @@ export default {
         gap: 2px;
         .pointer;
         &.on {
-            color: @primary;
+            color: @v4primary;
         }
         &:hover {
             color: @pink;
