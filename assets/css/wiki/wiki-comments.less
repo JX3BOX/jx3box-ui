@@ -14,11 +14,11 @@
             border: 1px solid #dcdfe6;
         }
 
-        &.el-button--primary:focus,
-        &.el-button--primary:active {
-            background-color: #0366d6;
-            border-color: #0366d6;
-        }
+        // &.el-button--primary:focus,
+        // &.el-button--primary:active {
+        //     background-color: #0366d6;
+        //     border-color: #0366d6;
+        // }
     }
 
     .u-pagination-box {
@@ -35,12 +35,13 @@
 
         .u-nickname-panel {
             .u-nickname {
-                font-weight: 600;
+                font-weight: 700;
                 color: #666666;
+                font-size: 13px;
             }
 
             .u-nickname[href] {
-                color: blueviolet;
+                color: @v4primary;
             }
 
             span + .u-nickname {
@@ -49,7 +50,7 @@
         }
 
         .u-comment {
-            padding: 5px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #eeeeee;
             overflow: hidden;
         }
@@ -89,8 +90,8 @@
             padding-bottom: 10px;
 
             .u-reply {
-                font-size: 13px;
-                padding: 6px 10px;
+                font-size: 12px;
+                // padding: 6px 10px;
             }
 
             .u-time {
@@ -107,7 +108,8 @@
         }
 
         & > .u-comments > .u-comment-panel > .u-comments {
-            padding-left: 15px;
+            padding-left: 30px;
+            padding-top:10px;
         }
     }
 
@@ -123,6 +125,7 @@
             .pb(10px);
             color: #666666;
             border-bottom: @border-style;
+            font-weight: 300;
 
             i,
             span {

@@ -37,6 +37,7 @@
                         v-if="comment.reply_form && comment.reply_form.show"
                         class="u-reply"
                         @click="comment.reply_form.show = !comment.reply_form.show"
+                        size="small"
                     >
                         <i class="el-icon-arrow-up"></i>
                         <span>收起</span>
@@ -48,6 +49,7 @@
                         class="u-reply"
                         @click="comment.reply_form.show = !comment.reply_form.show"
                         icon="ChatDotRound"
+                        size="small"
                     >
                         <span>回复</span>
                     </el-button>
@@ -58,9 +60,10 @@
                             @click="onStar(comment)"
                             plain
                             :icon="comment.is_star ? 'StarFilled' : 'Star'"
+                            size="small"
                             >{{ comment.is_star ? "取消加精" : "加精" }}</el-button
                         >
-                        <el-button type="primary" class="u-reply" @click="onTop(comment)" plain icon="Top">{{
+                        <el-button type="primary" class="u-reply" @click="onTop(comment)" plain icon="Top" size="small">{{
                             comment.is_top ? "取消置顶" : "置顶"
                         }}</el-button>
                     </template>

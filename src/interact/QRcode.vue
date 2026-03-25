@@ -4,9 +4,9 @@
         <span class="u-text">二维码</span>
     </div>
     <teleport to="body">
-        <div v-if="mode == 'cms' && active" class="u-qrcode u-qrcode-popup" :style="popupStyle" @click.stop>
+        <div v-if="mode == 'cms' && active" class="u-qrcode u-qrcode-popup w-qrcode-static" :style="popupStyle" @click.stop>
             <qrcode-vue class="u-pic" :value="value" :size="size" level="H"></qrcode-vue>
-            <span>扫一扫即可访问</span>
+            <span class="u-txt">扫一扫即可访问</span>
         </div>
     </teleport>
     <div class="w-qrcode-static" v-bind="$attrs" v-if="mode == 'static'">
