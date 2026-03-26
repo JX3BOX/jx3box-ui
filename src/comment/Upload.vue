@@ -13,6 +13,7 @@
             with-credentials
             :on-exceed="onExceed"
             :on-change="onChange"
+            :on-remove="onRemove"
             :on-success="onSuccess"
             :on-error="onError"
         >
@@ -50,6 +51,7 @@ export default {
             dialogVisible: false,
             fileList: [],
             successList: [],
+            uploadedMap: {},
 
             acceptedExtensions: ["jpg", "jpeg", "png", "gif"],
             maxCount: 5,
@@ -74,26 +76,48 @@ export default {
             });
         },
         onChange(file, fileList) {
-            if (file.status == "ready") {
-                if (file.size > this.maxSize) {
-                    this.$notify({
-                        title: "",
-                        message: this.$jx3boxT(
-                            "jx3boxUi.commentUpload.maxSize",
-                            "单张图片大小不能超过 {size} MB！",
-                            {
-                                size: this.maxSize / 1024 / 1024,
-                            }
-                        ),
-                        type: "error",
-                        duration: 3000,
-                        position: "bottom-right",
-                    });
-                    fileList.pop();
-                } else {
-                    this.fileList = fileList;
-                }
+            this.fileList = fileList;
+            if (file.status !== "ready" || !file.raw) return;
+
+            const ext = (file.name.split(".").pop() || "").toLowerCase();
+            if (!this.acceptedExtensions.includes(ext)) {
+                this.$notify({
+                    title: "",
+                    message: this.$jx3boxT(
+                        "jx3boxUi.commentUpload.onlyTypes",
+                        "仅支持 {types} 格式图片！",
+                        { types: this.acceptedExtensions.join(" / ").toUpperCase() }
+                    ),
+                    type: "error",
+                    duration: 3000,
+                    position: "bottom-right",
+                });
+                this.removeFile(file.uid);
+                return;
             }
+
+            if (file.size > this.maxSize) {
+                this.$notify({
+                    title: "",
+                    message: this.$jx3boxT(
+                        "jx3boxUi.commentUpload.maxSize",
+                        "单张图片大小不能超过 {size} MB！",
+                        {
+                            size: this.maxSize / 1024 / 1024,
+                        }
+                    ),
+                    type: "error",
+                    duration: 3000,
+                    position: "bottom-right",
+                });
+                this.removeFile(file.uid);
+                return;
+            }
+        },
+        onRemove(file, fileList) {
+            this.fileList = fileList;
+            if (file?.uid && this.uploadedMap[file.uid]) delete this.uploadedMap[file.uid];
+            this.successList = this.fileList.map((f) => this.uploadedMap[f.uid]).filter(Boolean);
         },
         upload() {
             if (this.fileList.length > 0) {
@@ -102,12 +126,19 @@ export default {
                 this.$emit("onFinish", []);
             }
         },
-        onSuccess(response) {
-            this.successList = this.successList.concat(response.data);
+        onSuccess(response, file, fileList) {
+            this.fileList = fileList;
+            const url = response?.data?.[0];
+            if (url && file?.uid) {
+                this.uploadedMap[file.uid] = url;
+                file.url = url;
+            }
+            this.successList = this.fileList.map((f) => this.uploadedMap[f.uid]).filter(Boolean);
             if (this.successList.length == this.fileList.length) {
                 this.$emit("onFinish", this.successList || []);
                 this.fileList = [];
                 this.successList = [];
+                this.uploadedMap = {};
             }
         },
         onError() {
@@ -120,6 +151,16 @@ export default {
             });
             this.$emit("onError");
             this.fileList = [];
+        },
+        addFile(file) {
+            if (this.$refs.upload && this.$refs.upload.handleStart) {
+                this.$refs.upload.handleStart(file);
+            }
+        },
+        removeFile(uid) {
+            this.fileList = this.fileList.filter((item) => item.uid !== uid);
+            if (uid && this.uploadedMap[uid]) delete this.uploadedMap[uid];
+            this.successList = this.fileList.map((f) => this.uploadedMap[f.uid]).filter(Boolean);
         },
     },
 };

@@ -16,6 +16,7 @@
                 v-model="newComment.content"
                 :placeholder="$jx3boxT('jx3boxUi.commentInputForm.placeholder', '参与讨论...')"
                 :id="inputId"
+                @paste="handlePaste"
             ></el-input>
             <div class="c-comment-tools">
                 <el-icon class="u-upload-icon" @click="showUploader = !showUploader"><Picture /></el-icon>
@@ -109,6 +110,7 @@ export default {
         attachmentUploadFinish(data) {
             this.$emit("submit", {
                 content: this.newComment.content,
+                is_secret: this.is_secret ? 1 : 0,
                 attachmentList: data,
             });
             this.newComment = {
@@ -147,6 +149,23 @@ export default {
                 myField.setSelectionRange(endPos + value.length, endPos + value.length);
             } else {
                 this.newComment.content = value;
+            }
+        },
+        async handlePaste(event) {
+            const clipboardItems = event.clipboardData.items;
+            for (let i = 0; i < clipboardItems.length; i++) {
+                const item = clipboardItems[i];
+                if (item.type.indexOf("image") !== -1) {
+                    // 阻止默认粘贴图片的名字
+                    event.preventDefault();
+                    const blob = item.getAsFile();
+                    const file = new File([blob], new Date().getTime() + "-" + blob.name, { type: blob.type });
+                    if (!this.showUploader) this.showUploader = true;
+                    await this.$nextTick();
+                    if (this.$refs.uploader) {
+                        this.$refs.uploader.addFile(file);
+                    }
+                }
             }
         },
     },
