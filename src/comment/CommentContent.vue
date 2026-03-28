@@ -1,10 +1,6 @@
 <template>
     <div class="u-cmt">
-        <div
-            class="u-text"
-            v-if="content != ''"
-            v-html="renderContent"
-        ></div>
+        <div class="u-text" v-if="content != ''" v-html="renderContent"></div>
         <div class="u-attachements" v-if="attachments.length">
             <el-image
                 v-for="url in attachments"
@@ -16,47 +12,22 @@
         </div>
         <div class="u-toolbar u-toolbar--primary">
             <div class="u-toolbar-left">
-                <el-button
-                    v-if="!currentUserHadLike"
-                    link
-                    size="small"
-                    @click="doLike(true)"
-                    ><img
-                        class="u-up" svg-inline
-                        src="../../assets/img/comment/heart_1.svg"
-                        alt=""
-                    />{{ $jx3boxT("jx3boxUi.commentContent.like", "点赞") }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
+                <el-button v-if="!currentUserHadLike" link size="small" @click="doLike(true)"
+                    ><img class="u-up" svg-inline src="../../assets/img/comment/heart_1.svg" alt="" />{{
+                        $jx3boxT("jx3boxUi.commentContent.like", "点赞")
+                    }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
-                <el-button
-                    link
-                    size="small"
-                    v-if="currentUserHadLike"
-                    @click="doLike(false)"
-                    ><img
-                        class="u-up" svg-inline
-                        src="../../assets/img/comment/heart_2.svg"
-                        alt=""
-                    />{{ $jx3boxT("jx3boxUi.commentContent.liked", "已赞") }}<span class="u-like-count">{{
-                        likesFormat(hasLikeCount)
-                    }}</span></el-button
+                <el-button link size="small" v-if="currentUserHadLike" @click="doLike(false)"
+                    ><img class="u-up" svg-inline src="../../assets/img/comment/heart_2.svg" alt="" />{{
+                        $jx3boxT("jx3boxUi.commentContent.liked", "已赞")
+                    }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
-                <el-button
-                    link
-                    size="small"
-                    icon="ChatRound"
-                    @click="showForm = !showForm"
-                    type="primary"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.reply", "回复") }}</el-button
-                >
-                <el-button
-                    v-if="canDelete"
-                    link
-                    icon="Delete"
-                    size="small"
-                    @click="deleteComment()"
-                    type="danger"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.delete", "删除") }}</el-button
-                >
+                <el-button link size="small" icon="ChatRound" @click="showForm = !showForm" type="primary">{{
+                    $jx3boxT("jx3boxUi.commentContent.reply", "回复")
+                }}</el-button>
+                <el-button v-if="canDelete" link icon="Delete" size="small" @click="deleteComment()" type="danger">{{
+                    $jx3boxT("jx3boxUi.commentContent.delete", "删除")
+                }}</el-button>
                 <el-button
                     link
                     size="small"
@@ -112,13 +83,7 @@
                 </time>
             </div>
             <div class="u-toolbar-right">
-                <el-button
-                    class="u-admin u-filter"
-                    v-if="canAddWhite"
-                    link
-                    size="small"
-                    @click="setWhiteComment(true)"
-                >
+                <el-button class="u-admin u-filter" v-if="canAddWhite" link size="small" @click="setWhiteComment(true)">
                     <img
                         class="u-icon-filter"
                         src="../../assets/img/editor/view.svg"
@@ -140,12 +105,7 @@
                 >
             </div>
         </div>
-        <el-form
-            v-if="showForm"
-            ref="form"
-            :model="newComment"
-            class="c-comment-subbox"
-        >
+        <el-form v-if="showForm" ref="form" :model="newComment" class="c-comment-subbox">
             <el-form-item>
                 <el-input
                     type="textarea"
@@ -157,12 +117,7 @@
             <el-form-item class="c-comment-tool-box">
                 <div class="c-comment-tools">
                     <el-icon class="u-upload-icon" @click="showUploader = !showUploader"><Picture /></el-icon>
-                    <Emotion
-                       class="c-comment-emotion"
-                       @selected="handleEmotionSelected"
-                       type="pop"
-                       :max="6"
-                    ></Emotion>
+                    <Emotion class="c-comment-emotion" @selected="handleEmotionSelected" type="pop" :max="6"></Emotion>
                 </div>
                 <Uploader
                     v-if="showUploader"
@@ -172,16 +127,12 @@
                 />
             </el-form-item>
             <el-form-item>
-                <el-button
-                    size="small"
-                    type="primary"
-                    @click="submit()"
-                    :disabled="disableSubmitBtn"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.submit", "提交") }}</el-button
-                >
-                <el-button size="small" link @click="showForm = false" type="primary"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.collapse", "收起") }}</el-button
-                >
+                <el-button size="small" type="primary" @click="submit()" :disabled="disableSubmitBtn">{{
+                    $jx3boxT("jx3boxUi.commentContent.submit", "提交")
+                }}</el-button>
+                <el-button size="small" link @click="showForm = false" type="primary">{{
+                    $jx3boxT("jx3boxUi.commentContent.collapse", "收起")
+                }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -306,9 +257,7 @@ export default {
                 return;
             }
             this.currentUserHadLike = setLike;
-            this.hasLikeCount = setLike
-                ? this.hasLikeCount + 1
-                : this.hasLikeCount - 1;
+            this.hasLikeCount = setLike ? this.hasLikeCount + 1 : this.hasLikeCount - 1;
             this.$emit("setLikeComment", setLike);
         },
         topComment(setTop) {
@@ -411,10 +360,7 @@ export default {
                 await this.$nextTick();
 
                 myField.focus();
-                myField.setSelectionRange(
-                    endPos + value.length,
-                    endPos + value.length
-                );
+                myField.setSelectionRange(endPos + value.length, endPos + value.length);
             } else {
                 this.newComment.content = value;
             }
@@ -432,26 +378,24 @@ export default {
 <style lang="less">
 /* src/comment/CommentContent.vue */
 .c-comment-cmt {
-
     //--el-color-primary:@primary;
 
     flex-grow: 1;
     position: relative;
     .u-toolbar {
         font-size: 12px;
-        margin-top:5px;
-        color:@v4tip;
+        margin-top: 5px;
+        color: @v4tip;
         .el-button.is-link {
-            color:@v4tip;
+            color: @v4tip;
             font-weight: normal;
-            &:hover{
-                color:@pink;
+            &:hover {
+                color: @pink;
             }
         }
         // .el-button.is-link.u-admin{
         //     color:orange;
         // }
-
 
         .el-button + .el-button {
             margin-left: 20px;
@@ -490,6 +434,7 @@ export default {
             line-height: 1.715;
             img {
                 vertical-align: -3px;
+                display: inline-block;
             }
             white-space: pre-line;
         }

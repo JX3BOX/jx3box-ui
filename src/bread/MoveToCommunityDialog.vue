@@ -213,11 +213,6 @@ export default {
     .el-form-item {
         margin-bottom: 12px;
     }
-    .m-star-line {
-        .el-form-item__content {
-            top: 10px;
-        }
-    }
     .u-time {
         color: #c0c4cc;
     }

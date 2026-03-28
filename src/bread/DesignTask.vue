@@ -9,10 +9,18 @@
     >
         <el-form :model="form" ref="form" :label-position="isPhone ? 'top' : 'left'" label-width="80px">
             <el-form-item :label="$jx3boxT('jx3boxUi.designTask.formTitle', '标题')">
-                <el-input v-model="form.title" :placeholder="$jx3boxT('jx3boxUi.designTask.titlePlaceholder', '请输入标题')"></el-input>
+                <el-input
+                    v-model="form.title"
+                    :placeholder="$jx3boxT('jx3boxUi.designTask.titlePlaceholder', '请输入标题')"
+                ></el-input>
             </el-form-item>
             <el-form-item :label="$jx3boxT('jx3boxUi.designTask.formType', '类型')">
-                <el-select v-model="form.type" :placeholder="$jx3boxT('jx3boxUi.designTask.typePlaceholder', '请选择类型')" style="width: 100%" filterable>
+                <el-select
+                    v-model="form.type"
+                    :placeholder="$jx3boxT('jx3boxUi.designTask.typePlaceholder', '请选择类型')"
+                    style="width: 100%"
+                    filterable
+                >
                     <el-option v-for="item in config" :key="item.id" :label="item.label" :value="item.name"></el-option>
                 </el-select>
             </el-form-item>
@@ -24,7 +32,10 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item :label="$jx3boxT('jx3boxUi.designTask.formRemark', '备注')">
-                <el-input v-model="form.remark" :placeholder="$jx3boxT('jx3boxUi.designTask.remarkPlaceholder', '请输入备注')"></el-input>
+                <el-input
+                    v-model="form.remark"
+                    :placeholder="$jx3boxT('jx3boxUi.designTask.remarkPlaceholder', '请输入备注')"
+                ></el-input>
             </el-form-item>
             <el-form-item :label="$jx3boxT('jx3boxUi.designTask.formStar', '星级')" class="m-star-line">
                 <el-rate v-model="form.star" :colors="colors"></el-rate>
@@ -34,18 +45,30 @@
         <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.designTask.recent", "近期推送") }}</el-divider>
         <template v-if="logs && logs.length">
             <el-table :data="logs" border size="small" max-height="300px">
-                <el-table-column :label="$jx3boxT('jx3boxUi.designTask.pushAt', '推送时间')" prop="push_at" align="center">
+                <el-table-column
+                    :label="$jx3boxT('jx3boxUi.designTask.pushAt', '推送时间')"
+                    prop="push_at"
+                    align="center"
+                >
                     <template #default="{ row }">
                         {{ formatTime(row.push_at) }}
                     </template>
                 </el-table-column>
-                <el-table-column :label="$jx3boxT('jx3boxUi.designTask.pusher', '推送人')" prop="pusher.display_name" align="center"></el-table-column>
+                <el-table-column
+                    :label="$jx3boxT('jx3boxUi.designTask.pusher', '推送人')"
+                    prop="pusher.display_name"
+                    align="center"
+                ></el-table-column>
                 <el-table-column :label="$jx3boxT('jx3boxUi.designTask.star', '星级')" prop="star" align="center">
                     <template #default="{ row }">
                         <el-rate v-model="row.star" disabled :colors="colors"></el-rate>
                     </template>
                 </el-table-column>
-                <el-table-column :label="$jx3boxT('jx3boxUi.designTask.remark', '备注')" prop="remark" align="center"></el-table-column>
+                <el-table-column
+                    :label="$jx3boxT('jx3boxUi.designTask.remark', '备注')"
+                    prop="remark"
+                    align="center"
+                ></el-table-column>
             </el-table>
         </template>
         <el-alert
@@ -183,11 +206,6 @@ export default {
 .m-design-task {
     .el-form-item {
         margin-bottom: 12px;
-    }
-    .m-star-line {
-        .el-form-item__content {
-            top: 10px;
-        }
     }
     .u-time {
         color: #c0c4cc;

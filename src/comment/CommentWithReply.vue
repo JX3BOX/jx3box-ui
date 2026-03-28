@@ -260,6 +260,9 @@ export default {
         color: #fff;
         margin-left: 5px;
         cursor: default;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
     .u-top {
         background-color: #6f42c1;
