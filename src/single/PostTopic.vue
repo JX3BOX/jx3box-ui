@@ -93,7 +93,7 @@ export default {
         font-size: 12px;
         font-weight: 700;
         position: absolute;
-        bottom: 16px;
+        bottom: 6px;
         right: 16px;
         // left: 50%;
         // transform: translate(-50%, -50%);

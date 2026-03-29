@@ -79,7 +79,7 @@ export default {
         &::marker {
             content: "+";
             font-size: 10px;
-            color:#999;
+            color: #999;
         }
         list-style-position: outside;
     }
@@ -94,8 +94,8 @@ export default {
         color: #666;
         // border-bottom: 1px solid transparent;
         &:hover {
-            color: @color;
-            .underline(@color);
+            color: @v4primary;
+            .underline(3px,solid,@v4primary);
             font-weight: 500;
             // .u-icon {
             //     transform: translateX(5px);
@@ -131,7 +131,8 @@ export default {
             .rb(0,10px);
             color: #999;
             &:hover {
-                color: @pink;
+                color: @v4primary;
+                fill: @v4primary;
             }
         }
     }
