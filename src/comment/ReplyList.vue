@@ -14,10 +14,10 @@
         <!-- 分页 -->
         <el-row v-if="data.length >= 3 || showPager">
             <el-col :span="4">
-                <el-button link v-show="showPager" @click="showLess()">{{
+                <el-button class="u-op" link v-show="showPager" @click="showLess()" icon="DCaret">{{
                     $jx3boxT("jx3boxUi.replyList.collapse", "收起")
                 }}</el-button>
-                <el-button link v-show="!showPager" @click="showMore()">{{
+                <el-button class="u-op" link v-show="!showPager" @click="showMore()" icon="DCaret">{{
                     $jx3boxT("jx3boxUi.replyList.showMore", "查看更多")
                 }}</el-button>
             </el-col>
@@ -102,6 +102,11 @@ export default {
 .c-comment-replylist {
     padding: 10px 0 10px 68px;
     border-top: 1px dashed #eee;
+
+    .u-op {
+        margin-left:0;
+        font-weight: normal;
+    }
 }
 .c-comment-reply {
     padding-top: 5px;
