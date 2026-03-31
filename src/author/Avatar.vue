@@ -55,7 +55,8 @@ export default {
     },
     methods: {
         showAvatar: function (val) {
-            return showAvatar(val, this.styles[this.size] * 3);
+            const size = typeof this.size === "number" ? this.size : this.styles[this.size];
+            return showAvatar(val, size);
         },
         authorLink,
     },
