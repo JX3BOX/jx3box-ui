@@ -65,7 +65,7 @@ export default {
             Bus.emit("toggleLeftSide", status);
         },
         showDecoration: function (val, type) {
-            return JX3BOX.__imgPath + `decoration/images/${val}/${type}.png`;
+            return JX3BOX.__cdn + `design/decoration/images/${val}/${type}.png`;
         },
         getDecoration() {
             if (!this.user_id) {
