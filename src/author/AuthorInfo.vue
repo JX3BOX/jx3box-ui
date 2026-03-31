@@ -188,7 +188,7 @@ export default {
     .u-displayname {
         .lh(1.2);
         font-weight: 500;
-        color: @color;
+        color: @bg-black;
         .nobreak;
         &:hover {
             color: #f39;
@@ -206,6 +206,7 @@ export default {
         // vertical-align: -2px;
         .fz(12px);
         flex-shrink: 0;
+        margin-right: 3px;
         img {
             .size(16px);
         }

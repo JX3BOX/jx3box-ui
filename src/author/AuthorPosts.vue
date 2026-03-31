@@ -82,6 +82,11 @@ export default {
             color: #999;
         }
         list-style-position: outside;
+        &:hover{
+            &::marker {
+                color: @v4primary;
+            }
+        }
     }
     .u-item {
         // display: flex;
@@ -91,7 +96,7 @@ export default {
         padding: 3px 2px 3px 5px;
         .nobreak;
         .fz(12px,2);
-        color: #666;
+        color: @color;
         // border-bottom: 1px solid transparent;
         &:hover {
             color: @v4primary;
