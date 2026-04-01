@@ -24,7 +24,7 @@
     .flex;
     align-items: center;
     justify-content: center;
-    gap: 20px
+    gap: 20px;
 }
 .w-thx-copyright {
     .fz(12px,2);
@@ -40,9 +40,9 @@
 .w-boxcoin-block {
     .pointer;
 
-    &.disabled{
-        opacity:0.5;
-        cursor:not-allowed;
+    &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 }
 .w-boxcoin-admin {
@@ -126,12 +126,13 @@
 }
 
 .w-boxcoin-records-list {
-
     --el-color-primary: @primary;
 
     max-width: 960px;
     border: 1px solid #eee;
     margin: 0 auto;
+    border-radius: 6px;
+    overflow: hidden;
 
     .u-list {
         list-style: none;
@@ -177,58 +178,59 @@
         .nobreak;
         .flex;
         align-items: center;
-        &:hover {
+        &[href]:hover {
             text-decoration: underline;
         }
         .mr(20px);
-    }
-    .u-default {
-        &:hover{
-            text-decoration: none;
+
+        &.u-default {
+            color: @color;
+            &:hover {
+                text-decoration: none;
+            }
         }
-    }
-    .u-user-avatar {
-        .y;
-        .size(24px);
-        .mr(5px);
-        .r(2px);
+        .u-user-avatar {
+            .y;
+            .size(24px);
+            .mr(5px);
+            .r(2px);
+        }
     }
     .u-count {
         .w(120px);
     }
     .u-head {
         background-color: @bg-light;
+        color: @v4text;
     }
     .u-body {
         .u-count {
-            color: #fe7e91;
+            color: #fd76a7;
             font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
         }
-    }
-    .u-remark {
-        .nobreak;
-        .w(280px);
-        color:@color;
-    }
-    .u-time {
-        color: #999;
-    }
-    .u-delete {
-        .ml(20px);
-        color: #c00;
-        i {
-            .mr(3px);
+        .u-time {
+            color: @v4tip;
         }
-        .pointer;
-        &:hover {
-            color: #f00;
+        .u-remark {
+            .nobreak;
+            .w(280px);
+            color: @color;
+        }
+        .u-delete {
+            .ml(20px);
+            color: #c00;
+            i {
+                .mr(3px);
+            }
+            .pointer;
+            &:hover {
+                color: #f00;
+            }
+        }
+        .u-client {
+            color: @v4focus;
         }
     }
-    .u-client {
-        margin-left: 5px;
-        color: #09f;
-    }
-
 }
 .w-boxcoin-records-pages {
     justify-content: center;

@@ -41,9 +41,9 @@
                     </span>
                     <span class="u-meta u-remark">{{ item.remark }}</span>
                     <time class="u-meta u-time">{{ showTime(item.created_at) }}</time>
-                    <span class="u-client" v-if="isSuperAdmin">{{ item.client }}</span>
                     <span class="u-delete" v-if="isSuperAdmin" @click="recovery(item, i)">
                         <i class="Delete"></i>{{ $jx3boxT("jx3boxUi.boxcoinRecords.revoke", "撤销") }}
+                        (<span class="u-client">{{ item.client }}</span>)
                     </span>
                 </li>
             </ul>
