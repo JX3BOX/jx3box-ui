@@ -248,17 +248,17 @@
         "parentKey": "pvx"
     },
     {
-        "key": "gonggao",
-        "link": "/pvg/gonggao",
-        "label": "活动告示",
+        "key": "treasure",
+        "link": "/pvx/codex/adventure",
+        "label": "奇遇珍卷",
         "client": "all",
         "status": true,
         "parentKey": "pvx"
     },
     {
-        "key": "price",
-        "link": "/pvg/price",
-        "label": "价格走势",
+        "key": "achievement",
+        "link": "/pvx/codex/achievement",
+        "label": "资历宝典",
         "client": "all",
         "status": true,
         "parentKey": "pvx"
