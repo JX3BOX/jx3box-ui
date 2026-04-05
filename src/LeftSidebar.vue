@@ -108,7 +108,7 @@ export default {
         };
         Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
 
-        if (window.innerWidth < 1024) {
+        if (window.innerWidth < 1200) {
             this.isOpen = false;
 
             this.__docClickHandler = () => {
