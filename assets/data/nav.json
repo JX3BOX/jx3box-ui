@@ -112,6 +112,14 @@
         "parentKey": "pvp"
     },
     {
+        "key": "changelog",
+        "link": "/pvp/changelog",
+        "label": "技改历史",
+        "client": "all",
+        "status": true,
+        "parentKey": "pvp"
+    },
+    {
         "key": "desert",
         "link": "/pvp/desert",
         "label": "绝境战场",
@@ -124,14 +132,6 @@
         "link": "/pvp/sandbox",
         "label": "沙盘查询",
         "client": "std",
-        "status": true,
-        "parentKey": "pvp"
-    },
-    {
-        "key": "changelog",
-        "link": "/pvp/changelog",
-        "label": "技改历史",
-        "client": "all",
         "status": true,
         "parentKey": "pvp"
     },
