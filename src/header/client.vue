@@ -193,11 +193,11 @@ export default {
     }
 
     // 桌面端保留hover效果
-    @media (hover: hover) and (pointer: fine) {
-        &:hover .u-trigger::after {
-            opacity: 1;
-        }
-    }
+    //@media (hover: hover) and (pointer: fine) {
+    //    &:hover .u-trigger::after {
+    //        opacity: 1;
+    //    }
+    //}
     height: @header-height;
     * {
         .pointer;
