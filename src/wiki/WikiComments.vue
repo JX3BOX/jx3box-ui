@@ -143,7 +143,7 @@ export default {
                 type: this.type,
                 source_id: this.sourceId,
                 parent_id: parent_id,
-                user_nickname: form.user_nickname || User.getInfo().name,
+                user_nickname: form.user_nickname || User.getInfo().name || '神秘侠士',
                 content: form.content,
                 client: this.client,
             };
