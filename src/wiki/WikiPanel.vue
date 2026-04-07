@@ -2,18 +2,17 @@
     <div
         class="c-wiki-panel"
         :class="{
-            'border-none': borderNone,
-            'm-detail-scene': wikiPost || scene === 'detail',
+            border: border,
         }"
     >
         <div class="m-panel-head">
             <slot name="head-before"></slot>
+            <div class="m-panel-title">
+                <slot name="head-title"></slot>
+            </div>
             <div class="m-panel-actions">
                 <QRcode v-if="wikiPost && showQR" class="u-qr" />
                 <slot name="head-actions"></slot>
-            </div>
-            <div class="m-panel-title">
-                <slot name="head-title"></slot>
             </div>
             <slot name="head-after"></slot>
         </div>
@@ -73,9 +72,9 @@ export default {
             type: String,
             default: "default",
         },
-        borderNone: {
+        border: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         showQR: {
             type: Boolean,

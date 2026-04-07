@@ -2,36 +2,25 @@
 .c-wiki-panel {
     .db;
     .mb(15px);
-    background-color: #fafbfc;
-    border: 1px solid #eeeeee;
-    border-radius: 5px;
     font-size: 14px;
-
-    img {
-        height: auto;
-    }
-
-    b,
-    strong {
-        font-weight: bold;
-    }
-
-    &.border-none {
-        background-color: transparent;
-        border: none;
-
-        .m-panel-head {
-            background-color: transparent;
-        }
-    }
 
     .m-panel-head {
         .pr;
         padding: 0 15px;
-        background-color: #f5f7fa;
         border-bottom: 1px solid #eeeeee;
+        .flex(y);
+        justify-content: space-between;
 
-        & .m-panel-actions {
+
+        .m-panel-title {
+            .flex(y);
+            .gap(5px);
+            padding: 10px 0;
+            color: #6c645c;
+            font-weight: 500;
+        }
+
+        .m-panel-actions {
             .pa;
             right: 15px;
             top: 50%;
@@ -39,31 +28,7 @@
             font-size: 12px;
             z-index: 30;
             .flex(y);
-
-            .u-more,
-            .el-button {
-                .dbi;
-                .ml(15px);
-
-                &:first-child {
-                    .ml(0);
-                }
-            }
-
-            .u-more {
-                color: var(--el-color-primary);
-            }
-
-            .el-button {
-                font-size: 12px;
-            }
-        }
-
-        & .m-panel-title {
-            padding: 10px 0;
-            color: #6c645c;
-            margin: 0;
-            font-weight: 500;
+            .gap(10px);
         }
     }
 
@@ -71,6 +36,15 @@
         padding: 15px;
         line-height: 1.6em;
         word-break: break-all;
+    }
+
+    &.border {
+        background-color: #fafbfc;
+        border: 1px solid #eeeeee;
+        border-radius: 5px;
+        .m-panel-head {
+            background-color: #f5f7fa;
+        }
     }
 
     .m-wiki-metas {
@@ -143,36 +117,36 @@
     }
 
     // 详情场景
-    &.m-detail-scene {
-        .m-panel-title {
-            img,
-            svg,
-            i,
-            span {
-                .dbi;
-                vertical-align: middle;
-            }
+    // &.m-detail-scene {
+    //     .m-panel-title {
+    //         img,
+    //         svg,
+    //         i,
+    //         span {
+    //             .dbi;
+    //             vertical-align: middle;
+    //         }
 
-            img,
-            svg,
-            i {
-                width: 28px;
-                height: 28px;
-                line-height: 28px;
-                color: var(--el-color-primary);
-                fill: var(--el-color-primary);
-                font-size: 22px;
-            }
+    //         img,
+    //         svg,
+    //         i {
+    //             width: 28px;
+    //             height: 28px;
+    //             line-height: 28px;
+    //             color: var(--el-color-primary);
+    //             fill: var(--el-color-primary);
+    //             font-size: 22px;
+    //         }
 
-            img,
-            svg {
-                .mr(7px);
-            }
+    //         img,
+    //         svg {
+    //             .mr(7px);
+    //         }
 
-            span {
-                font-size: 17px;
-                font-weight: 300;
-            }
-        }
-    }
+    //         span {
+    //             font-size: 17px;
+    //             font-weight: 300;
+    //         }
+    //     }
+    // }
 }

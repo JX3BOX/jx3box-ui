@@ -1,8 +1,8 @@
 <template>
     <WikiPanel class="c-wiki-comments" scene="detail">
         <template #head-title>
-            <i class="el-icon-chat-line-round"></i>
-            <span>百科评论</span>
+            <i class="u-icon el-icon-chat-line-round"></i>
+            <span class="u-txt">百科评论</span>
         </template>
         <template #body>
             <div class="m-comments-panel" v-loading="loading">
@@ -143,7 +143,7 @@ export default {
                 type: this.type,
                 source_id: this.sourceId,
                 parent_id: parent_id,
-                user_nickname: form.user_nickname || User.getInfo().name || '神秘侠士',
+                user_nickname: form.user_nickname || User.getInfo().name || "神秘侠士",
                 content: form.content,
                 client: this.client,
             };
