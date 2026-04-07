@@ -74,6 +74,7 @@ export default {
         line-height: @header-logo-size;
         margin-left: 10px;
         transition: 0.15s ease-in-out;
+        .smooth;
     }
 
     &:hover .u-pic {
