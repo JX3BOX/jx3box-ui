@@ -1,8 +1,8 @@
 <template>
     <WikiPanel class="c-wiki-revisions" scene="detail">
         <template #head-title>
-            <i class="el-icon-time"></i>
-            <span>历史版本</span>
+            <i class="u-icon el-icon-time"></i>
+            <span class="u-txt">历史版本</span>
         </template>
         <template #body>
             <div class="m-revisions-panel">
