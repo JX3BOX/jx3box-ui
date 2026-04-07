@@ -184,7 +184,7 @@ export default {
 /* src/interact/BoxcoinRecords.vue */
 .w-boxcoin-records-pages{
 
-    --el-color-primary: @primary;
+
 
     .flex(x);
     margin-top:5px;

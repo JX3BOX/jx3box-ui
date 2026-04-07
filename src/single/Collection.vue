@@ -103,7 +103,7 @@ export default {
 <style lang="less">
 /* src/single/Collection.vue */
 .w-collection {
-    --el-color-primary: @primary;
+
 
     .w-collection-title {
         cursor: pointer;

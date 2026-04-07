@@ -357,7 +357,7 @@ export default {
     @std: #f0b400;
     @all: #a26ef7;
     @wujie: #fc79bf;
-    --el-color-primary: @primary;
+
 
     .u-client {
         // .fl;
