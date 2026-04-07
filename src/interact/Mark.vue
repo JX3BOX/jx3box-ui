@@ -4,7 +4,7 @@
             <img
                 v-if="!$slots.default"
                 svg-inline
-                src="../../assets/img/header/logo.svg"
+                src="../../assets/img/common/logo.svg"
             />
             <slot></slot>
             {{ mark_key }}
@@ -33,11 +33,11 @@ export default {
         },
         BGL: {
             type: String,
-            default: "#409EFF", 
+            default: "#409EFF",
         },
         BGR: {
             type: String,
-            default: "#67C23A", 
+            default: "#67C23A",
         },
     },
     data: function() {
