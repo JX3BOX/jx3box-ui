@@ -296,6 +296,10 @@ export default {
     .fz(32px);
     padding: 1px 0;
 
+    *{
+        white-space: nowrap;
+    }
+
     .u-title {
         color: @color;
         // &:hover {
@@ -357,7 +361,6 @@ export default {
     @std: #f0b400;
     @all: #a26ef7;
     @wujie: #fc79bf;
-
 
     .u-client {
         // .fl;
@@ -450,9 +453,8 @@ export default {
 }
 @media screen and (max-width: @ipad) {
     .m-single-info {
-        .u-meta {
-            .none;
-        }
+        flex-wrap: wrap;
+        gap: 5px;
     }
 }
 @media screen and (max-width: @phone) {
