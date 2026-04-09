@@ -123,6 +123,7 @@ export default {
         user-select: none;
         padding: 5px 0;
         padding-right: 20px;
+        .w(150px);
 
         &.on {
             .u-options {

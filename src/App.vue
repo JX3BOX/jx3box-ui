@@ -36,7 +36,7 @@
                     </div>
                     <h1 class="m-title">复制组件</h1>
                     <div class="m-block">
-                        <CopyComp value="xfbsyxj">xfbsyxj</CopyComp>
+                        <Copy value="xfbsyxj">xfbsyxj</Copy>
                     </div>
 
                     <h1 class="m-title">切换侧边栏</h1>
@@ -199,7 +199,7 @@ import PostCollection from "./single/PostCollection.vue";
 import QRcode from "./interact/QRcode.vue";
 import UploadBanner from "./upload/UploadBanner.vue";
 import Mark from "./interact/Mark.vue";
-import CopyComp from "./interact/Copy.vue";
+import Copy from "./interact/Copy.vue";
 
 import GamePrice from "./wiki/GamePrice.vue";
 import WikiComments from "./wiki/WikiComments.vue";
@@ -209,7 +209,7 @@ export default {
     name: "App",
     components: {
         Mark,
-        CopyComp,
+        Copy,
         Author,
         // PostHeader,
         PostTopic,
