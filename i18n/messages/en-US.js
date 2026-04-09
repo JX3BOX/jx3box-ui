@@ -152,6 +152,7 @@ export default {
     },
     common: {
         copySuccess: "Copied",
+        copySuccessToast: "Copied",
         copyFailed: "Copy failed",
         cannotCopyClipboard: "Cannot access clipboard",
         browserCopyFailed: "Browser copy failed",

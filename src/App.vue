@@ -34,6 +34,10 @@
                     <div class="m-block">
                         <Mark label="渊穷砂" BGL="#24292e" BGR="#ffadcb" value="按键启动"></Mark>
                     </div>
+                    <h1 class="m-title">复制组件</h1>
+                    <div class="m-block">
+                        <CopyComp value="xfbsyxj">xfbsyxj</CopyComp>
+                    </div>
 
                     <h1 class="m-title">切换侧边栏</h1>
                     <div class="m-block">
@@ -194,7 +198,8 @@ import PostVersion from "./single/PostVersion.vue";
 import PostCollection from "./single/PostCollection.vue";
 import QRcode from "./interact/QRcode.vue";
 import UploadBanner from "./upload/UploadBanner.vue";
-import Mark from "./interact/Mark.vue"
+import Mark from "./interact/Mark.vue";
+import CopyComp from "./interact/Copy.vue";
 
 import GamePrice from "./wiki/GamePrice.vue";
 import WikiComments from "./wiki/WikiComments.vue";
@@ -204,6 +209,7 @@ export default {
     name: "App",
     components: {
         Mark,
+        CopyComp,
         Author,
         // PostHeader,
         PostTopic,

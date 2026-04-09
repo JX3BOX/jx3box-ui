@@ -152,6 +152,7 @@ export default {
     },
     common: {
         copySuccess: "Đã sao chép",
+        copySuccessToast: "Đã sao chép",
         copyFailed: "Sao chép thất bại",
         cannotCopyClipboard: "Không thể truy cập clipboard",
         browserCopyFailed: "Trình duyệt không sao chép được",

@@ -152,6 +152,7 @@ export default {
     },
     common: {
         copySuccess: "复制成功",
+        copySuccessToast: "复制成功",
         copyFailed: "复制失败",
         cannotCopyClipboard: "无法复制到剪贴板",
         browserCopyFailed: "浏览器复制失败",
