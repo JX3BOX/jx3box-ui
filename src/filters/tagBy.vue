@@ -8,12 +8,8 @@
                 {{ current || $jx3boxT("jx3boxUi.tagBy.all", "全部") }}</span
             >
             <span class="u-toggle">
-                <el-icon class="el-icon-arrow-down">
-                    <arrow-down />
-                </el-icon>
-                <el-icon class="el-icon-arrow-up">
-                    <arrow-up />
-                </el-icon>
+                <i class="el-icon-arrow-down"> </i>
+                <i class="el-icon-arrow-up"> </i>
             </span>
         </span>
         <span class="u-options">
