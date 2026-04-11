@@ -1,81 +1,103 @@
 <template>
     <div class="w-thx">
-        <div class="w-thx-panel">
-            <boxcoin-admin
-                :postId="postId"
+        <template v-if="type === 'batchReward'">
+            <batch-reward
+                v-if="hasRight && adminBoxcoinEnable && boxcoin_enable"
                 :postType="postType"
-                v-if="hasRight && adminBoxcoinEnable && boxcoin_enable && hasPermission"
-                :userId="userId"
-                :max="admin_max"
-                :min="admin_min"
-                :own="admin_left"
-                :total="admin_total"
-                :points="admin_points"
-                :authors="authors"
-                @updateRecord="updateRecord"
-                :client="finalClient"
-                :totalLimit="total_limit"
-                :postTypeUsed="post_type_used"
-                :category="category"
-            />
-            <Like :postId="postId" :postType="postType"></Like>
-            <fav :postId="postId" :postType="postType" :postTitle="postTitle"></fav>
-            <Rss v-if="showRss" :type="postType" :id="postId" :title="postTitle"></Rss>
-            <boxcoin-user
-                :postId="postId"
-                :postType="postType"
+                :items="postId"
                 :boxcoin="boxcoin"
                 :userId="userId"
-                :own="user_left"
-                :points="user_points"
+                :own="admin_left"
+                :points="admin_points"
                 :authors="authors"
-                v-if="userBoxcoinEnable && boxcoin_enable && allowGift"
-                @updateRecord="updateRecord"
                 :client="finalClient"
+                :max="admin_max"
+                :min="admin_min"
+                :total="admin_total"
                 :category="category"
-                :can-gift="lvEnough"
-            />
-            <Share :postId="postId" :postType="postType" :client="client" />
-            <watch-later
-                :category="postType"
-                :title="postTitle"
-                :author-id="authorId"
-                :banner="banner"
-                :content-id="contentMetaId"
-            ></watch-later>
-        </div>
-        <div class="w-thx-records">
-            <boxcoin-records
                 :postId="postId"
-                :postType="postType"
-                :postClient="finalClient"
-                :cacheRecord="cacheRecord"
-                :mode="mode"
-                @update:boxcoin="updateBoxcoin"
-                v-if="showRecord"
+                @updateRecord="updateRecord"
             />
-        </div>
-        <div class="w-thx-copyright">
-            &copy;
-            {{
-                $jx3boxT(
-                    "jx3boxUi.thx.copyright1",
-                    "所有原创作品，著作权归作者所有，所有未经授权的非署名转载或抄袭将有权追究法律责任，所有法律事务由专聘律师代理。"
-                )
-            }}<br />
-            {{
-                $jx3boxT(
-                    "jx3boxUi.thx.copyright2",
-                    "签约作者独家特约稿件，及所有魔盒官方评分作品用户一经兑现则视为有偿付费稿件，所有商业稿件的转载引用需同时征得魔盒平台授权。"
-                )
-            }}
-        </div>
+        </template>
+        <template v-else>
+            <div class="w-thx-panel">
+                <boxcoin-admin
+                    :postId="postId"
+                    :postType="postType"
+                    v-if="hasRight && adminBoxcoinEnable && boxcoin_enable && hasPermission"
+                    :userId="userId"
+                    :max="admin_max"
+                    :min="admin_min"
+                    :own="admin_left"
+                    :total="admin_total"
+                    :points="admin_points"
+                    :authors="authors"
+                    @updateRecord="updateRecord"
+                    :client="finalClient"
+                    :totalLimit="total_limit"
+                    :postTypeUsed="post_type_used"
+                    :category="category"
+                />
+                <Like :postId="postId" :postType="postType"></Like>
+                <fav :postId="postId" :postType="postType" :postTitle="postTitle"></fav>
+                <Rss v-if="showRss" :type="postType" :id="postId" :title="postTitle"></Rss>
+                <boxcoin-user
+                    :postId="postId"
+                    :postType="postType"
+                    :boxcoin="boxcoin"
+                    :userId="userId"
+                    :own="user_left"
+                    :points="user_points"
+                    :authors="authors"
+                    v-if="userBoxcoinEnable && boxcoin_enable && allowGift"
+                    @updateRecord="updateRecord"
+                    :client="finalClient"
+                    :category="category"
+                    :can-gift="lvEnough"
+                />
+                <watch-later
+                    :category="postType"
+                    :title="postTitle"
+                    :author-id="authorId"
+                    :banner="banner"
+                    :content-id="contentMetaId"
+                ></watch-later>
+                <Share :postId="postId" :postType="postType" :client="client" />
+            </div>
+            <div class="w-thx-records">
+                <boxcoin-records
+                    :postId="postId"
+                    :postType="postType"
+                    :postClient="finalClient"
+                    :cacheRecord="cacheRecord"
+                    :mode="mode"
+                    @update:boxcoin="updateBoxcoin"
+                    v-if="showRecord"
+                />
+            </div>
+            <div class="w-thx-copyright">
+                &copy;
+                {{
+                    $jx3boxT(
+                        "jx3boxUi.thx.copyright1",
+                        "所有原创作品，著作权归作者所有，所有未经授权的非署名转载或抄袭将有权追究法律责任，所有法律事务由专聘律师代理。"
+                    )
+                }}<br />
+                {{
+                    $jx3boxT(
+                        "jx3boxUi.thx.copyright2",
+                        "签约作者独家特约稿件，及所有魔盒官方评分作品用户一经兑现则视为有偿付费稿件，所有商业稿件的转载引用需同时征得魔盒平台授权。"
+                    )
+                }}
+            </div>
+        </template>
     </div>
 </template>
 
 <script>
 import Like from "../interact/Like.vue";
 import Fav from "../interact/Fav.vue";
+import BatchReward from "../interact/BatchReward.vue";
 import BoxcoinAdmin from "../interact/BoxcoinAdmin.vue";
 import BoxcoinUser from "../interact/BoxcoinUser.vue";
 import BoxcoinRecords from "../interact/BoxcoinRecords.vue";
@@ -94,6 +116,7 @@ export default {
     components: {
         Like,
         Fav,
+        BatchReward,
         BoxcoinAdmin,
         BoxcoinUser,
         BoxcoinRecords,
@@ -107,7 +130,7 @@ export default {
             default: "normal",
         },
         postId: {
-            type: [Number, String],
+            type: [Number, String, Array],
             default: 0,
         },
         postType: {

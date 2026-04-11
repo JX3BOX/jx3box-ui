@@ -7,7 +7,7 @@ function getPostAuthors(post_id) {
 
 // 获取文章内容
 function getPost(post_id) {
-    return $cms().get(`/api/cms/post/${post_id}`)
+    return $cms().get(`/api/cms/post/${post_id}`);
 }
 
 function uploadImage(formData) {
@@ -48,6 +48,10 @@ function getSliders(source_type, source_ids, client = "std") {
     return $cms({ mute: true }).get(`/api/cms/news/v2`, {
         params: _params,
     });
+}
+
+function getSlider(params) {
+    return $cms({ mute: true }).get(`/api/cms/news/item`, { params });
 }
 
 function getCollection(id) {
@@ -130,7 +134,7 @@ function refreshQQBotImage(data) {
 
 // 获取用户permission
 function getUserPermission() {
-    return $cms().get(`/api/cms/account/permission/i`)
+    return $cms().get(`/api/cms/account/permission/i`);
 }
 
 export {
@@ -142,6 +146,7 @@ export {
     getDecorationJson,
     checkTeamMember,
     getSliders,
+    getSlider,
     getCollection,
     getTopicBucket,
     getConfig,
