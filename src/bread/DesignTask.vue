@@ -112,6 +112,7 @@ export default {
                 remark: "",
                 star: 0,
                 subtype: "",
+                type: "",
                 version: "std",
             },
             colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
@@ -135,6 +136,9 @@ export default {
             if (val) {
                 if (this.post) {
                     this.form.title = this.post.post_title;
+                    if (["achievement", "item", "quest", "knowledge"].includes(this.post?.post_type)) {
+                        this.form.type = "wiki";
+                    }
                 }
                 this.loadLogs();
 
@@ -170,7 +174,10 @@ export default {
 
             data.source_type = this.post?.post_type;
             data.source_id = String(this.post?.ID);
-            data.link = `/${this.post?.post_type}/${this.post?.ID}`;
+            data.link =
+                this.form.type === "wiki"
+                    ? `/${this.post.post_type}/view/${this.post.ID}`
+                    : `/${this.post?.post_type}/${this.post?.ID}`;
             data.flow = 0;
 
             createDesignTask(data).then(() => {
