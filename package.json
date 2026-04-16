@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-ui",
-    "version": "2.1.12",
+    "version": "2.1.13",
     "description": "JX3BOX Vue3 UI",
     "main": "index.js",
     "scripts": {
@@ -101,6 +101,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/JX3BOX/jx3box-vue3-ui.git"
+        "url": "git+https://github.com/JX3BOX/jx3box-ui.git"
     }
 }
