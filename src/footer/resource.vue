@@ -79,7 +79,8 @@
         >
             <div class="flex items-center space-x-3">
                 <div
-                    class="flex h-10 w-10 items-center justify-center rounded-lg text-blue-400"
+                    @click="gotoQQbot"
+                    class="flex h-10 w-10 items-center justify-center rounded-lg text-blue-400 cursor-pointer"
                     style="background-color: rgba(59, 130, 246, 0.2)"
                 >
                     <img
@@ -168,11 +169,15 @@ export default {
             return item?.name || "";
         },
         getDownloadLabel(item) {
-            if (item?.labelKey) return this.$jx3boxT(`jx3boxUi.commonFooter.${item.labelKey}`, item.label || item.labelKey);
+            if (item?.labelKey)
+                return this.$jx3boxT(`jx3boxUi.commonFooter.${item.labelKey}`, item.label || item.labelKey);
             return item?.label || "";
         },
         handleLinkClick(e, item) {
             if (!item?.href) e.preventDefault();
+        },
+        gotoQQbot() {
+            window.open("/qqbot", "_blank");
         },
     },
     created: function () {},
