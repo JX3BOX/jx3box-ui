@@ -222,6 +222,8 @@ export default {
     boxcoinAdmin: {
         tooltip: "品鑑",
         dialogTitle: "品鑑評分",
+        yearStatus: "全年額度",
+        yearSummary: "已用{used} 剩餘{left} 總計{total}",
         monthStatus: "本月狀態",
         monthSummary: "已用{used} 剩餘{left} 總計{total}",
         appraise: "品鑑",
@@ -231,9 +233,12 @@ export default {
         remark: "寄語",
         remarkPlaceholder: "請輸入寄語（必填）",
         insertCurrentRelease: "插入當前版本",
+        anonymity: "使用匿名品鑑",
+        anonymousRemark: "例行工作巡查",
         defaultRemark: "辛苦，感謝！",
         success: "操作成功",
         fetchFailed: "獲取失敗",
+        yearLimitExceeded: "操作失敗，已超出全年額度限制（{totalLimit}盒幣）",
     },
     boxcoinUser: {
         tooltip: "投幣",

@@ -222,6 +222,8 @@ export default {
     boxcoinAdmin: {
         tooltip: "Appraise",
         dialogTitle: "Appraisal Score",
+        yearStatus: "Yearly Quota",
+        yearSummary: "Used {used} Remaining {left} Total {total}",
         monthStatus: "This Month",
         monthSummary: "Used {used} Remaining {left} Total {total}",
         appraise: "Appraise",
@@ -231,9 +233,12 @@ export default {
         remark: "Message",
         remarkPlaceholder: "Enter a message (required)",
         insertCurrentRelease: "Insert current version",
+        anonymity: "Use anonymous appraisal",
+        anonymousRemark: "Routine work inspection",
         defaultRemark: "Thanks for your hard work!",
         success: "Success",
         fetchFailed: "Failed to fetch",
+        yearLimitExceeded: "Operation failed. Yearly quota exceeded ({totalLimit} BoxCoin).",
     },
     boxcoinUser: {
         tooltip: "Reward",
