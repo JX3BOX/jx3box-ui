@@ -145,7 +145,7 @@ export default {
     .lt(0);
     writing-mode: vertical-rl;
     .fz(12px);
-    background: @primary;
+    background: @v4primary;
     color: #fff;
     .h(100%);
     .x;
