@@ -83,6 +83,7 @@ import PostHeader from "./PostHeader.vue";
 import Creators from "./Creators.vue";
 import Collection from "./Collection.vue";
 import Thx from "./Thx.vue";
+import Comment from './Comment.vue';
 import RightAffix from "./RightAffix.vue";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
@@ -100,6 +101,7 @@ export default {
         Collection,
         Thx,
         Article,
+        Comment,
         RightAffix,
     },
     props: {
