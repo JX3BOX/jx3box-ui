@@ -85,6 +85,9 @@ export default {
             const urlParams = new URLSearchParams(window.location.search);
             const from = urlParams.get("from");
             from && sessionStorage.setItem("from", from);
+            if (checkIsApp) {
+                localStorage.setItem("__env", "app");
+            }
             if (isMiniProgram() || checkIsApp()) {
                 const appid = urlParams.get("appid");
                 const item = miniprogram?.find((item) => item.appid === appid);
