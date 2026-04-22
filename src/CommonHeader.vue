@@ -85,7 +85,7 @@ export default {
             const urlParams = new URLSearchParams(window.location.search);
             const from = urlParams.get("from");
             from && sessionStorage.setItem("from", from);
-            if (checkIsApp) {
+            if (checkIsApp()) {
                 localStorage.setItem("__env", "app");
             }
             if (isMiniProgram() || checkIsApp()) {
