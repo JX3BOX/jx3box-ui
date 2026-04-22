@@ -184,6 +184,46 @@
         "parentKey": "fb"
     },
     {
+        "key": "tool",
+        "link": "/tool/",
+        "label": "工具",
+        "client": "all",
+        "status": true,
+        "parentKey": ""
+    },
+    {
+        "key": "tool_post",
+        "link": "/tool",
+        "label": "教程资源",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
+        "key": "dbm",
+        "link": "/dbm/",
+        "label": "插件数据",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
+        "key": "database",
+        "link": "/app/database/",
+        "label": "数据大全",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
+        "key": "design",
+        "link": "/app/design/",
+        "label": "美术资源",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
         "key": "wiki",
         "link": "/cj/",
         "label": "百科",
@@ -262,46 +302,6 @@
         "client": "all",
         "status": true,
         "parentKey": "pvx"
-    },
-    {
-        "key": "tool",
-        "link": "/tool/",
-        "label": "工具",
-        "client": "all",
-        "status": true,
-        "parentKey": ""
-    },
-    {
-        "key": "tool_post",
-        "link": "/tool",
-        "label": "教程资源",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
-    },
-    {
-        "key": "dbm",
-        "link": "/dbm/",
-        "label": "插件数据",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
-    },
-    {
-        "key": "database",
-        "link": "/app/database/",
-        "label": "数据大全",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
-    },
-    {
-        "key": "design",
-        "link": "/app/design/",
-        "label": "美术资源",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
     },
     {
         "key": "bbs",
