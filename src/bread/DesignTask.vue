@@ -139,6 +139,10 @@ export default {
                     if (["achievement", "item", "quest", "knowledge"].includes(this.post?.post_type)) {
                         this.form.type = "wiki";
                     }
+                    // 当传入的 post 对象包含 subtype 字段时，优先使用 subtype 作为类型
+                    if (this.post?.subtype) {
+                        this.form.type = this.post.subtype;
+                    }
                 }
                 this.loadLogs();
 
@@ -191,7 +195,7 @@ export default {
         },
         loadLogs() {
             if (!this.post?.ID) return;
-            getDesignTask({ source_id: this.post?.ID }).then((res) => {
+            getDesignTask({ source_id: this.post?.ID, source_type: this.post?.post_type }).then((res) => {
                 this.logs = res.data.data || [];
             });
         },
