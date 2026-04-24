@@ -1,25 +1,27 @@
 <template>
     <header class="c-header" id="c-header" :class="{ isOverlay: overlayEnable && isOverlay }">
-        <div class="c-header-inner">
+        <div class="c-header__inner c-header-inner">
             <!-- logo -->
-            <header-logo />
+            <header-logo class="c-header__logo" />
 
             <!-- client -->
-            <header-client :defaultValue="client" />
+            <header-client class="c-header__client" :defaultValue="client" />
 
             <!-- search -->
-            <header-search :client="client" />
+            <header-search class="c-header__search" :client="client" />
 
             <!-- nav -->
-            <header-nav :client="client" />
+            <header-nav class="c-header__nav" :client="client" />
 
-            <slot></slot>
+            <div class="c-header__extra">
+                <slot></slot>
+            </div>
 
             <!-- user -->
-            <header-user ref="user" :client="client" :asset="asset" />
+            <header-user ref="user" class="c-header__user" :client="client" :asset="asset" />
         </div>
-        <header-box v-if="isMobile" class="c-header-jx3box" :overlayEnable="overlayEnable" />
-        <header-box2 v-else />
+        <header-box v-if="isMobile" class="c-header__box c-header-jx3box" :overlayEnable="overlayEnable" />
+        <header-box2 v-else class="c-header__box c-header__box--desktop" />
     </header>
 </template>
 
@@ -233,6 +235,15 @@ export default {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 
     transition: 0.5s ease-in-out;
+
+    &__inner {
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .flex;
+    }
 }
 .c-header.isOverlay {
     background-color: rgba(0, 0, 0, 0.85);
