@@ -80,44 +80,53 @@ export default {
     methods: {
         // webView检测
         checkIsWebView: function () {
-            if (window.navigator.userAgent.includes(KW)) {
-                document.documentElement.classList.add("env-app");
-            }
-
+            // 参数处理
             const urlParams = new URLSearchParams(window.location.search);
-            const from = urlParams.get("from");
-            from && sessionStorage.setItem("from", from);
-            if (checkIsApp()) {
+
+            // 环境判断缓存
+            const isApp = checkIsApp();
+            const isMp = isMiniProgram();
+
+            // App 环境缓存
+            if (isApp) {
                 localStorage.setItem("__env", "app");
             }
-            if (isMiniProgram() || checkIsApp()) {
-                const appid = urlParams.get("appid");
-                const item = miniprogram?.find((item) => item.appid === appid);
-                const from = urlParams.get("_from");
 
-                document.documentElement.classList.add("v-miniprogram");
-
-                if (from) {
-                    document.documentElement.classList.add("from-" + from);
-                }
-
-                if (appid && item) {
-                    document.documentElement.classList.add("env-miniprogram-" + item.id);
-
-                    window.JX3BOX_ENV = item.id?.toUpperCase() + "_MINIPROGRAM";
-                } else {
-                    document.documentElement.classList.add("wechat-miniprogram");
-
-                    window.JX3BOX_ENV = "MINIPROGRAM";
-
-                    // 微信小程序hack
-                    miniprogramHack();
-                }
+            // 小程序环境缓存
+            if (isMp) {
+                document.documentElement.classList.add("wechat-miniprogram");
+                window.JX3BOX_ENV = "MINIPROGRAM";
+                miniprogramHack();
             }
 
-            // 如果来自推栏
-            if (sessionStorage.getItem("from") == "tl") {
+            // 来源参数缓存
+            const from = urlParams.get("from")?.replace(/[^a-zA-Z0-9_-]/g, "");
+            if (from) {
+                sessionStorage.setItem("from", from);
+                document.documentElement.classList.add("from-" + from);
+            }
+
+            // 如果来自推栏 App
+            if (sessionStorage.getItem("from") === "tl") {
                 document.documentElement.classList.add("v-miniprogram");
+            }
+
+            // 移动容器模式：包含小程序或 App 内嵌环境
+            if (isMp || isApp) {
+                document.documentElement.classList.add("v-miniprogram");
+            }
+
+            // 来自自身小程序
+            const appid = urlParams.get("appid");
+            const internalApp = miniprogram?.find((item) => item.appid === appid);
+            if (appid && internalApp) {
+                document.documentElement.classList.add("env-miniprogram-" + internalApp.id);
+                window.JX3BOX_ENV = internalApp.id?.toUpperCase() + "_MINIPROGRAM";
+            }
+
+            // 仅安卓有效，基本不使用
+            if (window.navigator.userAgent.includes(KW)) {
+                document.documentElement.classList.add("env-app");
             }
         },
 
