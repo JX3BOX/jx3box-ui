@@ -38,11 +38,11 @@
         <!-- 样式分类（icon&more） -->
         <div class="m-icon-box" v-if="btnConfig.showIcon && !btnConfig.showHome">
             <div class="m-btn-box">
-                <!--        搜索按钮-->
+                <!-- 搜索按钮-->
                 <div v-if="btnConfig.showSearch" class="u-icon-d" @click="search">
                     <img class="u-icon" src="../assets/img/suspend/search.svg" svg-inline />
                 </div>
-                <!--        固定按钮-->
+                <!-- 固定按钮-->
                 <div
                     v-if="btnConfig.showFixed"
                     class="u-icon-d"
@@ -56,7 +56,7 @@
                     />
                     <img class="u-icon active" src="../assets/img/suspend/pin_slash_24.svg" svg-inline v-else />
                 </div>
-                <!--        收藏按钮-->
+                <!-- 收藏按钮-->
                 <div
                     v-if="btnConfig.showCollect"
                     class="u-icon-d"
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="m-more" v-if="btnConfig.showMore" @click="setMore">
-                <!--                <img class="u-icon" src="../assets/img/suspend/more.svg" svg-inline /> -->
+                <img class="u-icon" src="../assets/img/suspend/more.svg" svg-inline />
                 {{ $jx3boxT("jx3boxUi.suspendCommon.more", "更多") }}
             </div>
         </div>

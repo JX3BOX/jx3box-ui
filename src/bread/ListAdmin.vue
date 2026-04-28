@@ -16,6 +16,7 @@
             :append-to-body="true"
             :modal="false"
             :withHeader="false"
+            :size="drawerWidth"
         >
             <div class="c-admin-wrapper" v-loading="loading">
                 <el-divider content-position="left">主题管理</el-divider>
@@ -65,6 +66,9 @@ export default {
     computed: {
         hasRight() {
             return User.isEditor();
+        },
+        drawerWidth() {
+            return window.innerWidth > 768 ? "500px" : "100%";
         },
     },
     watch: {

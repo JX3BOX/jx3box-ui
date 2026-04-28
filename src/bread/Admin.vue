@@ -8,6 +8,7 @@
         :with-header="true"
         v-if="hasRight"
         :close-on-click-modal="true"
+        :size="drawerWidth"
     >
         <div class="c-admin-wrapper" ref="adminDrawer">
             <!-- <template v-if="isAdmin"> -->
@@ -260,6 +261,9 @@ export default {
             return this.marksOptions && Object.keys(this.marksOptions)
                 ? Object.assign({}, marks, this.marksOptions)
                 : marks;
+        },
+        drawerWidth: function () {
+            return window.innerWidth > 768 ? "500px" : "100%";
         },
     },
     methods: {

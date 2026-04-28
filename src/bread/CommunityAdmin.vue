@@ -8,6 +8,7 @@
         :modal="false"
         :withHeader="false"
         :close-on-click-modal="true"
+        :size="drawerWidth"
     >
         <div class="c-admin-wrapper c-community-wrapper">
             <el-divider content-position="left">信息设置</el-divider>
@@ -229,6 +230,9 @@ export default {
         },
         showColors() {
             return this.form.is_hight;
+        },
+        drawerWidth() {
+            return window.innerWidth > 768 ? "500px" : "100%";
         },
     },
     watch: {
