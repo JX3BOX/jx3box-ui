@@ -32,21 +32,21 @@ export default {
     data: function () {
         return {
             aboutLinks: [
-                { key: "teamMembers", name: "团队成员", href: "https://www.jx3box.com/about/" },
-                { key: "joinUs", name: "加入我们", href: "https://www.jx3box.com/notice/21899" },
-                { key: "devDocs", name: "开发文档", href: "https://www.jx3box.com/tool?subtype=4" },
+                { key: "teamMembers", name: "团队成员", href: "/about/" },
+                { key: "joinUs", name: "加入我们", href: "/notice/21899" },
+                { key: "devDocs", name: "开发文档", href: "/tool?subtype=4" },
                 { key: "codeRepo", name: "代码仓库", href: "https://github.com/JX3BOX" },
             ],
             legalLinks: [
-                { key: "userAgreement", name: "用户协议", href: "https://www.jx3box.com/about/license" },
-                { key: "creatorTreaty", name: "创作公约", href: "https://www.jx3box.com/about/treaty" },
-                { key: "privacyPolicy", name: "隐私政策", href: "https://www.jx3box.com/about/privacy" },
-                { key: "creatorIncentives", name: "创作激励", href: "https://www.jx3box.com/about/incentives" },
+                { key: "userAgreement", name: "用户协议", href: "/about/license" },
+                { key: "creatorTreaty", name: "创作公约", href: "/about/treaty" },
+                { key: "privacyPolicy", name: "隐私政策", href: "/about/privacy" },
+                { key: "creatorIncentives", name: "创作激励", href: "/about/incentives" },
             ],
             extraLinks: [
-                { key: "gameVersion", name: "游戏版本", href: "https://www.jx3box.com/topic" },
-                { key: "eventCenter", name: "活动中心", href: "https://www.jx3box.com/event" },
-                { key: "siteMap", name: "全站地图", href: "https://www.jx3box.com/app/" },
+                { key: "gameVersion", name: "游戏版本", href: "/topic" },
+                { key: "eventCenter", name: "活动中心", href: "/event" },
+                { key: "siteMap", name: "全站地图", href: "/app/" },
             ],
         };
     },
