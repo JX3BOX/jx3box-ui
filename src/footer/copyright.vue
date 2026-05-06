@@ -1,9 +1,6 @@
 <template>
-    <div
-        class="flex flex-col items-center justify-between pt-8 text-gray-500 md:flex-row"
-        style="border-top: 1px solid rgba(55, 65, 81, 1); font-size: 11px"
-    >
-        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
+    <div class="c-footer-copyright">
+        <div class="c-footer-copyright__main">
             <span>{{
                 $jx3boxT("jx3boxUi.commonFooter.copyright", "© 2019-{year} JX3BOX {poweredBy}", {
                     year: new Date().getFullYear(),
@@ -11,7 +8,7 @@
                 })
             }}</span>
             <a
-                class="text-gray-500 hover:underline"
+                class="c-footer-copyright__link c-footer-copyright__link--underline"
                 href="https://beian.miit.gov.cn/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -19,9 +16,9 @@
                 {{ $jx3boxT("jx3boxUi.commonFooter.icp", "湘ICP备2021002288号") }}
             </a>
         </div>
-        <div class="mt-4 flex items-center space-x-6 md:mt-0">
+        <div class="c-footer-copyright__extra">
             <a
-                class="text-gray-500 transition-colors hover:text-white"
+                class="c-footer-copyright__link"
                 href="https://rx-planet.com/contact"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -29,7 +26,7 @@
                 {{ $jx3boxT("jx3boxUi.commonFooter.contactUs", "联系我们") }}
             </a>
             <a
-                class="text-gray-500 transition-colors hover:text-white"
+                class="c-footer-copyright__link"
                 href="/dashboard/feedback"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -57,3 +54,65 @@ export default {
     mounted: function () {},
 };
 </script>
+
+<style lang="less">
+/* src/footer/copyright.vue */
+.c-footer-copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+    border-top: 1px solid #374151;
+    color: #6b7280;
+    font-size: 11px;
+    line-height: 16px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
+
+    &__main,
+    &__extra {
+        display: flex;
+        align-items: center;
+    }
+
+    &__main {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 24px;
+
+        @media (min-width: 768px) {
+            justify-content: flex-start;
+        }
+    }
+
+    &__extra {
+        margin-top: 16px;
+
+        > * + * {
+            margin-left: 24px;
+        }
+
+        @media (min-width: 768px) {
+            margin-top: 0;
+        }
+    }
+
+    &__link {
+        color: #6b7280;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #fff;
+        }
+
+        &--underline:hover {
+            color: #6b7280;
+            text-decoration: underline;
+        }
+    }
+}
+</style>

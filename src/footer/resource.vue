@@ -1,29 +1,29 @@
 <template>
-    <section class="lg:col-span-4 lg:col-start-9">
-        <h3 class="text-sm font-semibold tracking-wide text-white">
+    <section class="c-footer-resource">
+        <h3 class="c-footer-resource__title">
             {{ $jx3boxT("jx3boxUi.commonFooter.downloadCenter", "下载中心") }}
         </h3>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div class="c-footer-resource__grid">
             <div v-for="item in downloadLinks" :key="item.name">
                 <el-popover v-if="item.qrcode" trigger="hover" placement="top" popper-class="c-footer--v4__popover">
-                    <div class="flex flex-col items-center p-3">
+                    <div class="c-footer-resource__qrcode">
                         <img
-                            class="h-32 w-32 rounded-md object-cover"
+                            class="c-footer-resource__qrcode-img"
                             :src="item.qrcode"
                             :alt="getDownloadName(item)"
                         />
-                        <span class="mt-2 text-xs font-black">{{ getDownloadLabel(item) }}</span>
+                        <span class="c-footer-resource__qrcode-label">{{ getDownloadLabel(item) }}</span>
                     </div>
                     <template #reference>
                         <a
-                            class="flex h-12 items-center rounded-xl border border-gray-700 bg-gray-800 px-4 text-xs text-gray-300 transition hover:border-blue-500 hover:bg-gray-700"
+                            class="c-footer-resource__download"
                             :href="item.href || '#'"
                             :target="item.href ? '_blank' : null"
                             :rel="item.href ? 'noopener noreferrer' : null"
                             @click="handleLinkClick($event, item)"
                         >
-                            <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
-                                <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
+                            <span class="c-footer-resource__download-icon">
+                                <img :src="item.icon" :alt="getDownloadName(item)" />
                             </span>
                             <span>{{ getDownloadName(item) }}</span>
                         </a>
@@ -36,19 +36,19 @@
                     :show-after="150"
                     popper-class="c-footer--v4__popover"
                 >
-                    <div class="p-3 text-center text-xs font-semibold">
+                    <div class="c-footer-resource__placeholder">
                         {{ item.placeholder }}
                     </div>
                     <template #reference>
                         <a
-                            class="flex h-12 items-center rounded-xl border border-gray-700 bg-gray-800 px-4 text-xs text-gray-300 transition hover:border-blue-500 hover:bg-gray-700"
+                            class="c-footer-resource__download"
                             :href="item.href || '#'"
                             :target="item.href ? '_blank' : null"
                             :rel="item.href ? 'noopener noreferrer' : null"
                             @click="handleLinkClick($event, item)"
                         >
-                            <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
-                                <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
+                            <span class="c-footer-resource__download-icon">
+                                <img :src="item.icon" :alt="getDownloadName(item)" />
                             </span>
                             <span>{{ getDownloadName(item) }}</span>
                         </a>
@@ -56,49 +56,41 @@
                 </el-popover>
                 <a
                     v-else
-                    class="flex h-12 items-center rounded-xl border border-gray-700 bg-gray-800 px-4 text-xs text-gray-300 transition hover:border-blue-500 hover:bg-gray-700"
+                    class="c-footer-resource__download"
                     :href="item.href || '#'"
                     :target="item.href ? '_blank' : null"
                     :rel="item.href ? 'noopener noreferrer' : null"
                     @click="handleLinkClick($event, item)"
                 >
-                    <span class="mr-2.5 flex h-4 w-4 items-center justify-center">
-                        <img class="h-4 w-4" :src="item.icon" :alt="getDownloadName(item)" />
+                    <span class="c-footer-resource__download-icon">
+                        <img :src="item.icon" :alt="getDownloadName(item)" />
                     </span>
                     <span>{{ getDownloadName(item) }}</span>
                 </a>
             </div>
         </div>
 
-        <div
-            class="mt-4 flex items-center justify-between rounded-xl border p-4"
-            style="
-                border-color: rgba(59, 130, 246, 0.2);
-                background-image: linear-gradient(90deg, rgba(30, 64, 175, 0.2), rgba(31, 41, 55, 0.4));
-            "
-        >
-            <div class="flex items-center space-x-3">
+        <div class="c-footer-resource__qqbot">
+            <div class="c-footer-resource__qqbot-main">
                 <div
                     @click="gotoQQbot"
-                    class="flex h-10 w-10 items-center justify-center rounded-lg text-blue-400 cursor-pointer"
-                    style="background-color: rgba(59, 130, 246, 0.2)"
+                    class="c-footer-resource__qqbot-icon"
                 >
                     <img
-                        class="h-6 w-6"
                         svg-inline
                         src="../../assets/img/common/qqbot.svg"
                         :alt="$jx3boxT('jx3boxUi.commonFooter.qqBot', 'QQ机器人')"
                     />
                 </div>
-                <div @click="copyText('3889010020')" class="cursor-pointer">
-                    <p class="font-bold uppercase tracking-wider text-gray-500" style="font-size: 10px">
+                <div @click="copyText('3889010020')" class="c-footer-resource__qqbot-text">
+                    <p class="c-footer-resource__qqbot-label">
                         {{ $jx3boxT("jx3boxUi.commonFooter.qqBotService", "QQ 机器人服务") }}
                     </p>
-                    <p class="mt-1 font-mono text-sm font-semibold text-white">3889 010 020</p>
+                    <p class="c-footer-resource__qqbot-number">3889 010 020</p>
                 </div>
             </div>
             <a
-                class="rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-blue-500"
+                class="c-footer-resource__qqbot-button"
                 href="tencent://AddContact/?uin=3889010020&Site=www.jx3box.com&Menu=yes"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -184,3 +176,174 @@ export default {
     mounted: function () {},
 };
 </script>
+
+<style lang="less">
+/* src/footer/resource.vue */
+.c-footer-resource {
+    @media (min-width: 1024px) {
+        grid-column: 9 / span 4;
+    }
+
+    &__title {
+        margin: 0;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: 0.025em;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        margin-top: 16px;
+
+        @media (min-width: 640px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    &__qrcode {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px;
+    }
+
+    &__qrcode-img {
+        width: 128px;
+        height: 128px;
+        border-radius: 6px;
+        object-fit: cover;
+    }
+
+    &__qrcode-label {
+        margin-top: 8px;
+        font-size: 12px;
+        font-weight: 900;
+        line-height: 16px;
+    }
+
+    &__placeholder {
+        padding: 12px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
+    }
+
+    &__download {
+        display: flex;
+        align-items: center;
+        height: 48px;
+        padding: 0 16px;
+        border: 1px solid #374151;
+        border-radius: 12px;
+        background: #1f2937;
+        color: #d1d5db;
+        font-size: 12px;
+        line-height: 16px;
+        text-decoration: none;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+
+        &:hover {
+            border-color: #3b82f6;
+            background: #374151;
+        }
+    }
+
+    &__download-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+
+        img {
+            display: block;
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    &__qqbot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+        padding: 16px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        background-image: linear-gradient(90deg, rgba(30, 64, 175, 0.2), rgba(31, 41, 55, 0.4));
+    }
+
+    &__qqbot-main {
+        display: flex;
+        align-items: center;
+
+        > * + * {
+            margin-left: 12px;
+        }
+    }
+
+    &__qqbot-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+        cursor: pointer;
+
+        svg,
+        img {
+            display: block;
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &__qqbot-text {
+        cursor: pointer;
+    }
+
+    &__qqbot-label {
+        margin: 0;
+        color: #6b7280;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 14px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    &__qqbot-number {
+        margin: 4px 0 0;
+        color: #fff;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+    }
+
+    &__qqbot-button {
+        padding: 6px 12px;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background: #3b82f6;
+        }
+    }
+}
+</style>
