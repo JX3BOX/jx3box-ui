@@ -85,7 +85,7 @@
             <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.meta", "元信息") }}</el-divider>
             <div class="c-admin-info">
                 <div class="w-select c-admin-type">
-                    <div class="u-select-label">{{ $jx3boxT("jx3boxUi.admin.section", "板块") }}</div>
+                    <div class="u-select-label u-admin-select-label">{{ $jx3boxT("jx3boxUi.admin.section", "板块") }}</div>
                     <el-select
                         v-model="post_type"
                         :placeholder="$jx3boxT('jx3boxUi.admin.sectionPlaceholder', '请选择板块')"
