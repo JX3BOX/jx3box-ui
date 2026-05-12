@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-ui",
-    "version": "2.2.7",
+    "version": "2.2.8",
     "description": "JX3BOX Vue3 UI",
     "main": "index.js",
     "scripts": {

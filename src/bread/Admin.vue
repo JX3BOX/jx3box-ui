@@ -58,7 +58,7 @@
             <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.banner", "封面海报") }}</el-divider>
             <div class="c-admin-banner">
                 <el-upload
-                    class="c-admin-upload el-upload--picture-card"
+                    class="c-admin-upload"
                     :action="uploadurl"
                     :with-credentials="true"
                     :show-file-list="false"
@@ -66,7 +66,7 @@
                     :on-error="uploadFail"
                 >
                     <img v-if="post_banner" :src="post_banner" />
-                    <el-icon><Plus /></el-icon>
+                    <el-icon v-else><Plus /></el-icon>
                 </el-upload>
                 <el-input class="u-banner" v-model="post_banner">
                     <template #prepend>

@@ -62,26 +62,39 @@
     }
 }
 .c-admin-upload {
-    .w(100%) !important;
-    .x;
+    width: 100%;
 
     .el-upload {
-        .size(100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 148px;
+        overflow: hidden;
+        background-color: #fbfdff;
+        border: 1px dashed #c0ccda;
+        border-radius: 6px;
         box-sizing: border-box;
+        vertical-align: top;
     }
-    overflow: hidden;
 
-    background-color: #fbfdff;
-    border: 1px dashed #c0ccda;
-    border-radius: 6px;
-    box-sizing: border-box;
-    width: 148px;
-    height: 148px;
-    line-height: 146px;
-    vertical-align: top;
+    img {
+        display: block;
+        width: 100%;
+        min-height: 148px;
+        max-height: 240px;
+        object-fit: cover;
+    }
+
+    .el-icon {
+        font-size: 24px;
+        color: #8c939d;
+    }
 
     &:hover {
-        border-color: #409eff;
+        .el-upload {
+            border-color: #409eff;
+        }
     }
 }
 

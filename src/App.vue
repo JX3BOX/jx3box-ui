@@ -15,7 +15,7 @@
             </template>
             bread info
             <template #op-prepend>
-                <AdminDrop :post="community" :isCommunity="true" :user-id="8" :showMove="true" />
+                <AdminDrop :post="community" :isCommunity="false" :user-id="8" :showMove="true" />
             </template>
         </breadcrumb>
         <LeftSidebar :open="true" :uid="8">
