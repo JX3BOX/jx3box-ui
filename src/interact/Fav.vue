@@ -79,7 +79,7 @@ export default {
             });
         },
         addFav: function () {
-            addFav(this.postType, this.postId, this.postTitle).then((res) => {
+            addFav(this.postType, this.postId, this.postTitle, this.author_id).then((res) => {
                 this.favorite = res.id;
                 this.total++;
             });

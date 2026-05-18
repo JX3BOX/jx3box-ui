@@ -16,7 +16,7 @@
                 :client="client"
             />
             <Like :postId="postId" :postType="postType"></Like>
-            <fav :postId="postId" :postType="postType" :postTitle="postTitle"></fav>
+            <fav :postId="postId" :postType="postType" :postTitle="postTitle" :author_id="userId"></fav>
             <boxcoin-user
                 :postId="postId"
                 :postType="postType"

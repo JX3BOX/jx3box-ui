@@ -46,6 +46,7 @@
                 :userBoxcoinEnable="true"
                 :authors="authors"
                 :client="post_client"
+                :authorId="author_id"
                 showRss
                 v-if="showThx"
             />
@@ -72,6 +73,7 @@
             :postId="id"
             :postType="post_type"
             :postTitle="post_title"
+            :authorId="author_id"
             :showComment="id && allow_comment"
             @toComment="toComment($event)"
         ></right-affix>

@@ -39,8 +39,8 @@
                     :category="category"
                 />
                 <Like :postId="postId" :postType="postType"></Like>
-                <fav :postId="postId" :postType="postType" :postTitle="postTitle"></fav>
-                <Rss v-if="showRss" :type="postType" :id="postId" :title="postTitle"></Rss>
+                <fav :postId="postId" :postType="postType" :postTitle="postTitle" :author_id="postAuthorId"></fav>
+                <Rss v-if="showRss" :type="postType" :id="postId" :title="postTitle" :author_id="postAuthorId"></Rss>
                 <boxcoin-user
                     :postId="postId"
                     :postType="postType"
@@ -58,7 +58,7 @@
                 <watch-later
                     :category="postType"
                     :title="postTitle"
-                    :author-id="authorId"
+                    :author-id="postAuthorId"
                     :banner="banner"
                     :content-id="contentMetaId"
                 ></watch-later>
@@ -227,6 +227,9 @@ export default {
                 return "std";
             }
             return this.client;
+        },
+        postAuthorId: function () {
+            return this.authorId || this.userId;
         },
         showRecord() {
             // 当admin_boxcoin_visible为0时，作者本人和64及以上权限可见打赏记录
