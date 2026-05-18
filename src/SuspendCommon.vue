@@ -466,6 +466,7 @@ export default {
                     avatar: "", //作者头像
                     author_id: "", //作者id
                 },
+                author_id: "",
                 subscribeType: "", //订阅类型，用于区分调用百科、文章、作者、帖子等订阅接口，
                 postType: "", //订阅、收藏接口的type,如'face','bps','article'等
                 id: "", //页面数据ID，用于收藏订阅操作
@@ -499,6 +500,15 @@ export default {
         },
         fixIsActive() {
             return this.fixList.some((item) => item.url === this.fixPageConfig.url);
+        },
+        authorId() {
+            return this.drawerConfig.author_id || this.drawerConfig.author?.author_id || "";
+        },
+        subscribeData() {
+            return {
+                title: this.drawerConfig.title,
+                author_id: this.authorId,
+            };
         },
     },
     mounted() {
@@ -590,7 +600,7 @@ export default {
                     this.collectInfo = {};
                 });
             } else {
-                setCollect(conf.id, conf.postType, conf.title).then((res) => {
+                setCollect(conf.id, conf.postType, conf.title, this.authorId).then((res) => {
                     this.isCollect = true;
                     this.collectInfo = res.data?.data;
                 });
@@ -629,7 +639,7 @@ export default {
                         this.$emit("subscribe", { isSubscribe: false });
                     });
                 } else {
-                    subscribePost(conf.id, { title: conf.title }).then((res) => {
+                    subscribePost(conf.id, this.subscribeData).then((res) => {
                         this.isSubscribe = true;
                         this.subscribeInfo = res.data?.data;
                         this.$emit("subscribe", { isSubscribe: true });
@@ -644,7 +654,7 @@ export default {
                         this.$emit("subscribe", { isSubscribe: false });
                     });
                 } else {
-                    subscribeArticle(conf.postType, conf.id, { title: conf.title }).then((res) => {
+                    subscribeArticle(conf.postType, conf.id, this.subscribeData).then((res) => {
                         this.isSubscribe = true;
                         this.subscribeInfo = res.data?.data;
                         this.$emit("subscribe", { isSubscribe: true });
@@ -659,7 +669,7 @@ export default {
                         this.$emit("subscribe", { isSubscribe: false });
                     });
                 } else {
-                    subscribeWiki(conf.postType, conf.id, { title: conf.title }).then((res) => {
+                    subscribeWiki(conf.postType, conf.id, this.subscribeData).then((res) => {
                         this.isSubscribe = true;
                         this.subscribeInfo = res.data?.data;
                         this.$emit("subscribe", { isSubscribe: true });

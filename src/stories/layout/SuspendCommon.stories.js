@@ -30,6 +30,7 @@ export const Default = {
                 avatar: 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png',
                 author_id: 8,
             },
+            author_id: 8,
             subscribeType: '',
             postType: '',
             id: '',

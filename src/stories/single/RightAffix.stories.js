@@ -13,6 +13,7 @@ const meta = {
         postId: { control: 'number' },
         postType: { control: 'text' },
         postTitle: { control: 'text' },
+        authorId: { control: 'number' },
         showComment: { control: 'boolean' },
     },
 };
@@ -24,6 +25,7 @@ export const Default = {
         postId: 80449,
         postType: 'bbs',
         postTitle: '轻剑驭风版本攻略示例',
+        authorId: 8,
         showComment: true,
     },
     render: (args) => ({
@@ -58,6 +60,7 @@ export const Default = {
                     { name: 'postId', type: 'String | Number', default: '""', description: '当前文章 ID，用于收藏查询。' },
                     { name: 'postType', type: 'String', default: '""', description: '文章类型，例如 bbs / pvx。' },
                     { name: 'postTitle', type: 'String', default: '""', description: '文章标题，用于收藏请求。' },
+                    { name: 'authorId', type: 'String | Number', default: '""', description: '收藏请求携带的作者 UID。' },
                     { name: 'showComment', type: 'Boolean | Number', default: 'false', description: '是否展示评论入口按钮。' },
                 ],
             };
