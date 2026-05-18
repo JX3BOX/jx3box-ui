@@ -39,6 +39,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        author_id: {
+            type: [String, Number],
+            default: "",
+        },
     },
     data: function () {
         return {

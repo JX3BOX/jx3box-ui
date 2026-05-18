@@ -5,8 +5,8 @@ function hasFav(post_type, post_id) {
         return res.data.data;
     });
 }
-function addFav(post_type, post_id, post_title) {
-    return $next().post(`api/article/favorites/add/${post_id}/${post_type}`, { post_title }).then((res) => {
+function addFav(post_type, post_id, post_title, author_id) {
+    return $next().post(`api/article/favorites/add/${post_id}/${post_type}`, { post_title, author_id }).then((res) => {
         return res.data.data;
     });
 }
