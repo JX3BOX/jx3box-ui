@@ -235,7 +235,7 @@ export default {
             return this.appConfig.app_logo || APP_LOGO_FALLBACK;
         },
         appName() {
-            return "魔盒APP";
+            return "剑网3魔盒";
         },
         appVersion() {
             return this.appConfig.android_versions || "";
