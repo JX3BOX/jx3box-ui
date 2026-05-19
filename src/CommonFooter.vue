@@ -33,7 +33,7 @@ import FooterResource from "./footer/resource.vue";
 import FooterCopyright from "./footer/copyright.vue";
 import i18nMixin from "../i18n/mixin";
 export default {
-    name: "Footer",
+    name: "CommonFooter",
     mixins: [i18nMixin],
     components: {
         FooterOfficial,
@@ -53,7 +53,7 @@ body::after {
     bottom: 0;
     background: #111827;
 }
-.c-footer--v4{
+.c-footer--v4 {
     box-sizing: border-box;
     padding: 3rem 1.5rem;
     background: #111827;
@@ -113,7 +113,7 @@ body::after {
         font-size: 1.5rem;
         line-height: 2rem;
         font-weight: 700;
-        letter-spacing: -0.025em;
+        letter-spacing: 0;
         color: #fff;
     }
 
@@ -125,8 +125,8 @@ body::after {
         color: #9ca3af;
     }
 
-    .u-logo{
-        fill:#fff;
+    .u-logo {
+        fill: #fff;
     }
 }
 .c-footer--v4__popover {
