@@ -155,9 +155,7 @@ import i18nMixin from "../../i18n/mixin";
 import { getConfig } from "../../service/cms";
 
 const APP_LOGO_FALLBACK = "https://cdn.jx3box.com/design/app/logo/jx3box-icon-512.png";
-const APPLE_STORE_LINK = "https://apps.apple.com/cn/app/id6761459300";
-const HARMONY_STORE_LINK = "https://appgallery.huawei.com/app/xxx";
-const APP_CONFIG_KEYS = ["android_apk", "android_versions", "app_logo", "app_version_desc"];
+const APP_CONFIG_KEYS = ["android_apk", "android_versions", "app_logo", "app_version_desc", "apple_url", "harmony_url"];
 
 export default {
     name: "FooterResource",
@@ -246,10 +244,16 @@ export default {
         androidDownloadUrl() {
             return this.appConfig.android_apk || "";
         },
+        appleDownloadUrl() {
+            return this.appConfig.apple_url || "";
+        },
+        harmonyDownloadUrl() {
+            return this.appConfig.harmony_url || "";
+        },
         activeDownloadUrl() {
             if (this.activePlatform === "android") return this.androidDownloadUrl;
-            if (this.activePlatform === "harmonyNext") return HARMONY_STORE_LINK;
-            return APPLE_STORE_LINK;
+            if (this.activePlatform === "harmonyNext") return this.harmonyDownloadUrl;
+            return this.appleDownloadUrl;
         },
         activeDownloadText() {
             const map = {
