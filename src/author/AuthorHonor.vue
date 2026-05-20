@@ -71,7 +71,7 @@ export default {
             let only = honorConfig.only;
             let prefix = honorConfig.prefix;
             let regPrefix = honorConfig.prefix.match(/\{([^{}]+?)\}/g);
-            let ranking = honorConfig.ranking;
+            let ranking = honorConfig.ranking || [];
             let honorStr = honorConfig.year || "";
 
             if (!only) {
