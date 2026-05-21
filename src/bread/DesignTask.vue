@@ -179,7 +179,7 @@ export default {
             data.source_type = this.post?.post_type;
             data.source_id = String(this.post?.ID);
             data.link =
-                this.form.type === "wiki"
+                this.form.type === "wiki" && data.source_type !== 'community'
                     ? `/${this.post.post_type}/view/${this.post.ID}`
                     : `/${this.post?.post_type}/${this.post?.ID}`;
             data.flow = 0;
