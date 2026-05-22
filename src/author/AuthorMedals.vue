@@ -59,7 +59,7 @@ export default {
             });
         },
         showIcon(medal) {
-            return __cdn + "design/medals/user/" + medal + ".gif";
+            return __cdn + "design/medals/user/" + medal + ".webp";
         },
         getMedalLink(medal) {
             if (medal.medal_url) return `${__Root}${medal.medal_url}`;
