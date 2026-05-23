@@ -171,7 +171,7 @@
                         <a>100473604</a>
                     </strong>
                 </RightSideMsg>
-                <PostTopic type="bps" :id="48857"></PostTopic>
+                <PostTopic type="bps" :id="0"></PostTopic>
                 <div id="directory"></div>
                 <PostVersion :post="post"></PostVersion>
                 <PostCollection :id="59" />
@@ -232,8 +232,8 @@ export default {
         return {
             tab: "content",
 
-            post_id: "23240",
-            post: "",
+            post_id: "19382",
+            post: {},
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,
             item2: null,
@@ -249,6 +249,7 @@ export default {
 
             // 通用
             userpop: false,
+            uploadBanner: "",
             homeworkVisible: false,
 
             showSuspendCommon: false,
@@ -277,10 +278,12 @@ export default {
             console.log(data);
         },
         loadPost() {
-            getPost(this.post_id).then((res) => {
-                this.post = res.data.data;
-                this.$forceUpdate();
-            });
+            getPost(this.post_id)
+                .then((res) => {
+                    this.post = res.data.data;
+                    this.$forceUpdate();
+                })
+                .catch(() => {});
         },
         filterMeta(val) {
             console.log(val);
@@ -336,19 +339,23 @@ export default {
         },
         loadCommunity: function () {
             // 72
-            getTopicDetails(4339).then((res) => {
-                this.community = res.data.data;
-            });
+            getTopicDetails(4339)
+                .then((res) => {
+                    this.community = res.data.data;
+                })
+                .catch(() => {});
         },
         loadWiki() {
-            wiki.mix({ type: "achievement", id: 12572, client: this.client }).then((res) => {
-                const { post, source, compatible, isEmpty, users } = res;
-                this.wiki_post = {
-                    post: post,
-                    source: source,
-                    users,
-                };
-            });
+            wiki.mix({ type: "achievement", id: 12572, client: this.client })
+                .then((res) => {
+                    const { post, source, compatible, isEmpty, users } = res;
+                    this.wiki_post = {
+                        post: post,
+                        source: source,
+                        users,
+                    };
+                })
+                .catch(() => {});
         },
     },
     mounted() {

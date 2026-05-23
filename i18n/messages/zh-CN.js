@@ -93,6 +93,8 @@ export default {
             jdt: "秘境百强",
             wiki: "百科",
             cj: "成就百科",
+            achievement: "成就百科",
+            treasure: "奇遇百科",
             item: "物品百科",
             quest: "任务百科",
             knowledge: "通识百科",
@@ -379,9 +381,15 @@ export default {
     },
     commentUpload: {
         tip: "最多上传 {count} 张 {types} 格式图片，单张图片不能超过 {size} MB",
+        tipWithVideo: "最多上传 {count} 个附件，支持 {types}，图片不超过 {imageSize} MB，视频不超过 {videoSize} MB",
         exceed: "最多上传 {count} 张图片！",
+        exceedWithVideo: "最多上传 {count} 个附件！",
+        onlyTypes: "仅支持 {types} 格式图片！",
+        onlyTypesWithVideo: "仅支持 {types} 格式的图片和视频！",
         maxSize: "单张图片大小不能超过 {size} MB！",
+        maxSizeVideo: "单个视频大小不能超过 {size} MB！",
         uploadFailed: "图片上传失败!",
+        uploadFailedWithVideo: "附件上传失败!",
     },
     quickReply: {
         title: "快捷回复",
@@ -541,6 +549,7 @@ export default {
     adminDrop: {
         manage: "管理",
         setting: "设置",
+        edit: "编辑",
         message: "私信",
         push: "推送",
         pictureTask: "刷图",

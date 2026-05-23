@@ -1,7 +1,7 @@
 <template>
     <el-container class="c-comment" :class="{ 'c-comment-mask': showMask }" v-loading="loading">
         <el-main>
-            <CommentInputForm @submit="userSubmitInputForm" />
+            <CommentInputForm :support-video="supportVideo" @submit="userSubmitInputForm" />
             <div class="c-comment-panel">
                 <div class="u-order">
                     <span class="u-label">{{ $jx3boxT("jx3boxUi.comment.sortMode", "排序模式：") }}</span>
@@ -44,6 +44,7 @@
                         :item="item"
                         :category="category"
                         :power="commentPower"
+                        :support-video="supportVideo"
                         @deleteComment="deleteComment"
                         @setTopComment="setTopComment"
                         @setStarComment="setStarComment"
@@ -59,6 +60,7 @@
                     <CommentInputForm
                         @submit="userSubmitInputForm"
                         :isBottom="commentList.length > 5"
+                        :support-video="supportVideo"
                         v-if="commentList.length > 5"
                     />
                     <div class="u-pages">
@@ -107,6 +109,10 @@ export default {
         order: {
             type: String,
             default: "",
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {

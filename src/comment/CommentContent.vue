@@ -2,14 +2,26 @@
     <div class="u-cmt">
         <div class="u-text" v-if="content != ''" v-html="renderContent"></div>
         <div class="u-attachements" v-if="attachments.length">
-            <el-image
-                v-for="url in attachments"
-                :key="url"
-                :src="showAttachment(url)"
-                :preview-src-list="[showPreview(url)]"
-                lazy
-            ></el-image>
+            <template v-for="url in attachments" :key="url">
+                <video
+                    v-if="isVideoAttachment(url)"
+                    class="u-attachment-video"
+                    :src="showPreview(url)"
+                    playsinline
+                    preload="metadata"
+                    @click="openVideoPreview(url)"
+                ></video>
+                <el-image
+                    v-else
+                    :src="showAttachment(url)"
+                    :preview-src-list="[showPreview(url)]"
+                    lazy
+                ></el-image>
+            </template>
         </div>
+        <el-dialog v-model="videoPreview.visible" class="u-comment-video-dialog" width="min(92vw, 760px)">
+            <video class="u-comment-video-preview" :src="videoPreview.url" controls playsinline></video>
+        </el-dialog>
         <div class="u-toolbar u-toolbar--primary">
             <div class="u-toolbar-left">
                 <el-button v-if="!currentUserHadLike" link size="small" @click="doLike(true)"
@@ -122,6 +134,7 @@
                 <Uploader
                     v-if="showUploader"
                     ref="uploader"
+                    :support-video="supportVideo"
                     @onFinish="attachmentUploadFinish"
                     @onError="attachmentUplodError"
                 />
@@ -145,6 +158,8 @@ const { resolveImagePath } = utilModule;
 import { formatContent } from "../../utils/emotion";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
 import i18nMixin from "../../i18n/mixin";
+
+const VIDEO_EXTENSIONS = ["mp4", "mov", "webm", "m4v"];
 
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
@@ -212,6 +227,10 @@ export default {
             type: [Boolean, Number],
             default: false,
         },
+        supportVideo: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         Uploader,
@@ -229,6 +248,10 @@ export default {
             previewList: [],
             currentUserHadLike: this.isLike,
             hasLikeCount: this.likes,
+            videoPreview: {
+                url: "",
+                visible: false,
+            },
 
             renderContent: "",
         };
@@ -368,7 +391,19 @@ export default {
         showPreview: function (val) {
             return resolveImagePath(val);
         },
+        openVideoPreview(val) {
+            this.videoPreview = {
+                url: this.showPreview(val),
+                visible: true,
+            };
+        },
+        isVideoAttachment(val) {
+            const cleanUrl = this.showPreview(val).split("?")[0].split("#")[0];
+            const ext = cleanUrl.split(".").pop()?.toLowerCase() || "";
+            return VIDEO_EXTENSIONS.includes(ext);
+        },
         showAttachment: function (val) {
+            if (this.isVideoAttachment(val)) return this.showPreview(val);
             return resolveImagePath(val) + "?x-oss-process=style/comment_thumb";
         },
     },
@@ -446,6 +481,17 @@ export default {
             .el-image {
                 margin-right: 20px;
             }
+            .u-attachment-video {
+                display: inline-block;
+                width: 180px;
+                height: 120px;
+                max-width: 100%;
+                margin-right: 20px;
+                object-fit: cover;
+                cursor: pointer;
+                background: #000;
+                vertical-align: top;
+            }
         }
     }
     .u-up {
@@ -477,6 +523,25 @@ export default {
             }
         }
     }
+}
+
+.u-comment-video-dialog {
+    margin-top: 5vh;
+
+    .el-dialog__body {
+        max-height: calc(100vh - 120px);
+        padding: 12px;
+        overflow: hidden;
+    }
+}
+
+.u-comment-video-preview {
+    max-width: 100%;
+    max-height: calc(100vh - 160px);
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+    background: #000;
 }
 
 .c-comment-subbox {

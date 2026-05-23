@@ -31,6 +31,7 @@
                     :content="item.content"
                     :comment-id="item.id"
                     :attachments="stringToArray(item.attachments)"
+                    :support-video="supportVideo"
                     :can-delete="power.can_del || power.uid == item.userId"
                     :can-set-top="(power.is_author || power.is_editor) && !item.is_top"
                     :can-cancel-top="(power.is_author || power.is_editor) && item.is_top"
@@ -55,6 +56,7 @@
             :data="replyList"
             :pager="pager"
             :power="power"
+            :support-video="supportVideo"
             @addNewReply="addNewReply"
             @deleteReply="deleteReply"
             @goto="gotoReplyListIndex"
@@ -98,6 +100,10 @@ export default {
         username: {
             type: String,
             default: "",
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {

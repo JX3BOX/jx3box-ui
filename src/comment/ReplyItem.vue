@@ -33,6 +33,7 @@
             :username="reply.displayName"
             :user-href="profileLink(reply.userId)"
             :current-id="reply.id"
+            :support-video="supportVideo"
             @hideForm="showReplyForReplyFrom = false"
             @doReply="doReply"
         />
@@ -54,6 +55,10 @@ export default {
         power: {
             type: Object,
             required: true,
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {

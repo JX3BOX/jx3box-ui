@@ -8,6 +8,10 @@ const KEY = "cmt_order";
 const { __Links } = JX3BOX;
 const $ = $next({ interceptor: false, mute: true });
 
+function getLocalOrderMode() {
+    return localStorage.getItem(KEY) || "DESC";
+}
+
 export async function getOrderMode() {
     if (User.isLogin()) {
         return $cms({ mute: true })
@@ -17,12 +21,14 @@ export async function getOrderMode() {
                 },
             })
             .then((res) => {
-                return res.data.data;
+                return res.data.data || getLocalOrderMode();
+            })
+            .catch(() => {
+                return getLocalOrderMode();
             });
     } else {
         return new Promise((resolve) => {
-            const key = localStorage.getItem(KEY) || "DESC";
-            resolve(key);
+            resolve(getLocalOrderMode());
         });
     }
 }

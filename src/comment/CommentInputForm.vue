@@ -43,6 +43,7 @@
             <Uploader
                 class="u-uploader"
                 ref="uploader"
+                :support-video="supportVideo"
                 @onFinish="attachmentUploadFinish"
                 @onError="attachmentUploadError"
                 v-if="showUploader"
@@ -72,6 +73,10 @@ export default {
     props: {
         // 用于判定该评论组件是否在底部
         isBottom: {
+            type: Boolean,
+            default: false,
+        },
+        supportVideo: {
             type: Boolean,
             default: false,
         },

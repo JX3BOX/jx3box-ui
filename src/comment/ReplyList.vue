@@ -6,6 +6,7 @@
             :key="reply.id"
             :reply="reply"
             :power="power"
+            :support-video="supportVideo"
             @deleteReply="deleteReply"
             @addReply="addReply"
             @setLikeComment="setLikeComment"
@@ -58,6 +59,10 @@ export default {
                 pageTotal: 1,
                 total: 0,
             }),
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {

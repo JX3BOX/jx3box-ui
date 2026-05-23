@@ -54,7 +54,7 @@
             <!-- 评论 -->
             <div ref="commentView" class="m-single-comment">
                 <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.cmsSingle.comment", "评论") }}</el-divider>
-                <Comment :id="id" category="post" v-if="id && allow_comment" />
+                <Comment :id="id" category="post" :support-video="supportVideo" v-if="id && allow_comment" />
                 <el-alert
                     :title="$jx3boxT('jx3boxUi.cmsSingle.commentDisabled', '作者没有开启评论功能')"
                     type="warning"
@@ -118,6 +118,10 @@ export default {
         showThx: {
             type: Boolean,
             default: true,
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {

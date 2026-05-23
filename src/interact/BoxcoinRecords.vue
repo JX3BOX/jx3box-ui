@@ -144,12 +144,23 @@ export default {
     },
     methods: {
         loadData: function () {
-            getPostBoxcoinRecords(this.postType, this.postId, this.params).then((res) => {
-                this.list = res.data.data?.list || [];
-                this.total = res.data.data.page.total;
-                this.boxcoin = res.data.data.fromManager + res.data.data.fromUser;
-                this.$emit("update:boxcoin", this.boxcoin);
-            });
+            this.loading = true;
+            getPostBoxcoinRecords(this.postType, this.postId, this.params)
+                .then((res) => {
+                    this.list = res.data.data?.list || [];
+                    this.total = res.data.data.page.total;
+                    this.boxcoin = res.data.data.fromManager + res.data.data.fromUser;
+                    this.$emit("update:boxcoin", this.boxcoin);
+                })
+                .catch(() => {
+                    this.list = [];
+                    this.total = 0;
+                    this.boxcoin = 0;
+                    this.$emit("update:boxcoin", 0);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         recovery: function (item, i) {
             this.$alert(

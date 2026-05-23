@@ -249,56 +249,91 @@ export default {
         },
     },
     methods: {
+        resetBoxcoinQuota() {
+            this.admin_max = 0;
+            this.admin_min = 0;
+            this.admin_left = 0;
+            this.admin_total = 0;
+            this.admin_points = [100];
+            this.total_limit = 0;
+            this.post_type_used = 0;
+            this.user_left = 0;
+            this.user_points = [100];
+        },
         loadBoxcoinConfig: function () {
             User.isLogin() &&
-                getPostBoxcoinConfig(this.postType).then((res) => {
-                    this.admin_max = res.data.data.limit.admin_max || 0;
-                    this.admin_min = res.data.data.limit.admin_min || 0;
-                    this.admin_points = res.data.data.limit.admin_points || [10, 1000];
-                    this.admin_left = res.data.data.asManagerBoxCoinRemain || 0;
-                    this.admin_total = res.data.data.asManagerBoxCoinTotal || 0;
-                    this.total_limit = res.data.data.limit.total_limit || 0;
-                    this.post_type_used = res.data.data.asPostTypeBoxcoinHasUsedTotalAtCurrentYear || 0;
+                getPostBoxcoinConfig(this.postType)
+                    .then((res) => {
+                        this.admin_max = res.data.data.limit.admin_max || 0;
+                        this.admin_min = res.data.data.limit.admin_min || 0;
+                        this.admin_points = res.data.data.limit.admin_points || [10, 1000];
+                        this.admin_left = res.data.data.asManagerBoxCoinRemain || 0;
+                        this.admin_total = res.data.data.asManagerBoxCoinTotal || 0;
+                        this.total_limit = res.data.data.limit.total_limit || 0;
+                        this.post_type_used = res.data.data.asPostTypeBoxcoinHasUsedTotalAtCurrentYear || 0;
 
-                    this.user_points = res.data.data.limit.user_points || [10, 1000];
-                    // 根据多端展示剩余币
-                    // 作品是n端，接受n端币+all币
-                    if (this.finalClient == "origin") {
-                        this.user_left = res.data.data.asUserBoxCoinRemainOrigin + res.data.data.asUserBoxCoinRemainAll;
-                    } else if (this.finalClient == "std") {
-                        this.user_left = res.data.data.asUserBoxCoinRemainStd + res.data.data.asUserBoxCoinRemainAll;
-                    } else {
-                        this.user_left =
-                            res.data.data.asUserBoxCoinRemainAll +
-                            res.data.data.asUserBoxCoinRemainStd +
-                            res.data.data.asUserBoxCoinRemainOrigin;
-                    }
+                        this.user_points = res.data.data.limit.user_points || [10, 1000];
+                        // 根据多端展示剩余币
+                        // 作品是n端，接受n端币+all币
+                        if (this.finalClient == "origin") {
+                            this.user_left = res.data.data.asUserBoxCoinRemainOrigin + res.data.data.asUserBoxCoinRemainAll;
+                        } else if (this.finalClient == "std") {
+                            this.user_left = res.data.data.asUserBoxCoinRemainStd + res.data.data.asUserBoxCoinRemainAll;
+                        } else {
+                            this.user_left =
+                                res.data.data.asUserBoxCoinRemainAll +
+                                res.data.data.asUserBoxCoinRemainStd +
+                                res.data.data.asUserBoxCoinRemainOrigin;
+                        }
+                    })
+                    .catch(() => {
+                        this.resetBoxcoinQuota();
+                    });
+            getBoxcoinStatus()
+                .then((res) => {
+                    this.boxcoin_enable = !!~~res.data?.data?.val;
+                })
+                .catch(() => {
+                    this.boxcoin_enable = 0;
                 });
-            getBoxcoinStatus().then((res) => {
-                this.boxcoin_enable = !!~~res.data?.data?.val;
-            });
 
             getConfig({
                 key: "admin_boxcoin_visible",
-            }).then((res) => {
-                this.admin_boxcoin_visible = Number(res?.val);
-            });
+            })
+                .then((res) => {
+                    this.admin_boxcoin_visible = Number(res?.val);
+                })
+                .catch(() => {
+                    this.admin_boxcoin_visible = 1;
+                });
 
             getConfig({
                 key: `level_has_gift_permission`,
-            }).then((res) => {
-                User.isLogin() &&
-                    User.getAsset().then((data) => {
-                        const asset = data;
-                        this.lvEnough = asset && asset.experience >= Number(res?.val);
-                    });
-            });
+            })
+                .then((res) => {
+                    User.isLogin() &&
+                        User.getAsset()
+                            .then((data) => {
+                                const asset = data;
+                                this.lvEnough = asset && asset.experience >= Number(res?.val);
+                            })
+                            .catch(() => {
+                                this.lvEnough = false;
+                            });
+                })
+                .catch(() => {
+                    this.lvEnough = false;
+                });
 
             User.isLogin() &&
-                getUserPermission().then((res) => {
-                    const permissions = res.data.data.permission?.map((item) => item.action);
-                    this.hasPermission = permissions.includes(`manage_boxcoin_${this.postType}`);
-                });
+                getUserPermission()
+                    .then((res) => {
+                        const permissions = res.data.data.permission?.map((item) => item.action);
+                        this.hasPermission = permissions.includes(`manage_boxcoin_${this.postType}`);
+                    })
+                    .catch(() => {
+                        this.hasPermission = false;
+                    });
         },
         // 用户打赏
         updateRecord: function (data) {
