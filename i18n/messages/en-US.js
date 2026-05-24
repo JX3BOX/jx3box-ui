@@ -83,7 +83,7 @@ export default {
             pvp: "PvP",
             yanxi: "Martial Study",
             desert: "Battle Royale",
-            sandbox: "Sandbox Lookup",
+            arenatower: "Arena Tower",
             changelog: "Balance History",
             fb: "Dungeon",
             fb_post: "Dungeon Guides",

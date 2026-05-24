@@ -83,7 +83,7 @@ export default {
             pvp: "競技",
             yanxi: "武學研習",
             desert: "絕境戰場",
-            sandbox: "沙盤查詢",
+            arenatower: "揚刀大會",
             changelog: "技改歷史",
             fb: "副本",
             fb_post: "副本攻略",

@@ -128,9 +128,9 @@
         "parentKey": "pvp"
     },
     {
-        "key": "sandbox",
-        "link": "/pvp/sandbox",
-        "label": "沙盘查询",
+        "key": "arenatower",
+        "link": "/pvp/arenatower",
+        "label": "扬刀大会",
         "client": "std",
         "status": true,
         "parentKey": "pvp"

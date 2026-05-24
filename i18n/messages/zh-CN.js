@@ -83,7 +83,7 @@ export default {
             pvp: "竞技",
             yanxi: "武学研习",
             desert: "绝境战场",
-            sandbox: "沙盘查询",
+            arenatower: "扬刀大会",
             changelog: "技改历史",
             fb: "副本",
             fb_post: "副本攻略",

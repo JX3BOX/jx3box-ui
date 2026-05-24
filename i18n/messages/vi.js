@@ -83,7 +83,7 @@ export default {
             pvp: "PvP",
             yanxi: "Nghiên Cứu Võ Học",
             desert: "Chiến Trường Tuyệt Cảnh",
-            sandbox: "Tra Cứu Sandbox",
+            arenatower: "Arena Tower",
             changelog: "Lịch Sử Chỉnh Kỹ Năng",
             fb: "Phó bản",
             fb_post: "Hướng Dẫn Phó Bản",
