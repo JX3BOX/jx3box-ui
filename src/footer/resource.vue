@@ -113,6 +113,19 @@
                         <div v-if="activePlatform === 'android'" class="u-app-download-tip">
                             仅支持 Android 10 及以上系统
                         </div>
+                        <div
+                            v-if="activePlatform === 'harmonyNext'"
+                            class="u-app-download-tip"
+                        >
+                            鸿蒙6.0以下请<a
+                                class="u-app-download-tip__link"
+                                :class="{ 'is-disabled': !androidDownloadUrl }"
+                                :href="androidDownloadUrl || undefined"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                @click="handleAndroidPackageClick"
+                            >安装安卓包</a>
+                        </div>
                     </div>
                 </div>
 
@@ -350,6 +363,10 @@ export default {
         },
         handleLogoError(e) {
             e.target.src = APP_LOGO_FALLBACK;
+        },
+        handleAndroidPackageClick(e) {
+            if (this.androidDownloadUrl) return;
+            e.preventDefault();
         },
         gotoQQbot() {
             window.open("/qqbot", "_blank");
@@ -650,6 +667,22 @@ export default {
         font-size: 12px;
         line-height: 18px;
         white-space: nowrap;
+
+        &__link {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+
+            &:hover {
+                color: inherit;
+            }
+
+            &.is-disabled {
+                cursor: not-allowed;
+                opacity: 0.6;
+                pointer-events: none;
+            }
+        }
     }
 
     .u-app-preview {
