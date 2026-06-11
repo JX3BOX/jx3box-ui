@@ -14,7 +14,7 @@
                         v-for="item in categoryList"
                         :key="item.id"
                         :label="item.name"
-                        :value="item.name"
+                        :value="item.mark"
                     ></el-option>
                 </el-select>
             </el-form-item>
