@@ -8,6 +8,7 @@
         "serve": "vue-cli-service serve --mode production",
         "debug": "vue-cli-service serve --mode debug",
         "storybook": "storybook dev -p 6006",
+        "check-storybook-coverage": "node src/stories/check-public-coverage.cjs",
         "build-storybook": "storybook build",
         "build": "npm run build:prod",
         "build:dev": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vue-cli-service build --mode development",

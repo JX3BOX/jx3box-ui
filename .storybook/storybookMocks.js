@@ -185,6 +185,14 @@ export function resolveStorybookMock(config) {
         return respond(config, { code: 0, data: { id: 1, totalFavorites: 12 } });
     }
 
+    if (method === 'post' && path === '/api/cms/manage/message') {
+        return respond(config, { code: 0, data: { id: 1 } });
+    }
+
+    if (method === 'post' && path === '/api/cms/qqbot/picture_task') {
+        return respond(config, { code: 0, data: { task_id: 'storybook-picture-task' } });
+    }
+
     if (method === 'get' && path === '/api/vip/i') {
         return respond(config, {
             data: {

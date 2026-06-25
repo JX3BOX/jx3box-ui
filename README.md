@@ -3,6 +3,26 @@
 1. App.vue 用于平时做组件开发临时预览
 2. Storybook 用于协作开发共享，注意编写好 props 注释
 
+## Storybook
+
+-   启动预览：`npm run storybook`
+-   静态构建：`npm run build-storybook`
+-   检查公共导出覆盖：`npm run check-storybook-coverage`
+
+### 编写规范
+
+-   对外导出的组件需要有独立 story，路径按模块归类到 `src/stories/<domain>/<Component>.stories.js`。
+-   story 优先提供真实使用场景和关键状态，配合 `argTypes` 暴露常用入参。
+-   props 说明使用 `src/stories/components/StoryPropsTable.vue` 手写维护；当前 Storybook 配置关闭了 docgen。
+-   内容页或布局相关组件优先复用 `src/stories/layout/StorybookShell.vue`，避免每个 story 重复搭上下文。
+-   需要接口数据时优先复用 `src/stories/mockData.js`，并在 `.storybook/storybookMocks.js` 增加 mock；不要让 Storybook 预览依赖真实服务。
+-   新增公共导出组件后，先跑 `npm run check-storybook-coverage`，再跑 `npm run build-storybook`。
+
+### 当前补全节奏
+
+-   第一阶段：优先保证 `index.js` 对外导出的组件均有 Storybook 示例。
+-   第二阶段：按目录补齐内部组件，优先级建议为 `interact`、`bread`、`author/comment/header/footer/upload`。
+
 ## 模块
 
 ### 全局
