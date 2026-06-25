@@ -207,7 +207,8 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
+/* src/author/AuthorGift.vue */
 .c-author-gift {
     .u-btn {
         // @color: #f9afd4;
@@ -247,7 +248,7 @@ export default {
         }
         b {
             // color:#49c10f;
-            // color:@color-link;
+            // color:var(--el-color-primary);
             color: #fba524;
             .fz(20px,1);
             .dbi;

@@ -1,8 +1,12 @@
 <template>
     <div class="c-post-version" v-if="list && list.length">
         <div class="m-title">
-            <div class="u-title"><el-icon class="u-icon"><Clock /></el-icon>历史版本</div>
-            <div class="u-op" @click="toggle"><el-icon><DCaret></DCaret></el-icon> 折叠</div>
+            <div class="u-title">
+                <el-icon class="u-icon"><Clock /></el-icon>历史版本
+            </div>
+            <div class="u-op" @click="toggle">
+                <el-icon><DCaret></DCaret></el-icon> 折叠
+            </div>
         </div>
         <transition name="collapse">
             <ul v-show="show" class="u-list">
@@ -122,6 +126,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/single/PostVersion.vue */
 .c-post-version {
     .m-title {
         .flex;
@@ -130,7 +135,8 @@ export default {
         //margin-bottom: 5px;
         line-height: 24px;
         .u-op {
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             line-height: 18px;
             //float: right;
             padding: 0 5px;
@@ -144,12 +150,13 @@ export default {
     }
     .u-title {
         //font-weight: 400;
-        font-size: 15px;
-        line-height: 24px;;
-        color:#333;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 18px;
+        color: #333;
         .flex;
         align-items: center;
-        gap: 5px;
+        gap: 3px;
         .u-icon {
             font-size: 18px;
         }

@@ -226,7 +226,8 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
+/* src/interact/BoxcoinUser.vue */
 .w-boxcoin-user {
     .dbi;
     .x(left);
@@ -244,7 +245,7 @@ export default {
         .ml(10px);
     }
     .u-charge {
-        .underline(@color-link);
+        .underline(var(--el-color-primary));
         .ml(10px);
     }
 }

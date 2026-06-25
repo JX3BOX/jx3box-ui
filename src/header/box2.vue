@@ -229,6 +229,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/box2.vue */
 .c-jx3box2-mask {
     position: fixed;
     left: 0;

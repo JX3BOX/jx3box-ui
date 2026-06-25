@@ -13,8 +13,8 @@
             </div>
             <!-- <AuthorLink class="u-block u-links" :uid="uid" :data="data" /> -->
             <AuthorMedals class="u-block u-trophy" :uid="uid" />
-            <!-- <AuthorTeams class="u-block u-teams" :uid="uid" />
-            <AuthorFans class="u-block u-fans" :uid="uid" /> -->
+            <!-- <AuthorTeams class="u-block u-teams" :uid="uid" /> -->
+            <!-- <AuthorFans class="u-block u-fans" :uid="uid" /> -->
             <slot></slot>
             <AuthorPosts class="u-block u-posts" :uid="uid" />
         </template>
@@ -77,5 +77,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Author.vue */
 @import "../../assets/css/single/author.less";
 </style>

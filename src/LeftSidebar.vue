@@ -65,7 +65,7 @@ export default {
             Bus.emit("toggleLeftSide", status);
         },
         showDecoration: function (val, type) {
-            return JX3BOX.__imgPath + `decoration/images/${val}/${type}.png`;
+            return JX3BOX.__cdn + `design/decoration/images/${val}/${type}.png`;
         },
         getDecoration() {
             if (!this.user_id) {
@@ -108,7 +108,7 @@ export default {
         };
         Bus.on("toggleLeftSide", this.__toggleLeftSideHandler);
 
-        if (window.innerWidth < 1024) {
+        if (window.innerWidth < 1200) {
             this.isOpen = false;
 
             this.__docClickHandler = () => {
@@ -126,6 +126,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/LeftSidebar.vue */
 @import "../assets/css/common/left-sidebar.less";
 // 虚拟装扮主题
 .m-theme {

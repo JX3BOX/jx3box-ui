@@ -4,7 +4,9 @@
             <div class="c-post-collection-title">
                 <el-icon class="u-icon"><Connection>></Connection></el-icon> 关联
             </div>
-            <div class="u-op" @click="toggle"><el-icon><DCaret></DCaret></el-icon> 折叠</div>
+            <div class="u-op" @click="toggle">
+                <el-icon><DCaret></DCaret></el-icon> 折叠
+            </div>
         </div>
         <transition name="collapse">
             <ul v-show="show" class="c-post-collection-list">
@@ -75,6 +77,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/single/PostCollection.vue */
 .c-post-collection {
     .m-title {
         .flex;
@@ -82,7 +85,8 @@ export default {
         align-items: center;
         line-height: 24px;
         .u-op {
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             line-height: 18px;
             padding: 0 5px;
             color: #cdd1db;
@@ -101,13 +105,13 @@ export default {
         }
     }
     .c-post-collection-title {
-        font-weight: 500;
-        line-height: 24px;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 18px;
+        color: #333;
         .flex;
         align-items: center;
-        font-size: 15px;
-        gap: 5px;
-        color: #333;
+        gap: 3px;
     }
     .u-icon {
         font-size: 18px;

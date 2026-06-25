@@ -3,6 +3,7 @@ import CommonHeader from "./src/CommonHeader.vue";
 import Footer from "./src/Footer.vue";
 import CommonFooter from "./src/CommonFooter.vue";
 import Icon from "./src/Icon.vue";
+import CommonBottom from "./src/CommonBottom.vue";
 
 // 布局
 import Main from "./src/Main.vue";
@@ -10,6 +11,7 @@ import Breadcrumb from "./src/Breadcrumb.vue";
 import LeftSidebar from "./src/LeftSidebar.vue";
 import RightSidebar from "./src/RightSidebar.vue";
 import LeftSideToggle from "./src/LeftSideToggle.vue";
+import RightSideMsg from "./src/RightSideMsg.vue";
 
 // 列表页
 import markBy from "./src/filters/markBy.vue";
@@ -30,6 +32,7 @@ import Thx from "./src/single/Thx.vue";
 import UserPop from "./src/author/UserPop.vue";
 import SuspendCommon from "./src/SuspendCommon.vue";
 import AdminDrop from "./src/bread/AdminDrop.vue";
+import Copy from "./src/interact/Copy.vue";
 
 import {
     Jx3boxUiI18n,
@@ -45,12 +48,14 @@ const components = {
     CommonFooter,
     Footer,
     Icon,
+    CommonBottom,
 
     Main,
     Breadcrumb,
     LeftSidebar,
     RightSidebar,
     LeftSideToggle,
+    RightSideMsg,
 
     tagBy,
     orderBy,
@@ -68,7 +73,8 @@ const components = {
     UserPop,
     SuspendCommon,
     AdminDrop,
-}
+    Copy,
+};
 
 const install = function (app) {
     Object.keys(components).forEach((key) => {

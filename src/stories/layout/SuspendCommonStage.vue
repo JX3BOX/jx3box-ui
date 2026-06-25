@@ -31,6 +31,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/stories/layout/SuspendCommonStage.vue */
 .suspend-stage {
     min-height: 100vh;
     display: flex;

@@ -38,11 +38,11 @@
         <!-- 样式分类（icon&more） -->
         <div class="m-icon-box" v-if="btnConfig.showIcon && !btnConfig.showHome">
             <div class="m-btn-box">
-                <!--        搜索按钮-->
+                <!-- 搜索按钮-->
                 <div v-if="btnConfig.showSearch" class="u-icon-d" @click="search">
                     <img class="u-icon" src="../assets/img/suspend/search.svg" svg-inline />
                 </div>
-                <!--        固定按钮-->
+                <!-- 固定按钮-->
                 <div
                     v-if="btnConfig.showFixed"
                     class="u-icon-d"
@@ -56,7 +56,7 @@
                     />
                     <img class="u-icon active" src="../assets/img/suspend/pin_slash_24.svg" svg-inline v-else />
                 </div>
-                <!--        收藏按钮-->
+                <!-- 收藏按钮-->
                 <div
                     v-if="btnConfig.showCollect"
                     class="u-icon-d"
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="m-more" v-if="btnConfig.showMore" @click="setMore">
-                <!--                <img class="u-icon" src="../assets/img/suspend/more.svg" svg-inline /> -->
+                <img class="u-icon" src="../assets/img/suspend/more.svg" svg-inline />
                 {{ $jx3boxT("jx3boxUi.suspendCommon.more", "更多") }}
             </div>
         </div>
@@ -466,6 +466,7 @@ export default {
                     avatar: "", //作者头像
                     author_id: "", //作者id
                 },
+                author_id: "",
                 subscribeType: "", //订阅类型，用于区分调用百科、文章、作者、帖子等订阅接口，
                 postType: "", //订阅、收藏接口的type,如'face','bps','article'等
                 id: "", //页面数据ID，用于收藏订阅操作
@@ -499,6 +500,15 @@ export default {
         },
         fixIsActive() {
             return this.fixList.some((item) => item.url === this.fixPageConfig.url);
+        },
+        authorId() {
+            return this.drawerConfig.author_id || this.drawerConfig.author?.author_id || "";
+        },
+        subscribeData() {
+            return {
+                title: this.drawerConfig.title,
+                author_id: this.authorId,
+            };
         },
     },
     mounted() {
@@ -590,7 +600,7 @@ export default {
                     this.collectInfo = {};
                 });
             } else {
-                setCollect(conf.id, conf.postType, conf.title).then((res) => {
+                setCollect(conf.id, conf.postType, conf.title, this.authorId).then((res) => {
                     this.isCollect = true;
                     this.collectInfo = res.data?.data;
                 });
@@ -629,7 +639,7 @@ export default {
                         this.$emit("subscribe", { isSubscribe: false });
                     });
                 } else {
-                    subscribePost(conf.id, { title: conf.title }).then((res) => {
+                    subscribePost(conf.id, this.subscribeData).then((res) => {
                         this.isSubscribe = true;
                         this.subscribeInfo = res.data?.data;
                         this.$emit("subscribe", { isSubscribe: true });
@@ -644,7 +654,7 @@ export default {
                         this.$emit("subscribe", { isSubscribe: false });
                     });
                 } else {
-                    subscribeArticle(conf.postType, conf.id, { title: conf.title }).then((res) => {
+                    subscribeArticle(conf.postType, conf.id, this.subscribeData).then((res) => {
                         this.isSubscribe = true;
                         this.subscribeInfo = res.data?.data;
                         this.$emit("subscribe", { isSubscribe: true });
@@ -659,7 +669,7 @@ export default {
                         this.$emit("subscribe", { isSubscribe: false });
                     });
                 } else {
-                    subscribeWiki(conf.postType, conf.id, { title: conf.title }).then((res) => {
+                    subscribeWiki(conf.postType, conf.id, this.subscribeData).then((res) => {
                         this.isSubscribe = true;
                         this.subscribeInfo = res.data?.data;
                         this.$emit("subscribe", { isSubscribe: true });
@@ -715,5 +725,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/SuspendCommon.vue */
 @import "../assets/css/common/suspend-common.less";
 </style>

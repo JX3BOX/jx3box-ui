@@ -8,6 +8,7 @@
         :with-header="true"
         v-if="hasRight"
         :close-on-click-modal="true"
+        :size="drawerWidth"
     >
         <div class="c-admin-wrapper" ref="adminDrawer">
             <!-- <template v-if="isAdmin"> -->
@@ -57,7 +58,7 @@
             <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.banner", "封面海报") }}</el-divider>
             <div class="c-admin-banner">
                 <el-upload
-                    class="c-admin-upload el-upload--picture-card"
+                    class="c-admin-upload"
                     :action="uploadurl"
                     :with-credentials="true"
                     :show-file-list="false"
@@ -65,7 +66,7 @@
                     :on-error="uploadFail"
                 >
                     <img v-if="post_banner" :src="post_banner" />
-                    <el-icon><Plus /></el-icon>
+                    <el-icon v-else><Plus /></el-icon>
                 </el-upload>
                 <el-input class="u-banner" v-model="post_banner">
                     <template #prepend>
@@ -83,13 +84,13 @@
 
             <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.admin.meta", "元信息") }}</el-divider>
             <div class="c-admin-info">
-                <div class="w-select c-admin-type">
-                    <div class="u-select-label">{{ $jx3boxT("jx3boxUi.admin.section", "板块") }}</div>
+                <div class="c-admin-select c-admin-type">
+                    <div class="c-admin-select__label">{{ $jx3boxT("jx3boxUi.admin.section", "板块") }}</div>
                     <el-select
                         v-model="post_type"
                         :placeholder="$jx3boxT('jx3boxUi.admin.sectionPlaceholder', '请选择板块')"
                         style="width: 100%"
-                        class="u-select drawer-item-content"
+                        class="c-admin-select__control drawer-item-content"
                         :disabled="appDisabled"
                     >
                         <el-option
@@ -260,6 +261,9 @@ export default {
             return this.marksOptions && Object.keys(this.marksOptions)
                 ? Object.assign({}, marks, this.marksOptions)
                 : marks;
+        },
+        drawerWidth: function () {
+            return window.innerWidth > 768 ? "500px" : "100%";
         },
     },
     methods: {
@@ -432,5 +436,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/Admin.vue */
 @import "../../assets/css/bread/admin.less";
 </style>

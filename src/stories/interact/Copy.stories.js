@@ -1,0 +1,80 @@
+import Copy from '../../interact/Copy.vue';
+import StoryPropsTable from '../components/StoryPropsTable.vue';
+
+const meta = {
+    title: 'Interact/Copy',
+    component: Copy,
+    parameters: {
+        layout: 'fullscreen',
+    },
+    argTypes: {
+        value: { control: 'text' },
+        tip: { control: 'text' },
+        throttle: { control: { type: 'number', min: 0, max: 3000, step: 100 } },
+    },
+};
+
+export default meta;
+
+export const Default = {
+    args: {
+        value: 'https://www.jx3box.com/storybook/copy',
+        tip: '',
+        throttle: 1500,
+    },
+    render: (args) => ({
+        components: { Copy, StoryPropsTable },
+        setup() {
+            return {
+                args,
+                propsInfo: [
+                    { name: 'value', type: 'String | Number | Function', default: '""', description: '复制内容，函数形式会在点击时实时取值。' },
+                    { name: 'tip', type: 'String', default: '""', description: '自定义复制成功提示，留空时使用默认文案。' },
+                    { name: 'throttle', type: 'Number', default: '1500', description: '复制触发节流间隔，单位毫秒。' },
+                    { name: '@success', type: 'Event', default: '-', description: '复制成功时返回复制内容。' },
+                    { name: '@error', type: 'Event', default: '-', description: '复制失败时返回错误信息。' },
+                ],
+            };
+        },
+        data() {
+            return {
+                dynamicCount: 1,
+                lastCopied: '',
+            };
+        },
+        methods: {
+            getDynamicValue() {
+                return `JX3BOX-${this.dynamicCount++}`;
+            },
+            handleSuccess(value) {
+                this.lastCopied = value;
+            },
+            handleError(error) {
+                this.lastCopied = String(error);
+            },
+        },
+        template: `
+            <div style="display:grid;gap:24px;padding:32px;background:#f5f7fb;min-height:100vh;">
+                <section style="display:grid;gap:18px;border-radius:20px;background:rgba(255,255,255,0.92);padding:24px;box-shadow:0 24px 60px rgba(15,23,42,0.08);">
+                    <div>
+                        <h2 style="margin:0;font-size:28px;color:#0f172a;">Copy</h2>
+                        <p style="margin:12px 0 0;color:#475569;line-height:1.8;">点击或键盘触发复制，成功后会在触发元素上方显示 toast。</p>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
+                        <Copy v-bind="args" @success="handleSuccess" @error="handleError">
+                            <el-button type="primary">复制 Args 内容</el-button>
+                        </Copy>
+                        <Copy value="自定义提示内容" tip="链接已复制" @success="handleSuccess" @error="handleError">
+                            <el-button>自定义提示</el-button>
+                        </Copy>
+                        <Copy :value="getDynamicValue" tip="动态编号已复制" :throttle="0" @success="handleSuccess" @error="handleError">
+                            <el-tag size="large" style="cursor:pointer;">复制动态值</el-tag>
+                        </Copy>
+                    </div>
+                    <div style="font-size:13px;color:#64748b;">最近复制：{{ lastCopied || '尚未触发' }}</div>
+                </section>
+                <StoryPropsTable title="Copy" description="复制触发器参数和事件说明。" :items="propsInfo" />
+            </div>
+        `,
+    }),
+};

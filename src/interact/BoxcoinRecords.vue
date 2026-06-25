@@ -41,9 +41,9 @@
                     </span>
                     <span class="u-meta u-remark">{{ item.remark }}</span>
                     <time class="u-meta u-time">{{ showTime(item.created_at) }}</time>
-                    <span class="u-client" v-if="isSuperAdmin">{{ item.client }}</span>
                     <span class="u-delete" v-if="isSuperAdmin" @click="recovery(item, i)">
                         <i class="Delete"></i>{{ $jx3boxT("jx3boxUi.boxcoinRecords.revoke", "撤销") }}
+                        (<span class="u-client">{{ item.client }}</span>)
                     </span>
                 </li>
             </ul>
@@ -56,6 +56,7 @@
             :page-size="per"
             :total="total"
             v-model="page"
+            center
         ></el-pagination>
     </div>
 </template>
@@ -143,12 +144,23 @@ export default {
     },
     methods: {
         loadData: function () {
-            getPostBoxcoinRecords(this.postType, this.postId, this.params).then((res) => {
-                this.list = res.data.data?.list || [];
-                this.total = res.data.data.page.total;
-                this.boxcoin = res.data.data.fromManager + res.data.data.fromUser;
-                this.$emit("update:boxcoin", this.boxcoin);
-            });
+            this.loading = true;
+            getPostBoxcoinRecords(this.postType, this.postId, this.params)
+                .then((res) => {
+                    this.list = res.data.data?.list || [];
+                    this.total = res.data.data.page.total;
+                    this.boxcoin = res.data.data.fromManager + res.data.data.fromUser;
+                    this.$emit("update:boxcoin", this.boxcoin);
+                })
+                .catch(() => {
+                    this.list = [];
+                    this.total = 0;
+                    this.boxcoin = 0;
+                    this.$emit("update:boxcoin", 0);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         recovery: function (item, i) {
             this.$alert(
@@ -177,3 +189,15 @@ export default {
     },
 };
 </script>
+
+
+<style lang="less">
+/* src/interact/BoxcoinRecords.vue */
+.w-boxcoin-records-pages{
+
+
+
+    .flex(x);
+    margin-top:5px;
+}
+</style>

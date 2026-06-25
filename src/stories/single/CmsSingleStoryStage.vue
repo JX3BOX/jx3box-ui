@@ -37,6 +37,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/stories/single/CmsSingleStoryStage.vue */
 .story-cmssingle-stage {
     display: grid;
     gap: 24px;

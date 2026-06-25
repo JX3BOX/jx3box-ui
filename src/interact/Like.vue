@@ -42,6 +42,7 @@ export default {
     },
     methods: {
         init: function () {
+            if (!this.ready) return;
             this.loadStat();
         },
         loadStat: function () {
@@ -60,7 +61,13 @@ export default {
         },
     },
     watch: {
-        postId: function () {
+        postId: {
+            immediate: true,
+            handler: function () {
+                this.init();
+            },
+        },
+        postType: function () {
             this.init();
         },
     },
@@ -68,5 +75,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Like.vue */
 @import "../../assets/css/interact/like2.less";
 </style>

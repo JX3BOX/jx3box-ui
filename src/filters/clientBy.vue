@@ -75,6 +75,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/filters/clientBy.vue */
 .w-filter-client {
     font-size: 0;
     ul,
@@ -102,9 +103,9 @@ export default {
         .pointer;
 
         &.on {
-            background-color: @color-link;
+            background-color: var(--el-color-primary);
             color: #fff;
-            border-color: darken(@color-link, 5%);
+            border-color: var(--el-color-primary);
         }
     }
 }

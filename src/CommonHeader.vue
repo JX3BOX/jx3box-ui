@@ -1,25 +1,27 @@
 <template>
     <header class="c-header" id="c-header" :class="{ isOverlay: overlayEnable && isOverlay }">
-        <div class="c-header-inner">
+        <div class="c-header__inner c-header-inner">
             <!-- logo -->
-            <header-logo />
+            <header-logo class="c-header__logo" />
 
             <!-- client -->
-            <header-client :defaultValue="client" />
+            <header-client class="c-header__client" :defaultValue="client" />
 
             <!-- search -->
-            <header-search :client="client" />
+            <header-search class="c-header__search" :client="client" />
 
             <!-- nav -->
-            <header-nav :client="client" />
+            <header-nav class="c-header__nav" :client="client" />
 
-            <slot></slot>
+            <div class="c-header__extra">
+                <slot></slot>
+            </div>
 
             <!-- user -->
-            <header-user ref="user" :client="client" :asset="asset" />
+            <header-user ref="user" class="c-header__user" :client="client" :asset="asset" />
         </div>
-        <header-box v-if="isMobile" class="c-header-jx3box" :overlayEnable="overlayEnable" />
-        <header-box2 v-else />
+        <header-box v-if="isMobile" class="c-header__box c-header-jx3box" :overlayEnable="overlayEnable" />
+        <header-box2 v-else class="c-header__box c-header__box--desktop" />
     </header>
 </template>
 
@@ -78,41 +80,53 @@ export default {
     methods: {
         // webView检测
         checkIsWebView: function () {
+            // 参数处理
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // 环境判断缓存
+            const isApp = checkIsApp();
+            const isMp = isMiniProgram();
+
+            // App 环境缓存
+            if (isApp) {
+                localStorage.setItem("__env", "app");
+            }
+
+            // 小程序环境缓存
+            if (isMp) {
+                document.documentElement.classList.add("wechat-miniprogram");
+                window.JX3BOX_ENV = "MINIPROGRAM";
+                miniprogramHack();
+            }
+
+            // 来源参数缓存
+            const from = urlParams.get("from")?.replace(/[^a-zA-Z0-9_-]/g, "");
+            if (from) {
+                sessionStorage.setItem("from", from);
+                document.documentElement.classList.add("from-" + from);
+            }
+
+            // 如果来自推栏 App
+            if (sessionStorage.getItem("from") === "tl") {
+                document.documentElement.classList.add("v-miniprogram");
+            }
+
+            // 移动容器模式：包含小程序或 App 内嵌环境
+            if (isMp || isApp) {
+                document.documentElement.classList.add("v-miniprogram");
+            }
+
+            // 来自自身小程序
+            const appid = urlParams.get("appid");
+            const internalApp = miniprogram?.find((item) => item.appid === appid);
+            if (appid && internalApp) {
+                document.documentElement.classList.add("env-miniprogram-" + internalApp.id);
+                window.JX3BOX_ENV = internalApp.id?.toUpperCase() + "_MINIPROGRAM";
+            }
+
+            // 仅安卓有效，基本不使用
             if (window.navigator.userAgent.includes(KW)) {
                 document.documentElement.classList.add("env-app");
-            }
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const from = urlParams.get("from");
-            from && sessionStorage.setItem("from", from);
-            if (isMiniProgram() || checkIsApp()) {
-                const appid = urlParams.get("appid");
-                const item = miniprogram?.find((item) => item.appid === appid);
-                const from = urlParams.get("_from");
-
-                document.documentElement.classList.add("v-miniprogram");
-
-                if (from) {
-                    document.documentElement.classList.add("from-" + from);
-                }
-
-                if (appid && item) {
-                    document.documentElement.classList.add("env-miniprogram-" + item.id);
-
-                    window.JX3BOX_ENV = item.id?.toUpperCase() + "_MINIPROGRAM";
-                } else {
-                    document.documentElement.classList.add("wechat-miniprogram");
-
-                    window.JX3BOX_ENV = "MINIPROGRAM";
-
-                    // 微信小程序hack
-                    miniprogramHack();
-                }
-            }
-
-            // 如果来自推栏
-            if (sessionStorage.getItem("from") == "tl") {
-                document.documentElement.classList.add("v-miniprogram");
             }
         },
 
@@ -214,6 +228,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/CommonHeader.vue */
 .c-header {
     position: fixed;
     left: 0;
@@ -222,6 +237,7 @@ export default {
 
     width: 100%;
     height: @header-height;
+    box-sizing: border-box;
 
     background-color: @header-bg;
     color: #fff;
@@ -231,6 +247,15 @@ export default {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 
     transition: 0.5s ease-in-out;
+
+    &__inner {
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .flex;
+    }
 }
 .c-header.isOverlay {
     background-color: rgba(0, 0, 0, 0.85);

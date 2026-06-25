@@ -1,68 +1,46 @@
 <template>
     <div class="u-cmt">
-        <div
-            class="u-text"
-            v-if="content != ''"
-            v-html="renderContent"
-        ></div>
+        <div class="u-text" v-if="content != ''" v-html="renderContent"></div>
         <div class="u-attachements" v-if="attachments.length">
-            <el-image
-                v-for="url in attachments"
-                :key="url"
-                :src="showAttachment(url)"
-                :preview-src-list="[showPreview(url)]"
-                lazy
-            ></el-image>
+            <template v-for="url in attachments" :key="url">
+                <video
+                    v-if="isVideoAttachment(url)"
+                    class="u-attachment-video"
+                    :src="showPreview(url)"
+                    playsinline
+                    preload="metadata"
+                    @click="openVideoPreview(url)"
+                ></video>
+                <el-image
+                    v-else
+                    :src="showAttachment(url)"
+                    :preview-src-list="[showPreview(url)]"
+                    lazy
+                ></el-image>
+            </template>
         </div>
+        <el-dialog v-model="videoPreview.visible" class="u-comment-video-dialog" width="min(92vw, 760px)">
+            <video class="u-comment-video-preview" :src="videoPreview.url" controls playsinline></video>
+        </el-dialog>
         <div class="u-toolbar u-toolbar--primary">
             <div class="u-toolbar-left">
-                <el-button
-                    class="u-admin"
-                    v-if="!currentUserHadLike"
-                    link
-                    size="small"
-                    @click="doLike(true)"
-                    ><img
-                        class="u-up"
-                        src="../../assets/img/comment/heart_1.svg"
-                        alt=""
-                    />{{ $jx3boxT("jx3boxUi.commentContent.like", "点赞") }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
+                <el-button v-if="!currentUserHadLike" link size="small" @click="doLike(true)"
+                    ><img class="u-up" svg-inline src="../../assets/img/comment/heart_1.svg" alt="" />{{
+                        $jx3boxT("jx3boxUi.commentContent.like", "点赞")
+                    }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
-                <el-button
-                    class="u-admin"
-                    link
-                    size="small"
-                    v-if="currentUserHadLike"
-                    @click="doLike(false)"
-                    ><img
-                        class="u-up"
-                        src="../../assets/img/comment/heart_2.svg"
-                        alt=""
-                    />{{ $jx3boxT("jx3boxUi.commentContent.liked", "已赞") }}<span class="u-like-count">{{
-                        likesFormat(hasLikeCount)
-                    }}</span></el-button
+                <el-button link size="small" v-if="currentUserHadLike" @click="doLike(false)"
+                    ><img class="u-up" svg-inline src="../../assets/img/comment/heart_2.svg" alt="" />{{
+                        $jx3boxT("jx3boxUi.commentContent.liked", "已赞")
+                    }}<span class="u-like-count">{{ likesFormat(hasLikeCount) }}</span></el-button
                 >
+                <el-button link size="small" icon="ChatRound" @click="showForm = !showForm" type="primary">{{
+                    $jx3boxT("jx3boxUi.commentContent.reply", "回复")
+                }}</el-button>
+                <el-button v-if="canDelete" link icon="Delete" size="small" @click="deleteComment()" type="danger">{{
+                    $jx3boxT("jx3boxUi.commentContent.delete", "删除")
+                }}</el-button>
                 <el-button
-                    class="u-admin"
-                    link
-                    size="small"
-                    icon="ChatRound"
-                    @click="showForm = !showForm"
-                    type="primary"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.reply", "回复") }}</el-button
-                >
-                <el-button
-                    class="u-admin"
-                    v-if="canDelete"
-                    link
-                    icon="Delete"
-                    size="small"
-                    @click="deleteComment()"
-                    type="danger"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.delete", "删除") }}</el-button
-                >
-                <el-button
-                    class="u-admin"
                     link
                     size="small"
                     icon="Delete"
@@ -117,13 +95,7 @@
                 </time>
             </div>
             <div class="u-toolbar-right">
-                <el-button
-                    class="u-admin u-filter"
-                    v-if="canAddWhite"
-                    link
-                    size="small"
-                    @click="setWhiteComment(true)"
-                >
+                <el-button class="u-admin u-filter" v-if="canAddWhite" link size="small" @click="setWhiteComment(true)">
                     <img
                         class="u-icon-filter"
                         src="../../assets/img/editor/view.svg"
@@ -145,12 +117,7 @@
                 >
             </div>
         </div>
-        <el-form
-            v-if="showForm"
-            ref="form"
-            :model="newComment"
-            class="c-comment-subbox"
-        >
+        <el-form v-if="showForm" ref="form" :model="newComment" class="c-comment-subbox">
             <el-form-item>
                 <el-input
                     type="textarea"
@@ -162,31 +129,23 @@
             <el-form-item class="c-comment-tool-box">
                 <div class="c-comment-tools">
                     <el-icon class="u-upload-icon" @click="showUploader = !showUploader"><Picture /></el-icon>
-                    <Emotion
-                       class="c-comment-emotion"
-                       @selected="handleEmotionSelected"
-                       type="pop"
-                       :max="6"
-                    ></Emotion>
+                    <Emotion class="c-comment-emotion" @selected="handleEmotionSelected" type="pop" :max="6"></Emotion>
                 </div>
                 <Uploader
                     v-if="showUploader"
                     ref="uploader"
+                    :support-video="supportVideo"
                     @onFinish="attachmentUploadFinish"
                     @onError="attachmentUplodError"
                 />
             </el-form-item>
             <el-form-item>
-                <el-button
-                    size="small"
-                    type="primary"
-                    @click="submit()"
-                    :disabled="disableSubmitBtn"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.submit", "提交") }}</el-button
-                >
-                <el-button size="small" link @click="showForm = false" type="primary"
-                    >{{ $jx3boxT("jx3boxUi.commentContent.collapse", "收起") }}</el-button
-                >
+                <el-button size="small" type="primary" @click="submit()" :disabled="disableSubmitBtn">{{
+                    $jx3boxT("jx3boxUi.commentContent.submit", "提交")
+                }}</el-button>
+                <el-button size="small" link @click="showForm = false" type="primary">{{
+                    $jx3boxT("jx3boxUi.commentContent.collapse", "收起")
+                }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -199,6 +158,8 @@ const { resolveImagePath } = utilModule;
 import { formatContent } from "../../utils/emotion";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
 import i18nMixin from "../../i18n/mixin";
+
+const VIDEO_EXTENSIONS = ["mp4", "mov", "webm", "m4v"];
 
 function fillZero(num) {
     return num > 9 ? num : `0${num}`;
@@ -266,6 +227,10 @@ export default {
             type: [Boolean, Number],
             default: false,
         },
+        supportVideo: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         Uploader,
@@ -283,6 +248,10 @@ export default {
             previewList: [],
             currentUserHadLike: this.isLike,
             hasLikeCount: this.likes,
+            videoPreview: {
+                url: "",
+                visible: false,
+            },
 
             renderContent: "",
         };
@@ -311,9 +280,7 @@ export default {
                 return;
             }
             this.currentUserHadLike = setLike;
-            this.hasLikeCount = setLike
-                ? this.hasLikeCount + 1
-                : this.hasLikeCount - 1;
+            this.hasLikeCount = setLike ? this.hasLikeCount + 1 : this.hasLikeCount - 1;
             this.$emit("setLikeComment", setLike);
         },
         topComment(setTop) {
@@ -416,10 +383,7 @@ export default {
                 await this.$nextTick();
 
                 myField.focus();
-                myField.setSelectionRange(
-                    endPos + value.length,
-                    endPos + value.length
-                );
+                myField.setSelectionRange(endPos + value.length, endPos + value.length);
             } else {
                 this.newComment.content = value;
             }
@@ -427,7 +391,19 @@ export default {
         showPreview: function (val) {
             return resolveImagePath(val);
         },
+        openVideoPreview(val) {
+            this.videoPreview = {
+                url: this.showPreview(val),
+                visible: true,
+            };
+        },
+        isVideoAttachment(val) {
+            const cleanUrl = this.showPreview(val).split("?")[0].split("#")[0];
+            const ext = cleanUrl.split(".").pop()?.toLowerCase() || "";
+            return VIDEO_EXTENSIONS.includes(ext);
+        },
         showAttachment: function (val) {
+            if (this.isVideoAttachment(val)) return this.showPreview(val);
             return resolveImagePath(val) + "?x-oss-process=style/comment_thumb";
         },
     },
@@ -435,14 +411,26 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/CommentContent.vue */
 .c-comment-cmt {
-
-    --el-color-primary:@primary;
+    //--el-color-primary:@primary;
 
     flex-grow: 1;
     position: relative;
     .u-toolbar {
         font-size: 12px;
+        margin-top: 5px;
+        color: @v4tip;
+        .el-button.is-link {
+            color: @v4tip;
+            font-weight: normal;
+            &:hover {
+                color: @pink;
+            }
+        }
+        // .el-button.is-link.u-admin{
+        //     color:orange;
+        // }
 
         .el-button + .el-button {
             margin-left: 20px;
@@ -475,12 +463,13 @@ export default {
         }
     }
     .u-cmt {
-        padding: 5px 0 10px 0;
+        padding: 10px 0;
         position: relative;
         .u-text {
             line-height: 1.715;
             img {
                 vertical-align: -3px;
+                display: inline-block;
             }
             white-space: pre-line;
         }
@@ -491,6 +480,17 @@ export default {
             margin-top: 10px;
             .el-image {
                 margin-right: 20px;
+            }
+            .u-attachment-video {
+                display: inline-block;
+                width: 180px;
+                height: 120px;
+                max-width: 100%;
+                margin-right: 20px;
+                object-fit: cover;
+                cursor: pointer;
+                background: #000;
+                vertical-align: top;
             }
         }
     }
@@ -523,6 +523,25 @@ export default {
             }
         }
     }
+}
+
+.u-comment-video-dialog {
+    margin-top: 5vh;
+
+    .el-dialog__body {
+        max-height: calc(100vh - 120px);
+        padding: 12px;
+        overflow: hidden;
+    }
+}
+
+.u-comment-video-preview {
+    max-width: 100%;
+    max-height: calc(100vh - 160px);
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+    background: #000;
 }
 
 .c-comment-subbox {

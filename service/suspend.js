@@ -50,9 +50,10 @@ function later(data) {
     return $next().post(`/api/next2/userdata/watch-later/item`, data);
 }
 // 收藏相关
-function setCollect(id, type, post_title) {
+function setCollect(id, type, post_title, author_id) {
     return $next().post(`/api/article/favorites/add/${id}/${type}`, {
         post_title: post_title,
+        author_id,
     });
 }
 function getCollectList(id, type) {

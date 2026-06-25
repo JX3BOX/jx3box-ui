@@ -7,12 +7,8 @@
                 })
             }}</span>
             <span class="u-toggle">
-                <el-icon class="el-icon-arrow-down">
-                    <arrow-down />
-                </el-icon>
-                <el-icon class="el-icon-arrow-up">
-                    <arrow-up />
-                </el-icon>
+                <i class="el-icon-arrow-down"> </i>
+                <i class="el-icon-arrow-up"> </i>
             </span>
         </span>
         <span class="u-options">
@@ -74,6 +70,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/filters/orderBy.vue */
 .w-filter-order {
     .fz(12px);
 
@@ -110,7 +107,7 @@ export default {
         align-items: center;
         .pointer;
         &.on {
-            color: @primary;
+            color: var(--el-color-primary);
         }
         &:hover {
             color: @pink;
@@ -126,6 +123,7 @@ export default {
         user-select: none;
         padding: 5px 0;
         padding-right: 20px;
+        .w(150px);
 
         &.on {
             .u-options {

@@ -193,6 +193,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/stories/layout/StorybookShell.vue */
 .sb-shell {
     min-height: 100vh;
     background:

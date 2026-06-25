@@ -68,6 +68,7 @@ import CommunityAdmin from "./CommunityAdmin.vue";
 import { sendMessage } from "../../service/admin";
 import { refreshQQBotImage } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
+import { editLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "AdminDrop",
     mixins: [i18nMixin],
@@ -225,6 +226,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/AdminDrop.vue */
 .c-admin-drop {
     .c-admin-drop__button {
         // padding: 8px 12px !important;

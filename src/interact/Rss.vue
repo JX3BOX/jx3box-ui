@@ -46,6 +46,10 @@ export default {
             type: String,
             default: "",
         },
+        author_id: {
+            type: [String, Number],
+            default: "",
+        },
     },
     data() {
         return {
@@ -94,7 +98,8 @@ export default {
                 type: this.type,
                 id: this.id,
                 data: {
-                    title: this.title
+                    title: this.title,
+                    author_id: this.author_id,
                 }
             }
         },
@@ -149,6 +154,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Rss.vue */
 .w-rss {
     .pointer;
     .dbi;

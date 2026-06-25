@@ -10,7 +10,7 @@
         <div class="m-version-container" v-loading="loading">
             <div class="m-toolbar">
                 <el-radio-group v-model="type">
-                    <el-radio-button :label="item.value" v-for="item in types" :key="item.value">{{
+                    <el-radio-button :value="item.value" v-for="item in types" :key="item.value">{{
                         item.label
                     }}</el-radio-button>
                 </el-radio-group>
@@ -48,12 +48,11 @@
                 </div>
             </div>
             <div v-if="type === 'view'" class="m-content-container">
-                <!-- TODO: 此处应该是Article -->
-                <!-- <Article :content="content1" /> -->
-                <div class="u-content" v-html="content1">
+                <div class="u-content">
+                    <Article :content="content1" />
                 </div>
-                <!-- <Article :content="content2" /> -->
-                <div class="u-content" v-html="content2">
+                <div class="u-content">
+                    <Article :content="content2" />
                 </div>
             </div>
             <div v-if="type === 'code'" class="m-content-container">
@@ -75,13 +74,13 @@
 
 <script>
 import { getCommitByHash } from "../../service/commit-history";
-// import Article from "@jx3box/jx3box-editor/src/Article.vue";
+import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import { CodeDiff } from "v-code-diff";
 export default {
     name: "VersionDialog",
     components: {
         CodeDiff,
-        // Article,
+        Article,
     },
     props: {
         modelValue: {
@@ -160,7 +159,7 @@ export default {
         },
         visible(val) {
             this.$emit("update:modelValue", val);
-        }
+        },
     },
     methods: {
         close() {
@@ -189,6 +188,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/VersionDialog.vue */
 .m-version-contrast-dialog {
     .el-dialog__body {
         padding: 0 20px 20px;

@@ -62,6 +62,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/filters/menuBy.vue */
 .w-filter-menu {
     .pointer;
     .u-menu-label {

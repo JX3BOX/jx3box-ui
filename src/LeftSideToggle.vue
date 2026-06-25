@@ -46,6 +46,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/LeftSideToggle.vue */
 .c-side-toggle {
     .pointer;
     .size(20px, 28px);

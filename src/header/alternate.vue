@@ -210,6 +210,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/alternate.vue */
 .c-alternate {
     .el-dialog__title {
         .fz(12px);

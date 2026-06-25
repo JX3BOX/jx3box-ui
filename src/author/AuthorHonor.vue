@@ -71,7 +71,7 @@ export default {
             let only = honorConfig.only;
             let prefix = honorConfig.prefix;
             let regPrefix = honorConfig.prefix.match(/\{([^{}]+?)\}/g);
-            let ranking = honorConfig.ranking;
+            let ranking = honorConfig.ranking || [];
             let honorStr = honorConfig.year || "";
 
             if (!only) {
@@ -116,6 +116,7 @@ export default {
 };
 </script>
 <style lang="less">
+/* src/author/AuthorHonor.vue */
 .c-author-honor {
     .dbi;
     text-align: center;

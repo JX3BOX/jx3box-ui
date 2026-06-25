@@ -53,6 +53,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/message.vue */
 //消息面板
 .c-header-msg {
     position: relative;
@@ -80,7 +81,7 @@ export default {
         border-radius: 50%;
         position: absolute;
         right: -5px;
-        top: -6px;
+        top: -2px;
         .z(1);
     }
 }

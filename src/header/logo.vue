@@ -41,6 +41,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/logo.vue */
 //logo
 .c-header-logo {
     .pointer;
@@ -73,6 +74,7 @@ export default {
         line-height: @header-logo-size;
         margin-left: 10px;
         transition: 0.15s ease-in-out;
+        .smooth;
     }
 
     &:hover .u-pic {

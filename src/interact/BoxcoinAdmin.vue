@@ -17,6 +17,16 @@
             append-to-body
         >
             <div class="w-boxcoin-admin-content">
+                <div class="u-left u-total-left">
+                    <em class="u-label">{{ $jx3boxT("jx3boxUi.boxcoinAdmin.yearStatus", "全年额度") }}</em>
+                    {{
+                        $jx3boxT("jx3boxUi.boxcoinAdmin.yearSummary", "已用{used} 剩余{left} 总计{total}", {
+                            used: this.postTypeUsed,
+                            left: this.postTypeLeft,
+                            total: this.totalLimit,
+                        })
+                    }}
+                </div>
                 <div class="u-left">
                     <em class="u-label">{{ $jx3boxT("jx3boxUi.boxcoinAdmin.monthStatus", "本月状态") }}</em>
                     {{
@@ -27,7 +37,7 @@
                         })
                     }}
                     <el-progress
-                        :percentage="100 - (this.used * 100) / this.total"
+                        :percentage="this.total ? 100 - (this.used * 100) / this.total : 0"
                         :stroke-width="15"
                         :text-inside="true"
                     ></el-progress>
@@ -59,6 +69,7 @@
                             :minlength="2"
                             :maxlength="30"
                             show-word-limit
+                            :disabled="!!is_anonymity"
                         ></el-input>
                         <el-button :disabled="fetchingCurrentRelease" @click="insertCurrentRelease"
                             >{{ $jx3boxT("jx3boxUi.boxcoinAdmin.insertCurrentRelease", "插入当前版本") }}</el-button
@@ -67,7 +78,17 @@
                 </div>
             </div>
             <template #footer>
-                <span class="dialog-footer">
+                <span class="dialog-footer w-boxcoin-admin-footer">
+                    <el-checkbox
+                        v-model="is_anonymity"
+                        border
+                        class="u-anonymity"
+                        :true-label="1"
+                        :false-label="0"
+                        @change="onAnonymityChange"
+                    >
+                        {{ $jx3boxT("jx3boxUi.boxcoinAdmin.anonymity", "使用匿名品鉴") }}
+                    </el-checkbox>
                     <el-button @click="visible = false">{{ $jx3boxT("jx3boxUi.common.cancel", "取消") }}</el-button>
                     <el-button type="primary" @click="submit" :disabled="!ready || submitting">{{
                         $jx3boxT("jx3boxUi.common.confirm", "确定")
@@ -129,6 +150,18 @@ export default {
             type: String,
             default: "",
         },
+        category: {
+            type: String,
+            default: "",
+        },
+        totalLimit: {
+            type: Number,
+            default: 0,
+        },
+        postTypeUsed: {
+            type: Number,
+            default: 0,
+        },
     },
     components: {
         Contributors,
@@ -142,6 +175,7 @@ export default {
             left: this.own,
             chosen: "", // 被选中的人
             amount: "",
+            is_anonymity: 1,
 
             submitting: false,
             fetchingCurrentRelease: false,
@@ -172,10 +206,20 @@ export default {
             return location.href.includes("origin") ? "origin" : "std";
         },
         fitPoints: function () {
-            return this.points.filter((item) => item <= this.left);
+            const points = this.points.filter((item) => item <= this.left);
+            if (this.isSignAuthor) {
+                return points.filter((item) => item <= 1000);
+            }
+            return points;
+        },
+        isSignAuthor: function () {
+            return User.getInfo().group == 32;
         },
         iconPath() {
             return JX3BOX.__cdn + "design/vector/icon/taste.svg";
+        },
+        postTypeLeft() {
+            return this.totalLimit - this.postTypeUsed;
         },
     },
     watch: {
@@ -194,9 +238,29 @@ export default {
         submit: function () {
             this.submitting = true;
             const count = this.count === "custom" ? this.amount : this.count;
+            let client = this.client || this.hostClient;
+            if (!["std", "origin", "all"].includes(client)) {
+                client = "std";
+            }
+            if ((this.totalLimit > 0 && this.postTypeUsed + Number(count) > this.totalLimit) || this.totalLimit === 0) {
+                this.$message({
+                    message: this.$jx3boxT(
+                        "jx3boxUi.boxcoinAdmin.yearLimitExceeded",
+                        "操作失败，已超出全年额度限制（{totalLimit}盒币）",
+                        {
+                            totalLimit: this.totalLimit,
+                        }
+                    ),
+                    type: "error",
+                });
+                this.submitting = false;
+                return;
+            }
             grantBoxcoin(this.postType, this.postId, this.chosen || this.userId, count, {
                 remark: this.remark,
-                client: this.client || this.hostClient,
+                client,
+                redirect: this.category ? `/${this.category}/${this.postId}` : undefined,
+                is_anonymity: this.is_anonymity,
             })
                 .then((res) => {
                     this.$message({
@@ -207,7 +271,7 @@ export default {
                 })
                 .then((data) => {
                     // 1.扣除额度
-                    this.left -= this.count;
+                    this.left -= Number(count);
                     // 2.将修改emit出去
                     this.$emit("updateRecord", data);
                 })
@@ -232,9 +296,27 @@ export default {
                     this.fetchingCurrentRelease = false;
                 });
         },
+        onAnonymityChange() {
+            if (this.is_anonymity) {
+                this.remark = this.$jx3boxT("jx3boxUi.boxcoinAdmin.anonymousRemark", "例行工作巡查");
+            }
+        },
         init: function () {},
     },
-    created: function () {},
+    created: function () {
+        this.remark = this.is_anonymity
+            ? this.$jx3boxT("jx3boxUi.boxcoinAdmin.anonymousRemark", "例行工作巡查")
+            : this.remark;
+    },
     mounted: function () {},
 };
 </script>
+
+<style lang="less">
+.w-boxcoin-admin-footer {
+    .u-anonymity {
+        float: left;
+        margin-left: 10px;
+    }
+}
+</style>

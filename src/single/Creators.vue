@@ -128,6 +128,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/Creators.vue */
 .w-creators {
     display: flex;
     border: 1px solid #ddd;
@@ -144,7 +145,7 @@ export default {
     .lt(0);
     writing-mode: vertical-rl;
     .fz(12px);
-    background: @primary;
+    background: @v4primary;
     color: #fff;
     .h(100%);
     .x;
@@ -175,13 +176,13 @@ export default {
         .bold;
         .db;
         color: @color;
-        margin-bottom: 2px;
+        // margin-bottom: 2px;
         .nobreak;
         max-width: 120px;
     }
     &:hover {
         .u-name {
-            color: @color-link;
+            color: var(--el-color-primary);
         }
     }
     .u-up {
@@ -200,8 +201,8 @@ export default {
         .dbi;
         .fz(12px,1);
         font-style: normal;
-        border: 1px solid @color-link;
-        color: @color-link;
+        border: 1px solid var(--el-color-primary);
+        color: var(--el-color-primary);
         padding: 3px 10px;
         .r(2px);
         .mt(5px);

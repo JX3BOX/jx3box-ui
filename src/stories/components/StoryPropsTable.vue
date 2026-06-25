@@ -57,6 +57,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/stories/components/StoryPropsTable.vue */
 .story-props-table {
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.92);

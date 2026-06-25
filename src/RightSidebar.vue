@@ -66,5 +66,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/RightSidebar.vue */
 @import "../assets/css/common/right-sidebar.less";
 </style>

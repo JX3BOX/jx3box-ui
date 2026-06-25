@@ -24,9 +24,7 @@
             <el-divider content-position="left">JX3BOX</el-divider>
             <div class="m-single-content">
                 <slot></slot>
-                <!-- TODO: 文章内容组件待完善，目前先用slot占位，后续替换为Article组件，支持markdown和html两种模式 -->
-                <!-- <ArticleMarkdown v-if="isMarkdown" :content="post_content" @directoryRendered="updateDirectory" /> -->
-                <Article :content="post_content" @directoryRendered="updateDirectory" />
+                <Article :content="post_content" :post_mode="post_mode" @directoryRendered="updateDirectory" />
             </div>
         </div>
         <div class="m-single-null" v-else>
@@ -48,6 +46,7 @@
                 :userBoxcoinEnable="true"
                 :authors="authors"
                 :client="post_client"
+                :authorId="author_id"
                 showRss
                 v-if="showThx"
             />
@@ -55,7 +54,7 @@
             <!-- 评论 -->
             <div ref="commentView" class="m-single-comment">
                 <el-divider content-position="left">{{ $jx3boxT("jx3boxUi.cmsSingle.comment", "评论") }}</el-divider>
-                <Comment :id="id" category="post" v-if="id && allow_comment" />
+                <Comment :id="id" category="post" :support-video="supportVideo" v-if="id && allow_comment" />
                 <el-alert
                     :title="$jx3boxT('jx3boxUi.cmsSingle.commentDisabled', '作者没有开启评论功能')"
                     type="warning"
@@ -74,6 +73,7 @@
             :postId="id"
             :postType="post_type"
             :postTitle="post_title"
+            :authorId="author_id"
             :showComment="id && allow_comment"
             @toComment="toComment($event)"
         ></right-affix>
@@ -85,8 +85,8 @@ import PostHeader from "./PostHeader.vue";
 import Creators from "./Creators.vue";
 import Collection from "./Collection.vue";
 import Thx from "./Thx.vue";
+import Comment from './Comment.vue';
 import RightAffix from "./RightAffix.vue";
-// import ArticleMarkdown from "@jx3box/jx3box-editor/src/ArticleMarkdown.vue";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { getAppType } from "@jx3box/jx3box-common/js/utils";
@@ -102,8 +102,8 @@ export default {
         Creators,
         Collection,
         Thx,
-        // ArticleMarkdown,
         Article,
+        Comment,
         RightAffix,
     },
     props: {
@@ -118,6 +118,10 @@ export default {
         showThx: {
             type: Boolean,
             default: true,
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {
@@ -258,5 +262,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/CmsSingle.vue */
 @import "../../assets/css/single/cms-single.less";
 </style>

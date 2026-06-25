@@ -6,6 +6,7 @@
             :key="reply.id"
             :reply="reply"
             :power="power"
+            :support-video="supportVideo"
             @deleteReply="deleteReply"
             @addReply="addReply"
             @setLikeComment="setLikeComment"
@@ -14,10 +15,10 @@
         <!-- 分页 -->
         <el-row v-if="data.length >= 3 || showPager">
             <el-col :span="4">
-                <el-button link v-show="showPager" @click="showLess()">{{
+                <el-button class="u-op" link v-show="showPager" @click="showLess()" icon="DCaret">{{
                     $jx3boxT("jx3boxUi.replyList.collapse", "收起")
                 }}</el-button>
-                <el-button link v-show="!showPager" @click="showMore()">{{
+                <el-button class="u-op" link v-show="!showPager" @click="showMore()" icon="DCaret">{{
                     $jx3boxT("jx3boxUi.replyList.showMore", "查看更多")
                 }}</el-button>
             </el-col>
@@ -59,6 +60,10 @@ export default {
                 total: 0,
             }),
         },
+        supportVideo: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         ReplyItem,
@@ -98,9 +103,15 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/ReplyList.vue */
 .c-comment-replylist {
     padding: 10px 0 10px 68px;
     border-top: 1px dashed #eee;
+
+    .u-op {
+        margin-left:0;
+        font-weight: normal;
+    }
 }
 .c-comment-reply {
     padding-top: 5px;
@@ -115,24 +126,28 @@ export default {
     .c-comment-avatar {
         margin-right: 10px;
         width: auto;
-    }
-    .u-avatar {
-        float: left;
-    }
-    .u-avatar-pic {
-        // width: 28px;
-        // height: 28px;
-        margin-right: 10px;
-    }
 
-    .u-name {
-        font-size: 12px;
-        line-height: 28px;
-        padding: 0 !important;
-        display: inline;
-        white-space: nowrap;
-    }
+        .u-avatar {
+            float: left;
+        }
+        .u-avatar-pic {
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            border:1px solid #eee;
+        }
+        .u-avatar-frame{
+            display: none;
+        }
 
+        .u-name {
+            font-size: 13px;
+            line-height: 28px;
+            padding: 0 !important;
+            display: inline;
+            white-space: nowrap;
+        }
+    }
     .u-reply {
         padding: 5px;
         line-height: 1.715;

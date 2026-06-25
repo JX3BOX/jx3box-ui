@@ -16,7 +16,7 @@
                 :client="client"
             />
             <Like :postId="postId" :postType="postType"></Like>
-            <fav :postId="postId" :postType="postType" :postTitle="postTitle"></fav>
+            <fav :postId="postId" :postType="postType" :postTitle="postTitle" :author_id="postAuthorId"></fav>
             <boxcoin-user
                 :postId="postId"
                 :postType="postType"
@@ -96,6 +96,10 @@ export default {
             type: [Number, String],
             default: 0,
         },
+        authorId: {
+            type: [Number, String],
+            default: 0,
+        },
         authors: {
             type: Array,
             default: () => [],
@@ -149,6 +153,9 @@ export default {
     computed: {
         post_keys: function () {
             return [this.postId, this.postType];
+        },
+        postAuthorId: function () {
+            return this.authorId || this.userId;
         },
     },
     watch: {
@@ -215,5 +222,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/SimpleThx.vue */
 @import "../../assets/css/single/thx.less";
 </style>

@@ -16,7 +16,9 @@
                 <template v-if="titleExtra">
                     <span class="u-client" :class="'i-client-' + client">{{ showClientLabel(client) }}</span>
                     <span class="u-client u-zlp" v-if="zlp">{{ zlp }}</span>
-                    <span class="u-client i-client-wujie" v-if="is_wujie">{{ $jx3boxT("jx3boxUi.postHeader.wujie", "无界") }}</span>
+                    <span class="u-client i-client-wujie" v-if="is_wujie">{{
+                        $jx3boxT("jx3boxUi.postHeader.wujie", "无界")
+                    }}</span>
                 </template>
             </span>
         </div>
@@ -29,7 +31,9 @@
                     <img svg-inline src="../../assets/img/single/author.svg" />
                 </i>
                 <a class="u-name" :href="author_link" v-if="!anonymous">{{ author_name }}</a>
-                <span class="u-name u-anonymous" v-else>{{ $jx3boxT("jx3boxUi.postHeader.mysterious", "神秘侠士") }}</span>
+                <span class="u-name u-anonymous" v-else>{{
+                    $jx3boxT("jx3boxUi.postHeader.mysterious", "神秘侠士")
+                }}</span>
             </div>
 
             <!-- 自定义字段 -->
@@ -45,7 +49,9 @@
             <div class="u-meta u-sub-block">
                 <em class="u-label">{{ $jx3boxT("jx3boxUi.postHeader.client", "适用客户端") }}</em>
                 <span class="u-value u-client" :class="client">{{ showClientLabel(client) }}</span>
-                <span class="u-value u-client wujie" v-if="is_wujie">{{ $jx3boxT("jx3boxUi.postHeader.wujie", "无界") }}</span>
+                <span class="u-value u-client wujie" v-if="is_wujie">{{
+                    $jx3boxT("jx3boxUi.postHeader.wujie", "无界")
+                }}</span>
             </div>
 
             <!-- 发布日期 -->
@@ -99,7 +105,6 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { showDate, showTime } from "@jx3box/jx3box-common/js/moment";
 import { editLink, authorLink } from "@jx3box/jx3box-common/js/utils.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import $ from "jquery";
 import i18nMixin from "../../i18n/mixin";
 const { __clients } = JX3BOX;
 
@@ -170,12 +175,13 @@ export default {
             return this.post?.client || "std";
         },
         is_wujie: function () {
-            return this.post?.is_wujie
+            return this.post?.is_wujie;
         },
     },
     watch: {
         post: {
             deep: true,
+            immediate: true,
             handler: function () {
                 this.countWords();
             },
@@ -187,24 +193,65 @@ export default {
         },
         countWords: function () {
             this.$nextTick(() => {
-                // 需要去除空格 \n \g
-                // eslint-disable-next-line no-useless-escape
-                const text = $(".c-article")
-                    .text()
-                    ?.replace(
-                        /[\s|\n|\r|\t|\g|\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\，|\。|\？|\：|\；|\‘|\’|\”|\“|\、|\·|\！|\（|\）|\》|\《|\『|\』]/g,
-                        ""
-                    );
+                const target = document.querySelector(".c-article");
+                if (target) {
+                    this._doCount(target);
+                    this._observeTarget(target);
+                } else {
+                    this._observeBody();
+                }
+            });
+        },
+        _doCount: function (target) {
+            // 需要去除空格 \n \g
+            // eslint-disable-next-line no-useless-escape
+            const text = target.textContent?.replace(
+                /[\s|\n|\r|\t|\g|\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\，|\。|\？|\：|\；|\‘|\’|\”|\“|\、|\·|\！|\（|\）|\》|\《|\『|\』]/g,
+                ""
+            );
 
-                this.wordCount = text?.length || 0;
+            this.wordCount = text?.length || 0;
+        },
+        _observeTarget: function (target) {
+            if (this.targetObserver) this.targetObserver.disconnect();
+            this.targetObserver = new MutationObserver(() => {
+                this._doCount(target);
+            });
+            this.targetObserver.observe(target, {
+                childList: true,
+                subtree: true,
+                characterData: true,
+            });
+        },
+        _observeBody: function () {
+            if (this.bodyObserver) return;
+            this.bodyObserver = new MutationObserver((mutations, observer) => {
+                const target = document.querySelector(".c-article");
+                if (target) {
+                    this._doCount(target);
+                    this._observeTarget(target);
+                    observer.disconnect();
+                    this.bodyObserver = null;
+                }
+            });
+            this.bodyObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
             });
         },
     },
-    mounted: function () {},
+    mounted: function () {
+        this.countWords();
+    },
+    beforeUnmount: function () {
+        if (this.targetObserver) this.targetObserver.disconnect();
+        if (this.bodyObserver) this.bodyObserver.disconnect();
+    },
 };
 </script>
 
 <style lang="less">
+/* src/single/PostHeader.vue */
 .i-client-all {
     border: 1px solid #a26ef7;
     color: #a26ef7;
@@ -249,6 +296,10 @@ export default {
     .fz(32px);
     padding: 1px 0;
 
+    *{
+        white-space: nowrap;
+    }
+
     .u-title {
         color: @color;
         // &:hover {
@@ -256,7 +307,7 @@ export default {
         // }
         letter-spacing: 0.5px;
         font-weight: 300;
-        .db;
+        // .db;
         .nobreak;
     }
     .u-author {
@@ -275,9 +326,11 @@ export default {
     }
 
     .u-private {
-        .y(-4px);
+        // .y(-4px);
         margin-right: 5px;
         color: #111;
+        top: 2px;
+        .pr;
     }
 }
 @media screen and (max-width: @phone) {
@@ -361,7 +414,7 @@ export default {
             color: var(--el-color-primary);
         }
         a:hover {
-            box-shadow: 0 1px 0 @color-link;
+            .underline(var(--el-color-primary));
         }
         i {
             .pr;
@@ -394,15 +447,14 @@ export default {
         }
         color: var(--el-color-primary);
         &:hover {
-            box-shadow: 0 1px 0 @color-link;
+            box-shadow: 0 1px 0 var(--el-color-primary);
         }
     }
 }
 @media screen and (max-width: @ipad) {
     .m-single-info {
-        .u-meta {
-            .none;
-        }
+        flex-wrap: wrap;
+        gap: 5px;
     }
 }
 @media screen and (max-width: @phone) {

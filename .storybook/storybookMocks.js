@@ -7,6 +7,9 @@ import {
     mockCommentPower,
     mockCreators,
     mockHonor,
+    mockWikiComments,
+    mockWikiRevisions,
+    mockWikiStat,
     mockMedals,
     mockSearchUser,
     mockTeams,
@@ -117,6 +120,18 @@ export function resolveStorybookMock(config) {
         return respond(config, { data: mockBoxcoinRecords });
     }
 
+    if (method === 'get' && path.match(/^\/api\/summary-any\/.+\/stat$/)) {
+        return respond(config, { data: mockWikiStat, status: 200 });
+    }
+
+    if (method === 'get' && path === '/api/cms/wiki/comment') {
+        return respond(config, { data: mockWikiComments });
+    }
+
+    if (method === 'get' && path.match(/^\/api\/cms\/wiki\/post\/type\/.+\/source\/.+\/versions$/)) {
+        return respond(config, { data: mockWikiRevisions });
+    }
+
     if (method === 'get' && path.match(/^\/api\/next2\/comment\/.+\/i-am-author$/)) {
         return respond(config, mockCommentPower);
     }
@@ -154,12 +169,28 @@ export function resolveStorybookMock(config) {
         return respond(config, { code: 0, data: {} });
     }
 
+    if (['post', 'put', 'delete'].includes(method) && path.startsWith('/api/cms/wiki/comment')) {
+        return respond(config, { code: 0, data: {} });
+    }
+
+    if (method === 'put' && path.match(/^\/api\/cms\/manage\/wiki\/comment\/\d+\/(star|top)$/)) {
+        return respond(config, { code: 0, data: {} });
+    }
+
     if (['post', 'delete'].includes(method) && path.startsWith('/api/next2/rss/')) {
         return respond(config, { code: 0, data: { subscribed: method === 'post' } });
     }
 
     if (['post', 'delete', 'get'].includes(method) && path.startsWith('/api/article/favorites/')) {
         return respond(config, { code: 0, data: { id: 1, totalFavorites: 12 } });
+    }
+
+    if (method === 'post' && path === '/api/cms/manage/message') {
+        return respond(config, { code: 0, data: { id: 1 } });
+    }
+
+    if (method === 'post' && path === '/api/cms/qqbot/picture_task') {
+        return respond(config, { code: 0, data: { task_id: 'storybook-picture-task' } });
     }
 
     if (method === 'get' && path === '/api/vip/i') {

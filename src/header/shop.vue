@@ -88,6 +88,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/shop.vue */
 .c-header-shop {
     .u-present {
         padding: 0 10px;

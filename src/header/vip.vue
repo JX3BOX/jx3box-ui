@@ -84,6 +84,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/header/vip.vue */
 .c-header-vip {
     height: 100%;
 

@@ -28,6 +28,7 @@
             <Uploader
                 v-if="showUploader"
                 ref="uploader"
+                :support-video="supportVideo"
                 @onFinish="attachmentUploadFinish"
                 @onError="attachmentUploadError"
             />
@@ -65,6 +66,10 @@ export default {
         currentId: {
             type: [Number, String],
             default: 0,
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {
@@ -134,6 +139,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/ReplyForReply.vue */
 .c-comment {
     .u-subbox-label {
         margin-bottom: 10px;

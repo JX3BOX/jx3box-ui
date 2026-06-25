@@ -14,7 +14,7 @@
                         v-for="item in categoryList"
                         :key="item.id"
                         :label="item.name"
-                        :value="item.name"
+                        :value="item.mark"
                     ></el-option>
                 </el-select>
             </el-form-item>
@@ -164,6 +164,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/bread/MoveToCommunityDialog.vue */
 .u_r_box {
     display: flex;
     justify-content: flex-end;
@@ -211,11 +212,6 @@ export default {
 .m-design-task {
     .el-form-item {
         margin-bottom: 12px;
-    }
-    .m-star-line {
-        .el-form-item__content {
-            top: 10px;
-        }
     }
     .u-time {
         color: #c0c4cc;

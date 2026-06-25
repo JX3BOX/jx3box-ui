@@ -49,5 +49,6 @@ export default {
 </script>
 
 <style lang="less">
+/* src/Footer.vue */
 @import "../assets/css/common/footer.less";
 </style>

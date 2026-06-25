@@ -1,5 +1,5 @@
 <template>
-    <div class="c-footer-official mt-6 flex flex-wrap gap-3">
+    <div class="c-footer-official">
         <div v-for="item in socials" :key="item.name">
             <el-popover
                 v-if="item.qrcode"
@@ -9,34 +9,34 @@
                 popper-class="c-footer--v4__popover"
                 @show="handlePopoverShow"
             >
-                <div class="flex w-36 flex-col items-center p-3">
+                <div class="c-footer-official__qrcode">
                     <img
-                        class="h-32 w-32 rounded-md object-cover"
+                        class="c-footer-official__qrcode-img"
                         :src="item.qrcode"
                         :alt="getSocialName(item)"
                         @load="handleQrcodeLoad"
                     />
-                    <span class="mt-2 text-xs font-black">{{ item.label || getSocialName(item) }}</span>
+                    <span class="c-footer-official__qrcode-label">{{ item.label || getSocialName(item) }}</span>
                 </div>
                 <template #reference>
                     <a
-                        class="u-link flex h-11 w-11 items-center justify-center rounded-full border border-gray-700 bg-gray-800 transition"
+                        class="u-link"
                         :title="item.label"
                         href="javascript:;"
                     >
-                        <img class="h-5 w-5" :src="item.icon" :alt="getSocialName(item)" />
+                        <img class="u-link__icon" :src="item.icon" :alt="getSocialName(item)" />
                     </a>
                 </template>
             </el-popover>
             <a
                 v-else
-                class="u-link flex h-11 w-11 items-center justify-center rounded-full border border-gray-700 bg-gray-800 transition"
+                class="u-link"
                 :href="item.href"
                 target="_blank"
                 rel="noopener noreferrer"
                 :title="item.label"
             >
-                <img class="h-5 w-5" :src="item.icon" :alt="getSocialName(item)" />
+                <img class="u-link__icon" :src="item.icon" :alt="getSocialName(item)" />
             </a>
         </div>
     </div>
@@ -132,11 +132,55 @@ export default {
 </script>
 
 <style lang="less">
+/* src/footer/official.vue */
 .c-footer-official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+
     .u-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 1px solid #374151;
+        border-radius: 50%;
+        background: #1f2937;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+
         &:hover {
             background-color: rgba(255, 255, 255, 1);
         }
+    }
+
+    .u-link__icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+    }
+
+    &__qrcode {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 144px;
+        padding: 12px;
+    }
+
+    &__qrcode-img {
+        width: 128px;
+        height: 128px;
+        border-radius: 6px;
+        object-fit: cover;
+    }
+
+    &__qrcode-label {
+        margin-top: 8px;
+        font-size: 12px;
+        font-weight: 900;
+        line-height: 16px;
     }
 }
 </style>

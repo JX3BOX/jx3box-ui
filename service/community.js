@@ -34,10 +34,10 @@ export const manageTopic = (id, action, value) => {
 
 export const manageTopicAll = (id, data) => {
     return $next().put(`${API_PREFIX}/community/discussion/manage/topic/item/${id}/opt`, data);
-}
+};
 
 export const getTopicDetails = (id) => {
-    return $next().get(`${API_PREFIX}/community/discussion/manage/topic/item/${id}`);
+    return $next({ mute: true }).get(`${API_PREFIX}/community/discussion/manage/topic/item/${id}`);
 };
 
 // 菜单
@@ -52,7 +52,7 @@ export function getCommunityTags() {
 // 获取原帖子
 export const getOriginalPost = (id) => {
     return $cms().get(`/api/cms/manage/post/by-community/${id}`);
-}
+};
 
 // 迁移帖子
 export const migrateCommunityPost = (data) => {

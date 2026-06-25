@@ -112,6 +112,14 @@
         "parentKey": "pvp"
     },
     {
+        "key": "changelog",
+        "link": "/pvp/changelog",
+        "label": "技改历史",
+        "client": "all",
+        "status": true,
+        "parentKey": "pvp"
+    },
+    {
         "key": "desert",
         "link": "/pvp/desert",
         "label": "绝境战场",
@@ -120,18 +128,10 @@
         "parentKey": "pvp"
     },
     {
-        "key": "sandbox",
-        "link": "/pvp/sandbox",
-        "label": "沙盘查询",
+        "key": "arenatower",
+        "link": "/pvp/arenatower",
+        "label": "扬刀大会",
         "client": "std",
-        "status": true,
-        "parentKey": "pvp"
-    },
-    {
-        "key": "changelog",
-        "link": "/pvp/changelog",
-        "label": "技改历史",
-        "client": "all",
         "status": true,
         "parentKey": "pvp"
     },
@@ -182,6 +182,46 @@
         "client": "all",
         "status": true,
         "parentKey": "fb"
+    },
+    {
+        "key": "tool",
+        "link": "/tool/",
+        "label": "工具",
+        "client": "all",
+        "status": true,
+        "parentKey": ""
+    },
+    {
+        "key": "tool_post",
+        "link": "/tool",
+        "label": "教程资源",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
+        "key": "dbm",
+        "link": "/dbm/",
+        "label": "插件数据",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
+        "key": "database",
+        "link": "/app/database/",
+        "label": "数据大全",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
+    },
+    {
+        "key": "design",
+        "link": "/app/design/",
+        "label": "美术资源",
+        "client": "all",
+        "status": true,
+        "parentKey": "tool"
     },
     {
         "key": "wiki",
@@ -248,60 +288,20 @@
         "parentKey": "pvx"
     },
     {
-        "key": "gonggao",
-        "link": "/pvg/gonggao",
-        "label": "活动告示",
+        "key": "treasure",
+        "link": "/pvx/codex/adventure",
+        "label": "奇遇珍卷",
         "client": "all",
         "status": true,
         "parentKey": "pvx"
     },
     {
-        "key": "price",
-        "link": "/pvg/price",
-        "label": "价格走势",
+        "key": "achievement",
+        "link": "/pvx/codex/achievement",
+        "label": "资历宝典",
         "client": "all",
         "status": true,
         "parentKey": "pvx"
-    },
-    {
-        "key": "tool",
-        "link": "/tool/",
-        "label": "工具",
-        "client": "all",
-        "status": true,
-        "parentKey": ""
-    },
-    {
-        "key": "tool_post",
-        "link": "/tool",
-        "label": "教程资源",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
-    },
-    {
-        "key": "dbm",
-        "link": "/dbm/",
-        "label": "插件数据",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
-    },
-    {
-        "key": "database",
-        "link": "/app/database/",
-        "label": "数据大全",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
-    },
-    {
-        "key": "design",
-        "link": "/app/design/",
-        "label": "美术资源",
-        "client": "all",
-        "status": true,
-        "parentKey": "tool"
     },
     {
         "key": "bbs",

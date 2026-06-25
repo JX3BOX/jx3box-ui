@@ -15,13 +15,15 @@
                         username || $jx3boxT("jx3boxUi.commentWithReply.defaultName", "人字榜800线无名小侠")
                     }}</el-link>
                     <span class="u-mark u-top" v-if="item.is_top"
-                        ><el-icon><Download></Download></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.top", "置顶") }}</span
+                        ><el-icon><Download></Download></el-icon
+                        >{{ $jx3boxT("jx3boxUi.commentWithReply.top", "置顶") }}</span
                     >
                     <span class="u-mark u-star" v-if="item.is_star"
                         ><el-icon><Star></Star></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.star", "精华") }}</span
                     >
                     <span class="u-mark u-secret" v-if="item.is_secret"
-                        ><el-icon><Cherry></Cherry></el-icon>{{ $jx3boxT("jx3boxUi.commentWithReply.secret", "悄悄话") }}</span
+                        ><el-icon><Cherry></Cherry></el-icon
+                        >{{ $jx3boxT("jx3boxUi.commentWithReply.secret", "悄悄话") }}</span
                     >
                 </div>
                 <CommentContent
@@ -29,6 +31,7 @@
                     :content="item.content"
                     :comment-id="item.id"
                     :attachments="stringToArray(item.attachments)"
+                    :support-video="supportVideo"
                     :can-delete="power.can_del || power.uid == item.userId"
                     :can-set-top="(power.is_author || power.is_editor) && !item.is_top"
                     :can-cancel-top="(power.is_author || power.is_editor) && item.is_top"
@@ -53,6 +56,7 @@
             :data="replyList"
             :pager="pager"
             :power="power"
+            :support-video="supportVideo"
             @addNewReply="addNewReply"
             @deleteReply="deleteReply"
             @goto="gotoReplyListIndex"
@@ -96,6 +100,10 @@ export default {
         username: {
             type: String,
             default: "",
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {
@@ -244,9 +252,11 @@ export default {
 </script>
 
 <style lang="less">
+/* src/comment/CommentWithReply.vue */
 .c-comment-cmt {
     .u-name {
         margin-right: 6px;
+        font-size: 13px;
     }
     .u-mark {
         font-style: normal;
@@ -256,6 +266,9 @@ export default {
         color: #fff;
         margin-left: 5px;
         cursor: default;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
     .u-top {
         background-color: #6f42c1;
@@ -271,6 +284,8 @@ export default {
     }
     .u-secret {
         background-color: #ff99cc;
+        display: inline-flex;
+        align-items: center;
     }
 }
 .c-comment-cmt__box {

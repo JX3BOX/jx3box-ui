@@ -1,7 +1,14 @@
 <template>
     <div class="c-right-affix" :class="{ 'is-close': !isOpen }">
         <div class="item">
-            <fav :postId="postId" :postType="postType" :postTitle="postTitle" :hiddenNum="true" :isOld="true"></fav>
+            <fav
+                :postId="postId"
+                :postType="postType"
+                :postTitle="postTitle"
+                :hiddenNum="true"
+                :isOld="true"
+                :author_id="authorId"
+            ></fav>
         </div>
         <el-tooltip v-if="showCommentBtn && showComment" effect="dark" content="去评论" placement="left">
             <div class="u-item" @click="toComment">
@@ -37,6 +44,10 @@ export default {
         showComment: {
             type: [Boolean, Number],
             default: false,
+        },
+        authorId: {
+            type: [String, Number],
+            default: "",
         },
     },
     data() {
@@ -91,6 +102,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/single/RightAffix.vue */
 .closeLeftSidebar() {
     transition: 0.2s ease-in-out;
     transform: translateX(100%);

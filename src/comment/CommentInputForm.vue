@@ -1,11 +1,10 @@
 <template>
     <el-form ref="form" :model="newComment" class="c-comment-box">
         <div class="u-mask">
-            {{ $jx3boxT("jx3boxUi.commentInputForm.authMaskPrefix", "参与评论，需先进行") }}<a
-                href="/dashboard/auth"
-                target="_blank"
-                class="u-link"
-                >{{ $jx3boxT("jx3boxUi.commentInputForm.authLink", "账号认证") }}</a
+            {{ $jx3boxT("jx3boxUi.commentInputForm.authMaskPrefix", "参与评论，需先进行")
+            }}<a href="/dashboard/auth" target="_blank" class="u-link">{{
+                $jx3boxT("jx3boxUi.commentInputForm.authLink", "账号认证")
+            }}</a
             >{{ $jx3boxT("jx3boxUi.commentInputForm.authMaskSuffix", "。") }}
         </div>
         <el-form-item>
@@ -17,44 +16,42 @@
                 v-model="newComment.content"
                 :placeholder="$jx3boxT('jx3boxUi.commentInputForm.placeholder', '参与讨论...')"
                 :id="inputId"
+                @paste="handlePaste"
             ></el-input>
             <div class="c-comment-tools">
                 <el-icon class="u-upload-icon" @click="showUploader = !showUploader"><Picture /></el-icon>
-                <Emotion
-                   class="c-comment-emotion"
-                   @selected="handleEmotionSelected"
-                   type="pop"
-                   :max="6">
-                </Emotion>
+                <Emotion class="c-comment-emotion" @selected="handleEmotionSelected" type="pop" :max="6"> </Emotion>
                 <quickReply @reply="onQuickReply"></quickReply>
                 <div class="c-comment-secret">
-                    <el-checkbox class="u-secret" v-model="is_secret" border size="small">{{
-                        $jx3boxT("jx3boxUi.commentInputForm.secret", "悄悄话")
-                    }}
+                    <el-checkbox class="u-secret" v-model="is_secret" border size="small"
+                        >{{ $jx3boxT("jx3boxUi.commentInputForm.secret", "悄悄话") }}
                         <el-tooltip
                             class="item"
                             effect="dark"
-                            :content="$jx3boxT('jx3boxUi.commentInputForm.secretTip', '勾选悄悄话后仅作者和你可见，并且不可再变更状态')"
+                            :content="
+                                $jx3boxT(
+                                    'jx3boxUi.commentInputForm.secretTip',
+                                    '勾选悄悄话后仅作者和你可见，并且不可再变更状态'
+                                )
+                            "
                             placement="top"
                         >
-                            <el-icon><InfoFilled></InfoFilled></el-icon> </el-tooltip></el-checkbox>
+                            <el-icon><InfoFilled></InfoFilled></el-icon> </el-tooltip
+                    ></el-checkbox>
                 </div>
             </div>
             <Uploader
                 class="u-uploader"
                 ref="uploader"
+                :support-video="supportVideo"
                 @onFinish="attachmentUploadFinish"
                 @onError="attachmentUploadError"
                 v-if="showUploader"
             />
             <div class="u-toolbar">
-                <el-button
-                    type="primary"
-                    @click="onSubmit"
-                    class="u-publish"
-                    :disabled="disableSubmitBtn"
-                    >{{ $jx3boxT("jx3boxUi.commentInputForm.publish", "发表评论") }}</el-button
-                >
+                <el-button type="primary" @click="onSubmit" class="u-publish" :disabled="disableSubmitBtn">{{
+                    $jx3boxT("jx3boxUi.commentInputForm.publish", "发表评论")
+                }}</el-button>
             </div>
         </el-form-item>
     </el-form>
@@ -71,24 +68,28 @@ export default {
     components: {
         Uploader,
         Emotion,
-        QuickReply
+        QuickReply,
     },
     props: {
         // 用于判定该评论组件是否在底部
         isBottom: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
+        supportVideo: {
+            type: Boolean,
+            default: false,
+        },
     },
     mounted() {
         if (this.isBottom) this.inputId = "textarea-bottom";
     },
-    data: function() {
+    data: function () {
         return {
             showUploader: false,
             disableSubmitBtn: false,
             newComment: {
-                content: ""
+                content: "",
             },
             inputId: "textarea-top",
             is_secret: false,
@@ -114,10 +115,11 @@ export default {
         attachmentUploadFinish(data) {
             this.$emit("submit", {
                 content: this.newComment.content,
-                attachmentList: data
+                is_secret: this.is_secret ? 1 : 0,
+                attachmentList: data,
             });
             this.newComment = {
-                content: ""
+                content: "",
             };
             this.showUploader = false;
 
@@ -136,7 +138,7 @@ export default {
          */
         async insertVariable(emotionVal) {
             const myField = document.querySelector(`#${this.inputId}`);
-            const value = emotionVal.key
+            const value = emotionVal.key;
             if (myField.selectionStart || myField.selectionStart === 0) {
                 let startPos = myField.selectionStart;
                 let endPos = myField.selectionEnd;
@@ -149,27 +151,47 @@ export default {
                 await this.$nextTick();
 
                 myField.focus();
-                myField.setSelectionRange(
-                    endPos + value.length,
-                    endPos + value.length
-                );
+                myField.setSelectionRange(endPos + value.length, endPos + value.length);
             } else {
                 this.newComment.content = value;
             }
-        }
-    }
+        },
+        async handlePaste(event) {
+            const clipboardItems = event.clipboardData.items;
+            for (let i = 0; i < clipboardItems.length; i++) {
+                const item = clipboardItems[i];
+                if (item.type.indexOf("image") !== -1) {
+                    // 阻止默认粘贴图片的名字
+                    event.preventDefault();
+                    const blob = item.getAsFile();
+                    const file = new File([blob], new Date().getTime() + "-" + blob.name, { type: blob.type });
+                    if (!this.showUploader) this.showUploader = true;
+                    await this.$nextTick();
+                    if (this.$refs.uploader) {
+                        this.$refs.uploader.addFile(file);
+                    }
+                }
+            }
+        },
+    },
 };
 </script>
 
 <style lang="less">
+/* src/comment/CommentInputForm.vue */
 .c-comment-secret {
     margin-left: 15px;
 
     .u-secret {
         display: flex;
         align-items: center;
-        .el-checkbox__inner{
-            display:block;
+        .el-checkbox__inner {
+            display: block;
+        }
+        .el-checkbox__label {
+            display: flex;
+            align-items: center;
+            gap: 3px;
         }
     }
 }

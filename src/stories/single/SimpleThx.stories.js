@@ -22,6 +22,7 @@ export const Default = {
                     { name: 'postType', type: 'String', default: '""', required: true, description: '文章类型。' },
                     { name: 'postTitle', type: 'String', default: '""', description: '文章标题。' },
                     { name: 'userId', type: 'Number | String', default: '0', description: '作者 UID。' },
+                    { name: 'authorId', type: 'Number | String', default: '0', description: '收藏请求携带的作者 UID，未传时回退到 userId。' },
                     { name: 'adminBoxcoinEnable / userBoxcoinEnable', type: 'Boolean', default: 'false', description: '控制打赏区显示。' },
                     { name: 'presetConfig', type: 'Object', default: '{}', description: 'Storybook 下可直接注入打赏配置，避免空态。' },
                 ],
@@ -30,7 +31,7 @@ export const Default = {
         template: `
             <div style="display:grid;gap:24px;">
                 <section style="border-radius:20px;background:rgba(255,255,255,0.92);padding:24px;box-shadow:0 24px 60px rgba(15,23,42,0.08);">
-                    <SimpleThx post-type="bbs" post-title="轻剑驭风版本攻略示例" :post-id="80449" :user-id="8" :admin-boxcoin-enable="true" :user-boxcoin-enable="true" :allow-gift="true" :preset-config="presetConfig" />
+                    <SimpleThx post-type="bbs" post-title="轻剑驭风版本攻略示例" :post-id="80449" :user-id="8" :author-id="8" :admin-boxcoin-enable="true" :user-boxcoin-enable="true" :allow-gift="true" :preset-config="presetConfig" />
                 </section>
                 <StoryPropsTable title="SimpleThx" description="简化互动条组件。" :items="propsInfo" />
             </div>

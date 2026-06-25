@@ -1,11 +1,19 @@
 <template>
-    <div class="c-header-client relative h-full group">
+    <div class="c-header-client" ref="dropdown">
         <!-- 当前选择展示 (触发器) -->
-        <button type="button" class="u-trigger h-full px-4 flex items-center gap-2 transition-colors duration-200">
+        <button
+            type="button"
+            class="u-trigger"
+            :class="{ 'is-active': isMenuOpen }"
+            @click="toggleMenu"
+            :aria-expanded="isMenuOpen"
+            aria-haspopup="true"
+        >
             <div class="u-client--current">
-                <span class="text-sm font-medium text-gray-200">{{ currentGameLabel }}</span>
+                <span>{{ currentGameLabel }}</span>
                 <svg
-                    class="w-3 h-3 text-gray-400 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"
+                    class="u-arrow"
+                    :class="{ 'is-open': isMenuOpen }"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -21,92 +29,74 @@
 
         <!-- 下拉菜单内容 -->
         <div
-            class="absolute top-full left-0 w-56 bg-[#242424] border border-gray-700 rounded-b-lg shadow-2xl py-2 overflow-hidden z-50 transition duration-200 ease-out origin-top opacity-0 -translate-y-2 invisible pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:visible group-focus-within:pointer-events-auto"
+            class="u-menu"
+            :class="{
+                'is-open': isMenuOpen
+            }"
             role="menu"
         >
-            <div class="px-3 py-2 text-[10px] text-gray-500 uppercase tracking-widest border-b border-gray-800 mb-1">
+            <div class="u-menu__title">
                 {{ $jx3boxT("jx3boxUi.commonHeader.chooseGameVersion", "选择游戏版本") }}
             </div>
 
             <!-- 剑网3 -->
             <a
                 href="javascript:void(0)"
-                class="flex items-center justify-between px-4 py-3 hover:bg-indigo-600 transition-colors group/item"
+                class="u-menu__item"
                 role="menuitem"
                 @click.prevent="switchGame('std')"
             >
-                <div class="flex items-center">
-                    <span class="mr-3 text-indigo-400 group-hover/item:text-white">
-                        <!-- <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path d="M4 5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z" />
-                            <path d="M4 13a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2Z" />
-                        </svg> -->
+                <div class="u-game">
+                    <span class="u-game__icon u-game__icon--std">
                         <img
-                            class="w-4 h-4"
                             svg-inline
                             src="../../assets/img/common/jx3-www.svg"
                             :alt="$jx3boxT('jx3boxUi.commonHeader.jx3Full', '剑网3 / 无界')"
                         />
-                        <!-- <Jx3Icon class="w-4 h-4" /> -->
                     </span>
-                    <div>
-                        <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">
+                    <div class="u-game__text">
+                        <div class="u-game__name">
                             {{ $jx3boxT("jx3boxUi.commonHeader.jx3Full", "剑网3 / 无界") }}
                         </div>
-                        <div class="text-[10px] text-gray-500 group-hover/item:text-indigo-200">www.jx3box.com</div>
+                        <div class="u-game__host">www.jx3box.com</div>
                     </div>
                 </div>
-                <span class="h-2 w-2 bg-amber-400 rounded-full" :class="{ hidden: activeKey !== 'std' }"></span>
+                <span class="u-dot" :class="{ 'is-hidden': activeKey !== 'std' }"></span>
             </a>
 
             <!-- 缘起 -->
             <a
                 href="javascript:void(0)"
-                class="flex items-center justify-between px-4 py-3 hover:bg-indigo-600 transition-colors group/item"
+                class="u-menu__item"
                 role="menuitem"
                 @click.prevent="switchGame('origin')"
             >
-                <div class="flex items-center">
-                    <span class="mr-3 text-amber-400 group-hover/item:text-white">
-                        <!-- <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-12.25a.75.75 0 0 0-1.5 0V10c0 .2.08.39.22.53l2.5 2.5a.75.75 0 1 0 1.06-1.06l-2.28-2.28V5.75Z"
-                                clip-rule="evenodd"
-                            />
-                        </svg> -->
+                <div class="u-game">
+                    <span class="u-game__icon u-game__icon--origin">
                         <img
-                            class="w-4 h-4"
                             svg-inline
                             src="../../assets/img/common/jx3-origin.svg"
                             :alt="$jx3boxT('jx3boxUi.commonHeader.originFull', '剑网3·缘起')"
                         />
-                        <!-- <OriginIcon class="w-4 h-4" /> -->
                     </span>
-                    <div>
-                        <div class="text-sm font-bold text-gray-200 group-hover/item:text-white">
+                    <div class="u-game__text">
+                        <div class="u-game__name">
                             {{ $jx3boxT("jx3boxUi.commonHeader.originFull", "剑网3·缘起") }}
                         </div>
-                        <div class="text-[10px] text-gray-500 group-hover/item:text-indigo-200">origin.jx3box.com</div>
+                        <div class="u-game__host">origin.jx3box.com</div>
                     </div>
                 </div>
-                <span class="h-2 w-2 bg-amber-400 rounded-full" :class="{ hidden: activeKey !== 'origin' }"></span>
+                <span class="u-dot" :class="{ 'is-hidden': activeKey !== 'origin' }"></span>
             </a>
         </div>
     </div>
 </template>
 
 <script>
-// import Jx3Icon from "@/assets/img/components/common/header/jx3-www.svg";
-// import OriginIcon from "@/assets/img/components/common/header/jx3-origin.svg";
 import i18nMixin from "../../i18n/mixin";
 export default {
     name: "clientSwitch",
     mixins: [i18nMixin],
-    components: {
-        // Jx3Icon,
-        // OriginIcon,
-    },
     props: {
         defaultValue: {
             type: String,
@@ -116,6 +106,7 @@ export default {
     data: function () {
         return {
             activeKey: this.defaultValue || (location.host.includes("origin") ? "origin" : "std"),
+            isMenuOpen: false,
         };
     },
     computed: {
@@ -131,6 +122,17 @@ export default {
         },
     },
     methods: {
+        toggleMenu: function() {
+            this.isMenuOpen = !this.isMenuOpen;
+        },
+        closeMenu: function() {
+            this.isMenuOpen = false;
+        },
+        handleClickOutside: function(event) {
+            if (this.$refs.dropdown && !this.$refs.dropdown.contains(event.target)) {
+                this.closeMenu();
+            }
+        },
         switchGame: function (target) {
             if (!target || (target !== "std" && target !== "origin")) return;
 
@@ -143,20 +145,47 @@ export default {
             const finalUrl = protocol + "//" + targetHost + currentPath + currentSearch + currentHash;
 
             this.activeKey = target;
+            this.closeMenu();
             window.location.href = finalUrl;
         },
     },
-    mounted: function () {},
+    mounted: function () {
+        // 监听点击外部区域关闭菜单
+        document.addEventListener('click', this.handleClickOutside);
+        // 支持触摸设备
+        document.addEventListener('touchstart', this.handleClickOutside);
+    },
+    beforeUnmount: function() {
+        // 清理事件监听器
+        document.removeEventListener('click', this.handleClickOutside);
+        document.removeEventListener('touchstart', this.handleClickOutside);
+    },
 };
 </script>
 
 <style lang="less">
+/* src/header/client.vue */
 .c-header-client {
+    .pr;
+    height: @header-height;
+
+    * {
+        .pointer;
+    }
+
     .u-trigger {
         .pr;
-    }
-    &:hover {
-        .u-trigger::after {
+        height: 100%;
+        padding: 0 16px;
+        .flex(y);
+        gap: 8px;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        // 为iOS添加触摸反馈
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+
+        &::after {
             content: "";
             .db;
             .pa;
@@ -164,11 +193,14 @@ export default {
             .w(90px);
             .h(2px);
             background-color: #e19f3a;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
-    }
-    height: @header-height;
-    * {
-        .pointer;
+
+        // 菜单打开时显示激活条
+        &.is-active::after {
+            opacity: 1;
+        }
     }
 
     .u-client--current {
@@ -176,12 +208,156 @@ export default {
         .r(4px);
         padding: 2px 5px;
         .flex(y);
+        gap: 4px;
+        white-space: nowrap;
 
         span {
             color: #fff !important;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
         }
-        svg {
+        .u-arrow {
+            width: 12px;
+            height: 12px;
             fill: #fff !important;
+            transition: transform 0.3s ease;
+
+            &.is-open {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .u-menu {
+        .pa;
+        top: 100%;
+        left: 0;
+        z-index: 50;
+        width: 224px;
+        padding: 8px 0;
+        overflow: hidden;
+        background: #242424;
+        border: 1px solid #374151;
+        border-top: 0;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 18px 32px rgba(0, 0, 0, 0.32);
+        transform: translateY(-8px);
+        transform-origin: top;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+
+        &.is-open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+
+    .u-menu__title {
+        padding: 8px 12px;
+        margin-bottom: 4px;
+        color: #6b7280;
+        border-bottom: 1px solid #1f2937;
+        font-size: 10px;
+        line-height: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .u-menu__item {
+        .flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 16px;
+        color: #e5e7eb;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover,
+        &:active {
+            background-color: rgb(79, 70, 229);
+            color: #fff;
+
+            .u-game__name {
+                color: #fff;
+            }
+
+            .u-game__host {
+                color: #c7d2fe;
+            }
+
+            .u-game__icon {
+                color: #fff;
+            }
+        }
+    }
+
+    .u-game {
+        .flex(y);
+        min-width: 0;
+    }
+
+    .u-game__icon {
+        .flex(x);
+        flex: 0 0 auto;
+        width: 16px;
+        height: 16px;
+        margin-right: 12px;
+
+        &,
+        svg,
+        img {
+            width: 16px !important;
+            height: 16px !important;
+        }
+
+        svg,
+        img {
+            display: block;
+        }
+
+        &--std {
+            color: #818cf8;
+        }
+
+        &--origin {
+            color: #fbbf24;
+        }
+    }
+
+    .u-game__text {
+        min-width: 0;
+    }
+
+    .u-game__name {
+        color: #e5e7eb;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+        white-space: nowrap;
+    }
+
+    .u-game__host {
+        color: #6b7280;
+        font-size: 10px;
+        line-height: 14px;
+        white-space: nowrap;
+    }
+
+    .u-dot {
+        flex: 0 0 auto;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fbbf24;
+
+        &.is-hidden {
+            visibility: hidden;
         }
     }
 }

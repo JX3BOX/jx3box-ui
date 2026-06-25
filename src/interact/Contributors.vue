@@ -56,6 +56,7 @@ export default {
 </script>
 
 <style lang="less">
+/* src/interact/Contributors.vue */
 .m-contributor {
     padding: 10px 10px 0 10px;
     .m-author {
