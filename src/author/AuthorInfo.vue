@@ -217,6 +217,7 @@ export default {
         .break(3);
         color: #888;
         padding: 0 5px;
+        white-space: pre-line;
     }
     .u-extend {
         display: flex;
