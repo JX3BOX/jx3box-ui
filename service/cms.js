@@ -19,6 +19,11 @@ function getDecoration(params) {
         params,
     });
 }
+function getDecorationV2(params) {
+    return $cms().get(`/api/cms/user/decoration/v2`, {
+        params,
+    });
+}
 function getDecorationJson() {
     let url = JX3BOX.__cdn + "design/decoration/index.json";
     return axios.get(url);
@@ -143,6 +148,7 @@ export {
     uploadImage,
     upload,
     getDecoration,
+    getDecorationV2,
     getDecorationJson,
     checkTeamMember,
     getSliders,

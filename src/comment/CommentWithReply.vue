@@ -73,11 +73,23 @@ import CommentContent from "./CommentContent.vue";
 import ReplyList from "./ReplyList.vue";
 import { POST, DELETE, GET } from "../../service/comment";
 import CommentAvatar from "../comment/Avatar.vue";
-import { getDecoration } from "../../service/cms";
+import { getDecorationV2 } from "../../service/cms";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
-const { __imgPath } = JX3BOX;
+const { __cdn } = JX3BOX;
 const DECORATION_KEY = "decoration_comment_";
+const DECORATION_EMPTY_VALUE = "no";
+const DECORATION_POSITION_MAP = {
+    lt: "left top",
+    ct: "center top",
+    rt: "right top",
+    lc: "left center",
+    cc: "center center",
+    rc: "right center",
+    lb: "left bottom",
+    cb: "center bottom",
+    rb: "right bottom",
+};
 export default {
     mixins: [i18nMixin],
     props: {
@@ -122,6 +134,7 @@ export default {
                 total: 0,
             },
             decoration: null,
+            decorationPosition: "",
         };
     },
     computed: {
@@ -132,6 +145,7 @@ export default {
             return this.decoration
                 ? {
                       backgroundImage: `url(${this.decoration})`,
+                      backgroundPosition: this.decorationPosition,
                       borderRadius: "8px",
                   }
                 : null;
@@ -142,29 +156,65 @@ export default {
         this.getDecoration();
     },
     methods: {
+        resolveDecorationDetail(decoration) {
+            if (!decoration) {
+                return null;
+            }
+
+            const decorations = Array.isArray(decoration.decorations) ? decoration.decorations : [];
+            return decorations.find((item) => item && item.image) || null;
+        },
+        normalizeDecorationImage(image) {
+            if (!image) {
+                return "";
+            }
+
+            let url = String(image).trim();
+            if (/^(https?:)?\/\//.test(url)) {
+                return url;
+            }
+
+            return __cdn + url.replace(/^\/+/, "");
+        },
+        resolveDecorationPosition(position) {
+            return DECORATION_POSITION_MAP[position] || position || "";
+        },
         setDecoration(decoration) {
-            this.decoration = __imgPath + `decoration/images/${decoration.val}/comment.png`;
+            const decorationDetail = this.resolveDecorationDetail(decoration);
+            const image = this.normalizeDecorationImage(decorationDetail?.image);
+            if (!image) {
+                return false;
+            }
+
+            this.decoration = image;
+            this.decorationPosition = this.resolveDecorationPosition(decorationDetail.position);
+            return true;
         },
         getDecoration() {
             let decoration_local = sessionStorage.getItem(DECORATION_KEY + this.uid);
+            if (decoration_local == DECORATION_EMPTY_VALUE) return;
             if (decoration_local) {
-                //解析本地缓存
-                let decoration_parse = JSON.parse(decoration_local);
-                if (decoration_parse) {
-                    this.setDecoration(decoration_parse);
-                    this.decoration = __imgPath + `decoration/images/${decoration_parse.val}/comment.png`;
-                    return;
+                try {
+                    let decoration_parse = JSON.parse(decoration_local);
+                    if (decoration_parse && this.setDecoration(decoration_parse)) {
+                        return;
+                    }
+                    sessionStorage.removeItem(DECORATION_KEY + this.uid);
+                } catch (err) {
+                    sessionStorage.removeItem(DECORATION_KEY + this.uid);
                 }
             }
-            getDecoration({ using: 1, user_id: this.uid, type: "comment" }).then((res) => {
-                let decorationList = res.data.data;
-                //筛选个人装扮
-                let decoration = decorationList.find((item) => item.type == "comment");
-                if (decoration) {
-                    this.decoration = __imgPath + `decoration/images/${decoration.val}/comment.png`;
+            getDecorationV2({ using: 1, user_id: this.uid, type: "comment", subtype: "pc_comment" }).then((res) => {
+                let decorationList = res.data.data || [];
+                let decoration = decorationList.find(
+                    (item) => item.type == "comment" && this.resolveDecorationDetail(item)
+                );
+                if (decoration && this.setDecoration(decoration)) {
                     sessionStorage.setItem(DECORATION_KEY + this.uid, JSON.stringify(decoration));
                     return;
                 }
+
+                sessionStorage.setItem(DECORATION_KEY + this.uid, DECORATION_EMPTY_VALUE);
             });
         },
         profileLink: function (uid) {

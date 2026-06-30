@@ -18,8 +18,8 @@
                 <AdminDrop :post="community" :isCommunity="false" :user-id="8" :showMove="true" />
             </template>
         </breadcrumb>
-        <LeftSidebar :open="true" :uid="8">
-            <Author :uid="8" />
+        <LeftSidebar :open="true" :uid="8719">
+            <Author :uid="8719" />
         </LeftSidebar>
         <Main :withoutLeft="false" :withoutRight="false">
             <el-tabs v-model="tab" type="card">
@@ -232,7 +232,8 @@ export default {
         return {
             tab: "content",
 
-            post_id: "19382",
+            // post_id: "19382",
+            post_id: "99808",
             post: {},
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,
