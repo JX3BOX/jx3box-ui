@@ -19,7 +19,7 @@
             </template>
         </breadcrumb>
         <LeftSidebar :open="true" :uid="8719">
-            <Author :uid="8719" />
+            <Author :uid="8" />
         </LeftSidebar>
         <Main :withoutLeft="false" :withoutRight="false">
             <el-tabs v-model="tab" type="card">

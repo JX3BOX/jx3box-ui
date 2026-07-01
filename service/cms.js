@@ -24,6 +24,13 @@ function getDecorationV2(params) {
         params,
     });
 }
+function getUserSkin(user_id) {
+    return $cms().get(`/api/cms/user/skin`, {
+        params: {
+            user_id,
+        },
+    });
+}
 function getDecorationJson() {
     let url = JX3BOX.__cdn + "design/decoration/index.json";
     return axios.get(url);
@@ -149,6 +156,7 @@ export {
     upload,
     getDecoration,
     getDecorationV2,
+    getUserSkin,
     getDecorationJson,
     checkTeamMember,
     getSliders,

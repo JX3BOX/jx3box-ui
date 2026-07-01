@@ -1,5 +1,5 @@
 <template>
-    <div class="c-author">
+    <div class="c-author" :style="decorationStyles">
         <AuthorInfo :uid="uid" :anonymous="anonymous" @ready="installModules" />
         <template v-if="data">
             <div class="u-interact">
@@ -31,8 +31,28 @@ import AuthorMedals from "../author/AuthorMedals.vue";
 // import AuthorTeams from "../author/AuthorTeams.vue";
 import AuthorPosts from "../author/AuthorPosts.vue";
 import AuthorRss from "../author/AuthorRss.vue";
+import { getUserSkin } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
 const jx3box = require("@jx3box/jx3box-common/data/jx3box.json");
+const { __cdn } = jx3box;
+const SKIN_POSITION_MAP = {
+    lt: "left top",
+    ct: "center top",
+    mt: "center top",
+    rt: "right top",
+    lc: "left center",
+    ml: "left center",
+    cc: "center center",
+    cm: "center center",
+    mm: "center center",
+    o: "center center",
+    rc: "right center",
+    mr: "right center",
+    lb: "left bottom",
+    cb: "center bottom",
+    mb: "center bottom",
+    rb: "right bottom",
+};
 export default {
     name: "AuthorComp",
     mixins: [i18nMixin],
@@ -49,7 +69,29 @@ export default {
     data: function () {
         return {
             data: "",
+            sidebarSkin: "",
+            sidebarSkinPosition: "",
         };
+    },
+    computed: {
+        decorationStyles() {
+            return this.sidebarSkin
+                ? {
+                      backgroundImage: `url(${this.sidebarSkin})`,
+                      backgroundPosition: this.sidebarSkinPosition,
+                  }
+                : null;
+        },
+    },
+    watch: {
+        uid() {
+            this.sidebarSkin = "";
+            this.sidebarSkinPosition = "";
+            this.loadSidebarSkin();
+        },
+    },
+    created() {
+        this.loadSidebarSkin();
     },
     methods: {
         installModules: function (data) {
@@ -60,6 +102,53 @@ export default {
         },
         onMessage: function () {
             window.open("/dashboard/letter?receiver=" + this.uid, "_blank");
+        },
+        resolveSkinDetail(record) {
+            if (!record) {
+                return null;
+            }
+
+            const skins = Array.isArray(record.skins) ? record.skins : [];
+            return skins.find((item) => item && item.subtype === "pc_sidebar" && item.image) || null;
+        },
+        normalizeSkinImage(image) {
+            if (!image) {
+                return "";
+            }
+
+            const url = String(image).trim();
+            if (/^(https?:)?\/\//.test(url)) {
+                return url;
+            }
+
+            return __cdn + url.replace(/^\/+/, "");
+        },
+        resolveSkinPosition(position) {
+            return SKIN_POSITION_MAP[position] || position || "";
+        },
+        setSidebarSkin(record) {
+            const detail = this.resolveSkinDetail(record);
+            const image = this.normalizeSkinImage(detail?.image);
+            if (!image) {
+                return false;
+            }
+
+            this.sidebarSkin = image;
+            this.sidebarSkinPosition = this.resolveSkinPosition(detail.position);
+            return true;
+        },
+        loadSidebarSkin() {
+            if (!this.uid || this.anonymous == 1) {
+                return;
+            }
+
+            getUserSkin(this.uid).then((res) => {
+                const records = res.data.data || [];
+                const record = records.find((item) => this.resolveSkinDetail(item));
+                if (record && this.setSidebarSkin(record)) {
+                    return;
+                }
+            });
         },
     },
     components: {
