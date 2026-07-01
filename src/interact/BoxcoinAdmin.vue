@@ -19,23 +19,15 @@
             <div class="w-boxcoin-admin-content">
                 <div class="u-left u-total-left">
                     <em class="u-label">{{ $jx3boxT("jx3boxUi.boxcoinAdmin.yearStatus", "全年额度") }}</em>
-                    {{
-                        $jx3boxT("jx3boxUi.boxcoinAdmin.yearSummary", "已用{used} 剩余{left} 总计{total}", {
-                            used: this.postTypeUsed,
-                            left: this.postTypeLeft,
-                            total: this.totalLimit,
-                        })
-                    }}
+                    {{ $jx3boxT("jx3boxUi.boxcoinAdmin.used", "已用") }}<b>{{ postTypeUsed }}</b>
+                    {{ $jx3boxT("jx3boxUi.boxcoinAdmin.left", "剩余") }}<b>{{ postTypeLeft }}</b>
+                    {{ $jx3boxT("jx3boxUi.boxcoinAdmin.total", "总计") }}<b>{{ totalLimit }}</b>
                 </div>
                 <div class="u-left">
                     <em class="u-label">{{ $jx3boxT("jx3boxUi.boxcoinAdmin.monthStatus", "本月状态") }}</em>
-                    {{
-                        $jx3boxT("jx3boxUi.boxcoinAdmin.monthSummary", "已用{used} 剩余{left} 总计{total}", {
-                            used: this.used,
-                            left: this.left,
-                            total: this.total,
-                        })
-                    }}
+                    {{ $jx3boxT("jx3boxUi.boxcoinAdmin.used", "已用") }}<b>{{ used }}</b>
+                    {{ $jx3boxT("jx3boxUi.boxcoinAdmin.left", "剩余") }}<b>{{ left }}</b>
+                    {{ $jx3boxT("jx3boxUi.boxcoinAdmin.total", "总计") }}<b>{{ total }}</b>
                     <el-progress
                         :percentage="this.total ? 100 - (this.used * 100) / this.total : 0"
                         :stroke-width="15"
@@ -44,7 +36,9 @@
                 </div>
                 <div class="u-list">
                     <em class="u-label">❤️ {{ $jx3boxT("jx3boxUi.boxcoinAdmin.appraise", "品鉴") }}</em>
-                    <Contributors v-if="authors && authors.length" :authors="authors" @chosen="handleChosen" />
+                    <div class="u-contributors" v-if="authors && authors.length">
+                        <Contributors :authors="authors" @chosen="handleChosen" />
+                    </div>
                     <div class="u-points">
                         <el-radio-group v-model="count">
                             <el-radio :value="item" v-for="item in fitPoints" :key="item" border>
@@ -317,6 +311,16 @@ export default {
     .u-anonymity {
         float: left;
         margin-left: 10px;
+    }
+}
+
+.w-boxcoin-admin-content {
+    .u-total-left {
+        .mb(10px);
+    }
+
+    .u-contributors {
+        .mt(20px);
     }
 }
 </style>

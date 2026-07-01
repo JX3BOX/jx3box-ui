@@ -24,7 +24,6 @@
                 <boxcoin-admin
                     :postId="postId"
                     :postType="postType"
-                    v-if="hasRight && adminBoxcoinEnable && boxcoin_enable && hasPermission"
                     :userId="userId"
                     :max="admin_max"
                     :min="admin_min"

@@ -105,6 +105,11 @@ export default {
         },
     },
     emits: ["update:modelValue"],
+    computed: {
+        client() {
+            return location.href.includes("origin") ? "origin" : "std";
+        },
+    },
     data() {
         return {
             form: {
@@ -149,6 +154,8 @@ export default {
                 if (User.isTeammate()) {
                     this.loadConfig();
                 }
+
+                this.form.version = this.client;
             }
         },
     },

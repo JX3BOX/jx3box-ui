@@ -248,5 +248,13 @@ export default {
         .underline(var(--el-color-primary));
         .ml(10px);
     }
+
+
+}
+.w-boxcoin-user-content {
+    .m-contributor {
+        .mt(20px);
+    }
+
 }
 </style>
