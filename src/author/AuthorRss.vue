@@ -132,23 +132,21 @@ export default {
 /* src/author/AuthorRss.vue */
 .c-author-rss.el-button {
     cursor: default;
+    transition: all 0.18s ease;
     &:hover,
     &.is-plain:hover,
     &.is-plain:focus {
         cursor: pointer;
-        background-color: @light-pink;
-        color: #fff;
-        border-color: darken(@light-pink, 2%);
+        background-color: rgba(255, 51, 153, 0.08);
+        color: @v4primary;
+        border-color: fade(@v4primary, 36%);
+        box-shadow: 0 6px 14px rgba(255, 51, 153, 0.1);
     }
     .u-icon {
-        .size(10px);
+        .size(11px);
         fill: currentColor;
         margin-right: 4px;
     }
-}
-
-.c-author-rss.el-button.is-subscribed {
-    color: #999;
 }
 
 @media screen and (max-width: @phone) {
