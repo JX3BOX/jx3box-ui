@@ -22,6 +22,7 @@
         <template v-else>
             <div class="w-thx-panel">
                 <boxcoin-admin
+                    v-if="hasRight && adminBoxcoinEnable && boxcoin_enable && hasPermission"
                     :postId="postId"
                     :postType="postType"
                     :userId="userId"
