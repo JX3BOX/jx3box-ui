@@ -45,6 +45,7 @@
                         :category="category"
                         :power="commentPower"
                         :support-video="supportVideo"
+                        :skin="commentSkins[item.userId]"
                         @deleteComment="deleteComment"
                         @setTopComment="setTopComment"
                         @setStarComment="setStarComment"
@@ -87,9 +88,11 @@ import { showAvatar, authorLink } from "@jx3box/jx3box-common/js/utils";
 import CommentInputForm from "../comment/CommentInputForm.vue";
 import CommentWithReply from "../comment/CommentWithReply.vue";
 import { GET, POST, DELETE, PUT, getOrderMode, setOrderMode } from "../../service/comment";
-import { getConfig } from "../../service/cms";
+import { getConfig, getUserSkinBatch } from "../../service/cms";
 import User from "@jx3box/jx3box-common/js/user";
 import i18nMixin from "../../i18n/mixin";
+const COMMENT_SKIN_TYPE = "comment";
+const COMMENT_SKIN_SUBTYPE = "pc_comment";
 export default {
     name: "CommentComp",
     mixins: [i18nMixin],
@@ -138,6 +141,7 @@ export default {
             orderByLikes: false,
             openWhiteList: false,
             loading: false,
+            commentSkins: {},
 
             showMask: false,
         };
@@ -239,6 +243,7 @@ export default {
                 .then((resp) => {
                     this.commentList = resp.data || [];
                     this.pager = resp.page;
+                    this.loadCommentSkins(this.commentList);
                 })
                 .catch(() => {})
                 .finally(() => {
@@ -280,6 +285,48 @@ export default {
         },
         showAvatar: function (val) {
             return showAvatar(val, 144);
+        },
+        collectCommentUserIds(list = []) {
+            return Array.from(
+                new Set(
+                    list
+                        .map((item) => Number(item?.userId || 0))
+                        .filter((uid) => Number.isInteger(uid) && uid > 0)
+                )
+            );
+        },
+        selectCommentSkin(records = []) {
+            const skins = records.flatMap((record) => (Array.isArray(record?.skins) ? record.skins : []));
+            return (
+                skins.find((item) => item?.theme === "all" && item?.image) ||
+                skins.find((item) => !item?.theme && item?.image) ||
+                skins.find((item) => item?.image) ||
+                null
+            );
+        },
+        loadCommentSkins(list = []) {
+            const userIds = this.collectCommentUserIds(list);
+            if (!userIds.length) {
+                this.commentSkins = {};
+                return;
+            }
+
+            getUserSkinBatch({
+                user_ids: userIds.join(","),
+                type: COMMENT_SKIN_TYPE,
+                subtype: COMMENT_SKIN_SUBTYPE,
+            })
+                .then((res) => {
+                    const data = res?.data?.data || {};
+                    this.commentSkins = userIds.reduce((acc, uid) => {
+                        const records = data[uid] || data[String(uid)] || [];
+                        acc[uid] = this.selectCommentSkin(records);
+                        return acc;
+                    }, {});
+                })
+                .catch(() => {
+                    this.commentSkins = {};
+                });
         },
         reloadPower() {
             GET(`${this.baseAPI}/i-am-author`)

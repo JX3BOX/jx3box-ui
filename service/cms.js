@@ -31,6 +31,11 @@ function getUserSkin(user_id) {
         },
     });
 }
+function getUserSkinBatch(params = {}) {
+    return $cms().get(`/api/cms/user/skin/batch`, {
+        params,
+    });
+}
 function getDecorationJson() {
     let url = JX3BOX.__cdn + "design/decoration/index.json";
     return axios.get(url);
@@ -157,6 +162,7 @@ export {
     getDecoration,
     getDecorationV2,
     getUserSkin,
+    getUserSkinBatch,
     getDecorationJson,
     checkTeamMember,
     getSliders,

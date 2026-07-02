@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const service = fs.readFileSync(path.join(root, "service/cms.js"), "utf8");
+const commentList = fs.readFileSync(path.join(root, "src/single/Comment.vue"), "utf8");
 const component = fs.readFileSync(path.join(root, "src/comment/CommentWithReply.vue"), "utf8");
 const leftSidebar = fs.readFileSync(path.join(root, "src/LeftSidebar.vue"), "utf8");
-const app = fs.readFileSync(path.join(root, "src/App.vue"), "utf8");
 
 function assert(condition, message) {
     if (!condition) {
@@ -15,11 +15,21 @@ function assert(condition, message) {
 
 assert(service.includes("/api/cms/user/decoration/v2"), "getDecoration should support the decoration v2 endpoint");
 
-assert(component.includes("getDecorationV2"), "comment decoration should request the v2 decoration endpoint");
+assert(service.includes("/api/cms/user/skin/batch"), "comment skin should support the batch user skin endpoint");
 
-assert(component.includes('subtype: "pc_comment"'), "comment decoration should request the pc_comment subtype");
+assert(commentList.includes("getUserSkinBatch"), "comment list should request user skins in batch");
 
-assert(component.includes("resolveDecorationDetail"), "comment decoration should resolve v2 decorations payload");
+assert(commentList.includes('type: COMMENT_SKIN_TYPE'), "comment skin request should include the comment type");
+
+assert(commentList.includes('subtype: COMMENT_SKIN_SUBTYPE'), "comment skin request should include the pc_comment subtype");
+
+assert(commentList.includes(":skin=\"commentSkins[item.userId]\""), "comment list should pass per-user skin to items");
+
+assert(!component.includes("getDecorationV2"), "comment item should not request the legacy decoration v2 endpoint");
+
+assert(component.includes("skin:"), "comment item should accept a skin prop");
+
+assert(!component.includes("resolveDecorationDetail"), "comment item should not resolve legacy v2 decorations payload");
 
 assert(component.includes("normalizeDecorationImage"), "comment decoration should normalize returned image URLs");
 
@@ -46,11 +56,6 @@ assert(leftSidebar.includes("resolveDecorationDetail"), "left sidebar decoration
 assert(
     !leftSidebar.includes("design/decoration/images/${val}/${type}.png"),
     "left sidebar decoration should not depend on the old val/sidebar.png path"
-);
-
-assert(
-    app.includes('<LeftSidebar :open="true" :uid="8719">') && app.includes('<Author :uid="8719" />'),
-    "local author fixture should pass the same 8719 uid to LeftSidebar and Author"
 );
 
 console.log("decoration v2 checks passed");

@@ -18,8 +18,8 @@
                 <AdminDrop :post="community" :isCommunity="false" :user-id="8" :showMove="true" />
             </template>
         </breadcrumb>
-        <LeftSidebar :open="true" :uid="8719">
-            <Author :uid="485084" />
+        <LeftSidebar :open="true">
+            <Author :uid="8" />
         </LeftSidebar>
         <Main :withoutLeft="false" :withoutRight="false">
             <el-tabs v-model="tab" type="card">
@@ -101,7 +101,8 @@
                 </el-tab-pane>
                 <el-tab-pane label="文章内容" name="content">
                     <el-radio-group v-model="post_id">
-                        <el-radio value="23240">临时测试</el-radio>
+                        <el-radio value="19382">临时测试</el-radio>
+                        <!-- <el-radio value="23240">临时测试</el-radio> -->
                         <el-radio value="35605">Markdown</el-radio>
                         <el-radio value="32035">仅小册</el-radio>
                         <el-radio value="30017">仅联合创作者</el-radio>
@@ -232,8 +233,7 @@ export default {
         return {
             tab: "content",
 
-            // post_id: "19382",
-            post_id: "99808",
+            post_id: "19382",
             post: {},
             client: location.href.includes("origin") ? "origin" : "std",
             item1: null,
