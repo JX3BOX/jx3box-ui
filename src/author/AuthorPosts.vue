@@ -96,7 +96,7 @@ export default {
         padding: 3px 2px 3px 5px;
         .nobreak;
         .fz(12px,2);
-        color: @color;
+        color: #42566d;
         // border-bottom: 1px solid transparent;
         &:hover {
             color: @v4primary;

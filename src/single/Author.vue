@@ -12,6 +12,7 @@
                 >
             </div>
             <!-- <AuthorLink class="u-block u-links" :uid="uid" :data="data" /> -->
+            <AuthorRole class="u-block u-roles" :data="data" />
             <AuthorMedals class="u-block u-trophy" :uid="uid" />
             <!-- <AuthorTeams class="u-block u-teams" :uid="uid" /> -->
             <!-- <AuthorFans class="u-block u-fans" :uid="uid" /> -->
@@ -27,6 +28,7 @@ import AuthorInfo from "../author/AuthorInfo.vue";
 // import AuthorFollow from "../author/AuthorFollow.vue";
 // import AuthorGift from "../author/AuthorGift.vue";
 // import AuthorFans from "../author/AuthorFans.vue";
+import AuthorRole from "../author/AuthorRole.vue";
 import AuthorMedals from "../author/AuthorMedals.vue";
 // import AuthorTeams from "../author/AuthorTeams.vue";
 import AuthorPosts from "../author/AuthorPosts.vue";
@@ -156,6 +158,7 @@ export default {
         // AuthorLink,
         // AuthorFollow,
         // AuthorGift,
+        AuthorRole,
         AuthorMedals,
         // AuthorTeams,
         AuthorPosts,

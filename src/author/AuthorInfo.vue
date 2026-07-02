@@ -159,10 +159,9 @@ export default {
 .c-author-info {
     .u-author {
         .flex(y);
-        gap:15px;
-        // .db;
-        .mb(10px);
+        gap:12px;
         .pr;
+        margin:5px 5px 10px 5px;
     }
     .u-avatar {
         // .fl;
@@ -215,7 +214,7 @@ export default {
     .u-bio {
         .fz(12px, 2);
         .break(3);
-        color: #888;
+        color: #9aa7b5;
         padding: 0 5px;
         white-space: pre-line;
     }
