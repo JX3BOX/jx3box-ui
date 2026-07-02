@@ -95,25 +95,24 @@
                 </time>
             </div>
             <div class="u-toolbar-right">
-                <el-button class="u-admin u-filter" v-if="canAddWhite" link size="small" @click="setWhiteComment(true)">
-                    <img
-                        class="u-icon-filter"
-                        src="../../assets/img/editor/view.svg"
-                        :alt="$jx3boxT('jx3boxUi.commentContent.show', '显示')"
-                    />
+                <el-button
+                    class="u-admin u-filter"
+                    v-if="canAddWhite"
+                    link
+                    icon="View"
+                    size="small"
+                    @click="setWhiteComment(true)"
+                >
                     {{ $jx3boxT("jx3boxUi.commentContent.show", "显示") }}</el-button
                 >
                 <el-button
                     class="u-admin u-filter"
                     v-if="canRemoveWhite"
                     link
+                    icon="Hide"
                     size="small"
                     @click="setWhiteComment(false)"
-                    ><img
-                        class="u-icon-filter"
-                        src="../../assets/img/comment/hide.svg"
-                        :alt="$jx3boxT('jx3boxUi.commentContent.hidden', '隐藏')"
-                    />{{ $jx3boxT("jx3boxUi.commentContent.hidden", "隐藏") }}</el-button
+                    >{{ $jx3boxT("jx3boxUi.commentContent.hidden", "隐藏") }}</el-button
                 >
             </div>
         </div>
@@ -449,10 +448,6 @@ export default {
             display: flex;
             align-items: center;
             gap: 5px;
-        }
-        .u-icon-filter {
-            width: 16px;
-            height: 16px;
         }
     }
     .u-date {
