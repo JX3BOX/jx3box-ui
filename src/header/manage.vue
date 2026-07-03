@@ -1,14 +1,16 @@
 <template>
     <div class="c-header-panel c-header-manage" id="c-header-manage">
         <span class="u-post u-manage">
-            <i class="u-pop" style="display: none" v-show="showPop || !isAuth"></i>
-            <!-- <manageIcon class="u-add" /> -->
-            <img
-                class="u-add"
-                svg-inline
-                src="../../assets/img/common/manage.svg"
-                :alt="$jx3boxT('jx3boxUi.commonHeader.manageCenter', '扩展中心')"
-            />
+            <i class="u-icon u-icon-msg">
+                <i class="u-pop" style="display: none" v-show="showPop || !isAuth"></i>
+                <!-- <manageIcon class="u-add" /> -->
+                <img
+                    class="u-add"
+                    svg-inline
+                    src="../../assets/img/common/manage.svg"
+                    :alt="$jx3boxT('jx3boxUi.commonHeader.manageCenter', '扩展中心')"
+                />
+            </i>
         </span>
         <ul class="u-menu u-pop-content">
             <template v-for="item in userPanel">
@@ -42,6 +44,7 @@ import i18nMixin from "../../i18n/mixin";
 import { getConfig } from "../../service/cms";
 // import manageIcon from "@/assets/img/components/common/header/manage.svg";
 const { __imgPath } = JX3BOX;
+const NOTICE_POP_KEY = "notice_pop";
 const defaultPanel = [
     {
         key: "manageCenter",
@@ -67,6 +70,22 @@ export default {
             type: Boolean,
             default: false,
         },
+        importantNotice: {
+            type: Object,
+            default: null,
+        },
+        importantNoticeUrl: {
+            type: Object,
+            default: null,
+        },
+        headerConfigLoaded: {
+            type: Boolean,
+            default: true,
+        },
+        headerConfigManaged: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         userPanel: function () {
@@ -84,7 +103,16 @@ export default {
         },
     },
     mounted() {
-        this.loadPanel();
+        if (this.headerConfigLoaded) {
+            this.loadPanel();
+        }
+    },
+    watch: {
+        headerConfigLoaded: function (val) {
+            if (val) {
+                this.loadPanel();
+            }
+        },
     },
     methods: {
         getPanelLabel(item) {
@@ -94,19 +122,16 @@ export default {
         loadPanel: async function () {
             try {
                 const panel = JSON.parse(sessionStorage.getItem("panel"));
-                let config = await getConfig({ key: "important_notice_url" });
+                const noticeConfig = await this.getNoticeConfig("important_notice", this.importantNotice);
+                const noticeUrlConfig = await this.getNoticeConfig("important_notice_url", this.importantNoticeUrl);
                 if (panel) {
-                    this.panel = panel;
+                    this.panel = this.applyNoticeConfig(panel, noticeConfig, noticeUrlConfig);
                     const item = this.panel?.find((i) => i.meta);
                     this.initMeta(item);
+                    sessionStorage.setItem("panel", JSON.stringify(this.panel));
                 } else {
                     getMenu("panel").then((res) => {
-                        this.panel = res.data?.data?.val?.map(item => {
-                            return {
-                                ...item,
-                                link: item.remark == 'feature' ? config.val : item.link
-                            };
-                        });
+                        this.panel = this.applyNoticeConfig(res.data?.data?.val, noticeConfig, noticeUrlConfig);
                         const item = this.panel?.find((i) => i.meta);
                         this.initMeta(item);
                         sessionStorage.setItem("panel", JSON.stringify(this.panel));
@@ -117,22 +142,33 @@ export default {
                 console.log("loadPanel error", e);
             }
         },
+        getNoticeConfig: async function (key, config) {
+            if (config) return config;
+            if (this.headerConfigManaged) return null;
+            return await getConfig({ key }).catch(() => null);
+        },
+        applyNoticeConfig: function (panel = [], noticeConfig, noticeUrlConfig) {
+            const items = panel?.length ? panel : defaultPanel;
+            return items.map((item) => {
+                if (item.remark !== "feature") return item;
+                return {
+                    ...item,
+                    link: noticeUrlConfig?.val || item.link,
+                    meta: noticeConfig?.val || item.meta,
+                };
+            });
+        },
         resolveImg: function (img) {
             return img ? __imgPath + "image/header/panel/" + img : __imgPath + "image/header/panel/default.svg";
         },
         initMeta(item) {
-            const local = localStorage.getItem("jb_panel_meta");
-
-            if (local) {
-                this.showPop = item?.meta && item?.meta != local;
-            } else {
-                localStorage.setItem("jb_panel_meta", item?.meta);
-                this.showPop = true;
-            }
+            const meta = item?.meta;
+            const local = localStorage.getItem(NOTICE_POP_KEY);
+            this.showPop = !!meta && meta != local;
         },
         onClick(item) {
             if (item.meta) {
-                localStorage.setItem("jb_panel_meta", item.meta);
+                localStorage.setItem(NOTICE_POP_KEY, item.meta);
                 this.showPop = false;
             }
         },
@@ -180,6 +216,7 @@ export default {
 
     .u-icon-msg {
         .pr;
+        .size(18px);
     }
 
     .u-pop {
@@ -188,11 +225,11 @@ export default {
         color: #fff;
         background-image: linear-gradient(#fcd14f, #d7a20b);
         background-clip: padding-box;
-        border: 2px solid #24292e;
+        border: 2px solid @header-bg;
         border-radius: 50%;
         position: absolute;
-        right: 4px;
-        top: 18px;
+        right: -5px;
+        top: -4px;
         z-index: 1;
     }
 

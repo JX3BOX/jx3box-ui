@@ -18,7 +18,15 @@
             </div>
 
             <!-- user -->
-            <header-user ref="user" class="c-header__user" :client="client" :asset="asset" />
+            <header-user
+                ref="user"
+                class="c-header__user"
+                :client="client"
+                :asset="asset"
+                :header-config="headerConfig"
+                :header-config-loaded="headerConfigLoaded"
+                :header-config-managed="true"
+            />
         </div>
         <header-box v-if="isMobile" class="c-header__box c-header-jx3box" :overlayEnable="overlayEnable" />
         <header-box2 v-else class="c-header__box c-header__box--desktop" />
@@ -45,8 +53,11 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 
 // 数据
 import { getGlobalConfig } from "../service/header";
+import { getConfig } from "../service/cms";
 import User from "@jx3box/jx3box-common/js/user.js";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+
+const HEADER_CONFIG_KEYS = ["important_notice", "important_notice_url", "vip", "mall"];
 
 export default {
     name: "Header",
@@ -67,6 +78,8 @@ export default {
             isMobile: window.innerWidth <= 768,
 
             asset: {},
+            headerConfig: {},
+            headerConfigLoaded: false,
         };
     },
     computed: {
@@ -133,6 +146,7 @@ export default {
         // 检查
         init: function () {
             this.checkIsWebView();
+            this.loadHeaderConfig();
 
             const token = this.getUrlParam("__token");
             const env = this.getUrlParam("__env");
@@ -198,6 +212,31 @@ export default {
                     document.documentElement.classList.add("is-comment-show");
                 }
             });
+        },
+        loadHeaderConfig: function () {
+            getConfig({
+                key: HEADER_CONFIG_KEYS.join(","),
+            })
+                .then((data) => {
+                    this.headerConfig = this.normalizeHeaderConfig(data);
+                })
+                .catch(() => {
+                    this.headerConfig = {};
+                })
+                .finally(() => {
+                    this.headerConfigLoaded = true;
+                });
+        },
+        normalizeHeaderConfig: function (data) {
+            if (Array.isArray(data)) {
+                return data.reduce((result, item) => {
+                    if (item?.key) {
+                        result[item.key] = item;
+                    }
+                    return result;
+                }, {});
+            }
+            return data?.key ? { [data.key]: data } : {};
         },
         updateScreen() {
             this.isMobile = window.innerWidth <= 768;

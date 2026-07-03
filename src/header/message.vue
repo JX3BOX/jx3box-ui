@@ -81,7 +81,7 @@ export default {
         border-radius: 50%;
         position: absolute;
         right: -5px;
-        top: -2px;
+        top: -4px;
         .z(1);
     }
 }

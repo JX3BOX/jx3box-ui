@@ -8,16 +8,22 @@
             <publish />
 
             <!-- vip -->
-            <vip />
+            <vip :config="headerConfig.vip" :config-loaded="headerConfigLoaded" :config-managed="headerConfigManaged" />
 
             <!-- 商城 -->
-            <shop />
+            <shop :config="headerConfig.mall" :config-loaded="headerConfigLoaded" :config-managed="headerConfigManaged" />
 
             <!-- 我的资产 -->
             <asset :asset="asset" />
 
             <!-- manage -->
-            <manage :isTeammate="isTeammate" />
+            <manage
+                :isTeammate="isTeammate"
+                :important-notice="headerConfig.important_notice"
+                :important-notice-url="headerConfig.important_notice_url"
+                :header-config-loaded="headerConfigLoaded"
+                :header-config-managed="headerConfigManaged"
+            />
 
             <!-- 语言切换 -->
             <lang />
@@ -76,6 +82,18 @@ export default {
                     was_pro: 0,
                 };
             },
+        },
+        headerConfig: {
+            type: Object,
+            default: () => ({}),
+        },
+        headerConfigLoaded: {
+            type: Boolean,
+            default: true,
+        },
+        headerConfigManaged: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {

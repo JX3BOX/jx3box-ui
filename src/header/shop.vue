@@ -6,7 +6,7 @@
             placement="bottom"
             popper-class="c-header-tooltip"
         >
-            <a class="u-present" href="/vip/mall">
+            <a class="u-present" href="/vip/mall" @click="markPopRead">
                 <i class="u-icon u-icon-msg">
                     <i class="u-pop" style="display: none" v-show="pop"></i>
                     <!-- <shopIcon class="u-icon" /> -->
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getConfig, getUserMeta, setUserMeta } from "../../service/cms";
+import { getConfig, getUserMeta } from "../../service/cms";
 import User from "@jx3box/jx3box-common/js/user";
 import i18nMixin from "../../i18n/mixin";
 // import shopIcon from "@/assets/img/components/common/header/gift.svg";
@@ -36,52 +36,66 @@ export default {
     data: function () {
         return {
             pop: false,
+            initialized: false,
+            popValue: "",
         };
     },
+    props: {
+        config: {
+            type: Object,
+            default: null,
+        },
+        configLoaded: {
+            type: Boolean,
+            default: true,
+        },
+        configManaged: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    watch: {
+        configLoaded: function (val) {
+            if (val) {
+                this.init();
+            }
+        },
+    },
     mounted() {
-        this.init();
+        if (this.configLoaded) {
+            this.init();
+        }
     },
     methods: {
         async init() {
+            if (this.initialized) return;
             /**
-             * 1. 用户第一次进入页面时，没有记录，则显示，并记录到meta
-             * 2. 用户第二次进入页面，此时meta有记录，但是用户并未进入会员中心，则显示
-             *
-             * meta如果为null，说明用户未登录，不显示
-             * meta如果为0，说明用户已经看过，不显示，同时比较config的值，如果config的值大于local，更新local为config的值和meta为1
-             * meta如果为1，说明用户未看过，显示
+             * 只在点击入口后记录本地版本；仅看到气泡不算已处理。
              */
             let meta = null;
             if (User.isLogin()) {
                 meta = await getUserMeta({ key: "mall_pop" });
             }
-            let config = await getConfig({ key: "mall" });
+            let config = this.config || (this.configManaged ? null : await getConfig({ key: "mall" }));
+            if (!config) return;
+            this.initialized = true;
+            this.popValue = config.val;
 
-            if (meta == null) {
-                const val = ~~config.val;
+            this.pop = this.shouldShowPop(meta, config.val);
+        },
+        shouldShowPop(meta, value) {
+            if (!~~value) return false;
 
-                if (val) {
-                    this.pop = true;
-                    localStorage.setItem("mall_pop", config.val);
-                    setUserMeta("mall_pop", { val: 1 });
-                }
-            } else {
-                if (meta == 1) {
-                    this.pop = true;
+            const local = localStorage.getItem("mall_pop");
+            if (String(local) === String(value)) return false;
 
-                    localStorage.setItem("mall_pop", config.val);
-                } else {
-                    const local = localStorage.getItem("mall_pop");
-
-                    if (~~config.val > ~~local) {
-                        this.pop = true;
-
-                        localStorage.setItem("mall_pop", config.val);
-
-                        // setUserMeta("mall_pop", { val: 1 });
-                    }
-                }
-            }
+            if (meta == null || meta == 1) return true;
+            return ~~value > ~~local;
+        },
+        markPopRead() {
+            if (!this.pop || this.popValue == null) return;
+            localStorage.setItem("mall_pop", this.popValue);
+            this.pop = false;
         },
     },
 };
@@ -111,11 +125,11 @@ export default {
         color: #fff;
         background-image: linear-gradient(#fcd14f, #d7a20b);
         background-clip: padding-box;
-        border: 2px solid #24292e;
+        border: 2px solid @header-bg;
         border-radius: 50%;
         position: absolute;
         right: -5px;
-        top: -6px;
+        top: -4px;
         z-index: 1;
     }
 }
