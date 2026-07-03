@@ -39,6 +39,7 @@ import { getMenu } from "../../service/header";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import User from "@jx3box/jx3box-common/js/user";
 import i18nMixin from "../../i18n/mixin";
+import { getConfig } from "../../service/cms";
 // import manageIcon from "@/assets/img/components/common/header/manage.svg";
 const { __imgPath } = JX3BOX;
 const defaultPanel = [
@@ -90,16 +91,22 @@ export default {
             if (item?.key) return this.$jx3boxT(`jx3boxUi.commonHeader.panel.${item.key}`, item.label || item.key);
             return item?.label || "";
         },
-        loadPanel: function () {
+        loadPanel: async function () {
             try {
                 const panel = JSON.parse(sessionStorage.getItem("panel"));
+                let config = await getConfig({ key: "important_notice_url" });
                 if (panel) {
                     this.panel = panel;
                     const item = this.panel?.find((i) => i.meta);
                     this.initMeta(item);
                 } else {
                     getMenu("panel").then((res) => {
-                        this.panel = res.data?.data?.val;
+                        this.panel = res.data?.data?.val?.map(item => {
+                            return {
+                                ...item,
+                                link: item.remark == 'feature' ? config.val : item.link
+                            };
+                        });
                         const item = this.panel?.find((i) => i.meta);
                         this.initMeta(item);
                         sessionStorage.setItem("panel", JSON.stringify(this.panel));
