@@ -1,6 +1,10 @@
 import { $cms } from "@jx3box/jx3box-common/js/api";
 import axios from "axios";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import { getGlobalConfig } from "./header";
+
+const APP_CONFIG_KEYS = ["android_apk", "android_versions", "app_logo", "app_version_desc", "apple_url", "harmony_url"];
+
 function getPostAuthors(post_id) {
     return $cms({ mute: true }).get(`/api/cms/post/${post_id}/authors`);
 }
@@ -80,12 +84,56 @@ function getTopicBucket(params) {
     return $cms().get(`/api/cms/topic/bucket`, { params });
 }
 
-// 获取config
-function getConfig(params) {
+function getLegacyConfig(params) {
     return $cms()
         .get(`/api/cms/config`, { params })
         .then((res) => {
             return res.data.data;
+        });
+}
+
+function normalizeConfigItem(key, value, subtype = "") {
+    return {
+        key,
+        val: value,
+        subtype,
+    };
+}
+
+function getConfigFromGlobal(params = {}) {
+    return getGlobalConfig().then((config) => {
+        if (!config || typeof config !== "object") return null;
+
+        if (params.key) {
+            const keys = String(params.key)
+                .split(",")
+                .map((key) => key.trim())
+                .filter(Boolean);
+
+            if (!keys.length) return null;
+            if (!keys.every((key) => Object.prototype.hasOwnProperty.call(config, key))) return null;
+
+            const items = keys.map((key) => normalizeConfigItem(key, config[key]));
+            return keys.length === 1 ? items[0] : items;
+        }
+
+        if (params.subtype === "app") {
+            if (!APP_CONFIG_KEYS.every((key) => Object.prototype.hasOwnProperty.call(config, key))) return null;
+            return APP_CONFIG_KEYS.map((key) => normalizeConfigItem(key, config[key], "app"));
+        }
+
+        return null;
+    });
+}
+
+// 获取config
+function getConfig(params = {}) {
+    return getConfigFromGlobal(params)
+        .then((data) => {
+            return data || getLegacyConfig(params);
+        })
+        .catch(() => {
+            return getLegacyConfig(params);
         });
 }
 

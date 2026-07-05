@@ -1,4 +1,5 @@
-import { $pay, $cms } from "@jx3box/jx3box-common/js/api";
+import { $pay } from "@jx3box/jx3box-common/js/api";
+import { getConfig } from "./cms";
 
 function getPostBoxcoinRecords(postType, postId, params) {
     return $pay().get(`/api/inspire/article/${postType}/${postId}/history`, {
@@ -23,10 +24,12 @@ function getPostBoxcoinConfig(postType) {
 }
 
 function getBoxcoinStatus() {
-    return $cms().get(`/api/cms/config`, {
-        params: {
-            key: "boxcoin",
-        },
+    return getConfig({ key: "boxcoin" }).then((data) => {
+        return {
+            data: {
+                data,
+            },
+        };
     });
 }
 
