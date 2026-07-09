@@ -2,7 +2,7 @@
     <div class="c-header-panel c-header-manage" id="c-header-manage">
         <span class="u-post u-manage">
             <i class="u-icon u-icon-msg">
-                <i class="u-pop" style="display: none" v-show="showPop || !isAuth"></i>
+                <i class="u-pop" style="display: none" v-show="showPanelPop"></i>
                 <!-- <manageIcon class="u-add" /> -->
                 <img
                     class="u-add"
@@ -20,6 +20,16 @@
                         {{ getPanelLabel(item) }}
                         <span v-if="showPop" class="u-new">New!</span>
                         <span v-if="item.remark == 'auth' && !isAuth" class="u-new">New!</span>
+                    </a>
+                    <a
+                        v-if="item.remark === 'feature' && hasAccountReadyIssue"
+                        href="javascript:;"
+                        class="u-menu-item u-menu-item--account-ready"
+                        @click.prevent="openAccountReady"
+                    >
+                        <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
+                        资料完善
+                        <span class="u-new u-new--important">重要</span>
                     </a>
                 </li>
             </template>
@@ -86,7 +96,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        accountReadyIssues: {
+            type: Array,
+            default: () => [],
+        },
     },
+    emits: ["open-account-ready"],
     computed: {
         userPanel: function () {
             return this.panel.filter((item) => {
@@ -100,6 +115,12 @@ export default {
         },
         isAuth() {
             return User.isPhoneMember();
+        },
+        hasAccountReadyIssue() {
+            return this.accountReadyIssues.length > 0;
+        },
+        showPanelPop() {
+            return this.showPop || this.hasAccountReadyIssue || !this.isAuth;
         },
     },
     mounted() {
@@ -172,6 +193,9 @@ export default {
                 this.showPop = false;
             }
         },
+        openAccountReady() {
+            this.$emit("open-account-ready");
+        },
     },
 };
 </script>
@@ -239,6 +263,14 @@ export default {
         background-color: @v4primary-dark;
         color: #fff;
         padding: 0px 6px;
+    }
+
+    .u-new--important {
+        background-color: #f56c6c;
+    }
+
+    .u-menu-item--account-ready {
+        color: #f56c6c;
     }
 }
 </style>

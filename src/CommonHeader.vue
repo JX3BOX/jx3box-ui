@@ -26,11 +26,40 @@
                 :header-config="headerConfig"
                 :header-config-loaded="headerConfigLoaded"
                 :header-config-managed="true"
+                :account-ready-issues="accountReadyIssues"
+                @open-account-ready="openAccountReadyDialog"
             />
         </div>
         <header-box v-if="isMobile" class="c-header__box c-header-jx3box" :overlayEnable="overlayEnable" />
         <header-box2 v-else class="c-header__box c-header__box--desktop" />
     </header>
+    <el-dialog
+        v-model="accountReadyDialogVisible"
+        class="c-header-account-ready"
+        width="min(92vw, 520px)"
+        title="⚠️ 完善账号安全信息"
+        append-to-body
+        @close="markAccountReadyDismissed"
+    >
+        <div class="c-header-account-ready__body">
+            <p class="u-desc">为了保障 App 登录、账号找回和卡密等功能正常使用，请先补全以下账号安全信息。</p>
+            <div class="u-list">
+                <div class="u-item" v-if="accountReadyIssues.includes('contact')">
+                    <div class="u-title">绑定邮箱或手机号</div>
+                    <div class="u-text">当前账号还没有可用的邮箱或手机号。请至少绑定其中一项，否则后续可能无法找回账号。</div>
+                    <el-button type="primary" @click="goAccountReady('/dashboard/notice')">去绑定</el-button>
+                </div>
+                <div class="u-item" v-if="accountReadyIssues.includes('password')">
+                    <div class="u-title">设置登录密码</div>
+                    <div class="u-text">当前账号还没有设置密码。未设置密码时，可能无法使用卡密等功能，也无法在 App 中通过账号密码登录。</div>
+                    <el-button type="primary" @click="goAccountReady('/dashboard/pwd')">去设置</el-button>
+                </div>
+            </div>
+        </div>
+        <template #footer>
+            <el-button @click="accountReadyDialogVisible = false">7天后再说</el-button>
+        </template>
+    </el-dialog>
 </template>
 
 <script>
@@ -53,12 +82,14 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 
 // 数据
 import { getGlobalConfig } from "../service/header";
-import { getConfig } from "../service/cms";
+import { getConfig, getMyAccountStatus } from "../service/cms";
 import { refreshTokenIfNeeded } from "./utils/auth-token-refresh";
 import User from "@jx3box/jx3box-common/js/user.js";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
-const HEADER_CONFIG_KEYS = ["important_notice", "important_notice_url", "vip", "mall"];
+const HEADER_CONFIG_KEYS = ["important_notice", "important_notice_url", "vip", "mall", "user_profile_ready"];
+const ACCOUNT_READY_STORAGE_PREFIX = "jx3box:account-ready-dismissed-until";
+const ACCOUNT_READY_DISMISS_INTERVAL = 7 * 24 * 60 * 60 * 1000;
 
 export default {
     name: "Header",
@@ -81,6 +112,9 @@ export default {
             asset: {},
             headerConfig: {},
             headerConfigLoaded: false,
+            accountReadyDialogVisible: false,
+            accountReadyIssues: [],
+            accountReadyChecking: false,
         };
     },
     computed: {
@@ -233,6 +267,7 @@ export default {
             })
                 .then((data) => {
                     this.headerConfig = this.normalizeHeaderConfig(data);
+                    this.checkAccountReadiness();
                 })
                 .catch(() => {
                     this.headerConfig = {};
@@ -251,6 +286,84 @@ export default {
                 }, {});
             }
             return data?.key ? { [data.key]: data } : {};
+        },
+        getConfigValue: function (key) {
+            const config = this.headerConfig?.[key];
+            return config?.val ?? config;
+        },
+        isAccountReadyEnabled: function () {
+            return String(this.getConfigValue("user_profile_ready") || "").trim() === "1";
+        },
+        getAccountReadyStorageKey: function () {
+            const uid = User.getInfo()?.uid || localStorage.getItem("uid") || "0";
+            return `${ACCOUNT_READY_STORAGE_PREFIX}:${uid}`;
+        },
+        isAccountReadyDismissed: function () {
+            try {
+                const key = this.getAccountReadyStorageKey();
+                const until = Number(localStorage.getItem(key));
+                if (!until) return false;
+                if (Date.now() < until) return true;
+                localStorage.removeItem(key);
+            } catch (e) {}
+            return false;
+        },
+        markAccountReadyDismissed: function () {
+            if (!User.isLogin() || !this.accountReadyIssues.length) return;
+            try {
+                localStorage.setItem(this.getAccountReadyStorageKey(), String(Date.now() + ACCOUNT_READY_DISMISS_INTERVAL));
+            } catch (e) {}
+        },
+        buildAccountReadyIssues: function (status = {}) {
+            const issues = [];
+            if (!status.has_phone && !status.has_verified_email) {
+                issues.push("contact");
+            }
+            if (!status.has_password) {
+                issues.push("password");
+            }
+            return issues;
+        },
+        isAccountReadyTargetPage: function () {
+            return ["/dashboard/notice", "/dashboard/pwd"].some((path) => location.pathname.startsWith(path));
+        },
+        checkAccountReadiness: function () {
+            if (this.accountReadyChecking || !User.isLogin()) return;
+            if (this.isAccountReadyTargetPage()) return;
+            if (!this.isAccountReadyEnabled()) return;
+
+            this.accountReadyChecking = true;
+            getMyAccountStatus()
+                .then((status) => {
+                    const issues = this.buildAccountReadyIssues(status);
+                    if (!issues.length) {
+                        this.accountReadyIssues = [];
+                        this.accountReadyDialogVisible = false;
+                        this.clearAccountReadyDismissed();
+                        return;
+                    }
+                    this.accountReadyIssues = issues;
+                    if (!this.isAccountReadyDismissed()) {
+                        this.accountReadyDialogVisible = true;
+                    }
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.accountReadyChecking = false;
+                });
+        },
+        clearAccountReadyDismissed: function () {
+            try {
+                localStorage.removeItem(this.getAccountReadyStorageKey());
+            } catch (e) {}
+        },
+        openAccountReadyDialog: function () {
+            if (!this.accountReadyIssues.length) return;
+            this.accountReadyDialogVisible = true;
+        },
+        goAccountReady: function (url) {
+            this.markAccountReadyDismissed();
+            window.open(url, "_blank", "noopener");
         },
         updateScreen() {
             this.isMobile = window.innerWidth <= 768;
@@ -310,6 +423,62 @@ export default {
             clear: both;
         }
         .flex;
+    }
+}
+
+.c-header-account-ready {
+    border-radius: 10px;
+
+    .el-dialog__header {
+        margin-right: 0;
+        padding: 24px 24px 10px;
+    }
+
+    .el-dialog__title {
+        font-weight: 700;
+        color: #222;
+    }
+
+    .el-dialog__body {
+        padding: 8px 24px 4px;
+    }
+
+    .el-dialog__footer {
+        padding: 12px 24px 22px;
+    }
+
+    &__body {
+        .u-desc {
+            margin: 0 0 16px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .u-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .u-item {
+            padding: 14px 16px;
+            border: 1px solid #e8edf5;
+            border-radius: 8px;
+            background: #f8fbff;
+        }
+
+        .u-title {
+            margin-bottom: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .u-text {
+            margin-bottom: 12px;
+            color: #5f6b7a;
+            line-height: 1.7;
+        }
     }
 }
 .c-header.isOverlay {

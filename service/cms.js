@@ -202,6 +202,14 @@ function getUserPermission() {
     return $cms().get(`/api/cms/account/permission/i`);
 }
 
+function getMyAccountStatus() {
+    return $cms({ mute: true })
+        .get(`/api/cms/user/my/account/status`)
+        .then((res) => {
+            return res.data.data;
+        });
+}
+
 export {
     getPost,
     getPostAuthors,
@@ -227,6 +235,7 @@ export {
     uploadFile,
     refreshQQBotImage,
     getUserPermission,
+    getMyAccountStatus,
     getUserConfig,
     setUserConfig,
 };

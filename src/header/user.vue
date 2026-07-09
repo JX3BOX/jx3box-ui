@@ -23,6 +23,8 @@
                 :important-notice-url="headerConfig.important_notice_url"
                 :header-config-loaded="headerConfigLoaded"
                 :header-config-managed="headerConfigManaged"
+                :account-ready-issues="accountReadyIssues"
+                @open-account-ready="$emit('open-account-ready')"
             />
 
             <!-- 语言切换 -->
@@ -95,7 +97,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        accountReadyIssues: {
+            type: Array,
+            default: () => [],
+        },
     },
+    emits: ["open-account-ready"],
     components: {
         message,
         publish,

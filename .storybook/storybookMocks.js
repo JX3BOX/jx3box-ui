@@ -48,10 +48,18 @@ function respond(config, data, status = 200) {
 }
 
 function mockCmsConfig(key) {
+    if (String(key || '').includes(',')) {
+        return String(key)
+            .split(',')
+            .map((item) => item.trim())
+            .filter(Boolean)
+            .map((item) => ({ key: item, ...mockCmsConfig(item) }));
+    }
     if (key === 'boxcoin') return { val: 1 };
     if (key === 'admin_boxcoin_visible') return { val: 1 };
     if (key === 'level_has_gift_permission') return { val: 0 };
     if (key === 'comment_strict') return { val: 0 };
+    if (key === 'user_profile_ready') return { val: 1 };
     return { val: '' };
 }
 
@@ -66,6 +74,99 @@ export function resolveStorybookMock(config) {
 
     if (method === 'get' && path === '/api/cms/config') {
         return respond(config, { data: mockCmsConfig(params.key) });
+    }
+
+    if (method === 'get' && path === '/api/cms/user/my/account/status') {
+        return respond(config, {
+            data: {
+                has_phone: false,
+                has_email: false,
+                email_verified: false,
+                has_verified_email: false,
+                has_password: false,
+            },
+        });
+    }
+
+    if (method === 'get' && path === '/api/letter/unread/count') {
+        return respond(config, { data: 0 });
+    }
+
+    if (method === 'get' && path === '/api/next2/userdata/messages/unread_total') {
+        return respond(config, { data: 0 });
+    }
+
+    if (method === 'get' && path === '/api/cms/user/conf') {
+        return respond(config, { data: null });
+    }
+
+    if (method === 'get' && path === '/api/cms/user/my/info') {
+        return respond(config, {
+            data: {
+                uid: 8,
+                name: 'Storybook用户',
+                group: 1,
+                token: 'storybook-token',
+                status: 0,
+                bind_wx: 0,
+                avatar: 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png',
+            },
+        });
+    }
+
+    if (method === 'get' && path === '/api/cms/config/menu/panel') {
+        return respond(config, {
+            data: {
+                val: [
+                    {
+                        key: 'featureUpdate',
+                        label: '功能更新',
+                        link: '/notice',
+                        icon: 'notice.svg',
+                        remark: 'feature',
+                        meta: 'storybook-feature',
+                    },
+                    {
+                        key: 'manageCenter',
+                        label: '后台管理',
+                        link: '/os',
+                        icon: 'cube.svg',
+                        onlyAdmin: true,
+                    },
+                ],
+            },
+        });
+    }
+
+    if (method === 'get' && path === '/api/cms/user/my/meta') {
+        return respond(config, { data: null });
+    }
+
+    if (method === 'post' && path === '/api/cms/user/account/email/logout') {
+        return respond(config, { data: true });
+    }
+
+    if (method === 'post' && path === '/api/personal/task/everyday/sign-in') {
+        return respond(config, { code: 0, data: true });
+    }
+
+    if (method === 'get' && path === '/api/vip/i') {
+        return respond(config, {
+            data: {
+                was_vip: 0,
+                expire_date: '1970-02-02T16:00:00.000Z',
+                total_day: 0,
+                was_pro: 0,
+                pro_expire_date: '1970-02-02T16:00:00.000Z',
+                pro_total_day: 0,
+                rename_card_count: 0,
+                had_renamed: 0,
+                namespace_card_count: 0,
+                box_coin: 0,
+                points: 0,
+                experience: 0,
+            },
+        });
     }
 
     if (method === 'get' && path.match(/^\/api\/cms\/post\/\d+\/authors$/)) {
