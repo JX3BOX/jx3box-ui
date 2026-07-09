@@ -54,6 +54,7 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 // 数据
 import { getGlobalConfig } from "../service/header";
 import { getConfig } from "../service/cms";
+import { refreshTokenIfNeeded } from "./utils/auth-token-refresh";
 import User from "@jx3box/jx3box-common/js/user.js";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
@@ -156,6 +157,7 @@ export default {
 
             if (User.isLogin()) {
                 this.loadAsset();
+                this.refreshAuthToken();
             }
 
             // 获取全局配置
@@ -194,6 +196,18 @@ export default {
                     }
                 }
             });
+        },
+
+        refreshAuthToken: function () {
+            refreshTokenIfNeeded().catch(() => {
+                // 自动续期失败不影响公共头渲染，后续鉴权请求会按既有逻辑处理登录态。
+            });
+        },
+
+        handleVisibilityChange: function () {
+            if (document.visibilityState === "visible") {
+                this.refreshAuthToken();
+            }
         },
 
         getUrlParam(name) {
@@ -245,6 +259,7 @@ export default {
     created: function () {
         this.init();
         window.addEventListener("resize", this.updateScreen, { passive: true });
+        document.addEventListener("visibilitychange", this.handleVisibilityChange);
 
         if (this.overlayEnable) {
             this.__overlayScrollHandler = _.throttle(() => {
@@ -256,6 +271,7 @@ export default {
     },
     beforeUnmount: function () {
         window.removeEventListener("resize", this.updateScreen);
+        document.removeEventListener("visibilitychange", this.handleVisibilityChange);
         if (this.__overlayScrollHandler) {
             window.removeEventListener("scroll", this.__overlayScrollHandler);
             this.__overlayScrollHandler.cancel && this.__overlayScrollHandler.cancel();

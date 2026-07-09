@@ -167,7 +167,7 @@ function setUserMeta(key, data) {
 
 // 刷新凭证
 function refreshAuth() {
-    return $cms().post(`/api/cms/user/account/email/refresh`);
+    return $cms().post(`/api/cms/user/account/token/refresh`);
 }
 
 function getUserHonor(uid) {
