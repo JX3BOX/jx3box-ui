@@ -24,7 +24,8 @@
                 :header-config-loaded="headerConfigLoaded"
                 :header-config-managed="headerConfigManaged"
                 :account-ready-issues="accountReadyIssues"
-                @open-account-ready="$emit('open-account-ready')"
+                :account-ready-incomplete="accountReadyIncomplete"
+                @open-account-ready="$emit('open-account-ready', $event)"
             />
 
             <!-- 语言切换 -->
@@ -100,6 +101,10 @@ export default {
         accountReadyIssues: {
             type: Array,
             default: () => [],
+        },
+        accountReadyIncomplete: {
+            type: Boolean,
+            default: false,
         },
     },
     emits: ["open-account-ready"],

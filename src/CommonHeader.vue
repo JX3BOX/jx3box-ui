@@ -27,6 +27,7 @@
                 :header-config-loaded="headerConfigLoaded"
                 :header-config-managed="true"
                 :account-ready-issues="accountReadyIssues"
+                :account-ready-incomplete="accountReadyIncomplete"
                 @open-account-ready="openAccountReadyDialog"
             />
         </div>
@@ -45,8 +46,8 @@
             <p class="u-desc">为了保障 App 登录、账号找回和卡密等功能正常使用，请先补全以下账号安全信息。</p>
             <div class="u-list">
                 <div class="u-item" v-if="accountReadyIssues.includes('contact')">
-                    <div class="u-title">绑定邮箱或手机号</div>
-                    <div class="u-text">当前账号还没有可用的邮箱或手机号。请至少绑定其中一项，否则后续可能无法找回账号。</div>
+                    <div class="u-title">绑定邮箱和手机号</div>
+                    <div class="u-text">当前账号的邮箱或手机号尚未完善。请完成手机号绑定，并绑定且验证邮箱，否则后续可能无法找回账号。</div>
                     <el-button type="primary" @click="goAccountReady('/dashboard/notice')">去绑定</el-button>
                 </div>
                 <div class="u-item" v-if="accountReadyIssues.includes('password')">
@@ -89,6 +90,7 @@ import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
 const HEADER_CONFIG_KEYS = ["important_notice", "important_notice_url", "vip", "mall", "user_profile_ready"];
 const ACCOUNT_READY_STORAGE_PREFIX = "jx3box:account-ready-dismissed-until";
+const ACCOUNT_READY_COMPLETE_STORAGE_PREFIX = "jx3box:account-ready-complete";
 const ACCOUNT_READY_DISMISS_INTERVAL = 7 * 24 * 60 * 60 * 1000;
 
 export default {
@@ -114,6 +116,7 @@ export default {
             headerConfigLoaded: false,
             accountReadyDialogVisible: false,
             accountReadyIssues: [],
+            accountReadyIncomplete: false,
             accountReadyChecking: false,
         };
     },
@@ -192,6 +195,7 @@ export default {
             if (User.isLogin()) {
                 this.loadAsset();
                 this.refreshAuthToken();
+                this.initAccountReadyState();
             }
 
             // 获取全局配置
@@ -267,13 +271,13 @@ export default {
             })
                 .then((data) => {
                     this.headerConfig = this.normalizeHeaderConfig(data);
-                    this.checkAccountReadiness();
                 })
                 .catch(() => {
                     this.headerConfig = {};
                 })
                 .finally(() => {
                     this.headerConfigLoaded = true;
+                    this.checkAccountReadiness();
                 });
         },
         normalizeHeaderConfig: function (data) {
@@ -294,9 +298,31 @@ export default {
         isAccountReadyEnabled: function () {
             return String(this.getConfigValue("user_profile_ready") || "").trim() === "1";
         },
-        getAccountReadyStorageKey: function () {
+        getAccountReadyUserId: function () {
             const uid = User.getInfo()?.uid || localStorage.getItem("uid") || "0";
-            return `${ACCOUNT_READY_STORAGE_PREFIX}:${uid}`;
+            return uid || "0";
+        },
+        getAccountReadyStorageKey: function () {
+            return `${ACCOUNT_READY_STORAGE_PREFIX}:${this.getAccountReadyUserId()}`;
+        },
+        getAccountReadyCompleteStorageKey: function () {
+            return `${ACCOUNT_READY_COMPLETE_STORAGE_PREFIX}:${this.getAccountReadyUserId()}`;
+        },
+        isAccountReadyCompleted: function () {
+            try {
+                return !!localStorage.getItem(this.getAccountReadyCompleteStorageKey());
+            } catch (e) {
+                return false;
+            }
+        },
+        markAccountReadyCompleted: function () {
+            try {
+                localStorage.setItem(this.getAccountReadyCompleteStorageKey(), String(Date.now()));
+            } catch (e) {}
+            this.clearAccountReadyDismissed();
+        },
+        initAccountReadyState: function () {
+            this.accountReadyIncomplete = !this.isAccountReadyCompleted();
         },
         isAccountReadyDismissed: function () {
             try {
@@ -316,7 +342,7 @@ export default {
         },
         buildAccountReadyIssues: function (status = {}) {
             const issues = [];
-            if (!status.has_phone && !status.has_verified_email) {
+            if (!status.has_phone || !status.has_verified_email) {
                 issues.push("contact");
             }
             if (!status.has_password) {
@@ -329,8 +355,12 @@ export default {
         },
         checkAccountReadiness: function () {
             if (this.accountReadyChecking || !User.isLogin()) return;
-            if (this.isAccountReadyTargetPage()) return;
-            if (!this.isAccountReadyEnabled()) return;
+            if (this.isAccountReadyCompleted()) {
+                this.accountReadyIssues = [];
+                this.accountReadyIncomplete = false;
+                this.accountReadyDialogVisible = false;
+                return;
+            }
 
             this.accountReadyChecking = true;
             getMyAccountStatus()
@@ -338,12 +368,14 @@ export default {
                     const issues = this.buildAccountReadyIssues(status);
                     if (!issues.length) {
                         this.accountReadyIssues = [];
+                        this.accountReadyIncomplete = false;
                         this.accountReadyDialogVisible = false;
-                        this.clearAccountReadyDismissed();
+                        this.markAccountReadyCompleted();
                         return;
                     }
                     this.accountReadyIssues = issues;
-                    if (!this.isAccountReadyDismissed()) {
+                    this.accountReadyIncomplete = true;
+                    if (this.isAccountReadyEnabled() && !this.isAccountReadyTargetPage() && !this.isAccountReadyDismissed()) {
                         this.accountReadyDialogVisible = true;
                     }
                 })
@@ -357,9 +389,35 @@ export default {
                 localStorage.removeItem(this.getAccountReadyStorageKey());
             } catch (e) {}
         },
-        openAccountReadyDialog: function () {
-            if (!this.accountReadyIssues.length) return;
-            this.accountReadyDialogVisible = true;
+        openAccountReadyDialog: function (issues) {
+            if (Array.isArray(issues) && issues.length) {
+                this.accountReadyIssues = issues;
+            }
+            if (this.accountReadyIssues.length) {
+                this.accountReadyDialogVisible = true;
+                return;
+            }
+            if (!User.isLogin() || this.isAccountReadyCompleted()) return;
+
+            this.accountReadyChecking = true;
+            getMyAccountStatus()
+                .then((status) => {
+                    const freshIssues = this.buildAccountReadyIssues(status);
+                    if (!freshIssues.length) {
+                        this.accountReadyIssues = [];
+                        this.accountReadyIncomplete = false;
+                        this.accountReadyDialogVisible = false;
+                        this.markAccountReadyCompleted();
+                        return;
+                    }
+                    this.accountReadyIssues = freshIssues;
+                    this.accountReadyIncomplete = true;
+                    this.accountReadyDialogVisible = true;
+                })
+                .catch(() => {})
+                .finally(() => {
+                    this.accountReadyChecking = false;
+                });
         },
         goAccountReady: function (url) {
             this.markAccountReadyDismissed();

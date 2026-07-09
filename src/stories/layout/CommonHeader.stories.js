@@ -56,6 +56,7 @@ export const AccountReadyMock = {
             localStorage.setItem('token_version', 'storybook');
             localStorage.setItem('avatar', 'https://cdn.jx3box.com/upload/avatar/2022/3/2/8_9860765.png');
             localStorage.removeItem('jx3box:account-ready-dismissed-until:8');
+            localStorage.removeItem('jx3box:account-ready-complete:8');
             sessionStorage.removeItem('panel');
 
             return { args };

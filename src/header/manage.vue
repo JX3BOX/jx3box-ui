@@ -22,7 +22,7 @@
                         <span v-if="item.remark == 'auth' && !isAuth" class="u-new">New!</span>
                     </a>
                     <a
-                        v-if="item.remark === 'feature' && hasAccountReadyIssue"
+                        v-if="isFeaturePanelItem(item) && hasAccountReadyIssue"
                         href="javascript:;"
                         class="u-menu-item u-menu-item--account-ready"
                         @click.prevent="openAccountReady"
@@ -100,6 +100,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        accountReadyIncomplete: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: ["open-account-ready"],
     computed: {
@@ -117,10 +121,10 @@ export default {
             return User.isPhoneMember();
         },
         hasAccountReadyIssue() {
-            return this.accountReadyIssues.length > 0;
+            return this.accountReadyIncomplete;
         },
         showPanelPop() {
-            return this.showPop || this.hasAccountReadyIssue || !this.isAuth;
+            return this.showPop || this.hasAccountReadyIssue;
         },
     },
     mounted() {
@@ -139,6 +143,9 @@ export default {
         getPanelLabel(item) {
             if (item?.key) return this.$jx3boxT(`jx3boxUi.commonHeader.panel.${item.key}`, item.label || item.key);
             return item?.label || "";
+        },
+        isFeaturePanelItem(item = {}) {
+            return item.remark === "feature" || !!item.meta || item.key === "featureUpdate" || item.label === "功能更新";
         },
         loadPanel: async function () {
             try {
@@ -194,7 +201,7 @@ export default {
             }
         },
         openAccountReady() {
-            this.$emit("open-account-ready");
+            this.$emit("open-account-ready", this.accountReadyIssues);
         },
     },
 };
