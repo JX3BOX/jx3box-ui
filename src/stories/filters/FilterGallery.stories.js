@@ -52,6 +52,7 @@ export const Default = {
                             { name: 'type / value', type: 'String', default: '""', description: '当前激活项。' },
                             { name: 'clients', type: 'Object', default: 'null', description: 'clientBy 自定义客户端列表。' },
                             { name: 'showWujie', type: 'Boolean', default: 'false', description: 'clientBy 是否展示无界。' },
+                            { name: 'autoDetect', type: 'Boolean', default: 'true', description: '是否在挂载时根据站点 hostname 自动选择客户端；受控场景传 false。' },
                         ],
                     },
                     {

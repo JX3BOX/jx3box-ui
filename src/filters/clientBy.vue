@@ -36,6 +36,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        autoDetect: {
+            type: Boolean,
+            default: true,
+        },
     },
     data: function () {
         return {
@@ -57,6 +61,11 @@ export default {
             return this.clients || clients;
         },
     },
+    watch: {
+        type: function (value) {
+            this.client = value || "";
+        },
+    },
     methods: {
         filter: function (val) {
             this.client = val;
@@ -65,11 +74,9 @@ export default {
         },
     },
     mounted: function () {
-        const client = location.href.includes("origin") ? "origin" : "std";
-        if (client) {
-            this.client = client;
-            this.filter(this.client);
-        }
+        if (!this.autoDetect) return;
+        const client = location.hostname.includes("origin") ? "origin" : "std";
+        this.filter(client);
     },
 };
 </script>
