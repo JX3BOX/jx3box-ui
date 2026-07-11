@@ -4,34 +4,34 @@
         :width="isPhone ? '95%' : '600px'"
         v-model="visible"
         @close="close"
-        title="迁回原板块"
+        :title="$jx3boxT('jx3boxUi.migrateCommunity.title', '迁回原板块')"
         append-to-body
         draggable
     >
         <div class="m-migrate-box" v-if="post?.ID">
             <div class="m-item">
-                <div class="u-label">标题</div>
+                <div class="u-label">{{ $jx3boxT('jx3boxUi.migrateCommunity.postTitle', '标题') }}</div>
                 <div class="u-value">{{ post?.post_title }}</div>
             </div>
             <div class="m-item">
-                <div class="u-label">作者</div>
+                <div class="u-label">{{ $jx3boxT('jx3boxUi.migrateCommunity.author', '作者') }}</div>
                 <div class="u-value">
                     <a target="_blank" :href="authorLink(post?.post_author)">{{ `${post?.author}` }}</a>
                 </div>
             </div>
             <div class="m-item">
-                <div class="u-label">原板块</div>
+                <div class="u-label">{{ $jx3boxT('jx3boxUi.migrateCommunity.originalSection', '原板块') }}</div>
                 <div class="u-value">{{ showType(post?.post_type) }}</div>
             </div>
             <div class="m-item">
-                <div class="u-label">原链接</div>
-                <div class="u-value"><a target="_blank" :href="postLink(post?.post_type, post?.ID)">查看</a></div>
+                <div class="u-label">{{ $jx3boxT('jx3boxUi.migrateCommunity.originalLink', '原链接') }}</div>
+                <div class="u-value"><a target="_blank" :href="postLink(post?.post_type, post?.ID)">{{ $jx3boxT('jx3boxUi.common.view', '查看') }}</a></div>
             </div>
         </div>
-        <el-alert type="warning" title="该帖子不可迁移，不存在原帖子" :closable="false" show-icon v-else></el-alert>
+        <el-alert type="warning" :title="$jx3boxT('jx3boxUi.migrateCommunity.notAvailable', '该帖子不可迁移，不存在原帖子')" :closable="false" show-icon v-else></el-alert>
         <template #footer v-if="post?.ID">
-            <el-button @click="close" :loading="loading">关闭</el-button>
-            <el-button type="primary" @click="submit" :loading="loading">确认</el-button>
+            <el-button @click="close" :loading="loading">{{ $jx3boxT('jx3boxUi.common.close', '关闭') }}</el-button>
+            <el-button type="primary" @click="submit" :loading="loading">{{ $jx3boxT('jx3boxUi.common.confirm', '确认') }}</el-button>
         </template>
     </el-dialog>
 </template>
@@ -92,12 +92,12 @@ export default {
             if (!this.post) {
                 return;
             }
-            this.$confirm("确认将该帖子迁回原板块？")
+            this.$confirm(this.$jx3boxT("jx3boxUi.migrateCommunity.confirm", "确认将该帖子迁回原板块？"))
                 .then(() => {
                     this.loading = true;
                     migrateCommunityPost({ community_id: this.communityId })
                         .then((res) => {
-                            this.$message.success("迁移成功");
+                            this.$message.success(this.$jx3boxT("jx3boxUi.migrateCommunity.success", "迁移成功"));
                             this.close();
                             location.href = "/community";
                         })

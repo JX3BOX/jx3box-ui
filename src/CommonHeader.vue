@@ -38,27 +38,27 @@
         v-model="accountReadyDialogVisible"
         class="c-header-account-ready"
         width="min(92vw, 520px)"
-        title="⚠️ 完善账号安全信息"
+        :title="$jx3boxT('jx3boxUi.accountReady.title', '⚠️ 完善账号安全信息')"
         append-to-body
         @close="markAccountReadyDismissed"
     >
         <div class="c-header-account-ready__body">
-            <p class="u-desc">为了保障 App 登录、账号找回和卡密等功能正常使用，请先补全以下账号安全信息。</p>
+            <p class="u-desc">{{ $jx3boxT('jx3boxUi.accountReady.description', '为了保障 App 登录、账号找回和卡密等功能正常使用，请先补全以下账号安全信息。') }}</p>
             <div class="u-list">
                 <div class="u-item" v-if="accountReadyIssues.includes('contact')">
-                    <div class="u-title">绑定邮箱和手机号</div>
-                    <div class="u-text">当前账号的邮箱或手机号尚未完善。请完成手机号绑定，并绑定且验证邮箱，否则后续可能无法找回账号。</div>
-                    <el-button type="primary" @click="goAccountReady('/dashboard/notice')">去绑定</el-button>
+                    <div class="u-title">{{ $jx3boxT('jx3boxUi.accountReady.contactTitle', '绑定邮箱和手机号') }}</div>
+                    <div class="u-text">{{ $jx3boxT('jx3boxUi.accountReady.contactDescription', '当前账号的邮箱或手机号尚未完善。请完成手机号绑定，并绑定且验证邮箱，否则后续可能无法找回账号。') }}</div>
+                    <el-button type="primary" @click="goAccountReady('/dashboard/notice')">{{ $jx3boxT('jx3boxUi.accountReady.bind', '去绑定') }}</el-button>
                 </div>
                 <div class="u-item" v-if="accountReadyIssues.includes('password')">
-                    <div class="u-title">设置登录密码</div>
-                    <div class="u-text">当前账号还没有设置密码。未设置密码时，可能无法使用卡密等功能，也无法在 App 中通过账号密码登录。</div>
-                    <el-button type="primary" @click="goAccountReady('/dashboard/pwd')">去设置</el-button>
+                    <div class="u-title">{{ $jx3boxT('jx3boxUi.accountReady.passwordTitle', '设置登录密码') }}</div>
+                    <div class="u-text">{{ $jx3boxT('jx3boxUi.accountReady.passwordDescription', '当前账号还没有设置密码。未设置密码时，可能无法使用卡密等功能，也无法在 App 中通过账号密码登录。') }}</div>
+                    <el-button type="primary" @click="goAccountReady('/dashboard/pwd')">{{ $jx3boxT('jx3boxUi.accountReady.setPassword', '去设置') }}</el-button>
                 </div>
             </div>
         </div>
         <template #footer>
-            <el-button @click="accountReadyDialogVisible = false">7天后再说</el-button>
+            <el-button @click="accountReadyDialogVisible = false">{{ $jx3boxT('jx3boxUi.accountReady.later', '7天后再说') }}</el-button>
         </template>
     </el-dialog>
 </template>

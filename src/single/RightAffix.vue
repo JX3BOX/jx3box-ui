@@ -10,12 +10,12 @@
                 :author_id="authorId"
             ></fav>
         </div>
-        <el-tooltip v-if="showCommentBtn && showComment" effect="dark" content="去评论" placement="left">
+        <el-tooltip v-if="showCommentBtn && showComment" effect="dark" :content="$jx3boxT('jx3boxUi.rightAffix.goComment', '去评论')" placement="left">
             <div class="u-item" @click="toComment">
                 <el-icon class="u-icon"><ChatDotSquare></ChatDotSquare></el-icon>
             </div>
         </el-tooltip>
-        <el-tooltip effect="dark" content="回到顶部" placement="bottom">
+        <el-tooltip effect="dark" :content="$jx3boxT('jx3boxUi.rightAffix.backToTop', '回到顶部')" placement="bottom">
             <div class="u-item" v-show="scrollBtnShow" @click="goTop">
                 <div class="u-to-top"></div>
             </div>

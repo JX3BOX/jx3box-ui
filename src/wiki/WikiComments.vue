@@ -2,14 +2,14 @@
     <WikiPanel class="c-wiki-comments" scene="detail">
         <template #head-title>
             <i class="u-icon el-icon-chat-line-round"></i>
-            <span class="u-txt">百科评论</span>
+            <span class="u-txt">{{ $jx3boxT('jx3boxUi.wikiComments.title', '百科评论') }}</span>
         </template>
         <template #body>
             <div class="m-comments-panel" v-loading="loading">
                 <div class="u-empty" v-if="!comments || !comments.length">
-                    <span v-if="comments === null">🎉 数据加载中...</span>
-                    <span v-if="comments === false">⚠️ 数据加载异常</span>
-                    <span v-if="comments && !comments.length">💧 暂无评论</span>
+                    <span v-if="comments === null">{{ $jx3boxT('jx3boxUi.wiki.loading', '🎉 数据加载中...') }}</span>
+                    <span v-if="comments === false">{{ $jx3boxT('jx3boxUi.wiki.loadFailed', '⚠️ 数据加载异常') }}</span>
+                    <span v-if="comments && !comments.length">{{ $jx3boxT('jx3boxUi.wikiComments.empty', '💧 暂无评论') }}</span>
                 </div>
                 <!-- 递归评论组件 -->
                 <wiki-comment :comments="comments" :source-id="sourceId" />
@@ -27,16 +27,16 @@
                 <div id="m-reply-form" class="m-reply-form">
                     <h4 class="u-title">
                         <i class="el-icon-chat-dot-round"></i>
-                        <span>回复</span>
+                        <span>{{ $jx3boxT('jx3boxUi.wiki.reply', '回复') }}</span>
                     </h4>
                     <textarea class="u-reply-content" v-model="reply_form.content"></textarea>
                     <div class="u-author">
-                        <span>昵称：</span>
+                        <span>{{ $jx3boxT('jx3boxUi.wiki.nickname', '昵称：') }}</span>
                         <input v-model="reply_form.user_nickname" type="text" />
                     </div>
                     <el-button type="primary" class="u-submit" @click="create_comment(reply_form)">
                         <i class="el-icon-check"></i>
-                        <span>提交</span>
+                        <span>{{ $jx3boxT('jx3boxUi.common.submit', '提交') }}</span>
                     </el-button>
                 </div>
             </div>
@@ -67,7 +67,7 @@ export default {
             comments: null,
             reply_form: {
                 content: "",
-                user_nickname: User.getInfo().name,
+                user_nickname: this.getDefaultNickname(),
             },
             page: 1,
             pageSize: 10,
@@ -84,6 +84,7 @@ export default {
         get_comments() {
             if (!this.type || !this.sourceId) return;
             this.loading = true;
+            const defaultNickname = this.getDefaultNickname();
             wikiComment
                 .list({ type: this.type, id: this.sourceId }, { client: this.client, page: this.page })
                 .then((res) => {
@@ -93,7 +94,7 @@ export default {
                         comments[i]["reply_form"] = {
                             show: false,
                             content: "",
-                            user_nickname: User.getInfo().name,
+                            user_nickname: this.getDefaultNickname(),
                         };
                     }
                     this.page = res.data.page;
@@ -120,7 +121,7 @@ export default {
                             item.reply_form = {
                                 show: false,
                                 content: "",
-                                user_nickname: User.getInfo().name,
+                                user_nickname: defaultNickname,
                             };
                             return item;
                         });
@@ -134,7 +135,7 @@ export default {
             // 校验评论内容
             if (!form.content) {
                 this.$message({
-                    message: "请先填写评论内容再尝试提交",
+                    message: this.$jx3boxT("jx3boxUi.wikiComments.contentRequired", "请先填写评论内容再尝试提交"),
                     type: "warning",
                 });
                 return;
@@ -143,7 +144,7 @@ export default {
                 type: this.type,
                 source_id: this.sourceId,
                 parent_id: parent_id,
-                user_nickname: form.user_nickname || User.getInfo().name || "神秘侠士",
+                user_nickname: form.user_nickname || this.getDefaultNickname(),
                 content: form.content,
                 client: this.client,
             };
@@ -153,13 +154,16 @@ export default {
                     res = res.data;
                     form.content = "";
                     this.$message({
-                        message: "提交成功，请等待审核",
+                        message: this.$jx3boxT("jx3boxUi.wikiComments.submitSuccess", "提交成功，请等待审核"),
                         type: "success",
                     });
                 })
                 .finally(() => {
                     form.show = false;
                 });
+        },
+        getDefaultNickname() {
+            return User.isLogin() ? User.getInfo().name : "神秘侠士";
         },
         handleCurrentChange(page) {
             this.page = page;

@@ -4,12 +4,12 @@
         :width="isPhone ? '95%' : '600px'"
         v-model="visible"
         @close="close"
-        title="迁移至论坛"
+        :title="$jx3boxT('jx3boxUi.moveCommunity.title', '迁移至论坛')"
         append-to-body
     >
         <el-form :model="form" ref="form" :rules="rules" :label-position="isPhone ? 'top' : 'left'" label-width="80px">
-            <el-form-item label="分类" prop="category">
-                <el-select v-model="form.category" placeholder="请选择帖子分类" style="width: 100%" filterable>
+            <el-form-item :label="$jx3boxT('jx3boxUi.moveCommunity.category', '分类')" prop="category">
+                <el-select v-model="form.category" :placeholder="$jx3boxT('jx3boxUi.moveCommunity.categoryPlaceholder', '请选择帖子分类')" style="width: 100%" filterable>
                     <el-option
                         v-for="item in categoryList"
                         :key="item.id"
@@ -18,12 +18,12 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="简介">
-                <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="form.introduction"> </el-input>
+            <el-form-item :label="$jx3boxT('jx3boxUi.moveCommunity.introduction', '简介')">
+                <el-input type="textarea" :rows="5" :placeholder="$jx3boxT('jx3boxUi.moveCommunity.contentPlaceholder', '请输入内容')" v-model="form.introduction"> </el-input>
             </el-form-item>
         </el-form>
 
-        <el-divider content-position="left">附图</el-divider>
+        <el-divider content-position="left">{{ $jx3boxT('jx3boxUi.moveCommunity.images', '附图') }}</el-divider>
         <div class="u-imgs">
             <div :class="`u-imgs-item`" v-for="(item, i) in form.extra_images" :key="i">
                 <el-image :src="item" fit="cover" style="width: 148px; height: 148px" />
@@ -33,15 +33,15 @@
         <el-divider content-position="left"></el-divider>
 
         <div class="u_r_box">
-            <el-popover placement="top" trigger="manual" size="mini" content="请确认此操作不可逆" v-model="visible">
+            <el-popover placement="top" trigger="manual" size="mini" :content="$jx3boxT('jx3boxUi.moveCommunity.irreversibleTip', '请确认此操作不可逆')" v-model="visible">
                 <template #reference>
-                    <el-checkbox v-model="checked">我已确认此操作不可逆</el-checkbox>
+                    <el-checkbox v-model="checked">{{ $jx3boxT('jx3boxUi.moveCommunity.irreversible', '我已确认此操作不可逆') }}</el-checkbox>
                 </template>
             </el-popover>
         </div>
         <template #footer>
-            <el-button @click="close">取 消</el-button>
-            <el-button type="primary" @click="onConfirm" :disabled="!checked">确 定</el-button>
+            <el-button @click="close">{{ $jx3boxT('jx3boxUi.common.cancel', '取消') }}</el-button>
+            <el-button type="primary" @click="onConfirm" :disabled="!checked">{{ $jx3boxT('jx3boxUi.common.confirm', '确定') }}</el-button>
         </template>
     </el-dialog>
 </template>
@@ -77,7 +77,7 @@ export default {
             categoryList: [],
             isPhone: window.innerWidth < 768,
             rules: {
-                category: [{ required: true, message: "请选择分类", trigger: "blur" }],
+                category: [{ required: true, message: this.$jx3boxT("jx3boxUi.moveCommunity.selectCategory", "请选择分类!"), trigger: "blur" }],
             },
         };
     },
@@ -107,11 +107,11 @@ export default {
         },
         onConfirm() {
             if (!this.post?.ID) {
-                this.$message.error("文章ID不存在!");
+                this.$message.error(this.$jx3boxT("jx3boxUi.moveCommunity.missingPost", "文章ID不存在!"));
                 return;
             }
             if (!this.form.category) {
-                this.$message.error("请选择分类!");
+                this.$message.error(this.$jx3boxT("jx3boxUi.moveCommunity.selectCategory", "请选择分类!"));
                 return;
             }
             if (!this.checked) {
@@ -122,7 +122,7 @@ export default {
             this.$refs.form?.validate((valid) => {
                 if (valid) {
                     recoverTopicFromPosts(this.form).then(() => {
-                        this.$message.success("操作成功");
+                        this.$message.success(this.$jx3boxT("jx3boxUi.common.actionSuccess", "操作成功"));
                         this.close();
                         this.clearForm();
                     });

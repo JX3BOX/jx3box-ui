@@ -2,22 +2,22 @@
     <WikiPanel class="c-wiki-revisions" scene="detail">
         <template #head-title>
             <i class="u-icon el-icon-time"></i>
-            <span class="u-txt">历史版本</span>
+            <span class="u-txt">{{ $jx3boxT('jx3boxUi.wikiRevisions.title', '历史版本') }}</span>
         </template>
         <template #body>
             <div class="m-revisions-panel">
                 <div class="u-empty" v-if="!versions || !versions.length">
-                    <span v-if="versions === null">🎉 数据加载中...</span>
-                    <span v-if="versions === false">⚠️ 数据加载异常</span>
-                    <span v-if="versions && !versions.length">💧 暂无数据</span>
+                    <span v-if="versions === null">{{ $jx3boxT('jx3boxUi.wiki.loading', '🎉 数据加载中...') }}</span>
+                    <span v-if="versions === false">{{ $jx3boxT('jx3boxUi.wiki.loadFailed', '⚠️ 数据加载异常') }}</span>
+                    <span v-if="versions && !versions.length">{{ $jx3boxT('jx3boxUi.wiki.empty', '💧 暂无数据') }}</span>
                 </div>
                 <table v-if="versions && versions.length" class="m-histories">
                     <thead>
                         <tr>
-                            <th>版本</th>
-                            <th>更新时间</th>
-                            <th>贡献者</th>
-                            <th>修订说明</th>
+                            <th>{{ $jx3boxT('jx3boxUi.wikiRevisions.version', '版本') }}</th>
+                            <th>{{ $jx3boxT('jx3boxUi.wikiPanel.updatedAt', '更新时间') }}</th>
+                            <th>{{ $jx3boxT('jx3boxUi.wikiRevisions.contributor', '贡献者') }}</th>
+                            <th>{{ $jx3boxT('jx3boxUi.wikiRevisions.remark', '修订说明') }}</th>
                         </tr>
                     </thead>
                     <tr class="history" v-for="(ver, key) in versions" :key="key">

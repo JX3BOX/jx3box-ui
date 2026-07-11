@@ -31,7 +31,9 @@ export default {
         switchAlternate: "切换马甲",
         themeStyle: "主题风格",
         logout: "退出登录",
-        roleManage: "角色管理",
+        roleManage: "我的角色",
+        myTeams: "我的团队",
+        myRelations: "我的关系",
         favorites: "收藏订阅",
         dashboard: "个人中心",
         profile: "资料修改",
@@ -161,6 +163,10 @@ export default {
         browserNotSupportCopy: "浏览器不支持复制",
         confirm: "确定",
         cancel: "取消",
+        close: "关闭",
+        view: "查看",
+        submit: "提交",
+        actionSuccess: "操作成功",
         tip: "提示",
     },
     footer: {
@@ -205,6 +211,7 @@ export default {
         proVip: "专业版会员",
         preVip: "高级版会员",
     },
+    authorRole: { title: "作者角色" },
     authorPosts: {
         latest: "最新作品",
         noTitle: "{type}/无标题",
@@ -478,6 +485,8 @@ export default {
         noTitle: "无标题",
         anonymous: "匿名",
     },
+    postVersion: { title: "历史版本", collapse: "折叠", compare: "对比" },
+    postCollection: { title: "关联", collapse: "折叠" },
     simpleThx: {
         record: "打赏记录",
     },
@@ -490,6 +499,7 @@ export default {
         commentDisabled: "作者没有开启评论功能",
         authorSet: "作者设置了【",
     },
+    rightAffix: { goComment: "去评论", backToTop: "回到顶部" },
     suspendCommon: {
         more: "更多",
         pinButton: "固定按钮",
@@ -589,4 +599,15 @@ export default {
         test: "体服",
         success: "提交成功",
     },
+    accountReady: {
+        title: "⚠️ 完善账号安全信息", description: "为了保障 App 登录、账号找回和卡密等功能正常使用，请先补全以下账号安全信息。",
+        contactTitle: "绑定邮箱和手机号", contactDescription: "当前账号的邮箱或手机号尚未完善。请完成手机号绑定，并绑定且验证邮箱，否则后续可能无法找回账号。", bind: "去绑定",
+        passwordTitle: "设置登录密码", passwordDescription: "当前账号还没有设置密码。未设置密码时，可能无法使用卡密等功能，也无法在 App 中通过账号密码登录。", setPassword: "去设置", later: "7天后再说",
+    },
+    migrateCommunity: { title: "迁回原板块", postTitle: "标题", author: "作者", originalSection: "原板块", originalLink: "原链接", notAvailable: "该帖子不可迁移，不存在原帖子", confirm: "确认将该帖子迁回原板块？", success: "迁移成功" },
+    moveCommunity: { title: "迁移至论坛", category: "分类", categoryPlaceholder: "请选择帖子分类", introduction: "简介", contentPlaceholder: "请输入内容", images: "附图", irreversibleTip: "请确认此操作不可逆", irreversible: "我已确认此操作不可逆", missingPost: "文章ID不存在!", selectCategory: "请选择分类!" },
+    wiki: { loading: "🎉 数据加载中...", loadFailed: "⚠️ 数据加载异常", empty: "💧 暂无数据", reply: "回复", nickname: "昵称：", mysterious: "神秘侠士" },
+    wikiPanel: { contributors: "参与贡献", difficulty: "综合难度", popularity: "热度", updatedAt: "更新时间" },
+    wikiComments: { title: "百科评论", empty: "💧 暂无评论", contentRequired: "请先填写评论内容再尝试提交", submitSuccess: "提交成功，请等待审核" },
+    wikiRevisions: { title: "历史版本", version: "版本", contributor: "贡献者", remark: "修订说明" },
 };

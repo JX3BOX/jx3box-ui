@@ -2,10 +2,10 @@
     <div class="c-post-version" v-if="list && list.length">
         <div class="m-title">
             <div class="u-title">
-                <el-icon class="u-icon"><Clock /></el-icon>历史版本
+                <el-icon class="u-icon"><Clock /></el-icon>{{ $jx3boxT("jx3boxUi.postVersion.title", "历史版本") }}
             </div>
             <div class="u-op" @click="toggle">
-                <el-icon><DCaret></DCaret></el-icon> 折叠
+                <el-icon><DCaret></DCaret></el-icon> {{ $jx3boxT("jx3boxUi.postVersion.collapse", "折叠") }}
             </div>
         </div>
         <transition name="collapse">
@@ -15,7 +15,7 @@
                         <span>{{ item.version }}</span> - <span>{{ item.created_at }}</span>
                     </div>
                     <el-button class="u-compare" size="small" type="primary" link
-                        ><el-icon class="u-icon"><Sort></Sort></el-icon>对比</el-button
+                        ><el-icon class="u-icon"><Sort></Sort></el-icon>{{ $jx3boxT("jx3boxUi.postVersion.compare", "对比") }}</el-button
                     >
                 </li>
             </ul>

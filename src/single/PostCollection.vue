@@ -2,10 +2,10 @@
     <div class="c-post-collection" v-if="list && list.length">
         <div class="m-title">
             <div class="c-post-collection-title">
-                <el-icon class="u-icon"><Connection>></Connection></el-icon> 关联
+                <el-icon class="u-icon"><Connection>></Connection></el-icon> {{ $jx3boxT("jx3boxUi.postCollection.title", "关联") }}
             </div>
             <div class="u-op" @click="toggle">
-                <el-icon><DCaret></DCaret></el-icon> 折叠
+                <el-icon><DCaret></DCaret></el-icon> {{ $jx3boxT("jx3boxUi.postCollection.collapse", "折叠") }}
             </div>
         </div>
         <transition name="collapse">

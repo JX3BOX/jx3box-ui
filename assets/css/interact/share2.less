@@ -2,12 +2,14 @@
 .w-share2 {
     .pointer;
     .dbi;
+
     .u-icon {
         .size(26px);
         .y;
         box-sizing: border-box;
         .pr;
     }
+
     .u-simple-icon {
         .size(20px);
         position: relative;
@@ -15,90 +17,124 @@
         fill: @color;
     }
 }
+
 .u-share2-pop {
+    padding: 0 !important;
+    overflow: hidden;
+    border: 0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 32px rgb(31 45 61 / 14%) !important;
+
     .u-share2-content {
         display: flex;
-        justify-content: space-between;
+        align-items: stretch;
+        width: 390px;
+        background: #fff;
+    }
+
+    .u-share2-content-main {
+        display: grid;
+        grid-template-columns: repeat(2, 78px);
+        gap: 10px;
+        align-content: center;
+        padding: 22px 20px;
+    }
+
+    .u-share2-item {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
         align-items: center;
+        justify-content: center;
+        min-height: 78px;
+        padding: 8px 5px;
+        color: #606266;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        transition: all .2s ease;
 
-        .w(400px);
-        .u-share2-content-main {
-            // display: flex;
-            &::after {
-                content: "";
-                height: 100%;
-                width: 1px;
-                color: #ececec;
-                .pa;
-                top: 0;
-                right: 0;
-            }
+        &:hover {
+            color: #0366d6;
+            background: #f2f8ff;
+            border-color: #d6e9ff;
+            transform: translateY(-2px);
 
-            .u-share2-item {
-                display: inline-flex;
-                flex-direction: column;
-                align-items: center;
-
-                cursor: pointer;
-                text-align: center;
-                width: 55px;
-                white-space: nowrap;
-                text-align: center;
-                .mr(10px);
-                overflow: hidden;
-
-                &:hover {
-                    color: #00a1d6;
-                    // .u-share-icon {
-                    //     // 利用shadow来改变 icon 颜色，注意overflow应为hidden
-                    //     position: relative;
-                    //     left: -80px;
-                    //     filter: drop-shadow(80px 0 #00a1d6);
-                    // }
-                }
-            }
-        }
-        .u-share2-wechat {
-            text-align: center;
-            padding: 0 0 0 20px;
-            border-left: 1px solid #e5e9ef;
-            margin-left: 10px;
-            .flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            .u-pic {
-                cursor: pointer;
+            .u-share-icon {
+                transform: scale(1.08);
             }
         }
     }
 
+    .u-share2-name {
+        font-size: 13px;
+        line-height: 18px;
+        white-space: nowrap;
+    }
+
     .u-share-icon {
         .size(28px);
+        transition: transform .2s ease;
+    }
+
+    .u-share2-wechat {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        min-width: 160px;
+        padding: 20px 18px;
+        color: #5a5273;
+        font-size: 13px;
+        line-height: 20px;
+        text-align: center;
+        background: linear-gradient(145deg, #faf7ff, #f1ebff);
+        border-left: 1px solid #e8e1f6;
+
+        .u-pic {
+            display: flex;
+            padding: 6px;
+            cursor: pointer;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgb(103 79 151 / 12%);
+        }
     }
 }
 
 @media screen and (max-width: @phone) {
     .u-share2-pop {
         .u-share2-content {
-            .w(150px);
-            flex-wrap: wrap;
-            text-align: center;
+            display: block;
+            width: 216px;
+        }
 
-            .u-share2-wechat {
-                text-align: center;
-                .w(150px);
-                padding: 0;
-                padding-top: 20px;
-                border-left: none;
-                margin-left: 0;
-                border-top: 1px solid #e5e9ef;
-                margin-top: 10px;
+        .u-share2-content-main {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            padding: 12px;
+        }
 
-                .u-pic {
-                    cursor: pointer;
-                }
+        .u-share2-item {
+            min-height: 66px;
+            padding: 5px 2px;
+        }
+
+        .u-share2-wechat {
+            flex-direction: row;
+            gap: 12px;
+            justify-content: flex-start;
+            min-width: 0;
+            padding: 12px;
+            text-align: left;
+            border-top: 1px solid #e8e1f6;
+            border-left: 0;
+
+            .u-pic {
+                flex: none;
+                padding: 4px;
             }
         }
     }

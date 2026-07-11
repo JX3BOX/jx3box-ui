@@ -42,6 +42,7 @@ import {
     getJx3boxUiAvailableLocales,
     setJx3boxUiLocale,
 } from "./i18n";
+import i18nMixin from "./i18n/mixin";
 
 const components = {
     CommonHeader,
@@ -77,6 +78,8 @@ const components = {
 };
 
 const install = function (app) {
+    // 为全部公共组件提供统一的本地化入口，避免每个组件重复注册 mixin。
+    app.mixin(i18nMixin);
     Object.keys(components).forEach((key) => {
         app.component(key, components[key]);
     });

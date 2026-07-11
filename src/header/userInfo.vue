@@ -71,29 +71,29 @@
                     </div>
 
                     <el-button-group class="u-actions">
-                        <a class="el-button el-button--default is-plain" href="/dashboard/config">{{
-                            $jx3boxT("jx3boxUi.commonHeader.config", "偏好设置")
-                        }}</a>
                         <a class="el-button el-button--default is-plain" @click="changeAlternate">{{
                             $jx3boxT("jx3boxUi.commonHeader.switchAlternate", "切换马甲")
                         }}</a>
-                        <a class="el-button el-button--default is-plain" href="/dashboard/frame">{{
+                        <a class="el-button el-button--default is-plain" href="/dashboard/config">{{
+                            $jx3boxT("jx3boxUi.commonHeader.config", "偏好设置")
+                        }}</a>
+                        <a class="el-button el-button--default is-plain" href="/dashboard/theme">{{
                             $jx3boxT("jx3boxUi.commonHeader.themeStyle", "主题风格")
                         }}</a>
                     </el-button-group>
 
                     <div class="u-other">
                         <a href="/dashboard/role" class="u-item"
-                            ><el-icon><User /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.roleManage", "角色管理") }}
+                            ><el-icon><User /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.roleManage", "我的角色") }}
+                        </a>
+                        <a href="/team/my/org" class="u-item"
+                            ><el-icon><School /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.myTeams", "我的团队") }}
+                        </a>
+                        <a href="/dashboard/privacy" class="u-item"
+                            ><el-icon><Connection /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.myRelations", "我的关系") }}
                         </a>
                         <a href="/dashboard/fav" class="u-item"
                             ><el-icon><Star /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.favorites", "收藏订阅") }}
-                        </a>
-                        <a href="/dashboard/mall" class="u-item"
-                            ><el-icon><Memo /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.orderCenter", "订单中心") }}
-                        </a>
-                        <a href="/dashboard/config" class="u-item"
-                            ><el-icon><Help /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.dashboard", "个人中心") }}
                         </a>
                         <hr />
                         <a href="/dashboard/profile" class="u-item"
@@ -103,6 +103,9 @@
                             ><el-icon><Phone /></el-icon>{{ $jx3boxT("jx3boxUi.commonHeader.feedbackHelp", "反馈帮助") }}
                         </a>
                         <hr />
+                        <div class="u-dashboard">
+                            <a href="/dashboard">{{ $jx3boxT("jx3boxUi.commonHeader.dashboard", "个人中心") }}</a>
+                        </div>
                         <div class="u-logout">
                             <el-button @click="logout" plain>{{ $jx3boxT("jx3boxUi.commonHeader.logout", "退出登录") }}</el-button>
                         </div>
@@ -628,10 +631,27 @@ export default {
 
     .u-logout {
         padding: 0 10px 10px 10px;
-        .mt(10px);
 
         .el-button {
             width: 100%;
+        }
+    }
+
+    .u-dashboard {
+        padding: 0 10px 10px;
+
+        a {
+            display: block;
+            padding: 8px 15px;
+            color: #fff;
+            text-align: center;
+            background: @v4primary;
+            .r(4px);
+
+            &:hover {
+                color: #fff;
+                background: lighten(@v4primary, 8%);
+            }
         }
     }
 }
