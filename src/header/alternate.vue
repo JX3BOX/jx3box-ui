@@ -47,7 +47,7 @@ import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 import dayjs from "dayjs";
 import User from "@jx3box/jx3box-common/js/user";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
-import { refreshAuth } from "../../service/cms";
+import { clearActiveAuthToken, refreshTokenIfNeeded, syncActiveAuthToken } from "../utils/auth-token-refresh";
 import i18nMixin from "../../i18n/mixin";
 export default {
     name: "AlternateSwitch",
@@ -162,8 +162,11 @@ export default {
                     type: "warning",
                 }
             )
-                .then(() => {
-                    User.update(item).then(async () => {
+                .then(async () => {
+                    await User.update(item);
+                    // 请求层优先读取 __token；必须与刚切换的马甲 token 同步，避免继续请求旧账号。
+                    syncActiveAuthToken(item.token);
+                    try {
                         localStorage.setItem(
                             "jx3box-alternate-" + item.uid,
                             JSON.stringify({
@@ -171,10 +174,11 @@ export default {
                                 created_at: Number(localStorage.getItem("created_at")),
                             })
                         );
-                        await refreshAuth();
+                        await refreshTokenIfNeeded({ force: true });
+                    } finally {
                         location.reload();
                         this.visible = false;
-                    });
+                    }
                 })
                 .catch(() => {});
         },
@@ -202,6 +206,8 @@ export default {
                 this.$message.error(this.$jx3boxT("jx3boxUi.commonHeader.alternate.maxFive", "最多只能添加5个马甲"));
                 return;
             }
+            // 新账号登录只会写普通 token；先清掉当前账号的高优先级 token，避免登录完成后仍请求旧账号。
+            clearActiveAuthToken();
             // 跳转至登录页
             location.href = JX3BOX.__Links.account.login + "?alternate=1";
         },

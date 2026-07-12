@@ -11,6 +11,42 @@ function canUseLocalStorage() {
     return typeof localStorage !== "undefined";
 }
 
+function canUseSessionStorage() {
+    return typeof sessionStorage !== "undefined";
+}
+
+export function syncActiveAuthToken(token = "") {
+    if (!token) {
+        return false;
+    }
+
+    if (canUseLocalStorage()) {
+        localStorage.setItem("__token", token);
+    }
+
+    // URL token 会被 common 缓存在 sessionStorage，存在时也必须随账号切换一起更新。
+    if (canUseSessionStorage() && sessionStorage.getItem("__token")) {
+        sessionStorage.setItem("__token", token);
+    }
+
+    return true;
+}
+
+export function hasActiveAuthTokenOverride() {
+    const localToken = canUseLocalStorage() ? localStorage.getItem("__token") : "";
+    const sessionToken = canUseSessionStorage() ? sessionStorage.getItem("__token") : "";
+    return !!(localToken || sessionToken);
+}
+
+export function clearActiveAuthToken() {
+    if (canUseLocalStorage()) {
+        localStorage.removeItem("__token");
+    }
+    if (canUseSessionStorage()) {
+        sessionStorage.removeItem("__token");
+    }
+}
+
 function decodeBase64Url(value = "") {
     const normalized = String(value).replace(/-/g, "+").replace(/_/g, "/");
     const padded = normalized.padEnd(normalized.length + ((4 - (normalized.length % 4)) % 4), "=");
@@ -120,8 +156,8 @@ async function applyRefreshResult(data = {}) {
 
     await User.update(profile);
 
-    // @jx3box/common User.update only writes token; keep __token in sync because common API reads it first.
-    localStorage.setItem("__token", profile.token);
+    // @jx3box/common User.update only writes token; keep higher-priority request tokens in sync too.
+    syncActiveAuthToken(profile.token);
     updateCurrentAlternate(profile);
     return true;
 }
@@ -129,7 +165,7 @@ async function applyRefreshResult(data = {}) {
 export async function refreshTokenIfNeeded(options = {}) {
     const { force = false } = options;
 
-    if (!User.isLogin() || !isAutoTokenRefreshEnabled()) {
+    if (!User.isLogin() || (!force && !isAutoTokenRefreshEnabled())) {
         return false;
     }
 

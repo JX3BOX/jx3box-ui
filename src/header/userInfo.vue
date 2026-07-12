@@ -129,6 +129,7 @@ import { getMenu } from "../../service/header";
 import Bus from "../../utils/bus";
 import alternate from "./alternate.vue";
 import i18nMixin from "../../i18n/mixin";
+import { clearActiveAuthToken, hasActiveAuthTokenOverride } from "../utils/auth-token-refresh";
 
 const { __Links, __Root, __imgPath, __OriginRoot } = JX3BOX;
 export default {
@@ -211,6 +212,9 @@ export default {
         showAvatar,
         logout: function (mute = false) {
             User.destroy()
+                .finally(() => {
+                    clearActiveAuthToken();
+                })
                 .then(() => {
                     this.$emit("logout");
 
@@ -239,9 +243,29 @@ export default {
         showUserName: function (val) {
             return val || this.$jx3boxT("jx3boxUi.commonHeader.anonymous", "匿名");
         },
+        repairMismatchedIdentity: function (data = {}) {
+            const cachedUid = Number(User.getInfo()?.uid || 0);
+            const requestUid = Number(data.ID || 0);
+            const hasUrlToken = new URLSearchParams(location.search).has("__token");
+
+            if (
+                cachedUid &&
+                requestUid &&
+                cachedUid !== requestUid &&
+                hasActiveAuthTokenOverride() &&
+                !hasUrlToken
+            ) {
+                clearActiveAuthToken();
+                location.reload();
+                return true;
+            }
+            return false;
+        },
         loadMyInfo: function () {
             getMyInfo()
                 .then((data) => {
+                    // 普通 uid 与接口身份不一致时，优先清除遗留的高优先级 token 并重新请求一次。
+                    if (this.repairMismatchedIdentity(data)) return;
                     this.user = data;
                     this.isSuperAuthor = !!data.sign;
                     this.isTeammate = this.user?.is_teammate;

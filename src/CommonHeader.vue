@@ -84,7 +84,7 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 // 数据
 import { getGlobalConfig } from "../service/header";
 import { getConfig, getMyAccountStatus } from "../service/cms";
-import { refreshTokenIfNeeded } from "./utils/auth-token-refresh";
+import { clearActiveAuthToken, refreshTokenIfNeeded } from "./utils/auth-token-refresh";
 import User from "@jx3box/jx3box-common/js/user.js";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
@@ -194,7 +194,7 @@ export default {
 
             if (User.isLogin()) {
                 this.loadAsset();
-                this.refreshAuthToken();
+                this.refreshAuthToken({ force: !!token, reloadOnIdentityChange: !!token });
                 this.initAccountReadyState();
             }
 
@@ -209,23 +209,27 @@ export default {
                         // 先保存最新的token_version
                         localStorage.setItem("token_version", global_token_version);
                         // 然后执行登出操作
-                        User.destroy().then(() => {
-                            this.$refs.user?.logout();
-                            // 清除马甲所有马甲信息
-                            let keys = Object.keys(localStorage);
-                            let alternate = keys.filter((key) => key.startsWith("jx3box-alternate-"));
+                        User.destroy()
+                            .finally(() => {
+                                clearActiveAuthToken();
+                            })
+                            .then(() => {
+                                this.$refs.user?.logout();
+                                // 清除马甲所有马甲信息
+                                let keys = Object.keys(localStorage);
+                                let alternate = keys.filter((key) => key.startsWith("jx3box-alternate-"));
 
-                            alternate.forEach((key) => {
-                                localStorage.removeItem(key);
+                                alternate.forEach((key) => {
+                                    localStorage.removeItem(key);
+                                });
+
+                                if (
+                                    location.pathname.startsWith("/dashboard") ||
+                                    location.pathname.startsWith("/publish")
+                                ) {
+                                    location.href = this.siteRoot;
+                                }
                             });
-
-                            if (
-                                location.pathname.startsWith("/dashboard") ||
-                                location.pathname.startsWith("/publish")
-                            ) {
-                                location.href = this.siteRoot;
-                            }
-                        });
                     }
                 } else {
                     // 非登录状态也更新token_version，确保用户下次登录时使用新版本
@@ -236,10 +240,23 @@ export default {
             });
         },
 
-        refreshAuthToken: function () {
-            refreshTokenIfNeeded().catch(() => {
-                // 自动续期失败不影响公共头渲染，后续鉴权请求会按既有逻辑处理登录态。
-            });
+        refreshAuthToken: function ({ force = false, reloadOnIdentityChange = false } = {}) {
+            const previousUid = User.getInfo()?.uid;
+            return refreshTokenIfNeeded({ force })
+                .then((refreshed) => {
+                    if (
+                        refreshed &&
+                        reloadOnIdentityChange &&
+                        String(previousUid || "") !== String(User.getInfo()?.uid || "")
+                    ) {
+                        location.reload();
+                    }
+                    return refreshed;
+                })
+                .catch(() => {
+                    // 自动续期失败不影响公共头渲染，后续鉴权请求会按既有逻辑处理登录态。
+                    return false;
+                });
         },
 
         handleVisibilityChange: function () {

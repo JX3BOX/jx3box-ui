@@ -41,6 +41,16 @@ PC 公共库存在马甲切换：
 
 否则用户切换马甲时可能拿回旧 token，或者后续请求继续优先使用旧 `__token`。
 
+马甲切换时必须先将目标马甲的 token 同步到 `localStorage.__token`；如果当前标签页存在
+`sessionStorage.__token`，也要一起更新，然后才能调用 refresh 接口。退出登录（包括
+`token_version` 触发的强制退出）时必须同时清理这两个 `__token`。否则业务页可能从普通
+`uid` 读取新账号，而接口仍携带旧账号的高优先级 token，最终在同一页面显示两个 UID。
+
+新增马甲跳转登录页前也要先清理两个 `__token`，因为账号页登录成功默认只更新普通
+`token/uid`。公共头拿到 `/user/my/info` 后，如果接口 UID 与本地 UID 不一致、当前又不是
+显式 `?__token=` 入口，应清除遗留覆盖 token 并刷新一次完成自愈。显式 URL token 入口则
+强制执行一次 refresh，把普通用户缓存归一到 URL token 对应的账号；UID 发生变化时刷新页面。
+
 ## 自动续期开关
 
 默认开启。可通过 localStorage 关闭：
@@ -50,6 +60,9 @@ localStorage.setItem("jx3box:auto_refresh_token", "false");
 ```
 
 值为 `"false"` 或 `"0"` 时不自动续期；其它情况按默认开启处理。
+
+该开关只控制后台自动续期。马甲切换和显式 URL token 身份归一属于用户主动登录流程，使用
+`force` 刷新，不受此开关影响。
 
 ## 失败语义
 
