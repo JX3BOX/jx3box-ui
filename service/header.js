@@ -6,6 +6,7 @@ const GLOBAL_CONFIG_STORAGE_KEY = "jx3box:global-config";
 const GLOBAL_CONFIG_TTL = 6 * 60 * 60 * 1000;
 let globalConfigCache = null;
 let globalConfigPending = null;
+let globalConfigRefreshPending = null;
 
 function getGlobalConfigUrl() {
     const root = JX3BOX.__ossRoot || "https://cdn.jx3box.com/";
@@ -74,7 +75,23 @@ function getGames() {
 }
 
 // 获取全局配置
-function getGlobalConfig() {
+function getGlobalConfig({ force = false } = {}) {
+    if (force) {
+        if (!globalConfigRefreshPending) {
+            globalConfigRefreshPending = axios
+                .get(getGlobalConfigUrl())
+                .then((res) => {
+                    globalConfigCache = res.data || {};
+                    writeGlobalConfigStorage(globalConfigCache);
+                    return globalConfigCache;
+                })
+                .finally(() => {
+                    globalConfigRefreshPending = null;
+                });
+        }
+        return globalConfigRefreshPending;
+    }
+
     if (globalConfigCache) return Promise.resolve(globalConfigCache);
 
     const storageConfig = readGlobalConfigStorage();

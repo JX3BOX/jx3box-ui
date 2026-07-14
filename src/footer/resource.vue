@@ -165,10 +165,17 @@
 import { ArrowDown, ArrowUp, Download } from "@element-plus/icons-vue";
 import { copyText } from "../../utils";
 import i18nMixin from "../../i18n/mixin";
-import { getConfig } from "../../service/cms";
+import { getGlobalConfig } from "../../service/header";
 
 const APP_LOGO_FALLBACK = "https://cdn.jx3box.com/design/app/logo/jx3box-icon-512.png";
-const APP_CONFIG_KEYS = ["android_apk", "android_versions", "app_logo", "app_version_desc", "apple_url", "harmony_url"];
+const APP_CONFIG_KEYS = [
+    "android_apk",
+    "android_versions",
+    "app_logo",
+    "app_version_desc",
+    "apple_url",
+    "harmony_url",
+];
 
 export default {
     name: "FooterResource",
@@ -305,20 +312,11 @@ export default {
             window.open(this.activeDownloadUrl, "_blank", "noopener,noreferrer");
         },
         loadAppConfig() {
-            const storeConfig = this.getStoreAppConfig();
-            if (storeConfig) {
-                this.appConfig = {
-                    ...this.appConfig,
-                    ...storeConfig,
-                };
-                this.appConfigLoaded = true;
-                return Promise.resolve();
-            }
             if (this.appConfigLoading || this.appConfigLoaded) return Promise.resolve();
             this.appConfigLoading = true;
-            return getConfig({ subtype: "app" })
-                .then((items) => {
-                    this.appConfig = this.getAppConfigFromItems(items);
+            return getGlobalConfig({ force: true })
+                .then((config) => {
+                    this.appConfig = this.getAppConfig(config);
                     this.appConfigLoaded = true;
                 })
                 .catch(() => {
@@ -328,22 +326,13 @@ export default {
                     this.appConfigLoading = false;
                 });
         },
-        getStoreAppConfig() {
-            const config = this.$store?.state?.config || {};
+        getAppConfig(config) {
+            if (!config || typeof config !== "object") return {};
             const appConfig = APP_CONFIG_KEYS.reduce((result, key) => {
                 if (config[key]) result[key] = config[key];
                 return result;
             }, {});
-            return Object.keys(appConfig).length ? appConfig : null;
-        },
-        getAppConfigFromItems(items) {
-            if (!Array.isArray(items)) return {};
-            return items.reduce((config, item) => {
-                if (!item?.key || !APP_CONFIG_KEYS.includes(item.key)) return config;
-                if (item.subtype && item.subtype !== "app") return config;
-                config[item.key] = item.val;
-                return config;
-            }, {});
+            return appConfig;
         },
         getDescLines(description) {
             return String(description || "")
@@ -372,7 +361,9 @@ export default {
             window.open("/qqbot", "_blank");
         },
     },
-    created: function () {},
+    created: function () {
+        this.loadAppConfig();
+    },
     mounted: function () {},
 };
 </script>

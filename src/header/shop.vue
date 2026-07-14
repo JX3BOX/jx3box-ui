@@ -23,8 +23,7 @@
 </template>
 
 <script>
-import { getConfig, getUserMeta } from "../../service/cms";
-import User from "@jx3box/jx3box-common/js/user";
+import { getConfig } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
 // import shopIcon from "@/assets/img/components/common/header/gift.svg";
 export default {
@@ -72,25 +71,18 @@ export default {
             /**
              * 只在点击入口后记录本地版本；仅看到气泡不算已处理。
              */
-            let meta = null;
-            if (User.isLogin()) {
-                meta = await getUserMeta({ key: "mall_pop" });
-            }
             let config = this.config || (this.configManaged ? null : await getConfig({ key: "mall" }));
             if (!config) return;
             this.initialized = true;
             this.popValue = config.val;
 
-            this.pop = this.shouldShowPop(meta, config.val);
+            this.pop = this.shouldShowPop(config.val);
         },
-        shouldShowPop(meta, value) {
+        shouldShowPop(value) {
             if (!~~value) return false;
 
             const local = localStorage.getItem("mall_pop");
-            if (String(local) === String(value)) return false;
-
-            if (meta == null || meta == 1) return true;
-            return ~~value > ~~local;
+            return String(local) !== String(value);
         },
         markPopRead() {
             if (!this.pop || this.popValue == null) return;
