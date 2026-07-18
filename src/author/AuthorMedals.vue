@@ -4,13 +4,13 @@
             <img svg-inline src="../../assets/img/leftsidebar/medal.svg" />
             <span>{{ $jx3boxT("jx3boxUi.authorMedals.title", "作者荣誉") }}</span>
         </div>
-        <div class="u-medals" v-if="medals && medals.length">
+        <div class="u-medals" v-if="displayMedals.length">
             <el-tooltip
                 class="item"
                 effect="dark"
                 :content="item.medal_desc"
                 placement="top"
-                v-for="item in medals"
+                v-for="item in displayMedals"
                 :key="item.id"
             >
                 <a :href="getMedalLink(item)" target="_blank" class="u-medal">
@@ -24,6 +24,7 @@
 <script>
 import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { getMedalLink } = utilModule;
+import { getUserMedals } from "../../service/author";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
 const { __cdn, __Root } = JX3BOX;
@@ -32,18 +33,59 @@ export default {
     name: "AuthorMedals",
     mixins: [i18nMixin],
     props: {
+        uid: {
+            type: [Number, String],
+            default: 0,
+        },
         medals: {
             type: Array,
-            default: () => [],
         },
     },
     components: {},
+    data: function () {
+        return {
+            legacyMedals: [],
+            medalsRequestId: 0,
+        };
+    },
     computed: {
+        displayMedals: function () {
+            if (this.medals !== undefined) {
+                return Array.isArray(this.medals) ? this.medals : [];
+            }
+            return this.legacyMedals;
+        },
+        legacyRequestKey: function () {
+            return this.medals === undefined && this.uid ? String(this.uid) : "";
+        },
         ready: function () {
-            return this.medals && this.medals.length;
+            return this.displayMedals.length;
+        },
+    },
+    watch: {
+        legacyRequestKey: {
+            immediate: true,
+            handler: function (key) {
+                this.loadLegacyMedals(key);
+            },
         },
     },
     methods: {
+        loadLegacyMedals: function (key) {
+            const requestId = ++this.medalsRequestId;
+            this.legacyMedals = [];
+            if (!key) return;
+
+            getUserMedals(this.uid, { is_wear: 1 })
+                .then((data) => {
+                    if (requestId !== this.medalsRequestId || key !== this.legacyRequestKey) return;
+                    this.legacyMedals = Array.isArray(data) ? data : [];
+                })
+                .catch(() => {
+                    if (requestId !== this.medalsRequestId || key !== this.legacyRequestKey) return;
+                    this.legacyMedals = [];
+                });
+        },
         showIcon(medal) {
             return __cdn + "design/medals/user/" + medal + ".webp";
         },
@@ -63,7 +105,7 @@ export default {
     .u-medals {
         display: flex;
         flex-wrap: wrap;
-        gap:5px;
+        gap: 5px;
         margin-top: 5px;
     }
     .u-medal {

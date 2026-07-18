@@ -11,22 +11,44 @@
 </template>
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
+import { getUserHonor } from "../../service/cms";
 import { inRange } from "lodash";
 
 const { __cdn, __Root } = JX3BOX;
 export default {
     props: {
+        uid: {
+            type: [Number, String],
+            default: 0,
+        },
         honor: {
             type: Object,
-            default: null,
         },
+    },
+    data: function () {
+        return {
+            legacyHonor: null,
+            honorRequestId: 0,
+        };
     },
     computed: {
         displayHonor() {
-            return this.formatHonor(this.honor);
+            const honor = this.honor !== undefined ? this.honor : this.legacyHonor;
+            return this.formatHonor(honor);
+        },
+        legacyRequestKey() {
+            return this.honor === undefined && this.uid ? String(this.uid) : "";
         },
         url() {
             return this.displayHonor?.honor_info?.url ? __Root + this.displayHonor.honor_info.url : "";
+        },
+    },
+    watch: {
+        legacyRequestKey: {
+            immediate: true,
+            handler(key) {
+                this.loadLegacyHonor(key);
+            },
         },
     },
     methods: {
@@ -34,6 +56,21 @@ export default {
             let item = this.displayHonor?.honor_info;
             if (!item) return;
             return __cdn + `design/decoration/honor/${item.img}/${item.img}.${item.img_ext || "png"}`;
+        },
+        loadLegacyHonor(key) {
+            const requestId = ++this.honorRequestId;
+            this.legacyHonor = null;
+            if (!key) return;
+
+            getUserHonor(this.uid)
+                .then((res) => {
+                    if (requestId !== this.honorRequestId || key !== this.legacyRequestKey) return;
+                    this.legacyHonor = res?.data?.data || null;
+                })
+                .catch(() => {
+                    if (requestId !== this.honorRequestId || key !== this.legacyRequestKey) return;
+                    this.legacyHonor = null;
+                });
         },
         formatHonor(honor) {
             if (!honor?.honor_info) return null;

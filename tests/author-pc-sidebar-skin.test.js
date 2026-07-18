@@ -31,15 +31,41 @@ assert(author.includes('item?.type === "medals"'), "Author should read active me
 
 assert(author.includes(':medals="activeMedals"'), "Author should pass active medals to AuthorMedals");
 
-assert(!authorMedals.includes("getUserMedals"), "AuthorMedals should not request medals independently");
+assert(authorMedals.includes("getUserMedals"), "AuthorMedals should retain the legacy uid endpoint");
 
-assert(!authorMedals.includes("getUserMedals"), "AuthorMedals should not request the legacy medal endpoint");
+assert(
+    authorMedals.includes("this.medals === undefined && this.uid"),
+    "AuthorMedals should only use the legacy endpoint when the new medals prop is absent"
+);
 
-assert(authorInfo.includes(':honor="honor"'), "AuthorInfo should pass the active honor to AuthorHonor");
+assert(
+    authorMedals.includes("requestId !== this.medalsRequestId"),
+    "AuthorMedals should ignore stale legacy endpoint responses"
+);
+
+assert(
+    authorInfo.includes('<Honor :uid="uid" :honor="honor">'),
+    "AuthorInfo should pass both the legacy uid and the active honor to AuthorHonor"
+);
+
+assert(
+    !/honor:\s*\{[\s\S]*?default:\s*null/.test(authorInfo),
+    "AuthorInfo should leave an omitted honor undefined so legacy uid consumers still load it"
+);
 
 assert(!authorHonor.includes("sessionStorage"), "AuthorHonor should not use session storage");
 
-assert(!authorHonor.includes("getUserHonor"), "AuthorHonor should not request the legacy active honor endpoint");
+assert(authorHonor.includes("getUserHonor"), "AuthorHonor should retain the legacy uid endpoint");
+
+assert(
+    authorHonor.includes("this.honor === undefined && this.uid"),
+    "AuthorHonor should only use the legacy endpoint when the new honor prop is absent"
+);
+
+assert(
+    authorHonor.includes("requestId !== this.honorRequestId"),
+    "AuthorHonor should ignore stale legacy endpoint responses"
+);
 
 assert(author.includes("backgroundPosition: this.sidebarSkinPosition"), "Author should apply skin position");
 

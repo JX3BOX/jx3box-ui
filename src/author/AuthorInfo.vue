@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <Honor :honor="honor"></Honor>
+        <Honor :uid="uid" :honor="honor"></Honor>
         <div class="u-bio">{{ data.user_bio }}</div>
     </div>
 </template>
@@ -93,7 +93,6 @@ export default {
         },
         honor: {
             type: Object,
-            default: null,
         },
     },
     components: {
