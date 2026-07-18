@@ -305,15 +305,15 @@ export default {
     .u-game__icon {
         .flex(x);
         flex: 0 0 auto;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
         margin-right: 12px;
 
         &,
         svg,
         img {
-            width: 16px !important;
-            height: 16px !important;
+            width: 20px !important;
+            height: 20px !important;
         }
 
         svg,
