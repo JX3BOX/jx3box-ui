@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <Honor :uid="uid"></Honor>
+        <Honor :honor="honor"></Honor>
         <div class="u-bio">{{ data.user_bio }}</div>
     </div>
 </template>
@@ -90,6 +90,10 @@ export default {
         anonymous: {
             type: [Number, String],
             default: 0,
+        },
+        honor: {
+            type: Object,
+            default: null,
         },
     },
     components: {

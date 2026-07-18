@@ -1,76 +1,47 @@
 <template>
-    <a class="c-author-honor" :style="{ backgroundImage: `url(${imgUrl()})` }" v-if="honor" :href="url" target="_blank">
-        <span :style="{ color: honor.color }">{{ honor.honor }}</span>
+    <a
+        class="c-author-honor"
+        :style="{ backgroundImage: `url(${imgUrl()})` }"
+        v-if="displayHonor"
+        :href="url"
+        target="_blank"
+    >
+        <span :style="{ color: displayHonor.color }">{{ displayHonor.honor }}</span>
     </a>
 </template>
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
-import { getUserHonor } from "../../service/cms";
 import { inRange } from "lodash";
 
 const { __cdn, __Root } = JX3BOX;
-const HONOR_IMG_KEY = "honor_img";
 export default {
     props: {
-        uid: {
-            type: [Number, String],
-            default: 0,
-        },
-    },
-    data: function () {
-        return {
-            honor: "",
-        };
-    },
-    watch: {
-        uid: {
-            immediate: true,
-            handler: function (val) {
-                val && this.getHonor();
-            },
+        honor: {
+            type: Object,
+            default: null,
         },
     },
     computed: {
-        isJdt() {
-            return this.honor?.val?.toLowerCase()?.includes("jdt");
+        displayHonor() {
+            return this.formatHonor(this.honor);
         },
         url() {
-            return this.honor?.honor_info?.url ? __Root + this.honor?.honor_info?.url : "";
+            return this.displayHonor?.honor_info?.url ? __Root + this.displayHonor.honor_info.url : "";
         },
     },
     methods: {
         imgUrl: function () {
-            let item = this.honor?.honor_info;
+            let item = this.displayHonor?.honor_info;
             if (!item) return;
-            return __cdn + `design/decoration/honor/${item.img}/${item.img}.${item.img_ext}`;
+            return __cdn + `design/decoration/honor/${item.img}/${item.img}.${item.img_ext || "png"}`;
         },
-        getHonor() {
-            let user_id = this.uid;
-            if (!user_id) return;
-            let honor_local = sessionStorage.getItem(HONOR_IMG_KEY + user_id) || "";
-            //解析本地缓存
-            if (honor_local == "no") return;
-            try {
-                this.honor = JSON.parse(honor_local);
-            } catch (err) {
-                getUserHonor(user_id).then((res) => {
-                    this.honor = res.data.data;
-                    if (!this.honor) {
-                        //空 则为无主题，不再加载接口，界面设No
-                        sessionStorage.setItem(HONOR_IMG_KEY + user_id, "no");
-                        return;
-                    }
-                    this.getHonorStyle(this.honor);
-                });
-            }
-        },
-        //有称号后，获取样式配置
-        getHonorStyle(honor) {
-            const data = honor;
+        formatHonor(honor) {
+            if (!honor?.honor_info) return null;
+            const data = { ...honor };
             let honorConfig = honor?.honor_info;
             let only = honorConfig.only;
-            let prefix = honorConfig.prefix;
-            let regPrefix = honorConfig.prefix.match(/\{([^{}]+?)\}/g);
+            let prefix = honorConfig.prefix || "";
+            let regPrefix = prefix.match(/\{([^{}]+?)\}/g);
             let ranking = honorConfig.ranking || [];
             let honorStr = honorConfig.year || "";
 
@@ -103,14 +74,13 @@ export default {
                     }
                 }
             }
-            data.honor = honorStr + honorConfig.suffix;
+            data.honor = honorStr + (honorConfig.suffix || "");
             data.color = honorConfig.color;
             data.img = honorConfig.img;
             data.img_ext = honorConfig.img_ext;
             data.isHave = true;
             data.isImgIndex = ranking?.length > 0;
-            sessionStorage.setItem(HONOR_IMG_KEY + this.uid, JSON.stringify(data));
-            this.honor = data;
+            return data;
         },
     },
 };

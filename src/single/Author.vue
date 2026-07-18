@@ -1,6 +1,6 @@
 <template>
     <div class="c-author" :style="decorationStyles">
-        <AuthorInfo :uid="uid" :anonymous="anonymous" @ready="installModules" />
+        <AuthorInfo :uid="uid" :anonymous="anonymous" :honor="activeHonor" @ready="installModules" />
         <template v-if="data">
             <div class="u-interact">
                 <!-- <AuthorFollow style="margin-right: 8px;" :uid="uid" /> -->
@@ -13,7 +13,7 @@
             </div>
             <!-- <AuthorLink class="u-block u-links" :uid="uid" :data="data" /> -->
             <AuthorRole class="u-block u-roles" :data="data" />
-            <AuthorMedals class="u-block u-trophy" :uid="uid" />
+            <AuthorMedals class="u-block u-trophy" :medals="activeMedals" />
             <!-- <AuthorTeams class="u-block u-teams" :uid="uid" /> -->
             <!-- <AuthorFans class="u-block u-fans" :uid="uid" /> -->
             <slot></slot>
@@ -73,6 +73,8 @@ export default {
             data: "",
             sidebarSkin: "",
             sidebarSkinPosition: "",
+            activeHonor: null,
+            activeMedals: [],
         };
     },
     computed: {
@@ -89,6 +91,8 @@ export default {
         uid() {
             this.sidebarSkin = "";
             this.sidebarSkinPosition = "";
+            this.activeHonor = null;
+            this.activeMedals = [];
             this.loadSidebarSkin();
         },
     },
@@ -146,6 +150,8 @@ export default {
 
             getUserSkin(this.uid).then((res) => {
                 const records = res.data.data || [];
+                this.activeHonor = records.find((item) => item?.type === "honor")?.honor || null;
+                this.activeMedals = records.find((item) => item?.type === "medals")?.medals || [];
                 const record = records.find((item) => this.resolveSkinDetail(item));
                 if (record && this.setSidebarSkin(record)) {
                     return;

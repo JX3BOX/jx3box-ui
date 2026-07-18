@@ -24,7 +24,6 @@
 <script>
 import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { getMedalLink } = utilModule;
-import { getUserMedals } from "../../service/author";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
 const { __cdn, __Root } = JX3BOX;
@@ -32,32 +31,19 @@ const { __cdn, __Root } = JX3BOX;
 export default {
     name: "AuthorMedals",
     mixins: [i18nMixin],
-    props: ["uid"],
-    components: {},
-    data: function () {
-        return {
-            medals: [],
-        };
-    },
-    computed: {
-        ready: function () {
-            return this.uid && this.medals && this.medals.length;
+    props: {
+        medals: {
+            type: Array,
+            default: () => [],
         },
     },
-    watch: {
-        uid: {
-            immediate: true,
-            handler: function (val) {
-                val && this.loadMedals();
-            },
+    components: {},
+    computed: {
+        ready: function () {
+            return this.medals && this.medals.length;
         },
     },
     methods: {
-        loadMedals: function () {
-            getUserMedals(this.uid, {is_wear: 1}).then((data) => {
-                this.medals = data || [];
-            });
-        },
         showIcon(medal) {
             return __cdn + "design/medals/user/" + medal + ".webp";
         },

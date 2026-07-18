@@ -170,6 +170,7 @@ function refreshAuth() {
     return $cms().post(`/api/cms/user/account/token/refresh`);
 }
 
+// 兼容备用：公共作者组件已改用 /user/skin 聚合数据
 function getUserHonor(uid) {
     return $cms({ mute: true }).get(`/api/cms/user/honor/${uid}/using`);
 }

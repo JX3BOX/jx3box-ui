@@ -34,9 +34,10 @@ async function getDouyu(ids) {
     return res.data.data;
 }
 
+// 兼容备用：公共作者组件已改用 /user/skin 聚合数据
 async function getUserMedals(uid, params) {
     return $next({ mute: true })
-        .get("/api/next2/user/" + uid + "/medals", {params})
+        .get("/api/next2/user/" + uid + "/medals", { params })
         .then((res) => {
             return res.data.data;
         });
