@@ -1,12 +1,18 @@
 <template>
     <div ref="trigger" class="w-qrcode" v-bind="$attrs" @click="togglePic" v-if="mode == 'cms'">
         <img class="u-icon" svg-inline src="../../assets/img/widget/qr-code.svg" />
-        <span class="u-text">二维码</span>
+        <span class="u-text">{{ triggerText }}</span>
     </div>
     <teleport to="body">
-        <div v-if="mode == 'cms' && active" class="u-qrcode u-qrcode-popup w-qrcode-static" :style="popupStyle" @click.stop>
+        <div
+            v-if="mode == 'cms' && active"
+            class="u-qrcode u-qrcode-popup w-qrcode-static"
+            :class="popupClass"
+            :style="popupStyle"
+            @click.stop
+        >
             <qrcode-vue class="u-pic" :value="value" :size="size" level="H"></qrcode-vue>
-            <span class="u-txt">扫一扫即可访问</span>
+            <span class="u-txt">{{ popupText }}</span>
         </div>
     </teleport>
     <div class="w-qrcode-static" v-bind="$attrs" v-if="mode == 'static'">
@@ -37,6 +43,18 @@ export default {
         s: {
             type: Number,
             default: 100,
+        },
+        triggerText: {
+            type: String,
+            default: "二维码",
+        },
+        popupText: {
+            type: String,
+            default: "扫一扫即可访问",
+        },
+        popupClass: {
+            type: [String, Array, Object],
+            default: "",
         },
     },
     data: function () {

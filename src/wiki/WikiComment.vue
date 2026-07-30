@@ -11,7 +11,7 @@
                         v-text="comment.user_nickname"
                     ></a>
                     <template v-if="comment.parent_id">
-                        <span>&nbsp;回复&nbsp;</span>
+                        <span>&nbsp;{{ $jx3boxT("jx3boxUi.wiki.reply", "回复") }}&nbsp;</span>
                         <a
                             class="u-nickname"
                             :href="comment.parent.user_id ? author_url(comment.parent.user_id) : null"
@@ -21,11 +21,11 @@
                     </template>
                     <span class="u-mark u-top" v-if="comment.is_top">
                         <i class="el-icon-download"></i>
-                        置顶
+                        {{ $jx3boxT("jx3boxUi.wikiComment.top", "置顶") }}
                     </span>
                     <span class="u-mark u-star" v-if="comment.is_star">
                         <i class="el-icon-star-on"></i>
-                        精华
+                        {{ $jx3boxT("jx3boxUi.wikiComment.star", "精华") }}
                     </span>
                 </div>
                 <p class="u-content" v-html="comment.content"></p>
@@ -38,9 +38,11 @@
                         class="u-reply"
                         @click="comment.reply_form.show = !comment.reply_form.show"
                         size="small"
+                        :aria-expanded="true"
+                        :aria-controls="`wiki-comment-reply-${comment.id}`"
                     >
                         <i class="el-icon-arrow-up"></i>
-                        <span>收起</span>
+                        <span>{{ $jx3boxT("jx3boxUi.wikiComment.collapse", "收起") }}</span>
                     </el-button>
                     <el-button
                         type="primary"
@@ -50,8 +52,10 @@
                         @click="comment.reply_form.show = !comment.reply_form.show"
                         icon="ChatDotRound"
                         size="small"
+                        :aria-expanded="false"
+                        :aria-controls="`wiki-comment-reply-${comment.id}`"
                     >
-                        <span>回复</span>
+                        <span>{{ $jx3boxT("jx3boxUi.wiki.reply", "回复") }}</span>
                     </el-button>
                     <template v-if="isEditor && !comment.parent_id">
                         <el-button
@@ -61,25 +65,43 @@
                             plain
                             :icon="comment.is_star ? 'StarFilled' : 'Star'"
                             size="small"
-                            >{{ comment.is_star ? "取消加精" : "加精" }}</el-button
+                            >{{
+                                comment.is_star
+                                    ? $jx3boxT("jx3boxUi.wikiComment.cancelStar", "取消加精")
+                                    : $jx3boxT("jx3boxUi.wikiComment.setStar", "加精")
+                            }}</el-button
                         >
                         <el-button type="primary" class="u-reply" @click="onTop(comment)" plain icon="Top" size="small">{{
-                            comment.is_top ? "取消置顶" : "置顶"
+                            comment.is_top
+                                ? $jx3boxT("jx3boxUi.wikiComment.cancelTop", "取消置顶")
+                                : $jx3boxT("jx3boxUi.wikiComment.setTop", "置顶")
                         }}</el-button>
                     </template>
                     <!-- 更新时间 -->
                     <span class="u-time" v-text="ts2str(comment.updated)"></span>
                 </div>
                 <!-- 评论回复表单 -->
-                <div class="m-reply-form" v-if="comment.reply_form && comment.reply_form.show">
-                    <textarea class="u-reply-content" v-model="comment.reply_form.content"></textarea>
+                <div
+                    class="m-reply-form"
+                    :id="`wiki-comment-reply-${comment.id}`"
+                    v-if="comment.reply_form && comment.reply_form.show"
+                >
+                    <textarea
+                        class="u-reply-content"
+                        v-model="comment.reply_form.content"
+                        :aria-label="$jx3boxT('jx3boxUi.wiki.reply', '回复')"
+                    ></textarea>
                     <div class="u-author">
-                        <span>昵称：</span>
-                        <input v-model="comment.reply_form.user_nickname" type="text" />
+                        <span>{{ $jx3boxT("jx3boxUi.wiki.nickname", "昵称：") }}</span>
+                        <input
+                            v-model="comment.reply_form.user_nickname"
+                            type="text"
+                            :aria-label="$jx3boxT('jx3boxUi.wiki.nickname', '昵称：')"
+                        />
                     </div>
                     <el-button type="primary" class="u-submit" @click="create_comment(comment.reply_form, comment.id)">
                         <i class="el-icon-check"></i>
-                        <span>提交</span>
+                        <span>{{ $jx3boxT("jx3boxUi.common.submit", "提交") }}</span>
                     </el-button>
                 </div>
             </div>
@@ -117,7 +139,10 @@ export default {
             if (!app.create_comment) app = app.$parent;
             if (!app.create_comment) {
                 this.$message({
-                    message: "发布评论异常，请联系管理员",
+                    message: this.$jx3boxT(
+                        "jx3boxUi.wikiComment.publishUnavailable",
+                        "发布评论异常，请联系管理员"
+                    ),
                     type: "warning",
                 });
                 return;
@@ -132,7 +157,10 @@ export default {
             if (!app.star_comment) app = app.$parent;
             if (!app.star_comment) {
                 this.$message({
-                    message: "操作异常，请联系管理员",
+                    message: this.$jx3boxT(
+                        "jx3boxUi.wikiComment.actionUnavailable",
+                        "操作异常，请联系管理员"
+                    ),
                     type: "warning",
                 });
                 return;
@@ -144,7 +172,10 @@ export default {
             if (!app.top_comment) app = app.$parent;
             if (!app.top_comment) {
                 this.$message({
-                    message: "操作异常，请联系管理员",
+                    message: this.$jx3boxT(
+                        "jx3boxUi.wikiComment.actionUnavailable",
+                        "操作异常，请联系管理员"
+                    ),
                     type: "warning",
                 });
                 return;

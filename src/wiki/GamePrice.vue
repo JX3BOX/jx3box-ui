@@ -1,11 +1,11 @@
 <template>
-    <span class="c-game-price" :class="alignClass">
+    <span class="c-game-price" :class="rootClasses">
         <span class="u-neg" v-if="numericPrice < 0">- </span>
         <span class="u-price">
             <template v-for="part in priceParts" :key="part.unit">
                 <span class="u-part" :class="`u-${part.unit}`">
                     <span class="u-price-value">{{ part.value }}</span>
-                    <img :src="part.icon" :alt="part.alt" />
+                    <img :src="part.icon" :alt="$jx3boxT(`jx3boxUi.gamePrice.${part.unit}`, part.alt)" />
                 </span>
             </template>
         </span>
@@ -36,16 +36,38 @@ export default {
             type: [Boolean, String],
             default: false,
         },
+        variant: {
+            type: String,
+            default: "default",
+            validator: (value) => ["default", "surface", "plain"].includes(value),
+        },
+        size: {
+            type: String,
+            default: "medium",
+            validator: (value) => ["small", "medium", "large"].includes(value),
+        },
+        layout: {
+            type: String,
+            default: "inline",
+            validator: (value) => ["inline", "block"].includes(value),
+        },
+        wrap: {
+            type: Boolean,
+            default: true,
+        },
     },
     computed: {
         numericPrice() {
             const value = Number(this.price);
             return Number.isFinite(value) ? Math.trunc(value) : 0;
         },
-        alignClass() {
-            if (this.align === true) return "is-align";
-            if (typeof this.align === "string" && this.align) return `is-${this.align}`;
-            return "";
+        rootClasses() {
+            const classes = [`is-${this.variant}`, `is-size-${this.size}`, `is-layout-${this.layout}`];
+            if (this.align === true) classes.push("is-align");
+            if (typeof this.align === "string" && this.align) classes.push(`is-${this.align}`);
+            if (!this.wrap) classes.push("is-nowrap");
+            if (this.numericPrice < 0) classes.push("is-negative");
+            return classes;
         },
         priceParts() {
             const value = Math.abs(this.numericPrice);
@@ -75,21 +97,28 @@ export default {
 
 <style lang="less">
 .c-game-price {
+    --jx3box-ui-game-price-color: #333;
+    --jx3box-ui-game-price-icon-size: 18px;
+    --jx3box-ui-game-price-font-size: 12px;
+    --jx3box-ui-game-price-gap: 6px;
+    --jx3box-ui-game-price-negative-color: var(--jx3box-ui-game-price-color);
+
     display: inline-flex;
     align-items: center;
-    color: #333;
+    color: var(--jx3box-ui-game-price-color);
     font-weight: 500;
 
     .u-price {
         display: inline-flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: var(--jx3box-ui-game-price-gap);
     }
 
     .u-neg {
         display: inline-flex;
         align-items: center;
+        color: var(--jx3box-ui-game-price-negative-color);
     }
 
     .u-part {
@@ -100,14 +129,15 @@ export default {
     }
 
     img {
-        width: 18px;
-        height: 18px;
+        width: var(--jx3box-ui-game-price-icon-size);
+        height: var(--jx3box-ui-game-price-icon-size);
         object-fit: contain;
         vertical-align: middle;
     }
 
     .u-price-value {
-        .fz(12px,18px);
+        font-size: var(--jx3box-ui-game-price-font-size);
+        line-height: var(--jx3box-ui-game-price-icon-size);
     }
 
     &.is-align {
@@ -129,6 +159,33 @@ export default {
     &.is-right {
         justify-content: flex-end;
         width: 100%;
+    }
+
+    &.is-size-small {
+        --jx3box-ui-game-price-icon-size: 14px;
+        --jx3box-ui-game-price-font-size: 11px;
+        --jx3box-ui-game-price-gap: 4px;
+    }
+
+    &.is-size-large {
+        --jx3box-ui-game-price-icon-size: 22px;
+        --jx3box-ui-game-price-font-size: 14px;
+        --jx3box-ui-game-price-gap: 8px;
+    }
+
+    &.is-layout-block {
+        display: flex;
+        width: 100%;
+    }
+
+    &.is-nowrap {
+        .u-price {
+            flex-wrap: nowrap;
+        }
+    }
+
+    &.is-surface {
+        --jx3box-ui-game-price-color: #334155;
     }
 }
 </style>

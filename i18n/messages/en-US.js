@@ -493,7 +493,9 @@ export default {
     migrateCommunity: { title: "Move back to original section", postTitle: "Title", author: "Author", originalSection: "Original section", originalLink: "Original link", notAvailable: "This post cannot be moved because its original post does not exist.", confirm: "Move this post back to its original section?", success: "Moved successfully" },
     moveCommunity: { title: "Move to community", category: "Category", categoryPlaceholder: "Select a post category", introduction: "Introduction", contentPlaceholder: "Enter content", images: "Images", irreversibleTip: "Please confirm that this action cannot be undone", irreversible: "I confirm that this action cannot be undone", missingPost: "Post ID does not exist!", selectCategory: "Please select a category!" },
     wiki: { loading: "🎉 Loading...", loadFailed: "⚠️ Failed to load data", empty: "💧 No data", reply: "Reply", nickname: "Nickname: ", mysterious: "Mysterious Hero" },
-    wikiPanel: { contributors: "Contributors", difficulty: "Difficulty", popularity: "Popularity", updatedAt: "Updated" },
+    wikiPanel: { contributors: "Contributors", difficulty: "Difficulty", popularity: "Popularity", updatedAt: "Updated", qrTrigger: "QR code", qrScanToVisit: "Scan to open this page" },
     wikiComments: { title: "Wiki Comments", empty: "💧 No comments", contentRequired: "Please enter a comment before submitting", submitSuccess: "Submitted successfully. Please wait for review." },
     wikiRevisions: { title: "Revision History", version: "Version", contributor: "Contributor", remark: "Revision notes" },
+    wikiComment: { top: "Pinned", star: "Featured", collapse: "Collapse", setStar: "Feature", cancelStar: "Unfeature", setTop: "Pin", cancelTop: "Unpin", publishUnavailable: "Unable to publish the comment. Please contact an administrator.", actionUnavailable: "Unable to complete this action. Please contact an administrator." },
+    gamePrice: { zhuan: "brick", jin: "gold", yin: "silver", tong: "copper" },
 };

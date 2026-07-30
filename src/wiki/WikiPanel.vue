@@ -1,9 +1,7 @@
 <template>
     <div
         class="c-wiki-panel"
-        :class="{
-            border: border,
-        }"
+        :class="rootClasses"
     >
         <div class="m-panel-head">
             <slot name="head-before"></slot>
@@ -11,7 +9,13 @@
                 <slot name="head-title"></slot>
             </div>
             <div class="m-panel-actions">
-                <QRcode v-if="wikiPost && showQR" class="u-qr" />
+                <QRcode
+                    v-if="wikiPost && showQR"
+                    class="u-qr"
+                    :trigger-text="$jx3boxT('jx3boxUi.wikiPanel.qrTrigger', '二维码')"
+                    :popup-text="$jx3boxT('jx3boxUi.wikiPanel.qrScanToVisit', '扫一扫即可访问')"
+                    popup-class="u-wiki-panel-qrcode-popup"
+                />
                 <slot name="head-actions"></slot>
             </div>
             <slot name="head-after"></slot>
@@ -72,6 +76,11 @@ export default {
             type: String,
             default: "default",
         },
+        variant: {
+            type: String,
+            default: "default",
+            validator: (value) => ["default", "surface", "plain"].includes(value),
+        },
         border: {
             type: Boolean,
             default: true,
@@ -85,6 +94,15 @@ export default {
         return {
             stat: null,
         };
+    },
+    computed: {
+        rootClasses() {
+            return {
+                border: this.border,
+                [`is-${this.variant}`]: true,
+                [`is-scene-${this.scene}`]: true,
+            };
+        },
     },
     watch: {
         wikiPost: {
