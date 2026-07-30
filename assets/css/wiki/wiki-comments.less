@@ -246,41 +246,42 @@
                 flex-wrap: wrap;
                 align-items: center;
                 padding-bottom: 0;
-                gap: 8px;
+                gap: 0;
 
                 .el-button + .el-button {
-                    margin-left: 0;
+                    margin-left: 20px;
                 }
 
                 .el-button {
-                    min-height: 28px;
-                    padding: 4px 10px;
-                    border-radius: 4px;
+                    min-height: auto;
+                    padding: 0;
+                    border: 0;
+                    border-radius: 0;
+                    background: transparent;
+                    color: @v4tip;
                     font-size: 12px;
+                    font-weight: normal;
 
                     &:focus-visible {
                         outline: 2px solid var(--jx3box-ui-wiki-panel-border-focus);
                         outline-offset: 2px;
                     }
-                }
-
-                .el-button--primary.is-plain {
-                    border-color: var(--jx3box-ui-wiki-panel-primary);
-                    color: var(--jx3box-ui-wiki-panel-primary);
-                    background: var(--jx3box-ui-wiki-panel-surface);
 
                     &:hover,
                     &:focus {
-                        border-color: var(--jx3box-ui-wiki-panel-primary-hover);
-                        color: var(--jx3box-ui-wiki-panel-primary-hover);
-                        background: var(--jx3box-ui-wiki-panel-primary-soft);
+                        border: 0;
+                        color: @pink;
+                        background: transparent;
                     }
                 }
 
                 .u-time {
+                    display: inline-flex;
+                    align-items: center;
                     float: none;
-                    margin: 0 0 0 auto;
-                    color: var(--jx3box-ui-wiki-panel-subtle);
+                    margin: 0 0 0 20px;
+                    color: #c0c4cc;
+                    line-height: 1;
                     opacity: 1;
                     white-space: nowrap;
                 }
@@ -413,12 +414,6 @@
             .u-mark {
                 height: auto;
                 white-space: normal;
-            }
-
-            .m-reply {
-                .el-button {
-                    min-height: 36px;
-                }
             }
         }
     }

@@ -439,6 +439,12 @@ export default {
             display: flex;
             justify-content: space-between;
 
+            .u-toolbar-left {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
             .u-toolbar-right {
                 padding-right: 5px;
             }
@@ -451,8 +457,11 @@ export default {
         }
     }
     .u-date {
+        display: inline-flex;
+        align-items: center;
         color: #c0c4cc;
         margin-left: 20px;
+        line-height: 1;
         i {
             margin-right: 5px;
         }
