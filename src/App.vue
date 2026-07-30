@@ -111,27 +111,36 @@
                     </el-radio-group>
                     <singlebox :post="post" />
                 </el-tab-pane>
-                <el-tab-pane label="百科组件" name="wiki">
+                <el-tab-pane class="m-pvx-wiki-demo" label="百科组件" name="wiki">
                     <h1 class="m-title">游戏价格组件</h1>
-                    <div class="m-block">
-                        <GamePrice :price="100009999" :align="true"></GamePrice>
+                    <div class="m-block m-game-price-demo">
+                        <GamePrice
+                            :price="100009999"
+                            :align="true"
+                            variant="surface"
+                        ></GamePrice>
+                        <GamePrice
+                            :price="-20800"
+                            variant="surface"
+                            style="--jx3box-ui-game-price-negative-color: #e11d48"
+                        ></GamePrice>
                     </div>
 
-                    <h1 class="m-title">百科面板</h1>
                     <div class="m-block">
-                        <WikiPanel :wiki-post="wiki_post">
-                            <template #head-title>奇遇攻略</template>
+                        <WikiPanel :wiki-post="wiki_post" variant="surface">
+                            <template #head-title>
+                                <i class="u-icon el-icon-document"></i>
+                                <span class="u-txt">奇遇攻略</span>
+                            </template>
                         </WikiPanel>
                     </div>
 
-                    <h1 class="m-title">百科评论</h1>
                     <div class="m-block">
-                        <WikiComments :source-id="12572" type="achievement" />
+                        <WikiComments :source-id="12572" type="achievement" variant="surface" />
                     </div>
 
-                    <h1 class="m-title">百科修订</h1>
                     <div class="m-block">
-                        <WikiRevisions type="achievement" :source-id="12572" />
+                        <WikiRevisions type="achievement" :source-id="12572" variant="surface" />
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="移动组件" name="mobile">
@@ -378,5 +387,39 @@ export default {
     .flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.m-pvx-wiki-demo {
+    padding: 24px;
+    background: #f6f8fa;
+
+    > .m-title:first-child {
+        margin-top: 0;
+    }
+
+    > .m-block {
+        padding: 0;
+    }
+
+    > .m-block + .m-block {
+        margin-top: 24px;
+    }
+}
+
+.m-game-price-demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+@media screen and (max-width: 720px) {
+    .m-pvx-wiki-demo {
+        padding: 16px;
+
+        > .m-block + .m-block {
+            margin-top: 20px;
+        }
+    }
 }
 </style>

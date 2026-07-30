@@ -231,6 +231,8 @@ export default {
     boxcoinAdmin: {
         tooltip: "Đánh giá",
         dialogTitle: "Chấm điểm đánh giá",
+        yearStatus: "Hạn mức cả năm",
+        yearSummary: "Đã dùng {used} Còn {left} Tổng {total}",
         monthStatus: "Tháng này",
         monthSummary: "Đã dùng {used} Còn {left} Tổng {total}",
         appraise: "Đánh giá",
@@ -240,9 +242,12 @@ export default {
         remark: "Lời nhắn",
         remarkPlaceholder: "Nhập lời nhắn (bắt buộc)",
         insertCurrentRelease: "Chèn phiên bản hiện tại",
+        anonymity: "Đánh giá ẩn danh",
+        anonymousRemark: "Kiểm tra công việc định kỳ",
         defaultRemark: "Vất vả rồi, cảm ơn!",
         success: "Thành công",
         fetchFailed: "Lấy dữ liệu thất bại",
+        yearLimitExceeded: "Thao tác thất bại, đã vượt hạn mức cả năm ({totalLimit} BoxCoin)",
     },
     boxcoinUser: {
         tooltip: "Tặng xu",
@@ -483,7 +488,9 @@ export default {
     migrateCommunity: { title: "Chuyển về mục gốc", postTitle: "Tiêu đề", author: "Tác giả", originalSection: "Mục gốc", originalLink: "Liên kết gốc", notAvailable: "Không thể chuyển bài viết này vì bài gốc không tồn tại.", confirm: "Chuyển bài viết này về mục gốc?", success: "Chuyển thành công" },
     moveCommunity: { title: "Chuyển đến diễn đàn", category: "Danh mục", categoryPlaceholder: "Chọn danh mục bài viết", introduction: "Giới thiệu", contentPlaceholder: "Nhập nội dung", images: "Hình ảnh", irreversibleTip: "Hãy xác nhận thao tác này không thể hoàn tác", irreversible: "Tôi xác nhận thao tác này không thể hoàn tác", missingPost: "ID bài viết không tồn tại!", selectCategory: "Vui lòng chọn danh mục!" },
     wiki: { loading: "🎉 Đang tải dữ liệu...", loadFailed: "⚠️ Không thể tải dữ liệu", empty: "💧 Chưa có dữ liệu", reply: "Trả lời", nickname: "Biệt danh: ", mysterious: "Hiệp khách bí ẩn" },
-    wikiPanel: { contributors: "Người đóng góp", difficulty: "Độ khó", popularity: "Độ phổ biến", updatedAt: "Cập nhật" },
+    wikiPanel: { contributors: "Người đóng góp", difficulty: "Độ khó", popularity: "Độ phổ biến", updatedAt: "Cập nhật", qrTrigger: "Mã QR", qrScanToVisit: "Quét để mở trang này" },
     wikiComments: { title: "Bình luận Wiki", empty: "💧 Chưa có bình luận", contentRequired: "Hãy nhập bình luận trước khi gửi", submitSuccess: "Gửi thành công, vui lòng chờ duyệt" },
     wikiRevisions: { title: "Lịch sử phiên bản", version: "Phiên bản", contributor: "Người đóng góp", remark: "Ghi chú chỉnh sửa" },
+    wikiComment: { top: "Đã ghim", star: "Nổi bật", collapse: "Thu gọn", setStar: "Đánh dấu nổi bật", cancelStar: "Bỏ nổi bật", setTop: "Ghim", cancelTop: "Bỏ ghim", publishUnavailable: "Không thể đăng bình luận. Vui lòng liên hệ quản trị viên.", actionUnavailable: "Không thể thực hiện thao tác. Vui lòng liên hệ quản trị viên." },
+    gamePrice: { zhuan: "gạch", jin: "vàng", yin: "bạc", tong: "đồng" },
 };

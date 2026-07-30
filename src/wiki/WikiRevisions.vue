@@ -1,5 +1,5 @@
 <template>
-    <WikiPanel class="c-wiki-revisions" scene="detail">
+    <WikiPanel class="c-wiki-revisions" scene="detail" :variant="variant">
         <template #head-title>
             <i class="u-icon el-icon-time"></i>
             <span class="u-txt">{{ $jx3boxT('jx3boxUi.wikiRevisions.title', '历史版本') }}</span>
@@ -61,6 +61,11 @@ export default {
         isGame: {
             type: [Boolean, Number],
             default: false,
+        },
+        variant: {
+            type: String,
+            default: "default",
+            validator: (value) => ["default", "surface", "plain"].includes(value),
         },
     },
     data: function () {

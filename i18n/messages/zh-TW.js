@@ -488,7 +488,9 @@ export default {
     migrateCommunity: { title: "遷回原版塊", postTitle: "標題", author: "作者", originalSection: "原版塊", originalLink: "原連結", notAvailable: "此貼文不可遷移，不存在原貼文", confirm: "確認將此貼文遷回原版塊？", success: "遷移成功" },
     moveCommunity: { title: "遷移至論壇", category: "分類", categoryPlaceholder: "請選擇貼文分類", introduction: "簡介", contentPlaceholder: "請輸入內容", images: "附圖", irreversibleTip: "請確認此操作不可逆", irreversible: "我已確認此操作不可逆", missingPost: "文章ID不存在!", selectCategory: "請選擇分類!" },
     wiki: { loading: "🎉 資料載入中...", loadFailed: "⚠️ 資料載入異常", empty: "💧 暫無資料", reply: "回覆", nickname: "暱稱：", mysterious: "神祕俠士" },
-    wikiPanel: { contributors: "參與貢獻", difficulty: "綜合難度", popularity: "熱度", updatedAt: "更新時間" },
+    wikiPanel: { contributors: "參與貢獻", difficulty: "綜合難度", popularity: "熱度", updatedAt: "更新時間", qrTrigger: "QR Code", qrScanToVisit: "掃描即可瀏覽" },
     wikiComments: { title: "百科評論", empty: "💧 暫無評論", contentRequired: "請先填寫評論內容再嘗試提交", submitSuccess: "提交成功，請等待審核" },
     wikiRevisions: { title: "歷史版本", version: "版本", contributor: "貢獻者", remark: "修訂說明" },
+    wikiComment: { top: "置頂", star: "精華", collapse: "收起", setStar: "設為精華", cancelStar: "取消精華", setTop: "置頂", cancelTop: "取消置頂", publishUnavailable: "發布評論異常，請聯絡管理員", actionUnavailable: "操作異常，請聯絡管理員" },
+    gamePrice: { zhuan: "磚", jin: "金", yin: "銀", tong: "銅" },
 };

@@ -609,7 +609,9 @@ export default {
     migrateCommunity: { title: "迁回原板块", postTitle: "标题", author: "作者", originalSection: "原板块", originalLink: "原链接", notAvailable: "该帖子不可迁移，不存在原帖子", confirm: "确认将该帖子迁回原板块？", success: "迁移成功" },
     moveCommunity: { title: "迁移至论坛", category: "分类", categoryPlaceholder: "请选择帖子分类", introduction: "简介", contentPlaceholder: "请输入内容", images: "附图", irreversibleTip: "请确认此操作不可逆", irreversible: "我已确认此操作不可逆", missingPost: "文章ID不存在!", selectCategory: "请选择分类!" },
     wiki: { loading: "🎉 数据加载中...", loadFailed: "⚠️ 数据加载异常", empty: "💧 暂无数据", reply: "回复", nickname: "昵称：", mysterious: "神秘侠士" },
-    wikiPanel: { contributors: "参与贡献", difficulty: "综合难度", popularity: "热度", updatedAt: "更新时间" },
+    wikiPanel: { contributors: "参与贡献", difficulty: "综合难度", popularity: "热度", updatedAt: "更新时间", qrTrigger: "二维码", qrScanToVisit: "扫一扫即可访问" },
     wikiComments: { title: "百科评论", empty: "💧 暂无评论", contentRequired: "请先填写评论内容再尝试提交", submitSuccess: "提交成功，请等待审核" },
     wikiRevisions: { title: "历史版本", version: "版本", contributor: "贡献者", remark: "修订说明" },
+    wikiComment: { top: "置顶", star: "精华", collapse: "收起", setStar: "加精", cancelStar: "取消加精", setTop: "置顶", cancelTop: "取消置顶", publishUnavailable: "发布评论异常，请联系管理员", actionUnavailable: "操作异常，请联系管理员" },
+    gamePrice: { zhuan: "砖", jin: "金", yin: "银", tong: "铜" },
 };

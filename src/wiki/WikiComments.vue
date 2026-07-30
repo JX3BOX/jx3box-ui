@@ -1,5 +1,5 @@
 <template>
-    <WikiPanel class="c-wiki-comments" scene="detail">
+    <WikiPanel class="c-wiki-comments" scene="detail" :variant="variant">
         <template #head-title>
             <i class="u-icon el-icon-chat-line-round"></i>
             <span class="u-txt">{{ $jx3boxT('jx3boxUi.wikiComments.title', '百科评论') }}</span>
@@ -29,10 +29,18 @@
                         <i class="el-icon-chat-dot-round"></i>
                         <span>{{ $jx3boxT('jx3boxUi.wiki.reply', '回复') }}</span>
                     </h4>
-                    <textarea class="u-reply-content" v-model="reply_form.content"></textarea>
+                    <textarea
+                        class="u-reply-content"
+                        v-model="reply_form.content"
+                        :aria-label="$jx3boxT('jx3boxUi.wiki.reply', '回复')"
+                    ></textarea>
                     <div class="u-author">
                         <span>{{ $jx3boxT('jx3boxUi.wiki.nickname', '昵称：') }}</span>
-                        <input v-model="reply_form.user_nickname" type="text" />
+                        <input
+                            v-model="reply_form.user_nickname"
+                            type="text"
+                            :aria-label="$jx3boxT('jx3boxUi.wiki.nickname', '昵称：')"
+                        />
                     </div>
                     <el-button type="primary" class="u-submit" @click="create_comment(reply_form)">
                         <i class="el-icon-check"></i>
@@ -60,6 +68,11 @@ export default {
         sourceId: {
             type: [Number, String],
             default: 0,
+        },
+        variant: {
+            type: String,
+            default: "default",
+            validator: (value) => ["default", "surface", "plain"].includes(value),
         },
     },
     data() {
@@ -163,7 +176,9 @@ export default {
                 });
         },
         getDefaultNickname() {
-            return User.isLogin() ? User.getInfo().name : "神秘侠士";
+            return User.isLogin()
+                ? User.getInfo().name
+                : this.$jx3boxT("jx3boxUi.wiki.mysterious", "神秘侠士");
         },
         handleCurrentChange(page) {
             this.page = page;
