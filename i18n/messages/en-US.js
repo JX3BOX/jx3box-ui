@@ -420,6 +420,8 @@ export default {
         title: "Admin Panel",
         status: "Status",
         refreshCache: "Refresh Cache",
+        refreshCacheSuccess: "Cache refreshed",
+        refreshCacheFailed: "Failed to refresh cache",
         visible: "Visibility",
         mark: "Recommended Badges",
         highlight: "Highlight & Pin",

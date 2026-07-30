@@ -19,7 +19,12 @@
                         option
                     }}</el-radio-button>
                 </el-radio-group>
-                <el-button type="primary" class="u-refresh-btn" @click="onRefreshCache">{{
+                <el-button
+                    type="primary"
+                    class="u-refresh-btn"
+                    :loading="refreshingCache"
+                    @click="onRefreshCache"
+                >{{
                     $jx3boxT("jx3boxUi.admin.refreshCache", "刷新缓存")
                 }}</el-button>
             </div>
@@ -127,7 +132,7 @@ import Bus from "../../utils/bus";
 import * as utilModule from "@jx3box/jx3box-common/js/utils";
 const { getRewrite } = utilModule;
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
-import { getSetting, postSetting } from "../../service/admin";
+import { getSetting, postSetting, refreshPostCache } from "../../service/admin";
 import User from "@jx3box/jx3box-common/js/user";
 import CMS_MARKS from "@jx3box/jx3box-common/data/mark.json";
 import { getTopicBucket } from "../../service/cms";
@@ -184,6 +189,7 @@ export default {
             // 数据
             pulled: false,
             pushing: false,
+            refreshingCache: false,
 
             // 权限
             hasRight: false,
@@ -376,11 +382,23 @@ export default {
                 this.tags = data;
             });
         },
-        onRefreshCache() {
-            emitter.emit("refreshCache", {
-                type: this.post_type,
-                id: this.pid,
-            });
+        async onRefreshCache() {
+            if (!this.pid || this.refreshingCache) return;
+
+            this.refreshingCache = true;
+            try {
+                await refreshPostCache(this.pid);
+                emitter.emit("refreshCache", {
+                    type: this.post_type,
+                    id: this.pid,
+                });
+                this.$message.success(this.$jx3boxT("jx3boxUi.admin.refreshCacheSuccess", "缓存刷新成功"));
+            } catch (err) {
+                this.$message.error(this.$jx3boxT("jx3boxUi.admin.refreshCacheFailed", "缓存刷新失败"));
+                console.error(err);
+            } finally {
+                this.refreshingCache = false;
+            }
         },
     },
     watch: {

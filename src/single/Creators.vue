@@ -67,9 +67,7 @@ export default {
             return editLink(this.postType, this.postId);
         },
         creators: function ({ other_authors }) {
-            return other_authors.map((item) => {
-                return item.author_id;
-            });
+            return (other_authors || []).filter((item) => item.status).map((item) => item.author_id);
         },
         userId: function () {
             return ~~User.getInfo().uid;
@@ -90,7 +88,7 @@ export default {
         loadData: function () {
             getPostAuthors(this.id).then((res) => {
                 this.super_author = res.data?.data.super_author;
-                this.other_authors = res.data?.data.other_authors;
+                this.other_authors = (res.data?.data.other_authors || []).filter((item) => item.status);
 
                 const super_author = {
                     user_id: this.super_author.ID,

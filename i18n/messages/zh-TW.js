@@ -413,6 +413,8 @@ export default {
         title: "管理面板",
         status: "狀態變更",
         refreshCache: "刷新快取",
+        refreshCacheSuccess: "快取刷新成功",
+        refreshCacheFailed: "快取刷新失敗",
         visible: "可見性變更",
         mark: "推薦角標",
         highlight: "高亮置頂",

@@ -408,6 +408,8 @@ export default {
         title: "Bảng quản trị",
         status: "Trạng thái",
         refreshCache: "Làm mới bộ nhớ đệm",
+        refreshCacheSuccess: "Đã làm mới bộ nhớ đệm",
+        refreshCacheFailed: "Không thể làm mới bộ nhớ đệm",
         visible: "Hiển thị",
         mark: "Nhãn đề xuất",
         highlight: "Nổi bật & ghim",

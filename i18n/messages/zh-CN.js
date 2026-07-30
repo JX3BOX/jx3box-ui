@@ -534,6 +534,8 @@ export default {
         title: "管理面板",
         status: "状态变更",
         refreshCache: "刷新缓存",
+        refreshCacheSuccess: "缓存刷新成功",
+        refreshCacheFailed: "缓存刷新失败",
         visible: "可见性变更",
         mark: "推荐角标",
         highlight: "高亮置顶",
