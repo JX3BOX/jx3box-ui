@@ -18,7 +18,7 @@
                     <a :href="item.link" :target="item.target || '_self'" class="u-menu-item" @click="onClick(item)">
                         <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
                         {{ getPanelLabel(item) }}
-                        <span v-if="showPop" class="u-new">New!</span>
+                        <span v-if="showPop && isFeaturePanelItem(item)" class="u-new">New!</span>
                         <span v-if="item.remark == 'auth' && !isAuth" class="u-new">New!</span>
                     </a>
                     <a
