@@ -13,13 +13,12 @@
             </i>
         </span>
         <ul class="u-menu u-pop-content">
-            <template v-for="item in userPanel">
-                <li :key="item.label" v-if="item.remark == 'auth' ? !isAuth : true">
+            <template v-for="item in userPanel" :key="item.label">
+                <li>
                     <a :href="item.link" :target="item.target || '_self'" class="u-menu-item" @click="onClick(item)">
                         <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
                         {{ getPanelLabel(item) }}
                         <span v-if="showPop && isFeaturePanelItem(item)" class="u-new">New!</span>
-                        <span v-if="item.remark == 'auth' && !isAuth" class="u-new">New!</span>
                     </a>
                     <a
                         v-if="isFeaturePanelItem(item) && hasAccountReadyIssue"
@@ -49,7 +48,6 @@
 <script>
 import { getMenu } from "../../service/header";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
-import User from "@jx3box/jx3box-common/js/user";
 import i18nMixin from "../../i18n/mixin";
 import { getConfig } from "../../service/cms";
 // import manageIcon from "@/assets/img/components/common/header/manage.svg";
@@ -109,16 +107,13 @@ export default {
     computed: {
         userPanel: function () {
             return this.panel.filter((item) => {
-                return !item.onlyAdmin;
+                return !item.onlyAdmin && item.remark !== "auth";
             });
         },
         adminPanel: function () {
             return this.panel.filter((item) => {
                 return item.onlyAdmin;
             });
-        },
-        isAuth() {
-            return User.isPhoneMember();
         },
         hasAccountReadyIssue() {
             return this.accountReadyIncomplete;
