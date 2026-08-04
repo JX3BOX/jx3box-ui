@@ -16,10 +16,8 @@
             <template v-for="item in userPanel" :key="item.label">
                 <li>
                     <a :href="item.link" :target="item.target || '_self'" class="u-menu-item" @click="onClick(item)">
-                        <span class="u-menu-icon-wrap">
-                            <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
-                        </span>
-                        <span class="u-menu-label">{{ getPanelLabel(item) }}</span>
+                        <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
+                        {{ getPanelLabel(item) }}
                         <span v-if="showPop && isFeaturePanelItem(item)" class="u-new">New!</span>
                     </a>
                     <a
@@ -28,10 +26,8 @@
                         class="u-menu-item u-menu-item--account-ready"
                         @click.prevent="openAccountReady"
                     >
-                        <span class="u-menu-icon-wrap">
-                            <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
-                        </span>
-                        <span class="u-menu-label">资料完善</span>
+                        <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
+                        资料完善
                         <span class="u-new u-new--important">重要</span>
                     </a>
                 </li>
@@ -40,10 +36,8 @@
                 <hr v-if="adminPanel.length" />
                 <li v-for="item in adminPanel" :key="item.label">
                     <a :href="item.link" :target="item.target || '_self'" class="u-menu-item">
-                        <span class="u-menu-icon-wrap">
-                            <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
-                        </span>
-                        <span class="u-menu-label">{{ getPanelLabel(item) }}</span>
+                        <img :src="resolveImg(item.icon)" class="u-menu-icon" :alt="item.icon" />
+                        {{ getPanelLabel(item) }}
                     </a>
                 </li>
             </template>
@@ -221,95 +215,36 @@ export default {
         align-items: center;
     }
     .u-menu {
-        width: 272px;
-        box-sizing: border-box;
-        right: -10px;
-        top: calc(100% + 8px);
-        margin: 0;
-        padding: 8px;
-        border: 1px solid rgba(31, 35, 41, 0.1);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.98);
-        box-shadow: 0 12px 36px rgba(15, 23, 42, 0.16), 0 2px 8px rgba(15, 23, 42, 0.08);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-
-        &:before {
-            right: 16px;
-            top: -14px;
-            border-width: 7px;
-            border-bottom-color: rgba(31, 35, 41, 0.1);
-        }
-
-        &:after {
-            right: 17px;
-            top: -12px;
-            border-width: 6px;
-            border-bottom-color: #fff;
-        }
-
-        li {
-            margin: 0;
-        }
-
         .u-menu-item {
             .flex;
             align-items: center;
-            gap: 10px;
-            min-height: 44px;
-            box-sizing: border-box;
-            padding: 8px 10px;
-            border-radius: 8px;
-            color: #303133;
-            font-size: 14px;
-            line-height: 20px;
-            text-decoration: none;
-            transition: background-color 0.16s ease, color 0.16s ease;
+            gap: 4px;
+            transition: background-color 0.15s ease;
 
             &:hover {
-                color: #4338ca;
-                background: #f4f3ff;
-
-                .u-menu-icon-wrap {
-                    background: #e8e7ff;
-                }
-
                 .u-menu-icon {
-                    opacity: 0.9;
+                    filter: invert(100%) sepia(0%) saturate(5658%) hue-rotate(215deg) brightness(114%) contrast(106%);
+                }
+                .u-new {
+                    background-color: #fff;
+                    color: @v4primary-dark;
+                    box-shadow: inset 0 0 0 1px fade(@v4primary-dark, 20%);
+                }
+                .u-new--important {
+                    color: #f56c6c;
+                    box-shadow: inset 0 0 0 1px fade(#f56c6c, 20%);
                 }
             }
         }
-
-        .u-menu-icon-wrap {
-            .flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            flex: 0 0 30px;
-            border-radius: 8px;
-            background: #f3f4f6;
-            transition: background-color 0.16s ease;
-        }
-
         .u-menu-icon {
-            width: 18px;
-            height: 18px;
-            opacity: 0.72;
-        }
-
-        .u-menu-label {
-            flex: 1;
-            min-width: 0;
-            font-weight: 500;
-            letter-spacing: 0.01em;
+            width: 16px;
+            height: 16px;
         }
     }
 
     hr {
         border: 0;
-        border-top: 1px solid #eef0f3;
-        margin: 6px 4px;
+        border-top: 1px solid #eee;
     }
 
     .u-icon-msg {
@@ -332,38 +267,22 @@ export default {
     }
 
     .u-new {
-        flex: 0 0 auto;
-        box-sizing: border-box;
-        min-width: 38px;
-        margin-left: 4px;
-        padding: 2px 7px;
-        border: 1px solid #d9d6fe;
-        border-radius: 999px;
-        background: #eeedff;
-        color: #4f46e5;
         font-size: 11px;
-        font-weight: 700;
-        line-height: 16px;
-        text-align: center;
+        line-height: 18px;
+        margin-left: 4px;
+        background-color: @v4primary-dark;
+        color: #fff;
+        padding: 0 5px;
+        border-radius: 2px;
+        transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .u-new--important {
-        border-color: #ffd1d1;
-        background: #fff0f0;
-        color: #e5484d;
+        background-color: #f56c6c;
     }
 
     .u-menu-item--account-ready {
-        color: #303133;
-
-        &:hover {
-            color: #d9363e;
-            background: #fff5f5;
-
-            .u-menu-icon-wrap {
-                background: #ffe8e8;
-            }
-        }
+        color: #f56c6c;
     }
 }
 </style>

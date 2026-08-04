@@ -3,7 +3,7 @@
         append-to-body
         v-model="visible"
         custom-class="c-alternate"
-        width="320px"
+        width="360px"
         :title="$jx3boxT('jx3boxUi.commonHeader.alternate.title', '切换马甲')"
     >
         <div class="c-alternate__content">
@@ -218,33 +218,40 @@ export default {
 <style lang="less">
 /* src/header/alternate.vue */
 .c-alternate {
+    border-radius: 6px;
+
     .el-dialog__title {
-        .fz(12px);
+        color: #303133;
+        .fz(16px);
+        font-weight: 600;
     }
     .el-dialog__body {
         padding: 0;
     }
     .el-dialog__header {
-        // padding: 10px;
-        border-bottom: #dcdfe6 1px solid;
+        margin-right: 0;
+        padding: 16px 20px;
+        border-bottom: 1px solid #ebeef5;
     }
 }
 
 .c-alternate__content {
-    max-height: 600px;
+    max-height: min(600px, calc(100vh - 120px));
     overflow-y: auto;
 
     .c-alternate-item {
         .flex;
-        gap: 10px;
+        align-items: center;
+        gap: 12px;
         .pointer;
-        padding: 10px;
+        padding: 12px 16px;
         .pr;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #ebeef5;
         .fz(13px);
+        transition: background-color 0.15s ease;
 
         &:hover {
-            background-color: @bg-light;
+            background-color: @bg-gray;
 
             .u-remove {
                 display: block;
@@ -254,11 +261,12 @@ export default {
 
     .u-remove {
         .pa;
-        right: 10px;
-        top: 5px;
-        color: #999;
+        right: 14px;
+        top: 50%;
+        color: #909399;
         .pointer;
         font-size: 16px;
+        transform: translateY(-50%);
 
         &:hover {
             color: #333;
@@ -270,9 +278,12 @@ export default {
         .pr;
     }
     .u-avatar {
+        display: block;
         width: 50px;
         height: 50px;
+        background-color: #fff;
         border-radius: 50%;
+        object-fit: cover;
     }
     .u-active {
         .pa;
@@ -280,18 +291,26 @@ export default {
         top: -6px;
         width: 20px;
         height: 20px;
-        // fill: #fff;
         color: #0dbc19;
+        background-color: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px #fff;
     }
 
     .m-misc {
+        min-width: 0;
         .flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 4px;
+    }
+    .u-name,
+    .u-time {
+        color: #606266;
+        line-height: 20px;
     }
     .u-label {
         font-size: 12px;
-        color: #999;
+        color: #909399;
     }
 
     .u-extra {
@@ -306,17 +325,16 @@ export default {
     }
 
     .c-alternate-btn {
-        // padding: 10px;
         text-align: center;
         .pointer;
-        // width: 100%;
-        // border-radius: 0;
         .size(100%,74px);
         .fz(40px,74px);
-        color: #999;
+        color: #909399;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
         &:hover {
-            background-color: @bg-light;
-            color: #888;
+            background-color: @bg-gray;
+            color: #606266;
         }
     }
 }
