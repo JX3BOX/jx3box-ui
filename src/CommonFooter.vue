@@ -143,9 +143,4 @@ body::after {
 .c-footer--v4__popover .el-popper__arrow::before {
     display: none !important;
 }
-.v-miniprogram{
-    .c-footer--v4{
-        .none;
-    }
-}
 </style>

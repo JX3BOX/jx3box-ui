@@ -574,20 +574,12 @@ export default {
 }
 
 @media screen and (max-width: @phone) {
-    .env-app,
-    .v-miniprogram,
-    .wechat-miniprogram {
+    .env-app {
         .c-header {
             .none;
         }
         body {
             padding-top: 0;
-        }
-    }
-
-    .wechat-miniprogram {
-        .c-header {
-            .none;
         }
     }
 }
