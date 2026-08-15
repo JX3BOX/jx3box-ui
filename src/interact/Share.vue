@@ -46,6 +46,7 @@
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import QrcodeVue from "qrcode.vue";
 import i18nMixin from "../../i18n/mixin";
+import { copyText } from "../../utils";
 
 const { __imgPath } = JX3BOX;
 export default {
@@ -73,7 +74,6 @@ export default {
         return {
             apis: {
                 qzone: 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?',
-                qq: 'http://connect.qq.com/widget/shareqq/index.html?',
                 wechat: '',
                 weibo: 'https://service.weibo.com/share/share.php?',
                 tieba: 'http://tieba.baidu.com/f/commit/share/openShareApi?'
@@ -125,7 +125,6 @@ export default {
                 qzone: this.shareToQzone,
                 weibo: this.shareToWeibo,
                 tieba: this.shareToTieba,
-                qq: this.shareToQQ,
             }
         },
         iconPath() {
@@ -150,12 +149,6 @@ export default {
                 + `&desc=${this.meta?.desc || ''}`
                 + `&pics=${this.pic}`;
         },
-        shareToQQ: function (){
-            return this.apis['qq']
-                + `url=${this.url}`
-                + `&title=${this.title}`
-                + `&pics=${this.pic}`;
-        },
         shareToTieba: function (){
             return this.apis['tieba']
                 + `url=${this.url}`
@@ -165,6 +158,10 @@ export default {
                 + `&pic=${this.pic}`;
         },
         share: function (val){
+            if (val === "qq") {
+                copyText(`【${this.title}】 ${this.url.href}`);
+                return;
+            }
             window.open(this.urls[val](), "_blank")
         }
     },
