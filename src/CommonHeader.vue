@@ -85,6 +85,7 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 import { getGlobalConfig } from "../service/header";
 import { getConfig, getMyAccountStatus } from "../service/cms";
 import { clearActiveAuthToken, refreshTokenIfNeeded } from "./utils/auth-token-refresh";
+import { checkClientStatOnVisible, installClientStatReporting } from "./utils/client-stat";
 import User from "@jx3box/jx3box-common/js/user.js";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
@@ -262,6 +263,7 @@ export default {
         handleVisibilityChange: function () {
             if (document.visibilityState === "visible") {
                 this.refreshAuthToken();
+                checkClientStatOnVisible();
             }
         },
 
@@ -446,6 +448,7 @@ export default {
     },
     created: function () {
         this.init();
+        installClientStatReporting();
         window.addEventListener("resize", this.updateScreen, { passive: true });
         document.addEventListener("visibilitychange", this.handleVisibilityChange);
 
