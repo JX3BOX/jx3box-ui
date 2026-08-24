@@ -1,11 +1,12 @@
 import { $cms } from "@jx3box/jx3box-common/js/api";
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
+import { applyJx3boxClientStatRules } from "./client-stat-business";
 
 const INSTANCE_ID_KEY = "jx3box:device_id";
 const REPORT_DATE_KEY = "jx3box:client-stat-report-date";
 const REPORT_SIGNATURE_KEY = "jx3box:client-stat-report-signature";
-const STAT_SDK_VERSION = "v0.0.1";
+const STAT_SDK_VERSION = "v0.0.2";
 const STARTUP_DELAY_MIN = 3 * 1000;
 const STARTUP_DELAY_MAX = 15 * 1000;
 
@@ -69,12 +70,23 @@ function resolveChannel() {
 }
 
 function resolvePlatform(userAgent, navigatorPlatform) {
+    if (/ArkWeb|HarmonyOS|OpenHarmony/i.test(userAgent)) return "harmony";
     if (/iPhone|iPad|iPod/i.test(userAgent)) return "ios";
     if (/Android/i.test(userAgent)) return "android";
     if (/Windows/i.test(userAgent)) return "windows";
     if (/Macintosh|MacIntel/i.test(userAgent) || navigatorPlatform === "MacIntel") return "macos";
     if (/Linux/i.test(userAgent)) return "linux";
     return "unknown";
+}
+
+function normalizeHarmonySystem(platform, userAgent) {
+    if (platform !== "harmony") return { os_name: platform, os_version: null };
+    const openHarmony = String(userAgent || "").match(/\b(?:Phone|Tablet);\s*OpenHarmony\s+([0-9]+(?:\.[0-9]+)*)\b/i);
+    if (openHarmony) return { os_name: "OpenHarmony", os_version: openHarmony[1] };
+    return {
+        os_name: /HarmonyOS/i.test(userAgent) ? "HarmonyOS" : "OpenHarmony",
+        os_version: null,
+    };
 }
 
 function resolveClient(platform, userAgent) {
@@ -130,13 +142,7 @@ function resolveDisplayMode() {
 }
 
 function resolveWebVersion() {
-    return (
-        window.__JX3BOX_VERSION__ ||
-        window.__APP_VERSION__ ||
-        process.env.VUE_APP_VERSION ||
-        process.env.VUE_APP_BUILD_VERSION ||
-        null
-    );
+    return window.__APP_VERSION__ || process.env.VUE_APP_VERSION || process.env.VITE_APP_VERSION || null;
 }
 
 export function buildClientStatPayload(instanceId) {
@@ -145,20 +151,25 @@ export function buildClientStatPayload(instanceId) {
     const connection = nav.connection || nav.mozConnection || nav.webkitConnection || {};
     const userAgent = String(nav.userAgent || "");
     const platform = resolvePlatform(userAgent, nav.platform);
-    const client = resolveClient(platform, userAgent);
+    const context = applyJx3boxClientStatRules(
+        { platform, client: resolveClient(platform, userAgent) },
+        { userAgent }
+    );
     const browser = parseBrowser(userAgent);
+    const system = normalizeHarmonySystem(context.platform, userAgent);
 
     return compactPayload({
         instance_id: instanceId,
         product: "jx3box",
-        client,
-        platform,
+        client: context.client,
+        platform: context.platform,
         domain: window.location.hostname,
         channel: resolveChannel(),
         web_version: resolveWebVersion(),
         sdk_version: STAT_SDK_VERSION,
 
-        os_name: platform,
+        os_name: system.os_name,
+        os_version: system.os_version,
         device_type: ["ios", "android"].includes(platform) ? (/iPad|Tablet/i.test(userAgent) ? "tablet" : "phone") : "desktop",
         architecture: /arm64|aarch64/i.test(userAgent)
             ? "arm64"
