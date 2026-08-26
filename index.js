@@ -43,6 +43,7 @@ import {
     setJx3boxUiLocale,
 } from "./i18n";
 import i18nMixin from "./i18n/mixin";
+import { createJx3boxTrafficAnalytics } from "./src/utils/traffic-analytics";
 
 const components = {
     CommonHeader,
@@ -93,4 +94,5 @@ export {
     mergeJx3boxUiMessages,
     getJx3boxUiAvailableLocales,
     setJx3boxUiLocale,
+    createJx3boxTrafficAnalytics,
 };
