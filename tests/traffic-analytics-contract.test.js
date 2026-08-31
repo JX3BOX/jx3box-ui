@@ -16,6 +16,7 @@ require("@babel/register")({
 });
 
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 const { test } = require("node:test");
 const fixture = require("@jx3box/jx3box-common/docs/fixtures/analytics-dual-sink-v1.json");
 const SHARED_ANALYTICS_QUEUE_STORAGE_KEY = "jx3box:analytics:queue:v1";
@@ -26,7 +27,12 @@ const {
     createJx3boxTrafficAnalytics,
     normalizeRecipientDomain,
     normalizeTrafficPermission,
+    resolvePcTrafficGameClient,
 } = require("../src/utils/traffic-analytics.js");
+const trafficSource = fs.readFileSync(path.resolve(__dirname, "../src/utils/traffic-analytics.js"), "utf8");
+
+assert.match(trafficSource, /const COMMON_HEADER_TRAFFIC_PROJECT = "jx3box-ui"/);
+assert.doesNotMatch(trafficSource, /PC_PROJECT_ROOTS|resolvePcTrafficProject/);
 
 function createMemoryStorage(initial) {
     const values = new Map(Object.entries(initial || {}));
@@ -202,6 +208,24 @@ test("recipient domains preserve web hosts and normalize embedded surfaces", () 
     assert.equal(normalizeRecipientDomain("origin.jx3box.com", "pc_web"), "origin.jx3box.com");
     assert.equal(normalizeRecipientDomain("localhost", "pc_game"), "embedded");
     assert.equal(normalizeRecipientDomain("https://www.jx3box.com/private", "pc_web"), "");
+});
+
+test("PC CommonHeader resolves query-first game_client and defaults every non-origin host to std", () => {
+    assert.equal(
+        resolvePcTrafficGameClient({ location: { hostname: "www.jx3box.com", search: "?client=origin" } }),
+        "origin"
+    );
+    assert.equal(
+        resolvePcTrafficGameClient({ location: { hostname: "origin.jx3box.com", search: "?client=std" } }),
+        "std"
+    );
+    assert.equal(
+        resolvePcTrafficGameClient({ location: { hostname: "origin.jx3box.com", search: "?client=all" } }),
+        "origin"
+    );
+    assert.equal(resolvePcTrafficGameClient({ location: { hostname: "localhost", search: "" } }), "std");
+    assert.equal(resolvePcTrafficGameClient({ location: { hostname: "localhost" } }), "std");
+    assert.equal(resolvePcTrafficGameClient({ location: { hostname: "other.jx3box.com" } }), "std");
 });
 
 test("headless opt-in emits the official Traffic fixture once and honors per-id ACK", async () => {

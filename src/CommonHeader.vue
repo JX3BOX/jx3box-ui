@@ -85,7 +85,14 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 import { getGlobalConfig } from "../service/header";
 import { getConfig, getMyAccountStatus } from "../service/cms";
 import { clearActiveAuthToken, refreshTokenIfNeeded } from "./utils/auth-token-refresh";
-import { checkClientStatOnVisible, installClientStatReporting } from "./utils/client-stat";
+import {
+    checkClientStatOnVisible,
+    ensureClientInstanceId,
+    installClientStatReporting,
+    resolveCurrentClientSurface,
+    resolveClientTrafficPermission,
+} from "./utils/client-stat";
+import { installCommonHeaderTrafficAnalytics } from "./utils/traffic-analytics";
 import User from "@jx3box/jx3box-common/js/user.js";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
@@ -105,7 +112,10 @@ export default {
         "header-box": box,
         "header-box2": box2,
     },
-    props: ["overlayEnable"],
+    props: {
+        overlayEnable: Boolean,
+        trafficEnabled: { type: Boolean, default: true },
+    },
     data: function () {
         return {
             isOverlay: false,
@@ -449,6 +459,22 @@ export default {
     created: function () {
         this.init();
         installClientStatReporting();
+        if (this.trafficEnabled) {
+            try {
+                installCommonHeaderTrafficAnalytics({
+                    router: this.$router,
+                    runtime: window,
+                    surface: resolveCurrentClientSurface(),
+                    instanceId: ensureClientInstanceId(),
+                    resolveTrafficPermission: resolveClientTrafficPermission,
+                    webVersion: window.__APP_VERSION__ || process.env.VUE_APP_VERSION || process.env.VITE_APP_VERSION || null,
+                }).catch(function () {
+                    // Traffic is fail-closed and must never affect the shared header or host page.
+                });
+            } catch (error) {
+                // Storage/privacy failures must not affect the shared header or host page.
+            }
+        }
         window.addEventListener("resize", this.updateScreen, { passive: true });
         document.addEventListener("visibilitychange", this.handleVisibilityChange);
 

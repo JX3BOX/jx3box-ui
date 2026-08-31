@@ -2,16 +2,22 @@ import { $cms } from "@jx3box/jx3box-common/js/api";
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import { applyJx3boxClientStatRules } from "./client-stat-business";
+import packageInfo from "../../package.json";
 
 const INSTANCE_ID_KEY = "jx3box:device_id";
 const REPORT_DATE_KEY = "jx3box:client-stat-report-date";
 const REPORT_SIGNATURE_KEY = "jx3box:client-stat-report-signature";
 const STAT_SDK_VERSION = "v0.0.2";
+const PACKAGE_VERSION = packageInfo.version;
+const WEB_VERSION = `jx3box-ui@${PACKAGE_VERSION}`;
 const STARTUP_DELAY_MIN = 3 * 1000;
 const STARTUP_DELAY_MAX = 15 * 1000;
 
 let reportTask = null;
 let scheduledTimer = null;
+let trafficPermission = null;
+let trafficPermissionCheckedAt = 0;
+const TRAFFIC_PERMISSION_MAX_AGE = 5 * 60 * 1000;
 
 function compactPayload(payload) {
     return Object.fromEntries(
@@ -97,6 +103,12 @@ function resolveClient(platform, userAgent) {
     return "unknown";
 }
 
+export function resolveCurrentClientSurface() {
+    const nav = window.navigator || {};
+    const userAgent = String(nav.userAgent || "");
+    return resolveClient(resolvePlatform(userAgent, nav.platform), userAgent);
+}
+
 function parseBrowser(userAgent) {
     const candidates = [
         ["Edge", /EdgA?[\s/]([\d.]+)/i],
@@ -141,10 +153,6 @@ function resolveDisplayMode() {
     return "browser";
 }
 
-function resolveWebVersion() {
-    return window.__APP_VERSION__ || process.env.VUE_APP_VERSION || process.env.VITE_APP_VERSION || null;
-}
-
 export function buildClientStatPayload(instanceId) {
     const nav = window.navigator || {};
     const screen = window.screen || {};
@@ -165,7 +173,9 @@ export function buildClientStatPayload(instanceId) {
         platform: context.platform,
         domain: window.location.hostname,
         channel: resolveChannel(),
-        web_version: resolveWebVersion(),
+        app_version: "jx3box-ui",
+        app_build: PACKAGE_VERSION,
+        web_version: WEB_VERSION,
         sdk_version: STAT_SDK_VERSION,
 
         os_name: system.os_name,
@@ -208,7 +218,7 @@ export function buildClientStatPayload(instanceId) {
 
 function getReportSignature() {
     const uid = User.isLogin() ? Number(User.getInfo()?.uid || localStorage.getItem("uid") || 0) : 0;
-    return `${uid}:${resolveWebVersion() || "unknown"}`;
+    return `${uid}:${WEB_VERSION}`;
 }
 
 export async function reportClientStat({ force = false } = {}) {
@@ -238,6 +248,24 @@ export async function reportClientStat({ force = false } = {}) {
     });
 
     return reportTask;
+}
+
+export async function resolveClientTrafficPermission({ force = false } = {}) {
+    if (!force && trafficPermission && Date.now() - trafficPermissionCheckedAt < TRAFFIC_PERMISSION_MAX_AGE) {
+        return trafficPermission;
+    }
+    try {
+        const result = await reportClientStat({ force: true });
+        const data = result?.data;
+        if (data && typeof data.traffic_allowed === "boolean") {
+            trafficPermission = data;
+            trafficPermissionCheckedAt = Date.now();
+            return data;
+        }
+    } catch (error) {
+        // Traffic remains fail-closed when heartbeat cannot confirm permission.
+    }
+    return null;
 }
 
 function isLocalhost() {

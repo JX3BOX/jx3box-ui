@@ -15,6 +15,27 @@ const DEFAULT_BATCH_ENDPOINT = "/api/cms/system/traffic/visits/batch";
 const DEFAULT_QUEUE_STORAGE_KEY = "jx3box:analytics:traffic:queue:v1";
 const DEFAULT_BLOCK_STORAGE_KEY = "jx3box:analytics:traffic:block:v1";
 const EMBEDDED_SURFACES = new Set(["app", "miniprogram", "pc_game", "mobile_game"]);
+const COMMON_HEADER_INSTALLATIONS = new WeakMap();
+const COMMON_HEADER_TRAFFIC_PROJECT = "jx3box-ui";
+
+function queryValue(runtime, key) {
+    const location = (runtime && runtime.location) || {};
+    const sources = [location.search, String(location.hash || "").split("?")[1]];
+    for (const source of sources) {
+        if (!source) continue;
+        const value = new URLSearchParams(String(source).replace(/^\?/, "")).get(key);
+        if (value !== null) return value;
+    }
+    return "";
+}
+
+function resolvePcTrafficGameClient(runtime) {
+    const explicitClient = String(queryValue(runtime, "client") || "").toLowerCase();
+    if (explicitClient === "std" || explicitClient === "origin") return explicitClient;
+    const hostname = String(runtime?.location?.hostname || "").toLowerCase();
+    if (hostname === "origin.jx3box.com") return "origin";
+    return "std";
+}
 
 function safeReason(value, fallback) {
     const reason = String(value || fallback || "traffic_disabled")
@@ -432,12 +453,52 @@ function createJx3boxTrafficAnalytics(options) {
     return api;
 }
 
+function installCommonHeaderTrafficAnalytics(options) {
+    const settings = options || {};
+    const router = settings.router;
+    if (!router || typeof router.afterEach !== "function") return Promise.resolve(null);
+    if (router.__jx3boxAnalyticsRouterOwner__) return Promise.resolve(null);
+    const existing = COMMON_HEADER_INSTALLATIONS.get(router);
+    if (existing) return existing;
+
+    const runtime = settings.runtime || (typeof window !== "undefined" ? window : {});
+    const surface = settings.surface || "pc_web";
+    if (surface !== "pc_web" && surface !== "mobile_web") return Promise.resolve(null);
+    const project = COMMON_HEADER_TRAFFIC_PROJECT;
+
+    const task = Promise.resolve(typeof router.isReady === "function" ? router.isReady() : undefined)
+        .then(function () {
+            const collector = createJx3boxTrafficAnalytics({
+                runtime,
+                router,
+                project,
+                product: "jx3box",
+                client: surface,
+                surface,
+                gameClient: function () { return resolvePcTrafficGameClient(runtime); },
+                platform: settings.platform || "web",
+                webVersion: settings.webVersion,
+                instanceId: settings.instanceId,
+                resolveTrafficPermission: settings.resolveTrafficPermission,
+            });
+            return collector.init().then(function () { return collector; });
+        })
+        .catch(function (error) {
+            COMMON_HEADER_INSTALLATIONS.delete(router);
+            throw error;
+        });
+    COMMON_HEADER_INSTALLATIONS.set(router, task);
+    return task;
+}
+
 export {
     DEFAULT_BATCH_ENDPOINT,
     DEFAULT_BLOCK_STORAGE_KEY,
     DEFAULT_CONFIG_ENDPOINT,
     DEFAULT_QUEUE_STORAGE_KEY,
     createJx3boxTrafficAnalytics,
+    installCommonHeaderTrafficAnalytics,
     normalizeRecipientDomain,
     normalizeTrafficPermission,
+    resolvePcTrafficGameClient,
 };

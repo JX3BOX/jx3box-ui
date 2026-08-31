@@ -12,11 +12,22 @@ function assert(condition, message) {
 
 assert(commonHeader.includes("installClientStatReporting()"), "CommonHeader should install client statistics");
 assert(
+    commonHeader.includes("installCommonHeaderTrafficAnalytics"),
+    "CommonHeader should automatically install the shared Traffic collector"
+);
+assert(
     commonHeader.includes("checkClientStatOnVisible()") && commonHeader.includes("visibilitychange"),
     "CommonHeader should retry statistics when the page becomes visible"
 );
 assert(clientStat.includes('const INSTANCE_ID_KEY = "jx3box:device_id"'), "PC should reuse the client instance id key");
 assert(clientStat.includes('product: "jx3box"'), "heartbeat should identify the JX3BOX product");
+assert(clientStat.includes('app_version: "jx3box-ui"'), "PC heartbeat should identify the shared header reporter");
+assert(clientStat.includes("app_build: PACKAGE_VERSION"), "PC heartbeat should report jx3box-ui package.json.version");
+assert(
+    clientStat.includes("const WEB_VERSION = `jx3box-ui@${PACKAGE_VERSION}`"),
+    "PC heartbeat should namespace its web version"
+);
+assert(clientStat.includes("web_version: WEB_VERSION"), "PC heartbeat should report the namespaced web version");
 assert(clientStat.includes('const STAT_SDK_VERSION = "v0.0.2"'), "statistics SDK version should remain explicit");
 assert(clientStat.includes('return "pc_web"'), "desktop browser traffic should report pc_web");
 assert(clientStat.includes('return "mobile_web"'), "mobile browsers visiting PC pages should report mobile_web");
@@ -29,10 +40,6 @@ assert(clientStatBusiness.includes('client: "mobile_game"'), "Jianghu Daily shou
 assert(
     clientStat.includes("/ArkWeb|HarmonyOS|OpenHarmony/i") && clientStat.includes('os_name: "OpenHarmony"'),
     "PC statistics should normalize OpenHarmony before reporting"
-);
-assert(
-    clientStat.includes("window.__APP_VERSION__ || process.env.VUE_APP_VERSION || process.env.VITE_APP_VERSION"),
-    "web version should use the shared app version fallback chain"
 );
 assert(!clientStat.includes("__JX3BOX_VERSION__"), "shared statistics must not depend on a JX3BOX-specific version global");
 assert(!clientStat.includes("VUE_APP_BUILD_VERSION"), "web version should not use the deprecated build-version fallback");
