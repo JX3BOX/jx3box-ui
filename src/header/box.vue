@@ -15,7 +15,7 @@
             <li v-for="(item, i) in list" :key="i" :class="{ 'u-app-start': item.lf }">
                 <a class="u-item" :href="item.href" :target="getTarget(item.href)">
                     <img class="u-pic" :src="getBoxIcon(item.img)" />
-                    <span class="u-txt">{{ item.abbr }}</span>
+                    <span class="u-txt" :title="item.abbr">{{ getDisplayName(item.abbr) }}</span>
                 </a>
             </li>
         </ul>
@@ -33,8 +33,8 @@ import Bus from "../../utils/bus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
 import box from "../../assets/data/box.json";
-import { getMenu } from "../../service/header.js";
 import { trimSlash } from "./utils";
+import { loadBoxMenu } from "./box-menu";
 
 const { __imgPath, __cdn } = JX3BOX;
 export default {
@@ -56,7 +56,7 @@ export default {
     },
     computed: {
         homeicon: function () {
-            return __imgPath + "image/box/home.svg";
+            return __cdn + "logo/logo-dark/home.svg";
         },
         homeicon_hover: function () {
             return __imgPath + "image/box/home_on.svg";
@@ -66,7 +66,8 @@ export default {
         },
         list: function () {
             return this.data.filter((item) => {
-                return item.status && (item.client == this.client || item.client == "all");
+                const visible = item.status == null || !!item.status;
+                return visible && this.matchedClient(item.client);
             });
         },
         prefix: function () {
@@ -78,12 +79,24 @@ export default {
             Bus.emit("toggleBox", false);
         },
         matchedClient: function (client) {
-            return client == "all" ? true : client == this.client;
+            const clients = Array.isArray(client)
+                ? client
+                : String(client || "")
+                      .split(",")
+                      .map((item) => item.trim())
+                      .filter(Boolean);
+            return !clients.length || clients.includes("all") || clients.includes(this.client);
         },
         getBoxIcon: function (val) {
             val = val && val?.replace(".png", ".svg");
-            let web_url = __cdn + "logo/logo-light/" + val;
+            let web_url = __cdn + "logo/logo-dark/" + val;
             return web_url;
+        },
+        getDisplayName: function (name) {
+            const chars = Array.from(String(name || "").trim());
+            if (chars.length === 5) return chars.slice(0, 3).join("");
+            if (chars.length === 4) return chars.slice(0, 2).join("");
+            return chars.join("");
         },
         getTarget: function (val) {
             if (window.innerWidth < 768 || val?.startsWith("/")) {
@@ -93,20 +106,9 @@ export default {
             }
         },
         loadMenu() {
-            try {
-                const _box = JSON.parse(sessionStorage.getItem("box"));
-                if (_box) {
-                    this.data = _box;
-                } else {
-                    getMenu("box").then((res) => {
-                        this.data = res.data?.data?.val;
-                        sessionStorage.setItem("box", JSON.stringify(this.data));
-                    });
-                }
-            } catch (e) {
-                this.data = box;
-                console.log("loadBox error", e);
-            }
+            loadBoxMenu(box).then((data) => {
+                this.data = data;
+            });
         },
         trimSlash(link) {
             return trimSlash(`${this.prefix}:${link}`);
