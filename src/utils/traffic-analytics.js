@@ -10,8 +10,8 @@ import {
     installVueRouterAnalytics,
 } from "@jx3box/jx3box-common/js/analytics.js";
 
-const DEFAULT_CONFIG_ENDPOINT = "/api/cms/system/traffic/config";
-const DEFAULT_BATCH_ENDPOINT = "/api/cms/system/traffic/visits/batch";
+const DEFAULT_CONFIG_ENDPOINT = "https://cms.jx3box.com/api/cms/system/traffic/config";
+const DEFAULT_BATCH_ENDPOINT = "https://cms.jx3box.com/api/cms/system/traffic/visits/batch";
 const DEFAULT_QUEUE_STORAGE_KEY = "jx3box:analytics:traffic:queue:v1";
 const DEFAULT_BLOCK_STORAGE_KEY = "jx3box:analytics:traffic:block:v1";
 const EMBEDDED_SURFACES = new Set(["app", "miniprogram", "pc_game", "mobile_game"]);

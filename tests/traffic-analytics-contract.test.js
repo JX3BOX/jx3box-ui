@@ -271,7 +271,7 @@ test("headless opt-in emits the official Traffic fixture once and honors per-id 
         ids: [fixture.canonical_event.page_view_id, fixture.canonical_event.event_id],
         async fetch(url, options) {
             requests.push({ url, options: options || {} });
-            if (String(url).startsWith("/api/cms/system/traffic/config")) {
+            if (String(url).startsWith("https://cms.jx3box.com/api/cms/system/traffic/config")) {
                 return createResponse(200, {
                     code: 0,
                     data: {
@@ -348,7 +348,7 @@ test("headless opt-in emits the official Traffic fixture once and honors per-id 
     await waitForRouter();
 
     assert.equal(requests.length, 1, "navigation should request config but defer Traffic until finalization");
-    assert.match(requests[0].url, /^\/api\/cms\/system\/traffic\/config\?/);
+    assert.match(requests[0].url, /^https:\/\/cms\.jx3box\.com\/api\/cms\/system\/traffic\/config\?/);
     assert.equal(requests[0].url.includes("must-stay-local"), false);
     assert.equal(requests[0].url.includes("section=home"), false);
     assert.equal(traffic.getState().analytics.queue.pending, 1);
@@ -422,7 +422,7 @@ test("embedded hosts use the backend recipient domain in both Config and envelop
     const runtime = createRuntime({
         async fetch(url, options) {
             requests.push({ url, options: options || {} });
-            if (String(url).startsWith("/api/cms/system/traffic/config")) {
+            if (String(url).startsWith("https://cms.jx3box.com/api/cms/system/traffic/config")) {
                 return createResponse(200, {
                     code: 0,
                     data: {
@@ -485,7 +485,7 @@ test("an explicit unknown permission pauses in memory until the host unblocks", 
         localStorage,
         async fetch(url, options) {
             requests.push({ url, options: options || {} });
-            if (String(url).startsWith("/api/cms/system/traffic/config")) {
+            if (String(url).startsWith("https://cms.jx3box.com/api/cms/system/traffic/config")) {
                 return createResponse(200, {
                     code: 0,
                     data: {
@@ -545,7 +545,7 @@ test("an explicit unknown permission pauses in memory until the host unblocks", 
         "unknown state is not a persistent device block"
     );
     await traffic.flush({ reason: "permission_unknown" });
-    assert.equal(requests.filter((request) => request.url === "/api/cms/system/traffic/visits/batch").length, 0);
+    assert.equal(requests.filter((request) => request.url === "https://cms.jx3box.com/api/cms/system/traffic/visits/batch").length, 0);
 
     assert.deepEqual(traffic.unblock(), { known: true, allow: true });
     assert.equal(traffic.getState().analytics.queue.blocked, false);
@@ -822,7 +822,7 @@ test("a trusted server ACK block is persisted before the queue is cleared", asyn
     const runtime = createRuntime({
         localStorage,
         async fetch(url, options) {
-            if (String(url).startsWith("/api/cms/system/traffic/config")) {
+            if (String(url).startsWith("https://cms.jx3box.com/api/cms/system/traffic/config")) {
                 return createResponse(200, {
                     code: 0,
                     data: {
@@ -889,7 +889,7 @@ test("the Traffic-only Journal never consumes or rewrites a shared Tracking Jour
         runtime: createRuntime({
             localStorage,
             async fetch(url, options) {
-                if (String(url).startsWith("/api/cms/system/traffic/config")) {
+                if (String(url).startsWith("https://cms.jx3box.com/api/cms/system/traffic/config")) {
                     return createResponse(200, {
                         code: 0,
                         data: {
