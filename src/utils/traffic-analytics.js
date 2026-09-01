@@ -18,6 +18,106 @@ const EMBEDDED_SURFACES = new Set(["app", "miniprogram", "pc_game", "mobile_game
 const COMMON_HEADER_INSTALLATIONS = new WeakMap();
 const COMMON_HEADER_TRAFFIC_PROJECT = "jx3box-ui";
 
+function normalizeRoutePath(value) {
+    let path = String(value || "")
+        .split(/[?#]/, 1)[0]
+        .trim();
+    if (!path) return "";
+    if (!path.startsWith("/")) path = `/${path}`;
+    path = path.replace(/\/{2,}/g, "/");
+    return path.length > 1 ? path.replace(/\/+$/, "") : path;
+}
+
+function normalizeVueRouteTemplate(value) {
+    const path = normalizeRoutePath(value);
+    if (!path || path === "/") return path;
+    return `/${path
+        .slice(1)
+        .split("/")
+        .map(function (segment) {
+            if (!segment.startsWith(":")) return segment;
+            const name = segment.slice(1).match(/^[A-Za-z_][A-Za-z0-9_]*/)?.[0];
+            if (!name) return segment;
+            // Backend rules own parameter validation. Vue Router custom regexes
+            // such as :id(\d+) are local matching details and must normalize to
+            // the registered cross-client template :id.
+            return `:${name}${segment.endsWith("?") ? "?" : ""}`;
+        })
+        .join("/")}`;
+}
+
+function routeTemplate(route) {
+    const source = route || {};
+    const meta = source.meta && typeof source.meta === "object" ? source.meta : {};
+    const analytics = meta.analytics && typeof meta.analytics === "object" ? meta.analytics : {};
+    const matched = Array.isArray(source.matched) ? source.matched : [];
+    const record = matched.length ? matched[matched.length - 1] : null;
+    return normalizeVueRouteTemplate(
+        analytics.route_pattern || analytics.routePattern || (record && record.path) || source.path || ""
+    );
+}
+
+function routerBase(router) {
+    return normalizeRoutePath(router?.options?.history?.base || router?.history?.base || "/") || "/";
+}
+
+function resolveAbsoluteRoutePattern(router, route, runtime) {
+    const pattern = routeTemplate(route);
+    if (!pattern) return "";
+    const base = routerBase(router);
+    if (base === "/" || pattern === base || pattern.startsWith(`${base}/`)) return pattern;
+
+    // Multi-entry PC projects mount their Router below paths such as /macro or /pet.
+    // Vue Router exposes only / and /:id inside that base, so retain the route
+    // template while restoring its public prefix. location.pathname is used only
+    // to verify that this Router currently owns the browser path; real IDs never
+    // replace the template or enter the long-term page key.
+    const pathname = normalizeRoutePath(runtime?.location?.pathname || "");
+    if (pathname && pathname !== base && !pathname.startsWith(`${base}/`)) return pattern;
+    return pattern === "/" ? base : `${base}${pattern}`;
+}
+
+function createAbsoluteRouteRouter(router, runtime) {
+    if (!router || typeof router.afterEach !== "function") return router;
+    const adaptRoute = function (route) {
+        if (!route) return route;
+        const routePattern = resolveAbsoluteRoutePattern(router, route, runtime);
+        if (!routePattern) return route;
+        const meta = route.meta && typeof route.meta === "object" ? route.meta : {};
+        const analytics = meta.analytics && typeof meta.analytics === "object" ? meta.analytics : {};
+        return Object.assign({}, route, {
+            meta: Object.assign({}, meta, {
+                analytics: Object.assign({}, analytics, { route_pattern: routePattern }),
+            }),
+        });
+    };
+    const adapter = Object.create(router);
+    adapter.afterEach = function (handler) {
+        return router.afterEach(function (to, from, failure) {
+            return handler(adaptRoute(to), adaptRoute(from), failure);
+        });
+    };
+    if (typeof router.isReady === "function") adapter.isReady = router.isReady.bind(router);
+    const currentRoute = router.currentRoute;
+    if (currentRoute && typeof currentRoute === "object" && "value" in currentRoute) {
+        adapter.currentRoute = {};
+        Object.defineProperty(adapter.currentRoute, "value", {
+            enumerable: true,
+            get: function () {
+                return adaptRoute(currentRoute.value);
+            },
+        });
+    } else {
+        Object.defineProperty(adapter, "currentRoute", {
+            enumerable: true,
+            get: function () {
+                return adaptRoute(router.currentRoute);
+            },
+        });
+    }
+    return adapter;
+}
+
 function queryValue(runtime, key) {
     const location = (runtime && runtime.location) || {};
     const sources = [location.search, String(location.hash || "").split("?")[1]];
@@ -465,12 +565,13 @@ function installCommonHeaderTrafficAnalytics(options) {
     const surface = settings.surface || "pc_web";
     if (surface !== "pc_web" && surface !== "mobile_web") return Promise.resolve(null);
     const project = COMMON_HEADER_TRAFFIC_PROJECT;
+    const analyticsRouter = createAbsoluteRouteRouter(router, runtime);
 
     const task = Promise.resolve(typeof router.isReady === "function" ? router.isReady() : undefined)
         .then(function () {
             const collector = createJx3boxTrafficAnalytics({
                 runtime,
-                router,
+                router: analyticsRouter,
                 project,
                 product: "jx3box",
                 client: surface,
@@ -497,8 +598,10 @@ export {
     DEFAULT_CONFIG_ENDPOINT,
     DEFAULT_QUEUE_STORAGE_KEY,
     createJx3boxTrafficAnalytics,
+    createAbsoluteRouteRouter,
     installCommonHeaderTrafficAnalytics,
     normalizeRecipientDomain,
     normalizeTrafficPermission,
     resolvePcTrafficGameClient,
+    resolveAbsoluteRoutePattern,
 };

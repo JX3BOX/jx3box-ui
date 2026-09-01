@@ -24,10 +24,12 @@ const { createEventQueue, createQueueStorage, createTrafficSink } = require("@jx
 const {
     DEFAULT_BLOCK_STORAGE_KEY,
     DEFAULT_QUEUE_STORAGE_KEY,
+    createAbsoluteRouteRouter,
     createJx3boxTrafficAnalytics,
     normalizeRecipientDomain,
     normalizeTrafficPermission,
     resolvePcTrafficGameClient,
+    resolveAbsoluteRoutePattern,
 } = require("../src/utils/traffic-analytics.js");
 const trafficSource = fs.readFileSync(path.resolve(__dirname, "../src/utils/traffic-analytics.js"), "utf8");
 
@@ -90,6 +92,39 @@ function createRouter() {
         },
     };
 }
+
+test("CommonHeader restores a multi-entry Router base without exposing real path IDs", () => {
+    const router = createRouter();
+    router.options = { history: { base: "/macro/" } };
+    const runtime = { location: { pathname: "/macro/123" } };
+    const detail = {
+        name: "single",
+        matched: [{ path: "/:id(\\d+)" }],
+        meta: {},
+        params: { id: "123" },
+    };
+    assert.equal(resolveAbsoluteRoutePattern(router, detail, runtime), "/macro/:id");
+    assert.equal(resolveAbsoluteRoutePattern(router, { matched: [{ path: "/" }], meta: {} }, runtime), "/macro");
+
+    const adapted = createAbsoluteRouteRouter(router, runtime);
+    let received = null;
+    adapted.afterEach((to) => {
+        received = to;
+    });
+    router.navigate(detail);
+    assert.equal(received.meta.analytics.route_pattern, "/macro/:id");
+    assert.equal(received.meta.analytics.route_pattern.includes("123"), false);
+});
+
+test("CommonHeader does not duplicate an already absolute route template", () => {
+    const router = createRouter();
+    router.options = { history: { base: "/pet" } };
+    const runtime = { location: { pathname: "/pet/456" } };
+    assert.equal(
+        resolveAbsoluteRoutePattern(router, { matched: [{ path: "/pet/:id" }], meta: {} }, runtime),
+        "/pet/:id"
+    );
+});
 
 function createRuntime(options) {
     const settings = options || {};
