@@ -22,8 +22,7 @@
 </template>
 
 <script>
-import * as utilModule from "@jx3box/jx3box-common/js/utils";
-const { getMedalLink } = utilModule;
+import { getMedalLink } from "@jx3box/jx3box-common/js/utils";
 import { getUserMedals } from "../../service/author";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";

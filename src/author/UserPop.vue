@@ -52,8 +52,7 @@
 </template>
 
 <script>
-import * as utilModule from "@jx3box/jx3box-common/js/utils";
-const { showAvatar } = utilModule;
+import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { getUserInfoByUidOrName } from "../../service/author";
 import i18nMixin from "../../i18n/mixin";
 export default {

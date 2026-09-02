@@ -70,8 +70,7 @@
 
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
-import * as utilModule from "@jx3box/jx3box-common/js/utils";
-const { authorLink } = utilModule;
+import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import { getUserInfo } from "../../service/author";
 import Avatar from "./Avatar.vue";

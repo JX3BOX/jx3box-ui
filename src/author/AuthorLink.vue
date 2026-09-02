@@ -33,8 +33,7 @@
 </template>
 
 <script>
-import * as utilModule from "@jx3box/jx3box-common/js/utils";
-const { tvLink } = utilModule;
+import { tvLink } from "@jx3box/jx3box-common/js/utils";
 import i18nMixin from "../../i18n/mixin";
 
 export default {

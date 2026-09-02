@@ -20,8 +20,7 @@
 </template>
 
 <script>
-import * as utilModule from "@jx3box/jx3box-common/js/utils";
-const { getLink } = utilModule;
+import { getLink } from "@jx3box/jx3box-common/js/utils";
 import { getCollection } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
 export default {

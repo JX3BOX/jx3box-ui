@@ -152,8 +152,7 @@
 
 <script>
 import Uploader from "./Upload.vue";
-import * as utilModule from "@jx3box/jx3box-common/js/utils";
-const { resolveImagePath } = utilModule;
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import { formatContent } from "../../utils/emotion";
 import Emotion from "@jx3box/jx3box-emotion/src/Emotion2.vue";
 import i18nMixin from "../../i18n/mixin";

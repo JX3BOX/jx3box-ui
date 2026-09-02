@@ -65,7 +65,7 @@ export default {
                     href: "",
                     icon: require('../../assets/img/common/wechat.svg'),
                     qrcode: require('../../assets/img/common/mp.jpg'),
-                    label: "剑三魔盒",
+                    label: "剑网3魔盒",
                 },
                 {
                     name: "B站",
