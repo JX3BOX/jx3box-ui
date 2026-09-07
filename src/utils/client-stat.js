@@ -7,7 +7,7 @@ import packageInfo from "../../package.json";
 const INSTANCE_ID_KEY = "jx3box:device_id";
 const REPORT_DATE_KEY = "jx3box:client-stat-report-date";
 const REPORT_SIGNATURE_KEY = "jx3box:client-stat-report-signature";
-const STAT_SDK_VERSION = "v0.0.2";
+const STAT_SDK_VERSION = "v0.0.3";
 const PACKAGE_VERSION = packageInfo.version;
 const WEB_VERSION = `jx3box-ui@${PACKAGE_VERSION}`;
 const STARTUP_DELAY_MIN = 3 * 1000;

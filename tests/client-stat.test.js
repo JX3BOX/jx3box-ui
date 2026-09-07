@@ -28,7 +28,7 @@ assert(
     "PC heartbeat should namespace its web version"
 );
 assert(clientStat.includes("web_version: WEB_VERSION"), "PC heartbeat should report the namespaced web version");
-assert(clientStat.includes('const STAT_SDK_VERSION = "v0.0.2"'), "statistics SDK version should remain explicit");
+assert(clientStat.includes('const STAT_SDK_VERSION = "v0.0.3"'), "statistics SDK version should remain explicit");
 assert(clientStat.includes('return "pc_web"'), "desktop browser traffic should report pc_web");
 assert(clientStat.includes('return "mobile_web"'), "mobile browsers visiting PC pages should report mobile_web");
 assert(

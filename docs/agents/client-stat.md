@@ -3,7 +3,7 @@
 `CommonHeader` 为引用公共头的普通 PC 项目接入新版客户端实例 heartbeat。
 
 - 接口：`POST /api/cms/system/stat/heartbeat`。
-- SDK 版本：当前固定为 `v0.0.2`，只在统计组件协议升级时调整。
+- SDK 版本：当前固定为 `v0.0.3`，只在统计组件协议升级时调整。
 - 实例 ID：复用本地 `jx3box:device_id` 随机 UUID；不使用硬件指纹。
 - 普通桌面浏览器为 `client=pc_web`；手机浏览器访问 PC 页面为 `client=mobile_web`。
 - 小程序和 App 容器按统一客户端枚举识别；游戏内页面的 `pc_game/mobile_game` 由对应页面以后主动指定，不在公共头推断。
