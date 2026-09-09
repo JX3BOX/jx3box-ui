@@ -18,7 +18,7 @@ require("@babel/register")({
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const { test } = require("node:test");
-const fixture = require("@jx3box/jx3box-common/docs/fixtures/analytics-dual-sink-v1.json");
+const fixture = require("./fixtures/analytics-dual-sink-v1.json");
 const SHARED_ANALYTICS_QUEUE_STORAGE_KEY = "jx3box:analytics:queue:v1";
 const { createEventQueue, createQueueStorage, createTrafficSink } = require("@jx3box/jx3box-common/js/analytics.js");
 const {
