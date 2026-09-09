@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-ui",
-    "version": "2.4.10",
+    "version": "2.4.11",
     "description": "JX3BOX Vue3 UI",
     "main": "index.js",
     "scripts": {
@@ -34,8 +34,8 @@
     },
     "dependencies": {
         "@element-plus/icons-vue": "^2.3.2",
-        "@jx3box/jx3box-common": "^9.5.8",
-        "@jx3box/jx3box-data": "^3.9.8",
+        "@jx3box/jx3box-common": "^9.5.9",
+        "@jx3box/jx3box-data": "^3.9.9",
         "@jx3box/jx3box-editor": "^3.2.13",
         "@jx3box/jx3box-emotion": "^1.3.2",
         "@jx3box/jx3box-macro": "^1.0.4",
