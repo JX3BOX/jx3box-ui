@@ -20,20 +20,22 @@
                             <th>{{ $jx3boxT('jx3boxUi.wikiRevisions.remark', '修订说明') }}</th>
                         </tr>
                     </thead>
+                    <tbody>
                     <tr class="history" v-for="(ver, key) in versions" :key="key">
-                        <td>
+                        <td :data-label="$jx3boxT('jx3boxUi.wikiRevisions.version', '版本')">
                             <a
                                 :href="link(type, `${ver.source_id}/${ver.id}`)"
                                 v-text="'v' + (versions.length - key)"
                                 @click="redirectRevision(ver, $event)"
                             ></a>
                         </td>
-                        <td v-text="ts2str(ver.updated)"></td>
-                        <td>
+                        <td :data-label="$jx3boxT('jx3boxUi.wikiPanel.updatedAt', '更新时间')" v-text="ts2str(ver.updated)"></td>
+                        <td :data-label="$jx3boxT('jx3boxUi.wikiRevisions.contributor', '贡献者')">
                             <a :href="ver.user_id ? author_url(ver.user_id) : null" v-text="ver.user_nickname"></a>
                         </td>
-                        <td v-text="ver.remark"></td>
+                        <td :data-label="$jx3boxT('jx3boxUi.wikiRevisions.remark', '修订说明')" v-text="ver.remark"></td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         </template>

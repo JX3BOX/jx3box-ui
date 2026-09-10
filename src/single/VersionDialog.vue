@@ -56,17 +56,16 @@
                 </div>
             </div>
             <div v-if="type === 'code'" class="m-content-container">
-                <code-diff
+                <ResponsiveCodeDiff
                     class="m-content-view"
                     :old-string="content1"
                     :new-string="content2"
                     :context="1024"
-                    output-format="side-by-side"
                     maxHeight="520px"
                     :filename="`${content1Len}字`"
                     :newFilename="`${content2Len}字`"
                     ignoreMatchingLines="data:image/png;base64,"
-                ></code-diff>
+                ></ResponsiveCodeDiff>
             </div>
         </div>
     </el-dialog>
@@ -75,11 +74,11 @@
 <script>
 import { getCommitByHash } from "../../service/commit-history";
 import Article from "@jx3box/jx3box-editor/src/Article.vue";
-import { CodeDiff } from "v-code-diff";
+import ResponsiveCodeDiff from "../wiki/ResponsiveCodeDiff.vue";
 export default {
     name: "VersionDialog",
     components: {
-        CodeDiff,
+        ResponsiveCodeDiff,
         Article,
     },
     props: {
@@ -234,6 +233,14 @@ export default {
         .m-content-view {
             margin: 0;
         }
+    }
+}
+@media screen and (max-width: 720px) {
+    .m-version-contrast-dialog {
+        .m-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
+        .m-toolbar .m-select { flex-direction: column; gap: 10px; }
+        .m-content-container { flex-direction: column; max-height: none; overflow: visible; }
+        .m-content-container .u-content { min-width: 0; width: 100%; height: auto; }
     }
 }
 </style>

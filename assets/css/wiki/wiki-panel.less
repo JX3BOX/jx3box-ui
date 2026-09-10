@@ -407,3 +407,12 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 720px) {
+    .c-wiki-panel.is-surface > .m-panel-body > .m-wiki-metas {
+        .u-meta { max-width: 100%; flex-wrap: wrap; gap: 6px; }
+        .u-label { flex-shrink: 0; margin-right: 2px; white-space: nowrap; }
+        .u-creator { margin-right: 0; }
+        .u-value:not(.u-creator) { min-width: 0; overflow-wrap: anywhere; }
+    }
+}

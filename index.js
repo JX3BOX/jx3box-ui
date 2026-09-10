@@ -96,3 +96,5 @@ export {
     setJx3boxUiLocale,
     createJx3boxTrafficAnalytics,
 };
+
+export { default as ResponsiveCodeDiff } from "./src/wiki/ResponsiveCodeDiff.vue";
