@@ -265,6 +265,7 @@ export default {
         success: "操作成功",
     },
     boxcoinRecords: {
+        time: "時間",
         participant: "參與打賞",
         author: "收益作者",
         boxcoin: "盒幣",

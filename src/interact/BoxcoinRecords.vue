@@ -1,16 +1,16 @@
 <template>
-    <div class="w-boxcoin-records" v-loading="loading">
+    <div class="w-boxcoin-records" :class="{ 'is-admin': isSuperAdmin }" v-loading="loading">
         <div class="w-boxcoin-records-list" v-if="list && list.length">
             <ul class="u-list">
                 <li class="u-item u-head">
                     <span class="u-meta u-action">
                         <el-icon><Trophy /></el-icon>
                     </span>
-                    <span class="u-meta u-user">{{ $jx3boxT("jx3boxUi.boxcoinRecords.participant", "参与打赏") }}</span>
-                    <span class="u-meta u-user">{{ $jx3boxT("jx3boxUi.boxcoinRecords.author", "收益作者") }}</span>
+                    <span class="u-meta u-user u-participant">{{ $jx3boxT("jx3boxUi.boxcoinRecords.participant", "参与打赏") }}</span>
+                    <span class="u-meta u-user u-author">{{ $jx3boxT("jx3boxUi.boxcoinRecords.author", "收益作者") }}</span>
                     <span class="u-meta u-count">{{ $jx3boxT("jx3boxUi.boxcoinRecords.boxcoin", "盒币") }}</span>
                     <span class="u-meta u-remark">{{ $jx3boxT("jx3boxUi.boxcoinRecords.remark", "寄语") }}</span>
-                    <time class="u-meta u-time"></time>
+                    <span class="u-meta u-time">{{ $jx3boxT("jx3boxUi.boxcoinRecords.time", "时间") }}</span>
                 </li>
                 <li v-for="(item, i) in list" :key="i" class="u-item u-body">
                     <span class="u-meta u-action">
@@ -22,18 +22,18 @@
                         </template>
                     </span>
                     <template v-if="item.ext_operate_user_info?.id == 1">
-                        <span class="u-meta u-user u-default">
+                        <span class="u-meta u-user u-participant u-default">
                             <img class="u-user-avatar" :src="showAvatar(item.ext_operate_user_info.avatar)" alt />
                             <span>{{ $jx3boxT("jx3boxUi.boxcoinRecords.system", "系统") }}</span>
                         </span>
                     </template>
-                    <a v-else class="u-meta u-user" :href="authorLink(item.operate_user_id)" target="_blank">
+                    <a v-else class="u-meta u-user u-participant" :href="authorLink(item.operate_user_id)" target="_blank">
                         <img class="u-user-avatar" :src="showAvatar(item.ext_operate_user_info.avatar)" alt />
-                        <span>{{ item.ext_operate_user_info.display_name }}</span>
+                        <span :title="item.ext_operate_user_info.display_name">{{ item.ext_operate_user_info.display_name }}</span>
                     </a>
-                    <a class="u-meta u-user" :href="authorLink(item.user_id)" target="_blank">
+                    <a class="u-meta u-user u-author" :data-label="$jx3boxT('jx3boxUi.boxcoinRecords.author', '收益作者')" :href="authorLink(item.user_id)" target="_blank">
                         <img class="u-user-avatar" :src="showAvatar(item.ext_user_info.avatar)" alt />
-                        <span>{{ item.ext_user_info.display_name }}</span>
+                        <span :title="item.ext_user_info.display_name">{{ item.ext_user_info.display_name }}</span>
                     </a>
                     <span class="u-meta u-count">
                         +
@@ -41,9 +41,11 @@
                     </span>
                     <span class="u-meta u-remark">{{ item.remark }}</span>
                     <time class="u-meta u-time">{{ showTime(item.created_at) }}</time>
-                    <span class="u-delete" v-if="isSuperAdmin" @click="recovery(item, i)">
-                        <i class="Delete"></i>{{ $jx3boxT("jx3boxUi.boxcoinRecords.revoke", "撤销") }}
-                        (<span class="u-client">{{ item.client }}</span>)
+                    <span class="u-operations" v-if="isSuperAdmin">
+                        <button type="button" class="u-delete" @click="recovery(item, i)">
+                            {{ $jx3boxT("jx3boxUi.boxcoinRecords.revoke", "撤销") }}
+                        </button>
+                        <span class="u-client" v-if="item.client">({{ item.client }})</span>
                     </span>
                 </li>
             </ul>
@@ -189,15 +191,3 @@ export default {
     },
 };
 </script>
-
-
-<style lang="less">
-/* src/interact/BoxcoinRecords.vue */
-.w-boxcoin-records-pages{
-
-
-
-    .flex(x);
-    margin-top:5px;
-}
-</style>

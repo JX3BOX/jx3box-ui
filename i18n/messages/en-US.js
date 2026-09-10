@@ -265,6 +265,7 @@ export default {
         success: "Success",
     },
     boxcoinRecords: {
+        time: "Time",
         participant: "Sender",
         author: "Author",
         boxcoin: "BoxCoin",

@@ -265,6 +265,7 @@ export default {
         success: "Thành công",
     },
     boxcoinRecords: {
+        time: "Thời gian",
         participant: "Người tặng",
         author: "Tác giả nhận",
         boxcoin: "BoxCoin",
