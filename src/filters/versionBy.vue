@@ -1,5 +1,5 @@
 <template>
-    <div class="w-filter-version">
+    <div class="w-filter-version" :class="{ 'is-segmented': segmented }">
         <ul>
             <li class="u-client" :class="{on: version == ''}" @click="filter('')">
                 {{ $jx3boxT("jx3boxUi.versionBy.all", "双端") }}
@@ -21,6 +21,10 @@ export default {
     name: "versionBy",
     mixins: [i18nMixin],
     props: {
+        segmented: {
+            type: Boolean,
+            default: false,
+        },
         value: {
             type: [String, Number],
             default: "",
@@ -52,6 +56,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "./segmented-skin.less";
 /* src/filters/versionBy.vue */
 .w-filter-version {
     font-size: 0;
@@ -85,5 +90,8 @@ export default {
             border-color: var(--el-color-primary);
         }
     }
+}
+.w-filter-version.is-segmented {
+    .filter-segmented-skin();
 }
 </style>

@@ -67,7 +67,7 @@
 
                     <h2 class="m-title">客户端</h2>
                     <div class="m-block">
-                        <clientBy type="" />
+                        <clientBy type="" segmented/>
                         <versionBy value="" />
                     </div>
 

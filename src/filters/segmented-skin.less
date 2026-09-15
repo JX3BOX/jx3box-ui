@@ -1,0 +1,28 @@
+.filter-segmented-skin() {
+    ul {
+        padding: 3px;
+        background-color: #f1f2f5;
+        border-color: #eceef2;
+        border-radius: 6px;
+    }
+
+    li {
+        color: #606775;
+        padding: 3px 10px;
+        border-right: none;
+        border-radius: 4px;
+        transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+
+        &:hover {
+            background-color: #e8eaf0;
+            color: #5140c9;
+        }
+
+        &.on {
+            background-color: #fff;
+            color: #5140c9;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(31, 35, 48, 0.1);
+        }
+    }
+}

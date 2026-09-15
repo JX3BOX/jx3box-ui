@@ -1,5 +1,5 @@
 <template>
-    <div class="w-filter-client">
+    <div class="w-filter-client" :class="{ 'is-segmented': segmented }">
         <ul>
             <li class="u-client" :class="{on: client == ''}" @click="filter('')" v-if="clients">
                 {{ $jx3boxT("jx3boxUi.clientBy.all", "全部") }}
@@ -24,6 +24,10 @@ export default {
     mixins: [i18nMixin],
     emits: ["filter"],
     props: {
+        segmented: {
+            type: Boolean,
+            default: false,
+        },
         type: {
             type: String,
             default: "",
@@ -82,6 +86,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "./segmented-skin.less";
 /* src/filters/clientBy.vue */
 .w-filter-client {
     font-size: 0;
@@ -115,5 +120,8 @@ export default {
             border-color: var(--el-color-primary);
         }
     }
+}
+.w-filter-client.is-segmented {
+    .filter-segmented-skin();
 }
 </style>
