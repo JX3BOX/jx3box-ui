@@ -227,6 +227,7 @@ export {
     getCollection,
     getTopicBucket,
     getConfig,
+    getConfigFromGlobal as getHeaderConfig,
     getUserMeta,
     setUserMeta,
     refreshAuth,

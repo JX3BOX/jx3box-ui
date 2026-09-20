@@ -49,7 +49,7 @@
 import { getMenu } from "../../service/header";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import i18nMixin from "../../i18n/mixin";
-import { getConfig } from "../../service/cms";
+import { getHeaderConfig as getConfig } from "../../service/cms";
 // import manageIcon from "@/assets/img/components/common/header/manage.svg";
 const { __imgPath } = JX3BOX;
 const NOTICE_POP_KEY = "notice_pop";
@@ -177,7 +177,7 @@ export default {
                 return {
                     ...item,
                     link: noticeUrlConfig?.val || item.link,
-                    meta: noticeConfig?.val || item.meta,
+                    meta: noticeConfig?.val ?? "",
                 };
             });
         },

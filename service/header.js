@@ -3,45 +3,23 @@ import { $cms, $next } from "@jx3box/jx3box-common/js/api";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 
 const GLOBAL_CONFIG_STORAGE_KEY = "jx3box:global-config";
-const GLOBAL_CONFIG_TTL = 6 * 60 * 60 * 1000;
-let globalConfigCache = null;
 let globalConfigPending = null;
-let globalConfigRefreshPending = null;
-
-function getGlobalConfigUrl() {
-    const root = JX3BOX.__ossRoot || "https://cdn.jx3box.com/";
-    return `${root.replace(/\/?$/, "/")}config/global.json`;
-}
-
-function getNow() {
-    return Date.now ? Date.now() : new Date().getTime();
-}
 
 function readGlobalConfigStorage() {
-    if (typeof sessionStorage === "undefined") return null;
     try {
-        const raw = sessionStorage.getItem(GLOBAL_CONFIG_STORAGE_KEY);
-        if (!raw) return null;
-        const cache = JSON.parse(raw);
-        if (!cache?.data || !cache?.time) return null;
-        if (getNow() - cache.time > GLOBAL_CONFIG_TTL) return null;
-        return cache.data;
+        const config = JSON.parse(sessionStorage.getItem(GLOBAL_CONFIG_STORAGE_KEY));
+        // 旧格式 { time, data } 属于原来的六小时缓存，不再复用。
+        return config && typeof config === "object" && !Array.isArray(config) && !config.time && !config.data
+            ? config
+            : null;
     } catch (e) {
         return null;
     }
 }
 
-function writeGlobalConfigStorage(data) {
-    if (typeof sessionStorage === "undefined") return;
-    try {
-        sessionStorage.setItem(
-            GLOBAL_CONFIG_STORAGE_KEY,
-            JSON.stringify({
-                time: getNow(),
-                data,
-            })
-        );
-    } catch (e) {}
+function getGlobalConfigUrl() {
+    const root = JX3BOX.__ossRoot || "https://cdn.jx3box.com/";
+    return `${root.replace(/\/?$/, "/")}config/global.json`;
 }
 
 function getLetter() {
@@ -74,45 +52,26 @@ function getGames() {
     return axios.get(JX3BOX.__dataPath + "data/product/games.json");
 }
 
-// 获取全局配置
+// 标签页会话内复用配置，不设置时间有效期；网络请求仍遵循浏览器 HTTP 缓存。
 function getGlobalConfig({ force = false } = {}) {
-    if (force) {
-        if (!globalConfigRefreshPending) {
-            globalConfigRefreshPending = axios
-                .get(getGlobalConfigUrl())
-                .then((res) => {
-                    globalConfigCache = res.data || {};
-                    writeGlobalConfigStorage(globalConfigCache);
-                    return globalConfigCache;
-                })
-                .finally(() => {
-                    globalConfigRefreshPending = null;
-                });
-        }
-        return globalConfigRefreshPending;
+    if (!force) {
+        const config = readGlobalConfigStorage();
+        if (config) return Promise.resolve(config);
     }
-
-    if (globalConfigCache) return Promise.resolve(globalConfigCache);
-
-    const storageConfig = readGlobalConfigStorage();
-    if (storageConfig) {
-        globalConfigCache = storageConfig;
-        return Promise.resolve(globalConfigCache);
-    }
-
     if (!globalConfigPending) {
         globalConfigPending = axios
             .get(getGlobalConfigUrl())
             .then((res) => {
-                globalConfigCache = res.data || {};
-                writeGlobalConfigStorage(globalConfigCache);
-                return globalConfigCache;
+                const config = res.data || {};
+                try {
+                    sessionStorage.setItem(GLOBAL_CONFIG_STORAGE_KEY, JSON.stringify(config));
+                } catch (e) {}
+                return config;
             })
             .finally(() => {
                 globalConfigPending = null;
             });
     }
-
     return globalConfigPending;
 }
 

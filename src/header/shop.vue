@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getConfig } from "../../service/cms";
+import { getHeaderConfig as getConfig } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
 // import shopIcon from "@/assets/img/components/common/header/gift.svg";
 export default {

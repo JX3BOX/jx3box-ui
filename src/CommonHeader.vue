@@ -83,7 +83,7 @@ import miniprogram from "@jx3box/jx3box-common/data/miniprogram.json";
 
 // 数据
 import { getGlobalConfig } from "../service/header";
-import { getConfig, getMyAccountStatus } from "../service/cms";
+import { getHeaderConfig as getConfig, getMyAccountStatus } from "../service/cms";
 import { clearActiveAuthToken, refreshTokenIfNeeded } from "./utils/auth-token-refresh";
 import {
     checkClientStatOnVisible,

@@ -6,7 +6,7 @@
             placement="bottom"
             popper-class="c-header-tooltip"
         >
-            <a class="u-post u-vip" href="/vip/premium" @click="markPopRead">
+            <a class="u-post u-vip" href="/vip/premium" @click="markPopRead" @auxclick.middle="markPopRead">
                 <i class="u-icon u-icon-msg">
                     <i class="u-pop" style="display: none" v-show="pop"></i>
                     <!-- <vipIcon class="u-add" /> -->
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getConfig } from "../../service/cms";
+import { getHeaderConfig as getConfig } from "../../service/cms";
 import i18nMixin from "../../i18n/mixin";
 // import vipIcon from "@/assets/img/components/common/header/vip.svg";
 export default {
@@ -61,11 +61,24 @@ export default {
         },
     },
     mounted() {
+        window.addEventListener("storage", this.syncPopRead);
+        window.addEventListener("pageshow", this.syncPopRead);
+        window.addEventListener("focus", this.syncPopRead);
         if (this.configLoaded) {
             this.init();
         }
     },
+    beforeUnmount() {
+        window.removeEventListener("storage", this.syncPopRead);
+        window.removeEventListener("pageshow", this.syncPopRead);
+        window.removeEventListener("focus", this.syncPopRead);
+    },
     methods: {
+        syncPopRead() {
+            if (this.initialized) {
+                this.pop = this.shouldShowPop(this.popValue);
+            }
+        },
         async init() {
             if (this.initialized) return;
             /**
