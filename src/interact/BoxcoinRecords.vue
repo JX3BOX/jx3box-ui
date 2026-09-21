@@ -57,7 +57,7 @@
             :hide-on-single-page="true"
             :page-size="per"
             :total="total"
-            v-model="page"
+            v-model:current-page="page"
             center
         ></el-pagination>
     </div>
