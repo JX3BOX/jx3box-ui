@@ -15,7 +15,7 @@
             <li v-for="(item, i) in list" :key="i" :class="{ 'u-app-start': item.lf }">
                 <a class="u-item" :href="item.href" :target="getTarget(item.href)">
                     <img class="u-pic" :src="getBoxIcon(item.img)" />
-                    <span class="u-txt" :title="item.abbr">{{ getDisplayName(item.abbr) }}</span>
+                    <span class="u-txt" :title="item.abbr">{{ getDisplayName(item) }}</span>
                 </a>
             </li>
         </ul>
@@ -37,6 +37,12 @@ import { trimSlash } from "./utils";
 import { loadBoxMenu } from "./box-menu";
 
 const { __imgPath, __cdn } = JX3BOX;
+const shortNames = {
+    talent: "奇穴模拟",
+    talent2: "镇派模拟",
+    meridians: "经脉模拟",
+    topic: "资料片",
+};
 export default {
     name: "Box",
     mixins: [i18nMixin],
@@ -92,11 +98,8 @@ export default {
             let web_url = __cdn + "logo/logo-dark/" + val;
             return web_url;
         },
-        getDisplayName: function (name) {
-            const chars = Array.from(String(name || "").trim());
-            if (chars.length === 5) return chars.slice(0, 3).join("");
-            if (chars.length === 4) return chars.slice(0, 2).join("");
-            return chars.join("");
+        getDisplayName: function (item) {
+            return shortNames[item.uuid] || item.abbr;
         },
         getTarget: function (val) {
             if (window.innerWidth < 768 || val?.startsWith("/")) {
