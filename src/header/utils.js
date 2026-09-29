@@ -1,6 +1,7 @@
 import { ElNotification } from "element-plus";
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import searchMap from "./search_map.json";
+import { findBoxMenuLink } from "./box-menu";
 import { tGlobal } from "../../i18n";
 
 const { __Root } = JX3BOX;
@@ -77,8 +78,9 @@ export function dispatchEventStorage() {
 }
 
 // search 跳转公共函数
-export function searchJump({ searchValue, isPhone = false, client = "std", url }) {
+export function searchJump({ searchValue, isPhone = false, client = "std", url, menu = [] }) {
     searchValue = searchValue.trim().toLowerCase();
+    const menuLink = findBoxMenuLink(menu, searchValue, client);
 
     // 检查输入是否为纯数字
     if (/^\d+$/.test(searchValue)) {
@@ -90,10 +92,10 @@ export function searchJump({ searchValue, isPhone = false, client = "std", url }
         } else {
             window.location.href = targetUrl;
         }
-    } else if (searchMap[searchValue]) {
+    } else if (searchMap[searchValue] || menuLink) {
         // 如果是 searchMap 中的关键词，跳转到对应的 URL
         const target = isPhone ? "_self" : "_blank";
-        const targetUrl = searchMap[searchValue];
+        const targetUrl = searchMap[searchValue] || menuLink;
 
         if (target === "_blank") {
             window.open(targetUrl, "_blank");
