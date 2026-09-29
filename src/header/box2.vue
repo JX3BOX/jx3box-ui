@@ -17,7 +17,7 @@
                                 <div class="u-icon-wrap">
                                     <img class="u-pic" :src="getBoxIcon(item.img)" />
                                 </div>
-                                <span class="u-txt">{{ item.abbr }}</span>
+                                <span class="u-txt">{{ item.label || item.abbr }}</span>
                             </a>
                         </li>
                         <li v-if="list.length > 0">

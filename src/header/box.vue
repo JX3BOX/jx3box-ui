@@ -15,7 +15,7 @@
             <li v-for="(item, i) in list" :key="i" :class="{ 'u-app-start': item.lf }">
                 <a class="u-item" :href="item.href" :target="getTarget(item.href)">
                     <img class="u-pic" :src="getBoxIcon(item.img)" />
-                    <span class="u-txt" :title="item.abbr">{{ getDisplayName(item.abbr) }}</span>
+                    <span class="u-txt" :title="item.label || item.abbr">{{ item.abbr || item.label }}</span>
                 </a>
             </li>
         </ul>
@@ -91,12 +91,6 @@ export default {
             val = val && val?.replace(".png", ".svg");
             let web_url = __cdn + "logo/logo-dark/" + val;
             return web_url;
-        },
-        getDisplayName: function (name) {
-            const chars = Array.from(String(name || "").trim());
-            if (chars.length === 5) return chars.slice(0, 3).join("");
-            if (chars.length === 4) return chars.slice(0, 2).join("");
-            return chars.join("");
         },
         getTarget: function (val) {
             if (window.innerWidth < 768 || val?.startsWith("/")) {

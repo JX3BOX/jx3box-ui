@@ -77,6 +77,8 @@
         color: #666;
         .db;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .u-mark {
         color: #fff;
@@ -132,7 +134,8 @@
     }
 }
 
-@media screen and (max-width: @phone) {
+// The mobile box is selected at 768px in CommonHeader.vue.
+@media screen and (max-width: 768px) {
     .c-header-jx3box {
         padding-top: 16px;
         background: #1d2128;
@@ -140,9 +143,41 @@
     }
 
     .c-jx3box {
-        height: calc(100vh - @header-height);
         .u-list {
             border-top: none;
+        }
+        .u-item {
+            border-radius: 10px;
+            border-color: rgba(255, 255, 255, 0.08);
+            background: #292e37;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+
+            .u-txt {
+                color: #d4d7de;
+            }
+        }
+        .u-item:not(.u-doing):hover,
+        .u-item:not(.u-doing):active {
+            border-color: fade(@v4primary500, 55%);
+            background: fade(@v4primary500, 16%);
+            transform: translateY(-1px);
+        }
+        .u-close {
+            margin: 6px 16px 16px 0;
+            padding: 7px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #d4d7de;
+        }
+    }
+}
+
+@media screen and (max-width: @phone) {
+    .c-jx3box {
+        height: calc(100vh - @header-height);
+        .u-list {
             padding: 0 16px 18px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -164,33 +199,10 @@
             .size(68px);
             .auto(x);
             padding: 7px;
-            border-radius: 10px;
-            border-color: rgba(255, 255, 255, 0.08);
-            background: #292e37;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
 
             .u-pic {
                 .size(28px);
             }
-
-            .u-txt {
-                color: #d4d7de;
-            }
-        }
-        .u-item:not(.u-doing):hover,
-        .u-item:not(.u-doing):active {
-            border-color: fade(@v4primary500, 55%);
-            background: fade(@v4primary500, 16%);
-            transform: translateY(-1px);
-        }
-        .u-close {
-            margin: 6px 16px 16px 0;
-            padding: 7px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.06);
-            color: #d4d7de;
         }
         .u-app-start {
             clear: none;
@@ -206,6 +218,9 @@
             .size(60px);
             .u-pic {
                 .size(22px);
+            }
+            .u-txt {
+                font-size: 11px;
             }
         }
     }

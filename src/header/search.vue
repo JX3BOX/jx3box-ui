@@ -27,6 +27,8 @@
 <script>
 import JX3BOX from "@jx3box/jx3box-common/data/jx3box.json";
 import { searchJump } from "./utils";
+import { loadBoxMenu } from "./box-menu";
+import box from "../../assets/data/box.json";
 import i18nMixin from "../../i18n/mixin";
 // import searchIcon from "@/assets/img/components/common/header/search-key-slash.svg";
 export default {
@@ -37,6 +39,7 @@ export default {
     },
     data: function () {
         return {
+            menu: [],
             isPhone: window.innerWidth < 720 ? true : false,
             url: JX3BOX.__Root + "search",
             client: location.href.includes("origin") ? "origin" : "std",
@@ -54,10 +57,15 @@ export default {
                 isPhone: this.isPhone,
                 url: this.url,
                 client: this.client,
+                menu: this.menu,
             });
         },
     },
-    created: function () {},
+    created: function () {
+        loadBoxMenu(box).then((menu) => {
+            this.menu = menu;
+        });
+    },
 };
 </script>
 
