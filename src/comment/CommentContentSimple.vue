@@ -288,6 +288,7 @@ export default {
             font-size: 14px;
             img {
                 vertical-align: -3px;
+                display: inline-block;
             }
         }
     }
