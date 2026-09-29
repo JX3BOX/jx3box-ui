@@ -9,20 +9,19 @@
         <div class="u-tip">
             <slot></slot>
         </div>
-        <div class="u-input">
+        <form class="u-input" @submit.prevent="onSearch">
             <el-input
-                v-model.trim.lazy="search"
+                v-model.trim="search"
                 :placeholder="$jx3boxT('jx3boxUi.userPop.placeholder', '请输入用户 UID 或者昵称进行搜索')"
-                @keydown.enter="onSearch"
             >
                 <template #prepend>
                     <el-icon><Search /></el-icon>
                 </template>
             </el-input>
-            <el-button  class="u-search-btn" type="primary" @click="onSearch" :disabled="!search">{{
+            <el-button  class="u-search-btn" type="primary" native-type="submit" :disabled="!search">{{
                 $jx3boxT("jx3boxUi.userPop.search", "搜索")
             }}</el-button>
-        </div>
+        </form>
         <div class="u-preview" v-loading="loading">
             <template v-if="searched && status">
                 <a class="u-author" :href="'/author/' + userdata.ID" target="_blank">
