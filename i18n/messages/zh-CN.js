@@ -28,7 +28,7 @@ export default {
         view: "查看",
         profileCenter: "个人中心",
         publishCenter: "发布中心",
-        switchAlternate: "切换马甲",
+        switchAlternate: "切换账号",
         themeStyle: "主题风格",
         logout: "退出登录",
         roleManage: "我的角色",
@@ -60,14 +60,14 @@ export default {
         all: "全部",
 
         alternate: {
-            title: "切换马甲",
+            title: "切换账号",
             userNickname: "用户昵称：",
             lastLogin: "上次登录：",
             expired: "(已过期)",
-            expiredNeedRelogin: "该马甲已过期，请重新登录",
-            switchConfirm: "确定要切换到该马甲吗？",
-            deleteConfirm: "确定要删除该马甲吗？",
-            maxFive: "最多只能添加5个马甲",
+            expiredNeedRelogin: "该账号已过期，请重新登录",
+            switchConfirm: "确定要切换到该账号吗？",
+            deleteConfirm: "确定要删除该账号吗？",
+            maxFive: "最多只能添加5个账号",
         },
         nav: {
             index: "首页",

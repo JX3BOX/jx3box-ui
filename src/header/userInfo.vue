@@ -72,7 +72,7 @@
 
                     <el-button-group class="u-actions">
                         <a class="el-button el-button--default is-plain" @click="changeAlternate">{{
-                            $jx3boxT("jx3boxUi.commonHeader.switchAlternate", "切换马甲")
+                            $jx3boxT("jx3boxUi.commonHeader.switchAlternate", "切换账号")
                         }}</a>
                         <a class="el-button el-button--default is-plain" href="/dashboard/config">{{
                             $jx3boxT("jx3boxUi.commonHeader.config", "偏好设置")
@@ -218,7 +218,7 @@ export default {
                 .then(() => {
                     this.$emit("logout");
 
-                    // 清除马甲所有马甲信息
+                    // 清除所有账号信息
                     let keys = Object.keys(localStorage);
                     let alternate = keys.filter((key) => key.startsWith("jx3box-alternate-"));
 

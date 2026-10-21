@@ -94,6 +94,7 @@
 
 <script>
 import i18nMixin from "../../i18n/mixin";
+import { getCurrentClient, isLocalDevelopment } from "./client-switch";
 export default {
     name: "clientSwitch",
     mixins: [i18nMixin],
@@ -105,7 +106,7 @@ export default {
     },
     data: function () {
         return {
-            activeKey: this.defaultValue || (location.host.includes("origin") ? "origin" : "std"),
+            activeKey: this.defaultValue || getCurrentClient(),
             isMenuOpen: false,
         };
     },
@@ -136,17 +137,16 @@ export default {
         switchGame: function (target) {
             if (!target || (target !== "std" && target !== "origin")) return;
 
-            const currentPath = window.location.pathname;
-            const currentSearch = window.location.search;
-            const currentHash = window.location.hash;
-            const protocol = window.location.protocol;
-
-            const targetHost = target === "std" ? "www.jx3box.com" : "origin.jx3box.com";
-            const finalUrl = protocol + "//" + targetHost + currentPath + currentSearch + currentHash;
+            const url = new URL(window.location.href);
+            if (isLocalDevelopment()) {
+                url.searchParams.set("client", target);
+            } else {
+                url.host = target === "std" ? "www.jx3box.com" : "origin.jx3box.com";
+            }
 
             this.activeKey = target;
             this.closeMenu();
-            window.location.href = finalUrl;
+            window.location.href = url.href;
         },
     },
     mounted: function () {

@@ -4,7 +4,7 @@
         v-model="visible"
         custom-class="c-alternate"
         width="360px"
-        :title="$jx3boxT('jx3boxUi.commonHeader.alternate.title', '切换马甲')"
+        :title="$jx3boxT('jx3boxUi.commonHeader.alternate.title', '切换账号')"
     >
         <div class="c-alternate__content">
             <div
@@ -59,7 +59,7 @@ export default {
             alternate: [
                 // {
                 //     uid: 100,
-                //     name: "马甲1",
+                //     name: "账号1",
                 //     avatar: "https://avatar.jx3box.com/avatar/1",
                 //     created_at: 1620000000000,
                 // },
@@ -105,7 +105,7 @@ export default {
                     }
                 });
 
-                // 如果当前没有马甲，添加当前登录用户
+                // 如果当前没有账号，添加当前登录用户
                 if (!this.alternate?.length) {
                     const data = {
                         uid: this.profile.uid,
@@ -142,11 +142,11 @@ export default {
         isExpired(time) {
             return dayjs().diff(time, "day") > 30;
         },
-        // 选择马甲
+        // 选择账号
         onSelectAlternate(item) {
             if (this.isExpired(item.created_at)) {
                 this.$message.error(
-                    this.$jx3boxT("jx3boxUi.commonHeader.alternate.expiredNeedRelogin", "该马甲已过期，请重新登录")
+                    this.$jx3boxT("jx3boxUi.commonHeader.alternate.expiredNeedRelogin", "该账号已过期，请重新登录")
                 );
                 return;
             }
@@ -154,7 +154,7 @@ export default {
                 return;
             }
             this.$confirm(
-                this.$jx3boxT("jx3boxUi.commonHeader.alternate.switchConfirm", "确定要切换到该马甲吗？"),
+                this.$jx3boxT("jx3boxUi.commonHeader.alternate.switchConfirm", "确定要切换到该账号吗？"),
                 this.$jx3boxT("jx3boxUi.common.tip", "提示"),
                 {
                     confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
@@ -164,7 +164,7 @@ export default {
             )
                 .then(async () => {
                     await User.update(item);
-                    // 请求层优先读取 __token；必须与刚切换的马甲 token 同步，避免继续请求旧账号。
+                    // 请求层优先读取 __token；必须与刚切换的账号 token 同步，避免继续请求旧账号。
                     syncActiveAuthToken(item.token);
                     try {
                         localStorage.setItem(
@@ -182,10 +182,10 @@ export default {
                 })
                 .catch(() => {});
         },
-        // 删除马甲
+        // 删除账号
         onRemoveAlternate(item) {
             this.$confirm(
-                this.$jx3boxT("jx3boxUi.commonHeader.alternate.deleteConfirm", "确定要删除该马甲吗？"),
+                this.$jx3boxT("jx3boxUi.commonHeader.alternate.deleteConfirm", "确定要删除该账号吗？"),
                 this.$jx3boxT("jx3boxUi.common.tip", "提示"),
                 {
                     confirmButtonText: this.$jx3boxT("jx3boxUi.common.confirm", "确定"),
@@ -200,10 +200,10 @@ export default {
                 })
                 .catch(() => {});
         },
-        // 新增马甲
+        // 新增账号
         onAddAlternate() {
             if (this.overLength) {
-                this.$message.error(this.$jx3boxT("jx3boxUi.commonHeader.alternate.maxFive", "最多只能添加5个马甲"));
+                this.$message.error(this.$jx3boxT("jx3boxUi.commonHeader.alternate.maxFive", "最多只能添加5个账号"));
                 return;
             }
             // 新账号登录只会写普通 token；先清掉当前账号的高优先级 token，避免登录完成后仍请求旧账号。

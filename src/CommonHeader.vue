@@ -70,6 +70,7 @@ import _ from "lodash";
 // 子模块
 import logo from "./header/logo.vue";
 import client from "./header/client.vue";
+import { getCurrentClient } from "./header/client-switch";
 import search from "./header/search.vue";
 import nav from "./header/nav.vue";
 import user from "./header/user.vue";
@@ -133,7 +134,7 @@ export default {
     },
     computed: {
         client: function () {
-            return location.hostname.includes("origin") ? "origin" : "std";
+            return getCurrentClient();
         },
         siteRoot: function () {
             return location.host.includes("origin") ? JX3BOX.__OriginRoot : JX3BOX.__Root;
@@ -226,7 +227,7 @@ export default {
                             })
                             .then(() => {
                                 this.$refs.user?.logout();
-                                // 清除马甲所有马甲信息
+                                // 清除所有账号信息
                                 let keys = Object.keys(localStorage);
                                 let alternate = keys.filter((key) => key.startsWith("jx3box-alternate-"));
 
