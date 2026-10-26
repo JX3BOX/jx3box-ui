@@ -11,7 +11,7 @@
                 }}</el-button
                 >
             </div>
-            <!-- <AuthorLink class="u-block u-links" :uid="uid" :data="data" /> -->
+            <AuthorLink class="u-block u-links" :data="data" />
             <AuthorRole class="u-block u-roles" :data="data" />
             <AuthorMedals class="u-block u-trophy" :medals="activeMedals" />
             <!-- <AuthorTeams class="u-block u-teams" :uid="uid" /> -->
@@ -24,7 +24,7 @@
 
 <script>
 import AuthorInfo from "../author/AuthorInfo.vue";
-// import AuthorLink from "../author/AuthorLink.vue";
+import AuthorLink from "../author/AuthorLink.vue";
 // import AuthorFollow from "../author/AuthorFollow.vue";
 // import AuthorGift from "../author/AuthorGift.vue";
 // import AuthorFans from "../author/AuthorFans.vue";
@@ -161,7 +161,7 @@ export default {
     },
     components: {
         AuthorInfo,
-        // AuthorLink,
+        AuthorLink,
         // AuthorFollow,
         // AuthorGift,
         AuthorRole,
