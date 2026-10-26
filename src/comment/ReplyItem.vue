@@ -95,11 +95,15 @@ export default {
         setLikeComment(setLike) {
             this.$emit("setLikeComment", this.reply.id, setLike);
         },
-        doReply(replyData) {
-            (replyData.replyForUID = this.reply.userId),
-                (replyData.replyForCommentId = this.reply.id),
-                this.$emit("addReply", replyData);
-            this.showReplyForReplyFrom = false;
+        doReply(replyData, clearSubmittedContent) {
+            replyData.replyForUID = this.reply.userId;
+            replyData.replyForCommentId = this.reply.id;
+            this.$emit("addReply", replyData, () => {
+                const contentCleared = clearSubmittedContent?.();
+                if (contentCleared !== false) {
+                    this.showReplyForReplyFrom = false;
+                }
+            });
         },
     },
 };

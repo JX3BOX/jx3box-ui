@@ -255,17 +255,7 @@ export default {
         },
         userSubmitInputForm(data, clearSubmittedContent) {
             POST(`${this.baseAPI}/comment`, null, data)
-                .then((responseJSON) => {
-                    if (!responseJSON || Number(responseJSON.code) !== 0) {
-                        this.$notify({
-                            title: this.$jx3boxT("jx3boxUi.comment.commentFailed", "评论失败"),
-                            message: responseJSON?.msg || "",
-                            type: "error",
-                            duration: 3000,
-                            position: "bottom-right",
-                        });
-                        return;
-                    }
+                .then(() => {
                     this.$notify({
                         title: "",
                         message: this.$jx3boxT("jx3boxUi.comment.commentSuccess", "评论成功!"),

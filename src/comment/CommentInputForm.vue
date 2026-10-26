@@ -129,11 +129,11 @@ export default {
         },
         clearSubmittedContent(submittedContent) {
             // 请求成功后才清空；若等待响应期间用户已修改内容，则保留新草稿。
-            if (this.newComment.content === submittedContent) {
-                this.newComment = {
-                    content: "",
-                };
-            }
+            if (this.newComment.content !== submittedContent) return false;
+            this.newComment = {
+                content: "",
+            };
+            return true;
         },
         attachmentUploadError() {
             this.disableSubmitBtn = false;

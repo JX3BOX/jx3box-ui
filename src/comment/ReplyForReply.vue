@@ -101,12 +101,21 @@ export default {
         },
         attachmentUploadFinish(data) {
             this.disableSubmitBtn = false;
-            this.$emit("doReply", {
-                content: this.content,
-                attachmentList: data,
-            });
-            this.content = "";
+            const submittedContent = this.content;
+            this.$emit(
+                "doReply",
+                {
+                    content: submittedContent,
+                    attachmentList: data,
+                },
+                () => this.clearSubmittedContent(submittedContent)
+            );
             this.showUploader = false;
+        },
+        clearSubmittedContent(submittedContent) {
+            if (this.content !== submittedContent) return false;
+            this.content = "";
+            return true;
         },
         attachmentUploadError() {
             this.disableSubmitBtn = false;

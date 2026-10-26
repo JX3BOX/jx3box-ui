@@ -98,6 +98,7 @@ export const POST = function (url, queryParams, body) {
     return $
         .post(url, body, {
             params: queryParams,
+            validateStatus: (status) => status === 200,
         })
         .then((res) => res.data)
         .catch((err) => __handleError(err));

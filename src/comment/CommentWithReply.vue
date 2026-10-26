@@ -214,7 +214,7 @@ export default {
         setWhiteComment(white) {
             this.$emit("setWhiteComment", this.item.id, white);
         },
-        addNewReply(data) {
+        addNewReply(data, clearSubmittedContent) {
             POST(`${this.baseApi}/comment/${this.item.id}/reply`, null, data)
                 .then(() => {
                     this.$notify({
@@ -224,7 +224,9 @@ export default {
                         duration: 3000,
                         position: "bottom-right",
                     });
-
+                    if (typeof clearSubmittedContent === "function") {
+                        clearSubmittedContent();
+                    }
                     this.loadReplyList(this.pager.index);
                 })
                 .catch(() => {});

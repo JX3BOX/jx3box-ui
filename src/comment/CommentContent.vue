@@ -341,14 +341,23 @@ export default {
         },
         attachmentUploadFinish(data) {
             this.disableSubmitBtn = false;
-            this.$emit("addNewReply", {
-                content: this.newComment.content,
-                attachmentList: data,
-            });
+            const submittedContent = this.newComment.content;
+            this.$emit(
+                "addNewReply",
+                {
+                    content: submittedContent,
+                    attachmentList: data,
+                },
+                () => this.clearSubmittedContent(submittedContent)
+            );
             this.showUploader = false;
+        },
+        clearSubmittedContent(submittedContent) {
+            if (this.newComment.content !== submittedContent) return false;
             this.newComment = {
                 content: "",
             };
+            return true;
         },
         attachmentUplodError() {
             this.disableSubmitBtn = false;
