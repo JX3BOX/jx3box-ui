@@ -20,12 +20,12 @@
             <img :src="getIcon('github')" />
         </a>
         <a
-            v-if="data.tv_type && data.tv_id"
+            v-if="tv_link"
             class="u-link u-link__tv"
             :class="'u-link__' + data.tv_type"
             :href="tv_link"
             target="_blank"
-            :title="$jx3boxT('jx3boxUi.authorLink.roomId', '房间号:{id}', { id: data.tv_id })"
+            :title="data.tv_id"
         >
             <img :src="getIcon(data.tv_type)" />
         </a>
@@ -58,7 +58,7 @@ export default {
             return tvLink(this.data.tv_type, this.data.tv_id) || "";
         },
         isExist(){
-            return this.data.weibo_name || this.data.github_name || (this.data.tv_type && this.data.tv_id)
+            return this.data.weibo_name || this.data.github_name || this.tv_link
         }
     },
     watch: {},
@@ -72,7 +72,9 @@ export default {
         getIcon: function (val) {
             // console.log(process.env);
             // return __imgPath + "image/author/" + val + ".svg";
-            const img = require("../../assets/img/author/" + val + ".svg");
+            const icons = ["weibo", "github", "bilibili", "huya", "douyu", "douyin", "kuaishou", "weixin", "xiaohongshu", "other"];
+            const name = icons.includes(val) ? val : "other";
+            const img = require("../../assets/img/author/" + name + ".svg");
             // console.log(img)
             return img;
         },
