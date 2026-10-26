@@ -92,7 +92,8 @@ export default {
     align-items: center;
     .u-link {
         .mr(3px);
-        .r(50%);
+        .r(4px);
+        overflow: hidden;
         .flex;
         justify-content: center;
         align-items: center;
