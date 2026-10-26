@@ -113,17 +113,27 @@ export default {
         },
         // 文件上传完成后，进行数据提交
         attachmentUploadFinish(data) {
-            this.$emit("submit", {
-                content: this.newComment.content,
-                is_secret: this.is_secret ? 1 : 0,
-                attachmentList: data,
-            });
-            this.newComment = {
-                content: "",
-            };
+            const submittedContent = this.newComment.content;
+            this.$emit(
+                "submit",
+                {
+                    content: submittedContent,
+                    is_secret: this.is_secret ? 1 : 0,
+                    attachmentList: data,
+                },
+                () => this.clearSubmittedContent(submittedContent)
+            );
             this.showUploader = false;
 
             this.disableSubmitBtn = false;
+        },
+        clearSubmittedContent(submittedContent) {
+            // 请求成功后才清空；若等待响应期间用户已修改内容，则保留新草稿。
+            if (this.newComment.content === submittedContent) {
+                this.newComment = {
+                    content: "",
+                };
+            }
         },
         attachmentUploadError() {
             this.disableSubmitBtn = false;

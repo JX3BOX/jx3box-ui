@@ -253,13 +253,13 @@ export default {
         handleCurrentChange(gotoIndex) {
             this.reloadCommentList(gotoIndex);
         },
-        userSubmitInputForm(data) {
+        userSubmitInputForm(data, clearSubmittedContent) {
             POST(`${this.baseAPI}/comment`, null, data)
                 .then((responseJSON) => {
-                    if (responseJSON && ~~responseJSON.code > 0) {
+                    if (!responseJSON || Number(responseJSON.code) !== 0) {
                         this.$notify({
                             title: this.$jx3boxT("jx3boxUi.comment.commentFailed", "评论失败"),
-                            message: responseJSON.msg || "",
+                            message: responseJSON?.msg || "",
                             type: "error",
                             duration: 3000,
                             position: "bottom-right",
@@ -273,6 +273,9 @@ export default {
                         duration: 3000,
                         position: "bottom-right",
                     });
+                    if (typeof clearSubmittedContent === "function") {
+                        clearSubmittedContent();
+                    }
                     // 位于第一页时才去更新数据,否则没必要,等用户自己触发
                     if (this.pager.index == 1) {
                         this.reloadCommentList(this.pager.index);
