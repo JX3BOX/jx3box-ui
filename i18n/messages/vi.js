@@ -321,7 +321,15 @@ export default {
         secretTip: "Bình luận bí mật chỉ hiển thị với bạn và tác giả, và không thể thay đổi sau đó",
         publish: "Đăng bình luận",
     },
-    commentWithReply: { defaultName: "Hiệp khách vô danh", top: "Ghim", star: "Nổi bật", secret: "Bí mật", commentSuccess: "Bình luận thành công!", deleteSuccess: "Xóa thành công!" },
+    commentWithReply: {
+        refreshAfterSubmitFailed: "Phản hồi đã được gửi nhưng không thể tải lại danh sách. Hãy tải lại trang để xem, không cần gửi lại.",
+        defaultName: "Hiệp khách vô danh",
+        top: "Ghim",
+        star: "Nổi bật",
+        secret: "Bí mật",
+        commentSuccess: "Bình luận thành công!",
+        deleteSuccess: "Xóa thành công!",
+    },
     commentUpload: {
         tip: "Tải tối đa {count} ảnh định dạng {types}, mỗi ảnh không quá {size} MB",
         tipWithVideo: "Tải tối đa {count} tệp đính kèm. Hỗ trợ: {types}. Ảnh không quá {imageSize} MB, video không quá {videoSize} MB",
@@ -347,6 +355,7 @@ export default {
     zlpBy: { all: "Tất cả", default: "Bản mở rộng" },
     collection: { included: "Tác phẩm này đã được đưa vào sổ tay JX3 của tác giả" },
     comment: {
+        refreshAfterSubmitFailed: "Bình luận đã được gửi nhưng không thể tải lại danh sách. Hãy tải lại trang để xem, không cần gửi lại.",
         sortMode: "Sắp xếp:",
         desc: "Mới nhất trước",
         asc: "Cũ nhất trước",

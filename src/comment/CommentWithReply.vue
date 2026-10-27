@@ -214,8 +214,8 @@ export default {
         setWhiteComment(white) {
             this.$emit("setWhiteComment", this.item.id, white);
         },
-        addNewReply(data, clearSubmittedContent) {
-            POST(`${this.baseApi}/comment/${this.item.id}/reply`, null, data)
+        addNewReply(data, clearSubmittedContent, onSettled) {
+            return POST(`${this.baseApi}/comment/${this.item.id}/reply`, null, data)
                 .then(() => {
                     this.$notify({
                         title: "",
@@ -227,9 +227,12 @@ export default {
                     if (typeof clearSubmittedContent === "function") {
                         clearSubmittedContent();
                     }
-                    this.loadReplyList(this.pager.index);
+                    return this.loadReplyList(this.pager.index, undefined, true);
                 })
-                .catch(() => {});
+                .catch(() => {})
+                .finally(() => {
+                    if (typeof onSettled === "function") onSettled();
+                });
         },
         deleteReply(id) {
             DELETE(`${this.baseApi}/comment/${id}`)
@@ -248,8 +251,15 @@ export default {
         gotoReplyListIndex(index) {
             this.loadReplyList(index, 6);
         },
-        loadReplyList(index, pageSize) {
-            GET(`${this.baseApi}/comment/${this.item.id}/reply/page/${index}?pageSize=${pageSize}`)
+        loadReplyList(index, pageSize, afterSubmit = false) {
+            return GET(`${this.baseApi}/comment/${this.item.id}/reply/page/${index}?pageSize=${pageSize}`, null, {
+                errorMessage: afterSubmit
+                    ? this.$jx3boxT(
+                          "jx3boxUi.commentWithReply.refreshAfterSubmitFailed",
+                          "回复已提交，列表刷新失败，请刷新页面查看，无需重复提交。"
+                      )
+                    : undefined,
+            })
                 .then((resp) => {
                     if (index == 1 && pageSize == 3) {
                         // eslint-disable-next-line vue/no-mutating-props

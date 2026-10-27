@@ -89,6 +89,7 @@ export default {
     },
     methods: {
         submitReply() {
+            if (this.disableSubmitBtn) return;
             this.disableSubmitBtn = true;
             if (this.$refs.uploader) {
                 this.$refs.uploader.upload();
@@ -100,7 +101,7 @@ export default {
             this.$emit("hideForm");
         },
         attachmentUploadFinish(data) {
-            this.disableSubmitBtn = false;
+            this.disableSubmitBtn = true;
             const submittedContent = this.content;
             this.$emit(
                 "doReply",
@@ -108,7 +109,10 @@ export default {
                     content: submittedContent,
                     attachmentList: data,
                 },
-                () => this.clearSubmittedContent(submittedContent)
+                () => this.clearSubmittedContent(submittedContent),
+                () => {
+                    this.disableSubmitBtn = false;
+                }
             );
             this.showUploader = false;
         },

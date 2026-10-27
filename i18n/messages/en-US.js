@@ -322,6 +322,7 @@ export default {
         publish: "Post Comment",
     },
     commentWithReply: {
+        refreshAfterSubmitFailed: "Your reply was posted, but the list could not be refreshed. Refresh the page to view it; do not submit again.",
         defaultName: "Anonymous Wanderer",
         top: "Pinned",
         star: "Featured",
@@ -354,6 +355,7 @@ export default {
     zlpBy: { all: "All", default: "Expansion" },
     collection: { included: "This post has been included in the author's JX3 booklet" },
     comment: {
+        refreshAfterSubmitFailed: "Your comment was posted, but the list could not be refreshed. Refresh the page to view it; do not submit again.",
         sortMode: "Sort:",
         desc: "Newest first",
         asc: "Oldest first",

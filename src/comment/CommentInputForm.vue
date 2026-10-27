@@ -97,6 +97,7 @@ export default {
     },
     methods: {
         onSubmit() {
+            if (this.disableSubmitBtn) return;
             this.disableSubmitBtn = true;
             if (this.$refs.uploader) {
                 this.$refs.uploader.upload();
@@ -105,14 +106,24 @@ export default {
             }
         },
         onQuickReply(item) {
-            this.$emit("submit", {
-                content: item,
-                attachmentList: [],
-                is_template: 1,
-            });
+            if (this.disableSubmitBtn) return;
+            this.disableSubmitBtn = true;
+            this.$emit(
+                "submit",
+                {
+                    content: item,
+                    attachmentList: [],
+                    is_template: 1,
+                },
+                undefined,
+                () => {
+                    this.disableSubmitBtn = false;
+                }
+            );
         },
         // 文件上传完成后，进行数据提交
         attachmentUploadFinish(data) {
+            this.disableSubmitBtn = true;
             const submittedContent = this.newComment.content;
             this.$emit(
                 "submit",
@@ -121,11 +132,12 @@ export default {
                     is_secret: this.is_secret ? 1 : 0,
                     attachmentList: data,
                 },
-                () => this.clearSubmittedContent(submittedContent)
+                () => this.clearSubmittedContent(submittedContent),
+                () => {
+                    this.disableSubmitBtn = false;
+                }
             );
             this.showUploader = false;
-
-            this.disableSubmitBtn = false;
         },
         clearSubmittedContent(submittedContent) {
             // 请求成功后才清空；若等待响应期间用户已修改内容，则保留新草稿。

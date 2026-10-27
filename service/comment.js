@@ -57,13 +57,12 @@ export async function setOrderMode(val) {
     }
 }
 
-export const GET = function (url, queryParams) {
-    return $
-        .get(url, {
-            params: queryParams,
-        })
+export const GET = function (url, queryParams, options = {}) {
+    return $.get(url, {
+        params: queryParams,
+    })
         .then((res) => res.data)
-        .catch((err) => __handleError(err));
+        .catch((err) => __handleError(err, options));
 };
 
 const postRecord = {};
@@ -95,11 +94,9 @@ export const POST = function (url, queryParams, body) {
             count: 0,
         };
     }
-    return $
-        .post(url, body, {
-            params: queryParams,
-            validateStatus: (status) => status === 200,
-        })
+    return $.post(url, body, {
+        params: queryParams,
+    })
         .then((res) => res.data)
         .catch((err) => __handleError(err));
 };
@@ -121,10 +118,10 @@ export const DELETE = function (url, queryParams) {
         .catch((err) => __handleError(err));
 };
 
-function __handleError(err) {
+function __handleError(err, options = {}) {
     const status = err?.response?.status;
     const statusText = err?.response?.statusText || "Request Error";
-    const message = err?.response?.data?.msg || err?.response?.data || "";
+    const message = options.errorMessage || err?.response?.data?.msg || err?.response?.data || "";
     switch (status) {
         case 401:
         case 403:
@@ -142,8 +139,8 @@ function __handleError(err) {
             });
             break;
         default:
-            Notification.error({
-                title: "系统:" + statusText,
+            Notification[options.errorMessage ? "warning" : "error"]({
+                title: options.errorMessage ? "" : "系统:" + statusText,
                 message: message || "系统错误,请稍后重试!",
                 duration: 3000,
                 position: "bottom-right",

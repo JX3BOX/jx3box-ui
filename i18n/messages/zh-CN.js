@@ -380,6 +380,7 @@ export default {
         publish: "发表评论",
     },
     commentWithReply: {
+        refreshAfterSubmitFailed: "回复已提交，列表刷新失败，请刷新页面查看，无需重复提交。",
         defaultName: "人字榜800线无名小侠",
         top: "置顶",
         star: "精华",
@@ -459,6 +460,7 @@ export default {
         included: "该作品已被收录至作者的剑三小册",
     },
     comment: {
+        refreshAfterSubmitFailed: "评论已提交，列表刷新失败，请刷新页面查看，无需重复提交。",
         sortMode: "排序模式：",
         desc: "最后靠前",
         asc: "最早靠前",

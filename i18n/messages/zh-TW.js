@@ -321,7 +321,15 @@ export default {
         secretTip: "勾選悄悄話後僅作者和你可見，且不可再變更狀態",
         publish: "發表評論",
     },
-    commentWithReply: { defaultName: "無名小俠", top: "置頂", star: "精華", secret: "悄悄話", commentSuccess: "評論成功!", deleteSuccess: "刪除成功!" },
+    commentWithReply: {
+        refreshAfterSubmitFailed: "回覆已提交，列表重新整理失敗，請重新整理頁面查看，無需重複提交。",
+        defaultName: "無名小俠",
+        top: "置頂",
+        star: "精華",
+        secret: "悄悄話",
+        commentSuccess: "評論成功!",
+        deleteSuccess: "刪除成功!",
+    },
     commentUpload: {
         tip: "最多上傳 {count} 張 {types} 格式圖片，單張圖片不能超過 {size} MB",
         tipWithVideo: "最多上傳 {count} 個附件，支援 {types}，圖片不超過 {imageSize} MB，影片不超過 {videoSize} MB",
@@ -347,6 +355,7 @@ export default {
     zlpBy: { all: "全部", default: "資料片" },
     collection: { included: "該作品已被收錄至作者的劍三小冊" },
     comment: {
+        refreshAfterSubmitFailed: "評論已提交，列表重新整理失敗，請重新整理頁面查看，無需重複提交。",
         sortMode: "排序模式：",
         desc: "最後靠前",
         asc: "最早靠前",

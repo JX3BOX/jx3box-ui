@@ -232,14 +232,21 @@ export default {
                 })
                 .catch(() => {});
         },
-        reloadCommentList(index) {
+        reloadCommentList(index, afterSubmit = false) {
             this.loading = true;
             let orderQuery = {};
             if (this.isDesc === "DESC") {
                 orderQuery["desc"] = true;
             }
             orderQuery["orderby_likes"] = this.orderByLikes;
-            GET(`${this.baseAPI}/comment/page/${index}`, orderQuery)
+            return GET(`${this.baseAPI}/comment/page/${index}`, orderQuery, {
+                errorMessage: afterSubmit
+                    ? this.$jx3boxT(
+                          "jx3boxUi.comment.refreshAfterSubmitFailed",
+                          "评论已提交，列表刷新失败，请刷新页面查看，无需重复提交。"
+                      )
+                    : undefined,
+            })
                 .then((resp) => {
                     this.commentList = resp.data || [];
                     this.pager = resp.page;
@@ -253,8 +260,8 @@ export default {
         handleCurrentChange(gotoIndex) {
             this.reloadCommentList(gotoIndex);
         },
-        userSubmitInputForm(data, clearSubmittedContent) {
-            POST(`${this.baseAPI}/comment`, null, data)
+        userSubmitInputForm(data, clearSubmittedContent, onSettled) {
+            return POST(`${this.baseAPI}/comment`, null, data)
                 .then(() => {
                     this.$notify({
                         title: "",
@@ -268,10 +275,13 @@ export default {
                     }
                     // 位于第一页时才去更新数据,否则没必要,等用户自己触发
                     if (this.pager.index == 1) {
-                        this.reloadCommentList(this.pager.index);
+                        return this.reloadCommentList(this.pager.index, true);
                     }
                 })
-                .catch(() => {});
+                .catch(() => {})
+                .finally(() => {
+                    if (typeof onSettled === "function") onSettled();
+                });
         },
         profileLink: function (uid) {
             return authorLink(uid);

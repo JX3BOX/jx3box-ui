@@ -340,7 +340,7 @@ export default {
             return count > 0 ? count : "";
         },
         attachmentUploadFinish(data) {
-            this.disableSubmitBtn = false;
+            this.disableSubmitBtn = true;
             const submittedContent = this.newComment.content;
             this.$emit(
                 "addNewReply",
@@ -348,7 +348,10 @@ export default {
                     content: submittedContent,
                     attachmentList: data,
                 },
-                () => this.clearSubmittedContent(submittedContent)
+                () => this.clearSubmittedContent(submittedContent),
+                () => {
+                    this.disableSubmitBtn = false;
+                }
             );
             this.showUploader = false;
         },
@@ -364,6 +367,7 @@ export default {
         },
 
         submit() {
+            if (this.disableSubmitBtn) return;
             this.disableSubmitBtn = true;
             if (this.$refs.uploader) {
                 this.$refs.uploader.upload();

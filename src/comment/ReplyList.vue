@@ -95,8 +95,8 @@ export default {
         setLikeComment(id, isLike) {
             this.$emit("setLikeComment", id, isLike);
         },
-        addReply(data, clearSubmittedContent) {
-            this.$emit("addNewReply", data, clearSubmittedContent);
+        addReply(data, clearSubmittedContent, onSettled) {
+            this.$emit("addNewReply", data, clearSubmittedContent, onSettled);
         },
     },
 };
