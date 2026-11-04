@@ -2,6 +2,7 @@ import { $cms } from "@jx3box/jx3box-common/js/api";
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import { applyJx3boxClientStatRules } from "./client-stat-business";
+import { DEFAULT_BLOCK_STORAGE_KEY } from "./traffic-analytics";
 import packageInfo from "../../package.json";
 
 const INSTANCE_ID_KEY = "jx3box:device_id";
@@ -15,8 +16,8 @@ const STARTUP_DELAY_MAX = 15 * 1000;
 
 let reportTask = null;
 let scheduledTimer = null;
-let trafficPermission = null;
-let trafficPermissionCheckedAt = 0;
+let pendingIdentity = null;
+const PERMISSION_KEY = "jx3box:client-stat-permission:v1";
 const TRAFFIC_PERMISSION_MAX_AGE = 5 * 60 * 1000;
 
 function compactPayload(payload) {
@@ -222,11 +223,28 @@ function getReportSignature() {
 }
 
 export async function reportClientStat({ force = false } = {}) {
-    if (reportTask) return reportTask;
+    const today = chinaDate();
+    const signature = getReportSignature();
+    const instance = ensureClientInstanceId();
+    const identity = JSON.stringify([today, signature, instance]);
+    if (reportTask) {
+        if (identity === pendingIdentity) return reportTask;
+        await reportTask.catch(() => null);
+        return reportClientStat({ force });
+    }
 
+    pendingIdentity = identity;
     reportTask = (async () => {
-        const today = chinaDate();
-        const signature = getReportSignature();
+        let cached;
+        try {
+            cached = JSON.parse(localStorage.getItem(PERMISSION_KEY));
+        } catch (_) { /* 旧值损坏时重新向服务端确认。 */ }
+        if (cached?.identity === identity && cached.until > Date.now()) {
+            if (!cached.gate) return { reported: false, reason: "cooldown" };
+            if (cached.gate.traffic_allowed === false || !localStorage.getItem(DEFAULT_BLOCK_STORAGE_KEY)) {
+                return { reported: false, data: cached.gate };
+            }
+        }
         if (
             !force &&
             localStorage.getItem(REPORT_DATE_KEY) === today &&
@@ -235,14 +253,24 @@ export async function reportClientStat({ force = false } = {}) {
             return { reported: false, reason: "already_reported" };
         }
 
-        const payload = buildClientStatPayload(ensureClientInstanceId());
-        const response = await $cms({ mute: true }).post("/api/cms/system/stat/heartbeat", payload, {
-            timeout: 10000,
-            skipForbiddenSessionClear: true,
-        });
+        const payload = buildClientStatPayload(instance);
+        let data;
+        try {
+            const response = await $cms({ mute: true }).post("/api/cms/system/stat/heartbeat", payload, {
+                timeout: 10000,
+                skipForbiddenSessionClear: true,
+            });
+            data = response?.data?.data;
+        } finally {
+            const gate = typeof data?.traffic_allowed === "boolean"
+                ? { traffic_allowed: data.traffic_allowed, blocked: data.blocked || null }
+                : null;
+            const ttl = gate ? TRAFFIC_PERMISSION_MAX_AGE : 60000 + Math.floor(Math.random() * 60000);
+            localStorage.setItem(PERMISSION_KEY, JSON.stringify({ identity, gate, until: Date.now() + ttl }));
+        }
         localStorage.setItem(REPORT_DATE_KEY, today);
         localStorage.setItem(REPORT_SIGNATURE_KEY, signature);
-        return { reported: true, data: response?.data?.data || null, payload };
+        return { reported: true, data: data || null, payload };
     })().finally(() => {
         reportTask = null;
     });
@@ -250,22 +278,15 @@ export async function reportClientStat({ force = false } = {}) {
     return reportTask;
 }
 
-export async function resolveClientTrafficPermission({ force = false } = {}) {
-    if (!force && trafficPermission && Date.now() - trafficPermissionCheckedAt < TRAFFIC_PERMISSION_MAX_AGE) {
-        return trafficPermission;
-    }
+export async function resolveClientTrafficPermission() {
     try {
-        const result = await reportClientStat({ force: true });
-        const data = result?.data;
-        if (data && typeof data.traffic_allowed === "boolean") {
-            trafficPermission = data;
-            trafficPermissionCheckedAt = Date.now();
-            return data;
-        }
-    } catch (error) {
-        // Traffic remains fail-closed when heartbeat cannot confirm permission.
+        let result = await reportClientStat({ force: true });
+        // 并发的普通日检可能只返回“今天已报”；此时仍需取得显式许可。
+        if (result.reason === "already_reported") result = await reportClientStat({ force: true });
+        return typeof result.data?.traffic_allowed === "boolean" ? result.data : null;
+    } catch (_) {
+        return null;
     }
-    return null;
 }
 
 function isLocalhost() {
