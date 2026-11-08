@@ -72,17 +72,17 @@
         "parentKey": "bps"
     },
     {
-        "key": "jcl",
-        "link": "/jcl/",
+        "key": "combat",
+        "link": "/combat",
         "label": "战斗分析",
         "client": "all",
         "status": true,
         "parentKey": "bps"
     },
     {
-        "key": "battle",
-        "link": "/battle/",
-        "label": "战斗统计",
+        "key": "dps",
+        "link": "/bps/dps",
+        "label": "伤害计算",
         "client": "all",
         "status": true,
         "parentKey": "bps"
@@ -289,7 +289,7 @@
     },
     {
         "key": "treasure",
-        "link": "/pvx/codex/adventure",
+        "link": "/pvx/adventure",
         "label": "奇遇珍卷",
         "client": "all",
         "status": true,
@@ -297,7 +297,7 @@
     },
     {
         "key": "achievement",
-        "link": "/pvx/codex/achievement",
+        "link": "/pvx/achievements",
         "label": "资历宝典",
         "client": "all",
         "status": true,
